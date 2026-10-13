@@ -1,87 +1,131 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import fidelLogo from "@/assets/fidallogo.png";
+import WordQuestionCard from "@/components/WordQuestionCard";
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute("/")({
+  component: HomePage,
+});
 
-function App() {
+const lessons = [
+  {
+    word: "ሰላም",
+    pronunciation: "Selam",
+    explanation: "A common Amharic greeting meaning hello or peace.",
+    options: ["Thank you", "Hello / Peace", "Goodbye", "Good morning"],
+    correctAnswer: "Hello / Peace",
+    audioSrc:
+      "https://br-floral-rain-b5mr73of.storage.c-7.us-east-2.aws.neon.tech/audio/Selam.mp3",
+  },
+  {
+    word: "አመሰግናለሁ",
+    pronunciation: "Ameseginalehu",
+    explanation: "A polite way to say thank you in Amharic.",
+    options: ["I'm sorry", "Welcome", "Thank you", "Good night"],
+    correctAnswer: "Thank you",
+    audioSrc: "/audio/amharic/ameseginalehu.mp3",
+  },
+  {
+    word: "እንደምን አደርክ",
+    pronunciation: "Endemin aderk",
+    explanation: "An informal way to ask a male how he is doing.",
+    options: [
+      "Where are you going?",
+      "How are you?",
+      "Goodbye",
+      "What's your name?",
+    ],
+    correctAnswer: "How are you?",
+    audioSrc: "/audio/amharic/endemin-aderk.mp3",
+  },
+  {
+    word: "ውሃ",
+    pronunciation: "Wuha",
+    explanation: "The Amharic word for water.",
+    options: ["Milk", "Coffee", "Food", "Water"],
+    correctAnswer: "Water",
+    audioSrc: "/audio/amharic/wuha.mp3",
+  },
+  {
+    word: "ቤት",
+    pronunciation: "Bet",
+    explanation: "The Amharic word for house or home.",
+    options: ["School", "House", "Road", "Market"],
+    correctAnswer: "House",
+    audioSrc: "/audio/amharic/bet.mp3",
+  },
+  {
+    word: "ፍቅር",
+    pronunciation: "Fikir",
+    explanation: "The Amharic word for love.",
+    options: ["Friend", "Happiness", "Love", "Family"],
+    correctAnswer: "Love",
+    audioSrc: "/audio/amharic/fikir.mp3",
+  },
+];
+
+function HomePage() {
+  const [currentLesson, setCurrentLesson] = useState(0);
+
+  const lesson = lessons[currentLesson];
+
+  function handleNext() {
+    setCurrentLesson((current) => (current + 1) % lessons.length);
+  }
+
   return (
-    <main className="page-wrap px-4 pb-8 pt-14">
-      <section className="island-shell rise-in relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10 sm:py-14">
-        <div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(79,184,178,0.32),transparent_66%)]" />
-        <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(47,106,74,0.18),transparent_66%)]" />
-        <p className="island-kicker mb-3">TanStack Start Base Template</p>
-        <h1 className="display-title mb-5 max-w-3xl text-4xl leading-[1.02] font-bold tracking-tight text-[var(--sea-ink)] sm:text-6xl">
-          Start simple, ship quickly.
-        </h1>
-        <p className="mb-8 max-w-2xl text-base text-[var(--sea-ink-soft)] sm:text-lg">
-          This base starter intentionally keeps things light: two routes, clean
-          structure, and the essentials you need to build from scratch.
+    <div className="min-h-screen bg-background">
+      <header className="flex flex-col items-center gap-4 border-b px-6 py-8 text-center">
+        <img
+          src={fidelLogo}
+          alt="Fidel Logo"
+          className="h-20 w-auto object-contain"
+        />
+
+        <h1 className="text-4xl font-bold">Fidel</h1>
+
+        <p className="max-w-lg text-muted-foreground">
+          Learn Ethiopian languages, one word at a time.
         </p>
-        <div className="flex flex-wrap gap-3">
-          <a
-            href="/about"
-            className="rounded-full border border-[rgba(50,143,151,0.3)] bg-[rgba(79,184,178,0.14)] px-5 py-2.5 text-sm font-semibold text-[var(--lagoon-deep)] no-underline transition hover:-translate-y-0.5 hover:bg-[rgba(79,184,178,0.24)]"
-          >
-            About This Starter
+
+        <nav className="flex gap-6">
+          <a href="/" className="font-medium hover:underline">
+            Home
           </a>
-          <a
-            href="https://tanstack.com/router"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-[rgba(23,58,64,0.2)] bg-white/50 px-5 py-2.5 text-sm font-semibold text-[var(--sea-ink)] no-underline transition hover:-translate-y-0.5 hover:border-[rgba(23,58,64,0.35)]"
-          >
-            Router Guide
+          <a href="/about" className="font-medium hover:underline">
+            About
           </a>
+        </nav>
+      </header>
+
+      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        <div className="mb-8 text-center">
+          <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-purple-600">
+            Your daily lesson
+          </p>
+
+          <h2 className="text-3xl font-bold">Let's learn a new word!</h2>
+
+          <p className="mt-2 text-muted-foreground">
+            Listen, learn, and choose the correct meaning.
+          </p>
+
+          <p className="mt-4 text-sm font-medium text-muted-foreground">
+            Word {currentLesson + 1} of {lessons.length}
+          </p>
+
+          <div className="mx-auto mt-3 h-2 max-w-xs overflow-hidden rounded-full bg-muted">
+            <div
+              className="h-full rounded-full bg-purple-600 transition-all duration-300"
+              style={{
+                width: `${((currentLesson + 1) / lessons.length) * 100}%`,
+              }}
+            />
+          </div>
         </div>
-      </section>
 
-      <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          [
-            'Type-Safe Routing',
-            'Routes and links stay in sync across every page.',
-          ],
-          [
-            'Server Functions',
-            'Call server code from your UI without creating API boilerplate.',
-          ],
-          [
-            'Streaming by Default',
-            'Ship progressively rendered responses for faster experiences.',
-          ],
-          [
-            'Tailwind Native',
-            'Design quickly with utility-first styling and reusable tokens.',
-          ],
-        ].map(([title, desc], index) => (
-          <article
-            key={title}
-            className="island-shell feature-card rise-in rounded-2xl p-5"
-            style={{ animationDelay: `${index * 90 + 80}ms` }}
-          >
-            <h2 className="mb-2 text-base font-semibold text-[var(--sea-ink)]">
-              {title}
-            </h2>
-            <p className="m-0 text-sm text-[var(--sea-ink-soft)]">{desc}</p>
-          </article>
-        ))}
-      </section>
-
-      <section className="island-shell mt-8 rounded-2xl p-6">
-        <p className="island-kicker mb-2">Quick Start</p>
-        <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-[var(--sea-ink-soft)]">
-          <li>
-            Edit <code>src/routes/index.tsx</code> to customize the home page.
-          </li>
-          <li>
-            Update <code>src/components/Header.tsx</code> and{' '}
-            <code>src/components/Footer.tsx</code> for brand links.
-          </li>
-          <li>
-            Add routes in <code>src/routes</code> and tweak visual tokens in{' '}
-            <code>src/styles.css</code>.
-          </li>
-        </ul>
-      </section>
-    </main>
-  )
+        <WordQuestionCard key={currentLesson} {...lesson} onNext={handleNext} />
+      </main>
+    </div>
+  );
 }
