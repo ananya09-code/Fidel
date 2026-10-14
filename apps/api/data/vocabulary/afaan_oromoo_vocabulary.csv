@@ -1,0 +1,563 @@
+language_code,text,transliteration,meaning,meaning_amharic,category,difficulty
+om,akkam,,hello / how,ሰላም / እንዴት,greetings,beginner
+om,akkam jirta,,how are you,እንዴት ነህ / ነሽ,greetings,beginner
+om,akkam bultan,,good morning (how did you spend the night),እንደምን አደራችሁ,greetings,beginner
+om,akkam oolte,,how was your day,እንዴት ዋልሽ,greetings,beginner
+om,nagaa,,peace / fine,ሰላም,greetings,beginner
+om,nagaan jirra,,we are fine,ሰላም ነን,greetings,beginner
+om,baga nagaan dhuftan,,welcome (plural),እንኳን ደህና መጣችሁ,greetings,beginner
+om,baga nagaan dhufte,,welcome (singular),እንኳን ደህና መጣህ,greetings,beginner
+om,nagaatti,,goodbye,ደህና ሁን,greetings,beginner
+om,nagaatti hafaa,,stay in peace (goodbye),ደህና ሁን,greetings,beginner
+om,galatoomi,,thank you,አመሰግናለሁ,greetings,beginner
+om,baayyee galatoomi,,thank you very much,በጣም አመሰግናለሁ,greetings,beginner
+om,dhiifama,,sorry / excuse me,ይቅርታ,greetings,beginner
+om,maaloo,,please,እባክህ,greetings,beginner
+om,baga gammaddan,,congratulations (plural),እንኳን ደስ አላችሁ,greetings,beginner
+om,baga gammadde,,congratulations (singular),እንኳን ደስ አለህ,greetings,beginner
+om,barka ayyaanaa,,happy holiday,መልካም በዓል,greetings,beginner
+om,halkan gaarii,,good night,ደህና እደር,greetings,beginner
+om,guyyaa gaarii,,good day,መልካም ቀን,greetings,beginner
+om,galgala gaarii,,good evening,መልካም ምሽት,greetings,beginner
+om,maqaan koo,,my name,ስሜ,greetings,beginner
+om,maqaan kee eenyu,,what is your name,ስምህ ማን ነው,greetings,beginner
+om,si argee gammadeera,,I am happy to meet you,ስላገኘሁህ ደስ ብሎኛል,greetings,beginner
+om,eessaa dhufte,,where are you from,ከየት መጣህ,greetings,beginner
+om,Oromiyaa irraa dhufe,,I come from Oromia,ከኦሮሚያ መጣሁ,greetings,beginner
+om,Afaan Oromoo dubbattaa,,do you speak Afaan Oromoo,ኦሮምኛ ትናገራለህ,greetings,beginner
+om,nan dubbadha,,I speak,እናገራለሁ,greetings,beginner
+om,hin beekku,,I don't know,አላውቅም,greetings,beginner
+om,nan beeka,,I know,አውቃለሁ,greetings,beginner
+om,hin hubadhu,,I don't understand,አልገባኝም,greetings,beginner
+om,nan hubadha,,I understand,ገብቶኛል,greetings,beginner
+om,irra deebi'i,,repeat,እንደገና ድገም,greetings,beginner
+om,suuta,,slowly,ቀስ ብለህ,greetings,beginner
+om,fayyaa,,health,ጤና,greetings,beginner
+om,nagaa qabdaa,,are you well,ደህና ነህ,greetings,beginner
+om,eeyyee,,yes,አዎ,common_expressions,beginner
+om,lakki,,no,አይ,common_expressions,beginner
+om,mitii,,is not / no,አይደለም,common_expressions,beginner
+om,ta'a,,okay,እሺ,common_expressions,beginner
+om,ni ta'a,,it is possible / okay,ይቻላል,common_expressions,beginner
+om,hin ta'u,,it is not possible,አይቻልም,common_expressions,beginner
+om,mee,,please / come on,እባክህ,common_expressions,beginner
+om,amma,,now,አሁን,common_expressions,beginner
+om,har'a,,today,ዛሬ,common_expressions,beginner
+om,kunoo,,here it is,ይኸውልህ,common_expressions,beginner
+om,eessa,,where,የት,common_expressions,beginner
+om,maal,,what,ምን,common_expressions,beginner
+om,eenyu,,who,ማን,common_expressions,beginner
+om,yoom,,when,መቼ,common_expressions,beginner
+om,maaliif,,why,ለምን,common_expressions,beginner
+om,akkamitti,,how,እንዴት,common_expressions,beginner
+om,meeqa,,how many / how much,ስንት,common_expressions,beginner
+om,kam,,which,የትኛው,common_expressions,beginner
+om,kun,,this,ይህ,common_expressions,beginner
+om,san,,that,ያ,common_expressions,beginner
+om,as,,here,እዚህ,common_expressions,beginner
+om,achi,,there,እዚያ,common_expressions,beginner
+om,asitti,,here (at),እዚህ ጋር,common_expressions,beginner
+om,achitti,,there (at),እዚያ ጋር,common_expressions,beginner
+om,dhugaa,,truth,እውነት,common_expressions,beginner
+om,gaarii,,good,ጥሩ,common_expressions,beginner
+om,badaa,,bad,መጥፎ,common_expressions,beginner
+om,baayyee,,very / many,በጣም / ብዙ,common_expressions,beginner
+om,xiqqoo,,a little,ትንሽ,common_expressions,beginner
+om,hunda,,all,ሁሉም,common_expressions,beginner
+om,tokko,,one / something,አንድ / አንዱ,common_expressions,beginner
+om,lamaan,,both,ሁለቱም,common_expressions,beginner
+om,kan biraa,,another,ሌላ,common_expressions,beginner
+om,fi,,and,እና,common_expressions,beginner
+om,yookiin,,or,ወይም,common_expressions,beginner
+om,garuu,,but,ግን,common_expressions,beginner
+om,sababni,,reason,ምክንያት,common_expressions,beginner
+om,akka,,like / as,እንደ,common_expressions,beginner
+om,yoo,,if,ከሆነ,common_expressions,beginner
+om,kaa'i,,get up,ተነስ,common_expressions,beginner
+om,koottu,,come (command),ና,common_expressions,beginner
+om,deemi,,go (command),ሂድ,common_expressions,beginner
+om,dhaabbadhu,,stop / stand (command),ቁም,common_expressions,beginner
+om,eegi,,wait (command),ጠብቅ,common_expressions,beginner
+om,ilaali,,look (command),ተመልከት,common_expressions,beginner
+om,dhaggeeffadhu,,listen (command),አዳምጥ,common_expressions,beginner
+om,dubbadhu,,speak (command),ተናገር,common_expressions,beginner
+om,mari'achuu,,to discuss,መወያየት,common_expressions,beginner
+om,mee ilaali,,please look,እባክህ ተመልከት,common_expressions,beginner
+om,mirga,,right (entitlement),መብት,common_expressions,beginner
+om,ani,,I,እኔ,pronouns_questions,beginner
+om,ati,,you (singular),አንተ / አንቺ,pronouns_questions,beginner
+om,inni,,he,እሱ,pronouns_questions,beginner
+om,isheen,,she,እሷ,pronouns_questions,beginner
+om,nuti,,we,እኛ,pronouns_questions,beginner
+om,isin,,you (plural),እናንተ,pronouns_questions,beginner
+om,isaan,,they,እነሱ,pronouns_questions,beginner
+om,koo,,my,የእኔ,pronouns_questions,beginner
+om,kee,,your,የአንተ,pronouns_questions,beginner
+om,isaa,,his,የእሱ,pronouns_questions,beginner
+om,ishee,,her,የእሷ,pronouns_questions,beginner
+om,keenya,,our,የእኛ,pronouns_questions,beginner
+om,keessan,,your (plural),የእናንተ,pronouns_questions,beginner
+om,isaanii,,their,የእነሱ,pronouns_questions,beginner
+om,ofii,,self,ራስ,pronouns_questions,beginner
+om,kan,,that which,የሆነው,pronouns_questions,beginner
+om,maaliin,,with what,በምን,pronouns_questions,beginner
+om,eessaa,,from where,ከየት,pronouns_questions,beginner
+om,eessatti,,at where,የት,pronouns_questions,beginner
+om,zeeroo,,zero,ዜሮ,numbers,beginner
+om,lama,,two,ሁለት,numbers,beginner
+om,sadii,,three,ሦስት,numbers,beginner
+om,afur,,four,አራት,numbers,beginner
+om,shan,,five,አምስት,numbers,beginner
+om,jaha,,six,ስድስት,numbers,beginner
+om,torba,,seven,ሰባት,numbers,beginner
+om,saddeet,,eight,ስምንት,numbers,beginner
+om,sagal,,nine,ዘጠኝ,numbers,beginner
+om,kudhan,,ten,አሥር,numbers,beginner
+om,kudha tokko,,eleven,አሥራ አንድ,numbers,beginner
+om,kudha lama,,twelve,አሥራ ሁለት,numbers,beginner
+om,kudha sadii,,thirteen,አሥራ ሦስት,numbers,beginner
+om,kudha afur,,fourteen,አሥራ አራት,numbers,beginner
+om,kudha shan,,fifteen,አሥራ አምስት,numbers,beginner
+om,kudha jaha,,sixteen,አሥራ ስድስት,numbers,beginner
+om,kudha torba,,seventeen,አሥራ ሰባት,numbers,beginner
+om,kudha saddeet,,eighteen,አሥራ ስምንት,numbers,beginner
+om,kudha sagal,,nineteen,አሥራ ዘጠኝ,numbers,beginner
+om,digdama,,twenty,ሃያ,numbers,beginner
+om,soddoma,,thirty,ሠላሳ,numbers,beginner
+om,afurtama,,forty,አርባ,numbers,beginner
+om,shantama,,fifty,ሃምሳ,numbers,beginner
+om,jaatama,,sixty,ስድሳ,numbers,beginner
+om,torbaatama,,seventy,ሰባ,numbers,beginner
+om,saddeettama,,eighty,ሰማንያ,numbers,beginner
+om,sagaltama,,ninety,ዘጠና,numbers,beginner
+om,dhibba,,hundred,መቶ,numbers,beginner
+om,kuma,,thousand,ሺህ,numbers,beginner
+om,miliyoona,,million,ሚሊዮን,numbers,beginner
+om,duraa,,first,የመጀመሪያ,numbers,beginner
+om,lammaffaa,,second,ሁለተኛ,numbers,beginner
+om,sadaffaa,,third,ሦስተኛ,numbers,beginner
+om,afraffaa,,fourth,አራተኛ,numbers,beginner
+om,shanaffaa,,fifth,አምስተኛ,numbers,beginner
+om,walakkaa,,half,ግማሽ,numbers,beginner
+om,lakkoofsa,,number,ቁጥር,numbers,beginner
+om,dachaa,,double,እጥፍ,numbers,beginner
+om,dabalataan,,in addition,በተጨማሪ,numbers,beginner
+om,hanga,,amount / until,ያህል / እስከ,numbers,beginner
+om,haadha,,mother,እናት,family,beginner
+om,abbaa,,father,አባት,family,beginner
+om,obboleessa,,brother,ወንድም,family,beginner
+om,obboleettii,,sister,እህት,family,beginner
+om,ilma,,son,ወንድ ልጅ,family,beginner
+om,intala,,daughter,ሴት ልጅ,family,beginner
+om,ijoollee,,children,ልጆች,family,beginner
+om,mucaa,,child,ልጅ,family,beginner
+om,daa'ima,,baby,ሕፃን,family,beginner
+om,akaakayyuu,,grandfather / ancestor,አያት,family,beginner
+om,abbaa manaa,,husband,ባል,family,beginner
+om,haadha manaa,,wife,ሚስት,family,beginner
+om,fira,,relative,ዘመድ,family,beginner
+om,michuu,,friend,ጓደኛ,family,beginner
+om,ollaa,,neighbor,ጎረቤት,family,beginner
+om,jaarsa,,old man,አዛውንት,family,beginner
+om,jaartii,,old woman,አሮጊት,family,beginner
+om,dubartii,,woman,ሴት,family,beginner
+om,dhiira,,man / male,ወንድ,family,beginner
+om,durba,,young woman,ልጃገረድ,family,beginner
+om,dargaggeessa,,young man,ወጣት,family,beginner
+om,hiriyaa,,companion,ወዳጅ,family,beginner
+om,maatii,,family,ቤተሰብ,family,beginner
+om,fudhaa,,marriage,ጋብቻ,family,beginner
+om,mataa,,head,ራስ,body,beginner
+om,rifeensa,,hair,ፀጉር,body,beginner
+om,fuula,,face,ፊት,body,beginner
+om,ija,,eye,ዓይን,body,beginner
+om,gurra,,ear,ጆሮ,body,beginner
+om,funyaan,,nose,አፍንጫ,body,beginner
+om,afaan,,mouth / language,አፍ / ቋንቋ,body,beginner
+om,ilkaan,,tooth,ጥርስ,body,beginner
+om,arraba,,tongue,ምላስ,body,beginner
+om,morma,,neck,አንገት,body,beginner
+om,laphee,,chest,ደረት,body,beginner
+om,harka,,hand / arm,እጅ,body,beginner
+om,quba,,finger,ጣት,body,beginner
+om,miila,,foot / leg,እግር,body,beginner
+om,jilba,,knee,ጉልበት,body,beginner
+om,garaa,,stomach,ሆድ,body,beginner
+om,dugda,,back,ጀርባ,body,beginner
+om,onnee,,heart,ልብ,body,beginner
+om,dhiiga,,blood,ደም,body,beginner
+om,lafee,,bone,አጥንት,body,beginner
+om,gogaa,,skin,ቆዳ,body,beginner
+om,nyaata,,food,ምግብ,food_and_drinks,beginner
+om,bishaan,,water,ውሃ,food_and_drinks,beginner
+om,annan,,milk,ወተት,food_and_drinks,beginner
+om,buna,,coffee,ቡና,food_and_drinks,beginner
+om,shaayii,,tea,ሻይ,food_and_drinks,beginner
+om,dhadhaa,,butter,ቅቤ,food_and_drinks,beginner
+om,buddeena,,bread,ዳቦ,food_and_drinks,beginner
+om,marqaa,,porridge,ገንፎ,food_and_drinks,beginner
+om,farsoo,,local beer,ጠላ,food_and_drinks,beginner
+om,daadhii,,mead,ጠጅ,food_and_drinks,beginner
+om,foon,,meat,ሥጋ,food_and_drinks,beginner
+om,kitfoo,,minced raw meat dish,ክትፎ,food_and_drinks,beginner
+om,baaqelaa,,broad bean,ባቄላ,food_and_drinks,beginner
+om,misira,,lentil,ምስር,food_and_drinks,beginner
+om,soogidda,,salt,ጨው,food_and_drinks,beginner
+om,sukkaara,,sugar,ስኳር,food_and_drinks,beginner
+om,zayita,,oil,ዘይት,food_and_drinks,beginner
+om,ruuzii,,rice,ሩዝ,food_and_drinks,beginner
+om,boqqolloo,,maize,በቆሎ,food_and_drinks,beginner
+om,qamadii,,wheat,ስንዴ,food_and_drinks,beginner
+om,xaafii,,teff,ጤፍ,food_and_drinks,beginner
+om,garbuu,,barley,ገብስ,food_and_drinks,beginner
+om,shunkurtii,,onion,ቀይ ሽንኩርት,food_and_drinks,beginner
+om,qullubbii,,garlic,ነጭ ሽንኩርት,food_and_drinks,beginner
+om,timaatimii,,tomato,ቲማቲም,food_and_drinks,beginner
+om,dinnicha,,potato,ድንች,food_and_drinks,beginner
+om,muuzii,,banana,ሙዝ,food_and_drinks,beginner
+om,burtukaana,,orange,ብርቱካን,food_and_drinks,beginner
+om,loomii,,lemon,ሎሚ,food_and_drinks,beginner
+om,maangoo,,mango,ማንጎ,food_and_drinks,beginner
+om,damma,,honey,ማር,food_and_drinks,beginner
+om,qurxummii,,fish,ዓሣ,food_and_drinks,beginner
+om,lukkuu,,chicken,ዶሮ,food_and_drinks,beginner
+om,barbaree,,chili pepper,በርበሬ,food_and_drinks,beginner
+om,kimmee,,spice,ቅመም,food_and_drinks,beginner
+om,naqaa,,raw,ጥሬ,food_and_drinks,beginner
+om,mi'aawaa,,delicious,ጣፋጭ,food_and_drinks,beginner
+om,dhugaatii,,drink,መጠጥ,food_and_drinks,beginner
+om,wayinii,,wine,ወይን,food_and_drinks,beginner
+om,sa'a,,cow,ላም,animals,beginner
+om,re'ee,,goat,ፍየል,animals,beginner
+om,hoolaa,,sheep,በግ,animals,beginner
+om,farda,,horse,ፈረስ,animals,beginner
+om,harree,,donkey,አህያ,animals,beginner
+om,gaala,,camel,ግመል,animals,beginner
+om,saree,,dog,ውሻ,animals,beginner
+om,adurree,,cat,ድመት,animals,beginner
+om,simbirroo,,bird,ወፍ,animals,beginner
+om,bofa,,snake,እባብ,animals,beginner
+om,leenca,,lion,አንበሳ,animals,beginner
+om,arba,,elephant,ዝሆን,animals,beginner
+om,waraabessa,,hyena,ጅብ,animals,beginner
+om,jaldeessa,,monkey,ዝንጀሮ,animals,beginner
+om,qeerransa,,leopard,ነብር,animals,beginner
+om,bineensa,,animal,እንስሳ,animals,beginner
+om,loon,,cattle,ከብት,animals,beginner
+om,korma,,bull,ኮርማ,animals,beginner
+om,jabbii,,calf,ጥጃ,animals,beginner
+om,bineensa bosonaa,,wild animal,የዱር እንስሳ,animals,beginner
+om,mana,,house,ቤት,home,beginner
+om,foddaa,,window,መስኮት,home,beginner
+om,kutaa,,room,ክፍል,home,beginner
+om,siree,,bed,አልጋ,home,beginner
+om,teessoo,,seat,መቀመጫ,home,beginner
+om,minjaala,,table,ጠረጴዛ,home,beginner
+om,ibsaa,,light,ብርሃን,home,beginner
+om,lafa,,ground / land,መሬት,home,beginner
+om,dallaa,,wall / fence,ግድግዳ / አጥር,home,beginner
+om,oobdii,,compound,ግቢ,home,beginner
+om,mana nyaataa,,kitchen,ማዕድ ቤት,home,beginner
+om,mana fincaanii,,bathroom,መታጠቢያ ቤት,home,beginner
+om,mana barumsaa,,school,ትምህርት ቤት,home,beginner
+om,magaalaa,,city,ከተማ,home,beginner
+om,gandaa,,village,መንደር,home,beginner
+om,daandii,,road,መንገድ,home,beginner
+om,huccuu,,clothes,ልብስ,clothing,beginner
+om,surree,,trousers,ሱሪ,clothing,beginner
+om,kophee,,shoes,ጫማ,clothing,beginner
+om,adii,,white,ነጭ,colors,beginner
+om,gurraacha,,black,ጥቁር,colors,beginner
+om,diimaa,,red,ቀይ,colors,beginner
+om,magariisa,,green,አረንጓዴ,colors,beginner
+om,halluu,,color,ቀለም,colors,beginner
+om,ifaa,,bright,ብሩህ,colors,beginner
+om,guyyaa,,day,ቀን,time,beginner
+om,halkan,,night,ሌሊት,time,beginner
+om,ganama,,morning,ጠዋት,time,beginner
+om,waaree,,afternoon,ከሰዓት,time,beginner
+om,galgala,,evening,ምሽት,time,beginner
+om,kaleessa,,yesterday,ትናንት,time,beginner
+om,bor,,tomorrow,ነገ,time,beginner
+om,yeroo,,time,ጊዜ,time,beginner
+om,sa'aatii,,hour,ሰዓት,time,beginner
+om,daqiiqaa,,minute,ደቂቃ,time,beginner
+om,torban,,week,ሳምንት,time,beginner
+om,ji'a,,month / moon,ወር / ጨረቃ,time,beginner
+om,waggaa,,year,ዓመት,time,beginner
+om,ayyaana,,holiday,በዓል,time,beginner
+om,Wiixata,,Monday,ሰኞ,time,beginner
+om,Kibxata,,Tuesday,ማክሰኞ,time,beginner
+om,Roobii,,Wednesday,ረቡዕ,time,beginner
+om,Kamisa,,Thursday,ሐሙስ,time,beginner
+om,Jimaata,,Friday,ዓርብ,time,beginner
+om,Sanbata,,Saturday,ቅዳሜ,time,beginner
+om,Dilbata,,Sunday,እሑድ,time,beginner
+om,dhiyeenya,,recently,በቅርቡ,time,beginner
+om,dhuma,,end,መጨረሻ,time,beginner
+om,jalqaba,,beginning,መጀመሪያ,time,beginner
+om,yeroo hundaa,,always,ሁልጊዜ,time,beginner
+om,darbee darbee,,sometimes,አንዳንድ ጊዜ,time,beginner
+om,yeroo tokko,,once,አንድ ጊዜ,time,beginner
+om,rooba,,rain,ዝናብ,weather_nature,beginner
+om,aduu,,sun,ፀሐይ,weather_nature,beginner
+om,urjii,,star,ኮከብ,weather_nature,beginner
+om,qilleensa,,wind,ነፋስ,weather_nature,beginner
+om,duumessa,,cloud,ደመና,weather_nature,beginner
+om,bona,,dry season,በጋ,weather_nature,beginner
+om,ganna,,rainy season (summer),ክረምት,weather_nature,beginner
+om,laga,,river,ወንዝ,weather_nature,beginner
+om,hara,,lake,ሐይቅ,weather_nature,beginner
+om,tulluu,,mountain,ተራራ,weather_nature,beginner
+om,bosona,,forest,ጫካ,weather_nature,beginner
+om,gaara,,mountain range,ተራራ,weather_nature,beginner
+om,muka,,tree,ዛፍ,weather_nature,beginner
+om,margaa,,grass,ሣር,weather_nature,beginner
+om,abdii,,hope,ተስፋ,weather_nature,beginner
+om,gaaddisa,,shade,ጥላ,weather_nature,beginner
+om,ibsaa aduu,,sunlight,የፀሐይ ብርሃን,weather_nature,beginner
+om,magaalaa guddoo,,capital,ዋና ከተማ,places,beginner
+om,Finfinnee,,Addis Ababa,አዲስ አበባ,places,beginner
+om,Oromiyaa,,Oromia,ኦሮሚያ,places,beginner
+om,Itoophiyaa,,Ethiopia,ኢትዮጵያ,places,beginner
+om,biyya,,country,አገር,places,beginner
+om,godina,,zone,ዞን,places,beginner
+om,aanaa,,district,ወረዳ,places,beginner
+om,mana kiristaanaa,,church,ቤተ ክርስቲያን,places,beginner
+om,masjida,,mosque,መስጊድ,places,beginner
+om,mana jireenyaa,,residence,መኖሪያ ቤት,places,beginner
+om,giddugala,,center,ማዕከል,places,beginner
+om,gabaa,,market,ገበያ,places,beginner
+om,mana yaalaa,,clinic,ክሊኒክ,places,beginner
+om,poostaa,,post office,ፖስታ ቤት,places,beginner
+om,baankii,,bank,ባንክ,places,beginner
+om,hospitaala,,hospital,ሆስፒታል,places,beginner
+om,buufata,,station,ጣቢያ,places,beginner
+om,dirree xiyyaaraa,,airport,አየር ማረፊያ,places,beginner
+om,daandii guddaa,,highway,ዋና መንገድ,places,beginner
+om,bakka bultii,,lodging,ማደሪያ,places,beginner
+om,imala,,journey,ጉዞ,travel,intermediate
+om,konkolaataa,,car,መኪና,travel,intermediate
+om,xiyyaara,,airplane,አውሮፕላን,travel,intermediate
+om,baabura,,train,ባቡር,travel,intermediate
+om,bisikilaa,,bicycle,ብስክሌት,travel,intermediate
+om,mana imalaa,,hotel,ሆቴል,travel,intermediate
+om,tikeetii,,ticket,ትኬት,travel,intermediate
+om,qarqara,,border / edge,ድንበር / ጠርዝ,travel,intermediate
+om,karaa,,way / direction,መንገድ / አቅጣጫ,travel,intermediate
+om,bitaa,,left,ግራ,travel,intermediate
+om,kallattii,,direction,አቅጣጫ,travel,intermediate
+om,fagoo,,far,ሩቅ,travel,intermediate
+om,dhiyoo,,near,ቅርብ,travel,intermediate
+om,gara,,toward,ወደ,travel,intermediate
+om,duraan,,before,በፊት,travel,intermediate
+om,boodaan,,after,በኋላ,travel,intermediate
+om,ol,,up,ላይ,travel,intermediate
+om,gadi,,down,ታች,travel,intermediate
+om,keessa,,inside,ውስጥ,travel,intermediate
+om,alaa,,outside,ውጪ,travel,intermediate
+om,gidduu,,between,መካከል,travel,intermediate
+om,cinaa,,beside,አጠገብ,travel,intermediate
+om,fuul duratti,,in front,ፊት ለፊት,travel,intermediate
+om,duubatti,,behind,ኋላ,travel,intermediate
+om,deemuu,,to go,መሄድ,verbs,beginner
+om,dhufuu,,to come,መምጣት,verbs,beginner
+om,nyaachuu,,to eat,መብላት,verbs,beginner
+om,dhuguu,,to drink,መጠጣት,verbs,beginner
+om,rafuu,,to sleep,መተኛት,verbs,beginner
+om,dubbachuu,,to speak,መናገር,verbs,beginner
+om,dubbisuu,,to read,ማንበብ,verbs,beginner
+om,barreessuu,,to write,መጻፍ,verbs,beginner
+om,arguu,,to see,ማየት,verbs,beginner
+om,dhaggeeffachuu,,to listen,ማዳመጥ,verbs,beginner
+om,beekuu,,to know,ማወቅ,verbs,beginner
+om,barbaaduu,,to want / to search,መፈለግ,verbs,beginner
+om,fudhachuu,,to take,መውሰድ,verbs,beginner
+om,kennuu,,to give,መስጠት,verbs,beginner
+om,bituu,,to buy,መግዛት,verbs,beginner
+om,gurguruu,,to sell,መሸጥ,verbs,beginner
+om,hojjechuu,,to work,መሥራት,verbs,beginner
+om,taphachuu,,to play,መጫወት,verbs,beginner
+om,gammaduu,,to be happy,መደሰት,verbs,beginner
+om,booyuu,,to cry,ማልቀስ,verbs,beginner
+om,kolfuu,,to laugh,መሳቅ,verbs,beginner
+om,qabuu,,to hold / to have,መያዝ,verbs,beginner
+om,fiduu,,to bring,ማምጣት,verbs,beginner
+om,ba'uu,,to go out,መውጣት,verbs,beginner
+om,galuu,,to enter / return,መግባት / መመለስ,verbs,beginner
+om,taa'uu,,to sit,መቀመጥ,verbs,beginner
+om,dhaabbachuu,,to stand,መቆም,verbs,beginner
+om,fiiguu,,to run,መሮጥ,verbs,beginner
+om,jiraachuu,,to live,መኖር,verbs,beginner
+om,du'uu,,to die,መሞት,verbs,beginner
+om,dhalachuu,,to be born,መወለድ,verbs,beginner
+om,jaalachuu,,to love,መውደድ,verbs,beginner
+om,jibbuu,,to hate,መጥላት,verbs,beginner
+om,yaaduu,,to think,ማሰብ,verbs,beginner
+om,gaafachuu,,to ask,መጠየቅ,verbs,beginner
+om,deebisuu,,to answer,መመለስ / መልስ መስጠት,verbs,beginner
+om,baruu,,to learn,መማር,verbs,beginner
+om,barsiisuu,,to teach,ማስተማር,verbs,beginner
+om,banuu,,to open,መክፈት,verbs,beginner
+om,cufuu,,to close,መዝጋት,verbs,beginner
+om,ka'uu,,to get up,መነሳት,verbs,beginner
+om,bobbaa'uu,,to leave,መልቀቅ,verbs,beginner
+om,dhaquu,,to visit,መጎብኘት,verbs,beginner
+om,simachuu,,to welcome,መቀበል,verbs,beginner
+om,gargaaruu,,to help,መርዳት,verbs,beginner
+om,eeguu,,to wait / to guard,መጠበቅ,verbs,beginner
+om,ilaaluu,,to look,መመልከት,verbs,beginner
+om,hubachuu,,to understand,መረዳት,verbs,beginner
+om,shaakaluu,,to practice,መለማመድ,verbs,beginner
+om,yaaluu,,to try,መሞከር,verbs,beginner
+om,jalqabuu,,to begin,መጀመር,verbs,beginner
+om,xumuruu,,to finish,መጨረስ,verbs,beginner
+om,ofuu,,to wear,መልበስ,verbs,beginner
+om,miiccuu,,to wash,ማጠብ,verbs,beginner
+om,bilcheessuu,,to cook,ማብሰል,verbs,beginner
+om,ibsuu,,to explain,ማብራራት,verbs,beginner
+om,waamuu,,to call,መጥራት,verbs,beginner
+om,kaa'uu,,to put,ማስቀመጥ,verbs,beginner
+om,baasuu,,to take out,ማውጣት,verbs,beginner
+om,dhiisuu,,to leave alone,መተው,verbs,beginner
+om,gadi bu'uu,,to descend,መውረድ,verbs,beginner
+om,ol ba'uu,,to ascend,ወደ ላይ መውጣት,verbs,beginner
+om,dhiqachuu,,to bathe,መታጠብ,verbs,beginner
+om,mormuu,,to oppose,መቃወም,verbs,beginner
+om,faarsuu,,to praise,ማወደስ,verbs,beginner
+om,sirreessuu,,to correct,ማረም,verbs,beginner
+om,tolchuu,,to make,መሥራት,verbs,beginner
+om,dhokachuu,,to hide,መደበቅ,verbs,beginner
+om,ajjeesuu,,to kill,መግደል,verbs,beginner
+om,bulchuu,,to rule,ማስተዳደር,verbs,beginner
+om,fayyuu,,to recover,መዳን,verbs,beginner
+om,dhukkubuu,,to be ill,መታመም,verbs,beginner
+om,guddachuu,,to grow,ማደግ,verbs,beginner
+om,guddisuu,,to raise,ማሳደግ,verbs,beginner
+om,galchuu,,to return,ማስገባት,verbs,beginner
+om,godhuu,,to make / do,ማድረግ,verbs,beginner
+om,jedhuu,,to say,ማለት,verbs,beginner
+om,hiruu,,to share,መካፈል,verbs,beginner
+om,dabaluu,,to add,መጨመር,verbs,beginner
+om,hir'isuu,,to subtract,መቀነስ,verbs,beginner
+om,lakkaa'uu,,to count,መቁጠር,verbs,beginner
+om,raawwachuu,,to do / perform,ማከናወን,verbs,beginner
+om,guddaa,,big,ትልቅ,adjectives,beginner
+om,xiqqaa,,small,ትንሽ,adjectives,beginner
+om,dheeraa,,tall / long,ረጅም,adjectives,beginner
+om,gabaabaa,,short,አጭር,adjectives,beginner
+om,ho'aa,,hot,ሙቅ,adjectives,beginner
+om,qabbanaa'aa,,cold,ቀዝቃዛ,adjectives,beginner
+om,haaraa,,new,አዲስ,adjectives,beginner
+om,moofaa,,old,አሮጌ,adjectives,beginner
+om,bareedaa,,beautiful,ቆንጆ,adjectives,beginner
+om,laafaa,,soft,ለስላሳ,adjectives,beginner
+om,cimaa,,strong,ጠንካራ,adjectives,beginner
+om,dadhabaa,,weak,ደካማ,adjectives,beginner
+om,ariifataa,,fast,ፈጣን,adjectives,beginner
+om,suuta suuta,,slow,ዘገምተኛ,adjectives,beginner
+om,ulfaataa,,heavy,ከባድ,adjectives,beginner
+om,salphaa,,light / easy,ቀላል,adjectives,beginner
+om,ulfaatuu,,difficult,አስቸጋሪ,adjectives,beginner
+om,salphaatuu,,simple,ቀላል,adjectives,beginner
+om,qulqulluu,,clean,ንጹሕ,adjectives,beginner
+om,xuraa'aa,,dirty,ቆሻሻ,adjectives,beginner
+om,gammachuu,,happy,ደስተኛ,adjectives,beginner
+om,gadda,,sad,ያዘነ,adjectives,beginner
+om,fayyaa qabeessa,,healthy,ጤነኛ,adjectives,beginner
+om,dhukkubsataa,,sick,ታማሚ,adjectives,beginner
+om,sooressa,,rich,ሀብታም,adjectives,beginner
+om,hiyyeessa,,poor,ድሃ,adjectives,beginner
+om,jabaa,,tough,ጠንካራ,adjectives,beginner
+om,jaalala,,love,ፍቅር,adjectives,beginner
+om,gaddaa,,sorrowful,ሐዘንተኛ,adjectives,beginner
+om,gammachuu guddaa,,great joy,ታላቅ ደስታ,adjectives,beginner
+om,hadhaawaa,,bitter,መራራ,adjectives,beginner
+om,jiidhaa,,wet,እርጥብ,adjectives,beginner
+om,sirrii,,correct,ትክክል,adjectives,beginner
+om,dogoggora,,mistake,ስህተት,adjectives,beginner
+om,barnoota,,education / lesson,ትምህርት,education,beginner
+om,barsiisaa,,teacher,አስተማሪ,education,beginner
+om,barataa,,student,ተማሪ,education,beginner
+om,kitaaba,,book,መጽሐፍ,education,beginner
+om,qubee,,letter,ፊደል,education,beginner
+om,jecha,,word,ቃል,education,beginner
+om,hima,,sentence,አረፍተ ነገር,education,beginner
+om,barreeffama,,writing,ጽሑፍ,education,beginner
+om,dubbii,,speech / matter,ንግግር / ጉዳይ,education,beginner
+om,qormaata,,exam,ፈተና,education,beginner
+om,kutaa barnootaa,,classroom,የመማሪያ ክፍል,education,beginner
+om,suuraa,,picture,ሥዕል,education,beginner
+om,macaafa,,book (alt),መጽሐፍ,education,beginner
+om,qabxii,,point / score,ነጥብ,education,beginner
+om,qorannoo,,research,ምርምር,education,beginner
+om,yaada,,idea,ሐሳብ,education,beginner
+om,beekumsa,,knowledge,እውቀት,education,beginner
+om,seera,,rule / law,ሕግ,education,beginner
+om,hiikuu,,to translate,መተርጎም,education,beginner
+om,hojii,,work,ሥራ,work_market,intermediate
+om,gatii,,price,ዋጋ,work_market,intermediate
+om,maallaqa,,money,ገንዘብ,work_market,intermediate
+om,qarshii,,birr / money,ብር,work_market,intermediate
+om,bitataa,,buyer,ገዢ,work_market,intermediate
+om,gurgurtaa,,sale,ሽያጭ,work_market,intermediate
+om,daldala,,trade,ንግድ,work_market,intermediate
+om,qonna,,farming,ግብርና,work_market,intermediate
+om,qotee bulaa,,farmer,ገበሬ,work_market,intermediate
+om,hojjetaa,,worker,ሠራተኛ,work_market,intermediate
+om,mindaa,,salary,ደመወዝ,work_market,intermediate
+om,biiroo,,office,ቢሮ,work_market,intermediate
+om,kaffaltii,,payment,ክፍያ,work_market,intermediate
+om,liqii,,loan,ብድር,work_market,intermediate
+om,gabaasa,,report,ሪፖርት,work_market,intermediate
+om,dhukkuba,,disease,በሽታ,health,intermediate
+om,qorichaa,,medicine,መድኃኒት,health,intermediate
+om,doktara,,doctor,ሐኪም,health,intermediate
+om,mataan na dhukkuba,,my head hurts,ራሴን ያመኛል,health,intermediate
+om,garaan na dhukkuba,,my stomach hurts,ሆዴን ያመኛል,health,intermediate
+om,qufaa,,cough,ሳል,health,intermediate
+om,ho'a,,fever,ትኩሳት,health,intermediate
+om,aariitii,,anger,ቁጣ,feelings,beginner
+om,sodaa,,fear,ፍርሃት,feelings,beginner
+om,miira,,feeling,ስሜት,feelings,beginner
+om,quufaa,,satisfaction,እርካታ,feelings,beginner
+om,beelaa,,hunger,ረሃብ,feelings,beginner
+om,dheebuu,,thirst,ጥማት,feelings,beginner
+om,dadhabbii,,tiredness,ድካም,feelings,beginner
+om,rakkoo,,problem,ችግር,feelings,beginner
+om,nagaa qabaachuu,,to be at peace,ሰላም መሆን,feelings,beginner
+om,yaaddoo,,worry,ጭንቀት,feelings,beginner
+om,amantaa,,faith,እምነት,feelings,beginner
+om,badhaasa,,reward,ሽልማት,feelings,beginner
+om,kanaaf,,therefore,ስለዚህ,adverbs_connectors,intermediate
+om,erga,,since,ከ... ጀምሮ,adverbs_connectors,intermediate
+om,osoo,,while,እያለ,adverbs_connectors,intermediate
+om,hamma,,until,እስከ,adverbs_connectors,intermediate
+om,booda,,after,በኋላ,adverbs_connectors,intermediate
+om,dura,,before,በፊት,adverbs_connectors,intermediate
+om,gara fuulduraa,,in the future,ወደፊት,adverbs_connectors,intermediate
+om,mala,,method,ዘዴ,adverbs_connectors,intermediate
+om,miidhaa,,harm,ጉዳት,adverbs_connectors,intermediate
+om,gargar,,separately,ለየብቻ,adverbs_connectors,intermediate
+om,walitti,,together,አንድ ላይ,adverbs_connectors,intermediate
+om,irra,,on,ላይ,adverbs_connectors,intermediate
+om,jala,,under,ሥር,adverbs_connectors,intermediate
+om,keessatti,,within,ውስጥ,adverbs_connectors,intermediate
+om,isa,,him / it,እሱን,adverbs_connectors,intermediate
+om,kanaan,,with this,በዚህ,adverbs_connectors,intermediate
+om,saniin,,with that,በዚያ,adverbs_connectors,intermediate
+om,aadaa,,culture,ባህል,geography_culture,intermediate
+om,seenaa,,history,ታሪክ,geography_culture,intermediate
+om,gadaa,,traditional Oromo governance system,የገዳ ሥርዓት,geography_culture,intermediate
+om,irreecha,,Oromo thanksgiving festival,ኢሬቻ (የኦሮሞ የምስጋና በዓል),geography_culture,intermediate
+om,waaqeffannaa,,traditional Oromo faith,ዋቄፈታ (የኦሮሞ ባህላዊ እምነት),geography_culture,intermediate
+om,abbaa gadaa,,leader in gadaa system,አባ ገዳ,geography_culture,intermediate
+om,siinqee,,women's rights institution,ሲንቄ (የሴቶች መብት ተቋም),geography_culture,intermediate
+om,hayyuu,,scholar / elder,ሊቅ / ሽማግሌ,geography_culture,intermediate
+om,jaarsolii,,elders,ሽማግሌዎች,geography_culture,intermediate
+om,dhaloota,,generation,ትውልድ,geography_culture,intermediate
+om,safuu,,moral order,ሥነ ምግባር,geography_culture,intermediate
+om,warqee,,gold,ወርቅ,geography_culture,intermediate
+om,afoola,,oral literature,የቃል ሥነ ጽሑፍ,geography_culture,intermediate
+om,weedduu,,song,ዘፈን,geography_culture,intermediate
+om,sirba,,song / music,ሙዚቃ,geography_culture,intermediate
