@@ -1,12 +1,5 @@
-from app.services.storage import upload_audio
-from app.db.database import SessionLocal
-from addisai import AddisAI
-from sqlalchemy import text
-from dotenv import load_dotenv
 import sys
-import os
 import argparse
-import re
 import tempfile
 from pathlib import Path
 
@@ -18,6 +11,24 @@ API_ROOT = Path(__file__).resolve().parents[1]
 
 if str(API_ROOT) not in sys.path:
     sys.path.insert(0, str(API_ROOT))
+
+from app.services.storage import (  # noqa: E402
+    delete_audio,
+    upload_audio,
+)
+from app.services.speech import (  # noqa: E402
+    DEFAULT_VOICE_ID,
+    LANGUAGE_CODE,
+    SPEED,
+    clean_word_text,
+    create_addis_client,
+    generate_mp3,
+    make_speech_text,
+    safe_filename,
+)
+from app.db.database import SessionLocal  # noqa: E402
+from sqlalchemy import text  # noqa: E402
+from dotenv import load_dotenv  # noqa: E402
 
 # --------------------------------------------------
 # Third-party imports
@@ -32,59 +43,21 @@ if str(API_ROOT) not in sys.path:
 # Load apps/api/.env
 load_dotenv(API_ROOT / ".env")
 
-LANGUAGE_CODE = "om"
-DEFAULT_VOICE_ID = "om-hawi"
-SPEED = "normal"
+# The speech helpers now live in app.services.speech so the batch API and this
+# script share one implementation. They are re-exported here so existing
+# callers and tests keep working.
 
-
-def create_addis_client():
-    """Initialize the Addis AI client."""
-    api_key = os.getenv("ADDIS_API_KEY")
-
-    if not api_key:
-        raise RuntimeError(
-            f"ADDIS_API_KEY is missing from {API_ROOT / '.env'}"
-        )
-
-    return AddisAI(api_key=api_key)
-
-
-def make_speech_text(word: str, content_type: str) -> str:
-    """Add a pause after isolated words for better pronunciation."""
-    if content_type == "word":
-        return f"{word}..."
-
-    return word
-
-
-def safe_filename(value: str) -> str:
-    """Create a safe temporary filename."""
-    value = re.sub(r"[^\w-]+", "-", value.strip(), flags=re.UNICODE)
-    return value.strip("-") or "word"
-
-
-def generate_mp3(
-    addis,
-    speech_text: str,
-    output_path: Path,
-    voice_id: str,
-) -> int | None:
-    """Generate an MP3 and return its duration in milliseconds."""
-    clip = addis.voice.generate(
-        voice_id=voice_id,
-        text=speech_text,
-        language=LANGUAGE_CODE,
-        output_format="mp3_44100",
-    )
-
-    clip.to_file(str(output_path))
-
-    duration = getattr(clip, "duration_seconds", None)
-
-    if duration is None:
-        return None
-
-    return round(duration * 1000)
+__all__ = [
+    "DEFAULT_VOICE_ID",
+    "LANGUAGE_CODE",
+    "SPEED",
+    "clean_word_text",
+    "create_addis_client",
+    "generate_mp3",
+    "main",
+    "make_speech_text",
+    "safe_filename",
+]
 
 
 def main():
@@ -114,7 +87,10 @@ def main():
     addis = create_addis_client()
 
     generated = 0
+    uploaded = 0
+    inserted = 0
     failed = 0
+    orphaned = []
 
     print(f"API directory: {API_ROOT}")
     print(f"Language: Afaan Oromoo ({LANGUAGE_CODE})")
@@ -148,7 +124,7 @@ def main():
             },
         ).mappings().all()
 
-        print(f"\nEligible words found: {len(words)}")
+        print(f"\nEligible words selected: {len(words)}")
 
         if not words:
             print("No words need audio for this voice and speed.")
@@ -156,7 +132,7 @@ def main():
 
         for word in words:
             word_id = str(word["id"])
-            original_text = word["text"]
+            raw_text = word["text"]
             content_type = word["content_type"]
 
             storage_key = (
@@ -164,9 +140,13 @@ def main():
                 f"{voice_id}-{SPEED}.mp3"
             )
 
-            print(f"\nProcessing: {original_text}")
+            print(f"\nProcessing: {raw_text}")
+
+            uploaded_this_run = False
 
             try:
+                original_text = clean_word_text(raw_text)
+
                 speech_text = make_speech_text(
                     original_text,
                     content_type,
@@ -198,16 +178,21 @@ def main():
                     print(
                         f"Generated: {output_path.stat().st_size:,} bytes"
                     )
+                    generated += 1
 
-                    # 2. Upload audio to Neon object storage.
+                    # 2. Upload audio to object storage. If this fails we
+                    # never reach the database insert below.
                     upload_audio(
                         str(output_path),
                         storage_key,
                     )
+                    uploaded_this_run = True
+                    uploaded += 1
 
                 print(f"Uploaded: {storage_key}")
 
-                # 3. Register the uploaded audio in PostgreSQL.
+                # 3. Register the uploaded audio in PostgreSQL. Status stays
+                # 'pending' -- pronunciation review is a separate, human step.
                 session.execute(
                     text("""
                         INSERT INTO audio_recordings (
@@ -238,7 +223,7 @@ def main():
                 )
 
                 session.commit()
-                generated += 1
+                inserted += 1
 
                 print("Database record saved: pending")
 
@@ -246,14 +231,34 @@ def main():
                 session.rollback()
                 failed += 1
 
-                print(f"FAILED: {original_text}")
+                print(f"FAILED: {raw_text}")
                 print(f"Error: {exc}")
+
+                # The object may already be in storage; remove it so we do
+                # not leave an upload with no database record.
+                if uploaded_this_run:
+                    try:
+                        delete_audio(storage_key)
+                        print(
+                            f"Cleaned up orphaned object: {storage_key}"
+                        )
+                    except Exception as cleanup_exc:
+                        orphaned.append(storage_key)
+                        print(
+                            "ORPHANED OBJECT (could not delete): "
+                            f"{storage_key}"
+                        )
+                        print(f"Cleanup error: {cleanup_exc}")
 
     print("\n" + "=" * 40)
     print("AUDIO GENERATION SUMMARY")
     print("=" * 40)
-    print(f"Successfully processed: {generated}")
-    print(f"Failed: {failed}")
+    print(f"Words selected:      {len(words)}")
+    print(f"Audio generated:     {generated}")
+    print(f"Uploads succeeded:  {uploaded}")
+    print(f"Rows inserted:      {inserted}")
+    print(f"Failed:             {failed}")
+    print(f"Orphaned objects:   {len(orphaned)}")
     print("Recording status: pending review")
 
 

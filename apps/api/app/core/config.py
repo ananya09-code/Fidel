@@ -28,6 +28,13 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
     ]
 
+    # Shared secret for the administrative audio-review endpoints. This is a
+    # stopgap, not real user authentication -- see app/core/admin_auth.py.
+    admin_api_key: str | None = None
+
+    # Lifetime of presigned audio URLs handed to the review dashboard.
+    audio_url_expires_in: int = 3600
+
 
 @lru_cache
 def get_settings() -> Settings:

@@ -4,6 +4,7 @@ version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
     "addisai>=0.6.0",
+    "alembic>=1.14",
     "boto3>=1.43.112",
     "fastapi[standard]>=0.143.0",
     "httpx>=0.28.1",

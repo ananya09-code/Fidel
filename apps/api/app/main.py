@@ -2,11 +2,43 @@ import os
 from typing import Generator
 
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
+
+from app.api import api_router
+from app.core.config import get_settings
 from app.db.database import SessionLocal
 
-app = FastAPI(title="Fidel API")
+
+def create_app() -> FastAPI:
+    """Build and configure the Fidel API application."""
+    settings = get_settings()
+
+    application = FastAPI(
+        title="Fidel API",
+        debug=settings.debug,
+    )
+
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=settings.cors_origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    # Every versioned route lives under the /api prefix, e.g. /api/health.
+    application.include_router(api_router, prefix="/api")
+
+    @application.get("/")
+    def health_check():
+        return {"message": "Fidel API is running"}
+
+    return application
+
+
+app = create_app()
 
 AUDIO_BASE_URL = os.getenv("AUDIO_BASE_URL", "").rstrip("/")
 
@@ -18,11 +50,6 @@ def get_db() -> Generator[Session, None, None]:
         yield db
     finally:
         db.close()
-
-
-@app.get("/")
-def health_check():
-    return {"message": "Fidel API is running"}
 
 
 @app.get("/api/v1/words/{word_id}")
