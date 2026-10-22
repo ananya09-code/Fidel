@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as LearnRouteImport } from './routes/learn'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as AppHomeRouteImport } from './routes/_app/Home'
+import { Route as AppLearnRouteImport } from './routes/_app/Learn'
 import { Route as AdminAudioReviewRouteImport } from './routes/admin.audio-review'
 
 const IndexRoute = IndexRouteImport.update({
@@ -18,10 +20,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LearnRoute = LearnRouteImport.update({
-  id: '/learn',
-  path: '/learn',
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppHomeRoute = AppHomeRouteImport.update({
+  id: '/Home',
+  path: '/Home',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppLearnRoute = AppLearnRouteImport.update({
+  id: '/Learn',
+  path: '/Learn',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AdminAudioReviewRoute = AdminAudioReviewRouteImport.update({
   id: '/admin/audio-review',
@@ -31,31 +42,41 @@ const AdminAudioReviewRoute = AdminAudioReviewRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/learn': typeof LearnRoute
+  '/Home': typeof AppHomeRoute
+  '/Learn': typeof AppLearnRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/learn': typeof LearnRoute
+  '/Home': typeof AppHomeRoute
+  '/Learn': typeof AppLearnRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/learn': typeof LearnRoute
+  '/_app': typeof AppRouteRouteWithChildren
+  '/_app/Home': typeof AppHomeRoute
+  '/_app/Learn': typeof AppLearnRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/learn' | '/admin/audio-review'
+  fullPaths: '/' | '/Home' | '/Learn' | '/admin/audio-review'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/learn' | '/admin/audio-review'
-  id: '__root__' | '/' | '/learn' | '/admin/audio-review'
+  to: '/' | '/Home' | '/Learn' | '/admin/audio-review'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_app/Home'
+    | '/_app/Learn'
+    | '/admin/audio-review'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LearnRoute: typeof LearnRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
   AdminAudioReviewRoute: typeof AdminAudioReviewRoute
 }
 
@@ -68,12 +89,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/learn': {
-      id: '/learn'
-      path: '/learn'
-      fullPath: '/learn'
-      preLoaderRoute: typeof LearnRouteImport
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/Home': {
+      id: '/_app/Home'
+      path: '/Home'
+      fullPath: '/Home'
+      preLoaderRoute: typeof AppHomeRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/Learn': {
+      id: '/_app/Learn'
+      path: '/Learn'
+      fullPath: '/Learn'
+      preLoaderRoute: typeof AppLearnRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/admin/audio-review': {
       id: '/admin/audio-review'
@@ -85,9 +120,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppRouteRouteChildren {
+  AppHomeRoute: typeof AppHomeRoute
+  AppLearnRoute: typeof AppLearnRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppHomeRoute: AppHomeRoute,
+  AppLearnRoute: AppLearnRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LearnRoute: LearnRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
   AdminAudioReviewRoute: AdminAudioReviewRoute,
 }
 export const routeTree = rootRouteImport
