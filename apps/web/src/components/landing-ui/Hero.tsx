@@ -81,7 +81,7 @@ export function Hero() {
           {/* Actions */}
           <div className="flex flex-wrap items-center gap-3">
             <Link
-              to="/learn"
+              to="/sign-in"
               className="group inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-[var(--sea-ink)] px-6 py-4 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(15,23,42,0.16),inset_0_1px_0_rgba(255,255,255,0.16)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(15,23,42,0.2)] active:translate-y-0"
             >
               Start learning
@@ -89,7 +89,7 @@ export function Hero() {
             </Link>
 
             <Link
-              to="/dictionary"
+              to="/sign-up"
               className="inline-flex items-center gap-2 rounded-2xl border border-white/80 bg-white/50 px-6 py-4 text-sm font-semibold text-[var(--sea-ink)] shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_4px_16px_rgba(15,23,42,0.04)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/75 active:translate-y-0"
             >
               <BookOpen className="h-4 w-4" />
@@ -188,8 +188,8 @@ export function Hero() {
 
                       <h2
                         className={`mt-2 whitespace-nowrap font-bold tracking-[-0.06em] text-white ${card.word === "Akkam"
-                            ? "text-5xl sm:text-6xl"
-                            : "text-6xl sm:text-7xl"
+                          ? "text-5xl sm:text-6xl"
+                          : "text-6xl sm:text-7xl"
                           }`}
                       >
                         {card.word}

@@ -46,7 +46,7 @@ export function LandingHeader() {
         {/* Actions */}
         <div className="relative z-10 flex items-center gap-2 sm:gap-3">
           <Link
-            to="/Home"
+            to="/sign-in"
             className="
               rounded-xl px-3 py-2.5 text-sm font-semibold
               text-[var(--sea-ink)]
@@ -60,7 +60,7 @@ export function LandingHeader() {
           </Link>
 
           <Link
-            to="/Home"
+            to="/sign-up"
             className="
               group relative overflow-hidden rounded-xl
               border border-white/20

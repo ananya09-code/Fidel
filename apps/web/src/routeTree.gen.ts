@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as AppHomeRouteImport } from './routes/_app/Home'
 import { Route as AppLearnRouteImport } from './routes/_app/Learn'
 import { Route as AdminAudioReviewRouteImport } from './routes/admin.audio-review'
@@ -22,6 +24,16 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignUpRoute = SignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppHomeRoute = AppHomeRouteImport.update({
@@ -42,12 +54,16 @@ const AdminAudioReviewRoute = AdminAudioReviewRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/Home': typeof AppHomeRoute
   '/Learn': typeof AppLearnRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/Home': typeof AppHomeRoute
   '/Learn': typeof AppLearnRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
@@ -56,19 +72,24 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteRouteWithChildren
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/_app/Home': typeof AppHomeRoute
   '/_app/Learn': typeof AppLearnRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/Home' | '/Learn' | '/admin/audio-review'
+  fullPaths:
+    '/' | '/sign-in' | '/sign-up' | '/Home' | '/Learn' | '/admin/audio-review'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/Home' | '/Learn' | '/admin/audio-review'
+  to: '/' | '/sign-in' | '/sign-up' | '/Home' | '/Learn' | '/admin/audio-review'
   id:
     | '__root__'
     | '/'
     | '/_app'
+    | '/sign-in'
+    | '/sign-up'
     | '/_app/Home'
     | '/_app/Learn'
     | '/admin/audio-review'
@@ -77,6 +98,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRouteRoute: typeof AppRouteRouteWithChildren
+  SignInRoute: typeof SignInRoute
+  SignUpRoute: typeof SignUpRoute
   AdminAudioReviewRoute: typeof AdminAudioReviewRoute
 }
 
@@ -94,6 +117,20 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-up': {
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/Home': {
@@ -137,6 +174,8 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
+  SignInRoute: SignInRoute,
+  SignUpRoute: SignUpRoute,
   AdminAudioReviewRoute: AdminAudioReviewRoute,
 }
 export const routeTree = rootRouteImport
