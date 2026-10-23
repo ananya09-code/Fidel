@@ -1,41 +1,44 @@
+
 import { ArrowUpRight, Clock3, Headphones } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 export function LearnOverview() {
   return (
-    <section className="space-y-6 sm:space-y-9">
+    <section className="space-y-7 sm:space-y-10">
       {/* Language heading */}
-      <header>
+      <header className="relative">
         <div className="flex items-center gap-2">
-          <span className="h-px w-6 bg-[var(--sea-ink)]/40 sm:w-8" />
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--sea-ink)]/65 sm:text-[11px] sm:tracking-[0.24em]">
+          <span className="h-px w-7 bg-[var(--hero-a)] sm:w-9" />
+
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--sea-ink)]/60 sm:text-[11px]">
             Your language journey
           </p>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-end justify-between gap-4 sm:mt-5">
+        <div className="mt-4 flex flex-col justify-between gap-5 min-[480px]:flex-row min-[480px]:items-end sm:mt-5">
           <div className="min-w-0">
-            <h1 className="text-3xl font-semibold leading-tight tracking-[-0.045em] text-[var(--sea-ink)] min-[420px]:text-4xl sm:text-5xl lg:text-6xl">
+            <h1 className="text-3xl font-semibold leading-[1.08] tracking-[-0.055em] text-[var(--sea-ink)] min-[420px]:text-4xl sm:text-5xl lg:text-6xl">
               Afaan Oromoo<span className="text-[var(--hero-a)]">.</span>
             </h1>
 
-            <p className="mt-2 max-w-sm text-sm leading-6 text-[var(--sea-ink)]/65 sm:mt-3 sm:text-base">
-              New words. New connections.
-              <br className="hidden min-[420px]:block" />A little closer to
-              speaking every day.
+            <p className="mt-3 max-w-sm text-sm leading-6 text-[var(--sea-ink)]/65 sm:text-base sm:leading-7">
+              Every word brings you closer
+              <br className="hidden min-[420px]:block" /> to a real conversation.
             </p>
           </div>
 
-          <div className="flex items-center gap-2.5 pb-1">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--sea-ink)]/15 text-xs font-semibold text-[var(--sea-ink)] sm:h-11 sm:w-11 sm:text-sm">
+          {/* Current level */}
+          <div className="flex w-fit items-center gap-3 rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--foam)]/50 px-3.5 py-2.5">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--hero-a)]/20 text-sm font-semibold text-[var(--sea-ink)]">
               01
             </div>
+
             <div>
               <p className="text-sm font-semibold text-[var(--sea-ink)]">
                 Beginner
               </p>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                Your starting point
+              <p className="mt-0.5 text-xs text-[var(--sea-ink)]/55">
+                Your first steps
               </p>
             </div>
           </div>
@@ -43,74 +46,104 @@ export function LearnOverview() {
       </header>
 
       {/* Featured lesson */}
-      <article className="relative isolate overflow-hidden rounded-[1.5rem] bg-[var(--sea-ink)] text-[var(--foam)] sm:rounded-[2rem]">
+      <article className="relative isolate overflow-hidden rounded-[1.6rem] bg-[var(--sea-ink)] text-[var(--foam)] shadow-sm sm:rounded-[2rem]">
+        {/* Subtle decorative background */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-5 -top-7 -z-10 select-none text-[9rem] font-bold leading-none tracking-[-0.1em] opacity-[0.06] sm:-right-1 sm:-top-12 sm:text-[15rem] lg:text-[17rem]"
-        >
-          A
-        </div>
+          className="pointer-events-none absolute -right-16 -top-20 -z-10 h-64 w-64 rounded-full border border-[var(--foam)]/[0.08] sm:-right-12 sm:-top-28 sm:h-80 sm:w-80"
+        />
 
-        <div className="grid sm:grid-cols-[minmax(0,1fr)_180px] lg:grid-cols-[minmax(0,1fr)_230px]">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-5 top-8 -z-10 h-40 w-40 rounded-full border border-[var(--foam)]/[0.08] sm:right-8 sm:top-12 sm:h-52 sm:w-52"
+        />
+
+        <div className="grid sm:grid-cols-[minmax(0,1fr)_200px] lg:grid-cols-[minmax(0,1fr)_250px]">
+          {/* Lesson information */}
           <div className="min-w-0 p-5 sm:p-7 lg:p-9">
-            <div className="flex flex-wrap items-center gap-2 text-[10px] font-semibold tracking-[0.12em] text-[var(--foam)]/65 sm:text-xs">
-              <span className="h-2 w-2 rounded-full bg-[var(--hero-a)]" />
-              UP NEXT
-              <span className="text-[var(--foam)]/30">/</span>
-              LESSON 01
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[var(--foam)]/15 bg-[var(--foam)]/[0.06] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.13em] text-[var(--foam)]/85 sm:text-[11px]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--hero-a)]" />
+                Up next
+              </span>
+
+              <span className="text-xs text-[var(--foam)]/45">
+                Lesson 01
+              </span>
             </div>
 
-            <h2 className="mt-5 max-w-md text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.04em] min-[420px]:text-3xl sm:mt-7 sm:text-4xl lg:text-[2.75rem]">
+            <h2 className="mt-6 max-w-md text-[2rem] font-semibold leading-[1.08] tracking-[-0.055em] min-[420px]:text-4xl sm:mt-7 sm:text-5xl lg:text-[3.4rem]">
               Start with
               <br />
-              <span className="text-[var(--hero-b)]">a simple hello.</span>
+              <span className="text-[var(--hero-b)]">
+                a simple hello.
+              </span>
             </h2>
 
-            <p className="mt-3 max-w-sm text-sm leading-6 text-[var(--foam)]/70 sm:mt-4">
-              Learn greetings and introductions, and take your first step toward
-              a real conversation in Afaan Oromoo.
+            <p className="mt-4 max-w-sm text-sm leading-6 text-[var(--foam)]/65 sm:text-base sm:leading-7">
+              Learn your first greetings and discover how to start a
+              conversation in Afaan Oromoo.
             </p>
 
-            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2.5 text-xs text-[var(--foam)]/70 sm:mt-6 sm:gap-x-5 sm:text-sm">
+            {/* Lesson details */}
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs text-[var(--foam)]/70 sm:text-sm">
               <span className="inline-flex items-center gap-2">
-                <Headphones className="h-4 w-4 shrink-0" />5 words
+                <Headphones
+                  aria-hidden="true"
+                  className="h-4 w-4 text-[var(--hero-a)]"
+                />
+                5 words
               </span>
 
               <span className="inline-flex items-center gap-2">
-                <Clock3 className="h-4 w-4 shrink-0" />3 minutes
+                <Clock3
+                  aria-hidden="true"
+                  className="h-4 w-4 text-[var(--hero-a)]"
+                />
+                3 min
               </span>
             </div>
 
-            <Link
-              to="/learn"
-              className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-full bg-[var(--foam)] px-5 text-sm font-semibold text-[var(--sea-ink)] transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--hero-a)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--sea-ink)] sm:mt-8 sm:w-auto sm:justify-start sm:gap-5"
-            >
-              Begin lesson
-              <ArrowUpRight className="h-4 w-4 shrink-0" />
-            </Link>
+            <div className="mt-7 sm:mt-8">
+              <Link
+                to="/learn"
+                className="group inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full bg-[var(--foam)] px-6 text-sm font-semibold text-[var(--sea-ink)] transition duration-200 hover:bg-[var(--hero-b)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--hero-a)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--sea-ink)] sm:w-auto sm:justify-start"
+              >
+                Begin lesson
+
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </Link>
+            </div>
           </div>
 
-          {/* Decorative lesson illustration */}
-          <div className="relative flex min-h-[125px] items-center justify-center overflow-hidden border-t border-[var(--foam)]/10 sm:min-h-full sm:border-l sm:border-t-0">
+          {/* Decorative lesson artwork */}
+          <div className="relative flex min-h-[155px] items-center justify-center overflow-hidden border-t border-[var(--foam)]/10 sm:min-h-full sm:border-l sm:border-t-0">
+            {/* Orbital rings */}
             <div
               aria-hidden="true"
-              className="absolute h-32 w-32 rounded-full border border-[var(--foam)]/15 sm:h-40 sm:w-40 lg:h-48 lg:w-48"
+              className="absolute h-36 w-36 rounded-full border border-[var(--foam)]/10 sm:h-44 sm:w-44 lg:h-52 lg:w-52"
             />
 
             <div
               aria-hidden="true"
-              className="absolute h-24 w-24 rounded-full border border-[var(--foam)]/20 sm:h-28 sm:w-28 lg:h-36 lg:w-36"
+              className="absolute h-28 w-28 rounded-full border border-[var(--foam)]/15 sm:h-32 sm:w-32 lg:h-40 lg:w-40"
             />
 
-            <div className="relative flex h-[4.5rem] w-[4.5rem] rotate-[-7deg] items-center justify-center rounded-[1.4rem] bg-[var(--hero-a)] text-3xl font-semibold text-[var(--sea-ink)] shadow-xl sm:h-24 sm:w-24 sm:rounded-[1.7rem] sm:text-4xl lg:h-28 lg:w-28 lg:text-5xl">
+            {/* Main lesson tile */}
+            <div className="relative flex h-[5.25rem] w-[5.25rem] rotate-[-7deg] items-center justify-center rounded-[1.5rem] bg-[var(--hero-a)] text-4xl font-semibold text-[var(--sea-ink)] shadow-xl shadow-black/10 sm:h-24 sm:w-24 sm:rounded-[1.8rem] sm:text-5xl lg:h-28 lg:w-28 lg:text-6xl">
               A
-              <span className="absolute -right-2 -top-2 flex h-7 w-7 rotate-[12deg] items-center justify-center rounded-full bg-[var(--foam)] text-[10px] font-bold text-[var(--sea-ink)] sm:h-9 sm:w-9 sm:text-xs">
+
+              <span className="absolute -right-2 -top-2 flex h-8 w-8 rotate-[12deg] items-center justify-center rounded-full border-[3px] border-[var(--sea-ink)] bg-[var(--foam)] text-[10px] font-bold text-[var(--sea-ink)] sm:h-9 sm:w-9">
                 01
               </span>
             </div>
 
-            <span className="absolute bottom-3 right-4 text-[9px] font-medium uppercase tracking-[0.18em] text-[var(--foam)]/40 sm:bottom-6 sm:right-6 sm:text-[10px]">
-              LET'S BEGIN
+            {/* Artwork caption */}
+            <span className="absolute bottom-4 right-4 text-[9px] font-semibold uppercase tracking-[0.2em] text-[var(--foam)]/40 sm:bottom-6 sm:right-6 sm:text-[10px]">
+              One word at a time
             </span>
           </div>
         </div>

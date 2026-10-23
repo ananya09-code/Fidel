@@ -1,80 +1,134 @@
-import { useState } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import { Headphones, Volume2 } from "lucide-react";
 
-import { Card, CardContent } from "@/components/ui/card";
-
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 type WordOfTheDayProps = {
   word?: string;
   pronunciation?: string;
   meaning?: string;
   audioSrc?: string;
+  language?: string;
 };
 
 export function WordOfTheDay({
   word = "Akkam",
-  pronunciation = "Pronunciation to be verified",
-  meaning = "Hello / How?",
+  pronunciation,
+  meaning = "Hello / How are you?",
   audioSrc,
+  language = "Afaan Oromoo",
 }: WordOfTheDayProps) {
   const [playing, setPlaying] = useState(false);
+  const [audioError, setAudioError] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
   async function playAudio() {
     if (!audioSrc || playing) return;
 
-    const audio = new Audio(audioSrc);
-    setPlaying(true);
+    setAudioError(false);
 
-    audio.onended = () => setPlaying(false);
-    audio.onerror = () => setPlaying(false);
+    const audio = new Audio(audioSrc);
+    audioRef.current = audio;
+
+    audio.onended = () => {
+      setPlaying(false);
+      audioRef.current = null;
+    };
+
+    audio.onerror = () => {
+      setPlaying(false);
+      setAudioError(true);
+      audioRef.current = null;
+    };
+
+    setPlaying(true);
 
     try {
       await audio.play();
     } catch {
       setPlaying(false);
+      setAudioError(true);
+      audioRef.current = null;
     }
   }
 
   return (
     <section className="space-y-4">
       <div>
-        <h2 className="text-xl font-bold tracking-tight">Word of the day</h2>
-
-        <p className="mt-1 text-sm text-muted-foreground">
-          A little Afaan Oromoo every day.
+        <p className="text-sm font-medium text-muted-foreground">
+          Build your vocabulary
         </p>
+
+        <h2 className="mt-1 text-2xl font-bold tracking-tight">
+          Word of the day
+        </h2>
       </div>
 
-      <Card className="rounded-3xl border-[var(--foam)]">
-        <CardContent className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-          <div className="flex items-center gap-5">
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-[var(--sand)]">
-              <Headphones className="h-8 w-8 text-[var(--sea-ink)]" />
+      <Card className="overflow-hidden rounded-2xl border bg-card shadow-sm">
+        <CardContent className="flex flex-col gap-6 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+          <div className="flex min-w-0 items-start gap-4 sm:items-center sm:gap-5">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[var(--sand)]">
+              <Headphones
+                className="h-6 w-6 text-[var(--sea-ink)]"
+                strokeWidth={1.8}
+              />
             </div>
 
-            <div>
-              <h3 className="text-3xl font-bold text-[var(--sea-ink)]">
+            <div className="min-w-0">
+              <p className="text-xs font-medium text-muted-foreground">
+                {language}
+              </p>
+
+              <h3 className="mt-1 text-3xl font-bold tracking-tight text-[var(--sea-ink)]">
                 {word}
               </h3>
 
-              <p className="mt-1 text-sm text-muted-foreground">
-                {pronunciation}
-              </p>
+              {pronunciation && (
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {pronunciation}
+                </p>
+              )}
 
-              <p className="mt-2 font-medium">{meaning}</p>
+              <p className="mt-2 text-base font-medium">{meaning}</p>
             </div>
           </div>
 
-          <Button
-            variant="outline"
-            onClick={playAudio}
-            disabled={!audioSrc || playing}
-            className="rounded-xl"
-          >
-            <Volume2 className="mr-2 h-4 w-4" />
-            {playing ? "Playing..." : "Listen"}
-          </Button>
+          <div className="flex shrink-0 flex-col gap-2 sm:items-end">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={playAudio}
+              disabled={!audioSrc || playing}
+              className="w-full rounded-xl sm:w-auto"
+              aria-label={`Listen to ${word} pronunciation`}
+            >
+              <Volume2 className="mr-2 h-4 w-4" />
+              {playing ? "Playing..." : "Listen"}
+            </Button>
+
+            {audioError && (
+              <p role="status" className="text-xs text-destructive">
+                Audio couldn't be played. Try again later.
+              </p>
+            )}
+
+            {!audioSrc && (
+              <p className="text-xs text-muted-foreground">
+                Audio unavailable
+              </p>
+            )}
+          </div>
         </CardContent>
       </Card>
     </section>

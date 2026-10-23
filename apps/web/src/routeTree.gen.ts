@@ -16,6 +16,7 @@ import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as AppHomeRouteImport } from './routes/_app/Home'
 import { Route as AppLearnRouteImport } from './routes/_app/Learn'
+import { Route as AppTestRouteImport } from './routes/_app/test'
 import { Route as AdminAudioReviewRouteImport } from './routes/admin.audio-review'
 
 const IndexRoute = IndexRouteImport.update({
@@ -52,6 +53,11 @@ const AppLearnRoute = AppLearnRouteImport.update({
   path: '/Learn',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppTestRoute = AppTestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AdminAudioReviewRoute = AdminAudioReviewRouteImport.update({
   id: '/admin/audio-review',
   path: '/admin/audio-review',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/sign-up': typeof SignUpRoute
   '/Home': typeof AppHomeRoute
   '/Learn': typeof AppLearnRoute
+  '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
 export interface FileRoutesByTo {
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/sign-up': typeof SignUpRoute
   '/Home': typeof AppHomeRoute
   '/Learn': typeof AppLearnRoute
+  '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
 export interface FileRoutesById {
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/sign-up': typeof SignUpRoute
   '/_app/Home': typeof AppHomeRoute
   '/_app/Learn': typeof AppLearnRoute
+  '/_app/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
 export interface FileRouteTypes {
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/Home'
     | '/Learn'
+    | '/test'
     | '/admin/audio-review'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/Home'
     | '/Learn'
+    | '/test'
     | '/admin/audio-review'
   id:
     | '__root__'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/_app/Home'
     | '/_app/Learn'
+    | '/_app/test'
     | '/admin/audio-review'
   fileRoutesById: FileRoutesById
 }
@@ -178,6 +190,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppLearnRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/test': {
+      id: '/_app/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof AppTestRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/admin/audio-review': {
       id: '/admin/audio-review'
       path: '/admin/audio-review'
@@ -191,11 +210,13 @@ declare module '@tanstack/react-router' {
 interface AppRouteRouteChildren {
   AppHomeRoute: typeof AppHomeRoute
   AppLearnRoute: typeof AppLearnRoute
+  AppTestRoute: typeof AppTestRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppHomeRoute: AppHomeRoute,
   AppLearnRoute: AppLearnRoute,
+  AppTestRoute: AppTestRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

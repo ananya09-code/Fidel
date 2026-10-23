@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sidebar";
 
 const mainLinks = [
-  { title: "Home", url: "/", icon: House },
+  { title: "Home", url: "/home", icon: House },
   { title: "Learn", url: "/learn", icon: BookOpen },
   { title: "Review", url: "/review", icon: Library },
   { title: "Progress", url: "/profile", icon: Trophy },
@@ -66,7 +66,7 @@ export function AppSidebar() {
                   item.url === "/"
                     ? pathname === "/"
                     : pathname === item.url ||
-                      pathname.startsWith(`${item.url}/`);
+                    pathname.startsWith(`${item.url}/`);
 
                 return (
                   <SidebarMenuItem key={item.title}>

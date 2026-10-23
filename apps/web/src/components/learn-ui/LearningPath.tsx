@@ -7,6 +7,7 @@ type Lesson = {
   title: string;
   subtitle: string;
   status: LessonStatus;
+  wordCount: number;
 };
 
 type Unit = {
@@ -17,11 +18,13 @@ type Unit = {
   lessons: Lesson[];
 };
 
+// Temporary demo content.
+// Replace these categories and counts with database data later.
 const units: Unit[] = [
   {
     id: 1,
-    title: "First Words",
-    subtitle: "Your journey begins here",
+    title: "Beginner",
+    subtitle: "Build your foundation in Afaan Oromoo",
     color: "#E9A23B",
     lessons: [
       {
@@ -29,62 +32,84 @@ const units: Unit[] = [
         title: "Greetings",
         subtitle: "Say hello in Afaan Oromoo",
         status: "completed",
+        wordCount: 12,
       },
       {
         id: 2,
-        title: "Meet & Greet",
-        subtitle: "Introduce yourself",
+        title: "Basic Responses",
+        subtitle: "Learn common replies",
         status: "current",
+        wordCount: 10,
       },
       {
         id: 3,
-        title: "Quick Responses",
-        subtitle: "Answer simple questions",
+        title: "Introductions",
+        subtitle: "Introduce yourself",
         status: "locked",
+        wordCount: 10,
       },
       {
         id: 4,
-        title: "Everyday Phrases",
-        subtitle: "Useful expressions",
+        title: "People & Family",
+        subtitle: "Talk about people close to you",
         status: "locked",
+        wordCount: 15,
       },
       {
         id: 5,
-        title: "First Words Checkpoint",
-        subtitle: "Review what you've learned",
-        status: "locked",
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "Everyday Life",
-    subtitle: "Talk about your world",
-    color: "#8B7CF6",
-    lessons: [
-      {
-        id: 6,
-        title: "Family & People",
-        subtitle: "Talk about your family",
-        status: "locked",
-      },
-      {
-        id: 7,
         title: "Numbers",
         subtitle: "Count in Afaan Oromoo",
         status: "locked",
+        wordCount: 12,
+      },
+      {
+        id: 6,
+        title: "Food & Drinks",
+        subtitle: "Learn everyday food vocabulary",
+        status: "locked",
+        wordCount: 12,
+      },
+      {
+        id: 7,
+        title: "Daily Activities",
+        subtitle: "Talk about your day",
+        status: "locked",
+        wordCount: 15,
       },
       {
         id: 8,
-        title: "Food & Drinks",
-        subtitle: "Order something to eat",
+        title: "Everyday Objects",
+        subtitle: "Name things around you",
         status: "locked",
+        wordCount: 12,
       },
       {
         id: 9,
-        title: "Daily Activities",
-        subtitle: "Describe your day",
+        title: "Time & Days",
+        subtitle: "Talk about time",
         status: "locked",
+        wordCount: 10,
+      },
+      {
+        id: 10,
+        title: "Places & Directions",
+        subtitle: "Talk about places",
+        status: "locked",
+        wordCount: 12,
+      },
+      {
+        id: 11,
+        title: "Common Verbs",
+        subtitle: "Learn everyday actions",
+        status: "locked",
+        wordCount: 15,
+      },
+      {
+        id: 12,
+        title: "Simple Sentences",
+        subtitle: "Put words together",
+        status: "locked",
+        wordCount: 10,
       },
     ],
   },
@@ -113,7 +138,6 @@ function LessonNode({
         transform: `translateX(${(horizontalPosition - 1) * 66}px)`,
       }}
     >
-      {/* Lesson node */}
       <div className="relative">
         {isCurrent && (
           <div
@@ -141,16 +165,14 @@ function LessonNode({
           style={
             isCurrent
               ? {
-                  backgroundColor: color,
-                  borderBottomColor: `${color}B0`,
-                }
+                backgroundColor: color,
+                borderBottomColor: `${color}B0`,
+              }
               : undefined
           }
         >
           {isCompleted && <Check className="h-8 w-8 stroke-[3]" />}
-
           {isCurrent && <Play className="ml-1 h-7 w-7 fill-current" />}
-
           {isLocked && <LockKeyhole className="h-6 w-6" />}
         </button>
 
@@ -172,8 +194,7 @@ function LessonNode({
         )}
       </div>
 
-      {/* Lesson label */}
-      <div className="mt-3 max-w-[145px] text-center">
+      <div className="mt-3 max-w-[160px] text-center">
         <p
           className={[
             "text-sm font-bold",
@@ -185,6 +206,10 @@ function LessonNode({
 
         <p className="mt-1 text-xs leading-4 text-muted-foreground">
           {lesson.subtitle}
+        </p>
+
+        <p className="mt-1 text-xs font-medium text-muted-foreground">
+          {lesson.wordCount} words
         </p>
       </div>
     </div>
@@ -223,7 +248,6 @@ export function LearningPath() {
               key={unit.id}
               className="overflow-hidden rounded-3xl border border-[var(--sea-ink)]/10 bg-white/60 p-5 sm:p-8"
             >
-              {/* Unit heading */}
               <div className="mb-10 flex items-center gap-4">
                 <div
                   className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-white"
@@ -238,7 +262,7 @@ export function LearningPath() {
 
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                    UNIT {String(unit.id).padStart(2, "0")}
+                    LEVEL {String(unit.id).padStart(2, "0")}
                   </p>
 
                   <h3 className="mt-1 text-lg font-bold text-[var(--sea-ink)]">
@@ -255,7 +279,6 @@ export function LearningPath() {
                 </span>
               </div>
 
-              {/* Unit progress bar */}
               <div className="mb-12 h-2 overflow-hidden rounded-full bg-black/5">
                 <div
                   className="h-full rounded-full transition-all"
@@ -266,7 +289,6 @@ export function LearningPath() {
                 />
               </div>
 
-              {/* Zigzag lesson path */}
               <div className="relative mx-auto flex max-w-md flex-col items-center gap-9 pb-5 pt-2">
                 {unit.lessons.map((lesson, index) => (
                   <div

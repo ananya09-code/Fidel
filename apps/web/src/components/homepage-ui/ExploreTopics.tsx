@@ -1,52 +1,52 @@
+
+import { Link } from "@tanstack/react-router";
 import {
-  ArrowDownRight,
   ArrowRight,
-  Check,
+  BookOpen,
+  CheckCircle2,
   Coffee,
   LockKeyhole,
   MessageCircle,
-  Sparkles,
   Utensils,
   Users,
 } from "lucide-react";
 
-import { Link } from "@tanstack/react-router";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 
 const topics = [
   {
     title: "Greetings",
-    description: "Start conversations, say hello, and introduce yourself.",
+    description:
+      "Learn how to say hello, introduce yourself, and start everyday conversations.",
     icon: MessageCircle,
-    color: "bg-[var(--foam)]",
     number: "01",
     available: true,
-    lessons: "Start here",
+    lessons: "Beginner",
   },
   {
     title: "Daily life",
-    description: "Talk about your routine and everyday activities.",
+    description:
+      "Talk about your routine, daily activities, and everyday situations.",
     icon: Coffee,
-    color: "bg-[var(--sand)]",
     number: "02",
     available: false,
     lessons: "Coming soon",
   },
   {
     title: "Food & drinks",
-    description: "Discover food vocabulary and ordering essentials.",
+    description:
+      "Learn food vocabulary and useful phrases for ordering meals.",
     icon: Utensils,
-    color: "bg-orange-100",
     number: "03",
     available: false,
     lessons: "Coming soon",
   },
   {
     title: "People & family",
-    description: "Talk about friends, family, and the people around you.",
+    description:
+      "Talk about your family, friends, and the people around you.",
     icon: Users,
-    color: "bg-sky-100",
     number: "04",
     available: false,
     lessons: "Coming soon",
@@ -54,92 +54,74 @@ const topics = [
 ];
 
 export function ExploreTopics() {
+  const availableTopics = topics.filter((topic) => topic.available).length;
+
   return (
     <section className="space-y-6">
       {/* Section heading */}
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <div className="mb-2 flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--hero-b)]" />
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              Find your words
-            </p>
-          </div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-muted-foreground">
+            Explore your learning path
+          </p>
 
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            What would you like to{" "}
-            <span className="text-[var(--sea-ink)]">learn?</span>
+            Learn by topic
           </h2>
 
-          <p className="mt-2 max-w-lg text-sm leading-6 text-muted-foreground">
-            Explore useful topics and build the confidence to use Afaan Oromoo
-            in everyday life.
+          <p className="max-w-xl text-sm leading-6 text-muted-foreground">
+            Start with useful words and phrases, then build your confidence
+            one conversation at a time.
           </p>
         </div>
 
         <Badge
-          variant="outline"
-          className="gap-1.5 rounded-full border-[var(--foam)] bg-white/70 px-3 py-1.5"
+          variant="secondary"
+          className="w-fit rounded-full px-3 py-1.5 font-medium"
         >
-          <Sparkles className="h-3.5 w-3.5 text-[var(--hero-b)]" />
-          {topics.filter((topic) => topic.available).length} of {topics.length}{" "}
-          topics
+          {availableTopics} of {topics.length} available
         </Badge>
       </div>
 
       {/* Topic cards */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {topics.map((topic, index) => {
+        {topics.map((topic) => {
           const Icon = topic.icon;
 
-          const cardContent = (
-            <CardContent className="relative flex h-full flex-col overflow-hidden p-5 sm:p-6">
-              {/* Decorative background */}
-              <div
-                aria-hidden="true"
-                className={`pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full ${topic.color} opacity-60 blur-2xl transition-transform duration-500 group-hover:scale-125`}
-              />
-
-              {/* Topic number and status */}
-              <div className="relative flex items-center justify-between">
-                <span className="text-xs font-bold tracking-[0.15em] text-muted-foreground/70">
-                  TOPIC {topic.number}
-                </span>
-
-                {topic.available ? (
-                  <Badge className="gap-1 rounded-full border-0 bg-[var(--sea-ink)] text-[var(--foam)] hover:bg-[var(--sea-ink)]">
-                    <Check className="h-3 w-3" />
-                    Ready
-                  </Badge>
-                ) : (
-                  <LockKeyhole
-                    className="h-4 w-4 text-muted-foreground/50"
-                    aria-label="Coming soon"
-                  />
-                )}
-              </div>
-
-              {/* Icon illustration */}
-              <div className="relative mt-7">
+          const content = (
+            <CardContent className="flex h-full flex-col p-5">
+              <div className="flex items-start justify-between gap-3">
                 <div
-                  className={`flex h-14 w-14 items-center justify-center rounded-[20px] ${topic.color} transition-transform duration-300 group-hover:rotate-[-5deg] group-hover:scale-105`}
+                  className={`flex h-12 w-12 items-center justify-center rounded-2xl ${topic.available
+                      ? "bg-[var(--sea-ink)] text-[var(--foam)]"
+                      : "bg-muted text-muted-foreground"
+                    }`}
                 >
-                  <Icon
-                    className="h-6 w-6 text-[var(--sea-ink)]"
-                    strokeWidth={1.7}
-                  />
+                  <Icon className="h-5 w-5" strokeWidth={1.8} />
                 </div>
 
-                {index === 0 && (
-                  <span className="absolute -right-1 top-0 flex h-7 w-7 items-center justify-center rounded-full border-4 border-white bg-[var(--hero-b)]">
-                    <Sparkles className="h-3 w-3 text-[var(--sea-ink)]" />
+                {topic.available ? (
+                  <Badge
+                    variant="secondary"
+                    className="gap-1 rounded-full"
+                  >
+                    <CheckCircle2 className="h-3 w-3" />
+                    Available
+                  </Badge>
+                ) : (
+                  <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <LockKeyhole className="h-3.5 w-3.5" />
+                    Coming soon
                   </span>
                 )}
               </div>
 
-              {/* Text */}
-              <div className="relative mt-5 flex-1">
-                <h3 className="text-lg font-bold tracking-tight">
+              <div className="mt-5 flex-1">
+                <p className="text-xs font-medium text-muted-foreground">
+                  TOPIC {topic.number}
+                </p>
+
+                <h3 className="mt-1 text-lg font-semibold tracking-tight">
                   {topic.title}
                 </h3>
 
@@ -148,66 +130,67 @@ export function ExploreTopics() {
                 </p>
               </div>
 
-              {/* Bottom action */}
-              <div className="relative mt-6 flex items-center justify-between border-t border-[var(--foam)]/80 pt-4">
-                <span
-                  className={`text-xs font-semibold ${
-                    topic.available
-                      ? "text-[var(--sea-ink)]"
-                      : "text-muted-foreground"
-                  }`}
-                >
+              <div className="mt-5 flex items-center justify-between border-t pt-4">
+                <span className="text-sm font-medium text-muted-foreground">
                   {topic.lessons}
                 </span>
 
                 {topic.available ? (
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--sea-ink)] text-[var(--foam)] transition-transform duration-300 group-hover:translate-x-1">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--sea-ink)] text-[var(--foam)] transition-transform group-hover:translate-x-1">
                     <ArrowRight className="h-4 w-4" />
                   </span>
                 ) : (
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-muted/70 text-muted-foreground/60">
-                    <LockKeyhole className="h-3.5 w-3.5" />
+                  <span
+                    aria-hidden="true"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-muted/70 text-muted-foreground"
+                  >
+                    <LockKeyhole className="h-4 w-4" />
                   </span>
                 )}
               </div>
             </CardContent>
           );
 
-          return topic.available ? (
-            <Link
-              key={topic.title}
-              to="/learn"
-              aria-label={`Start learning: ${topic.title}`}
-              className="group block h-full rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-4"
-            >
-              <Card className="relative h-full overflow-hidden rounded-3xl border-[var(--foam)] bg-white/90 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[var(--sea-ink)]/20 hover:shadow-xl hover:shadow-[var(--sea-ink)]/5">
-                {cardContent}
-              </Card>
-            </Link>
-          ) : (
+          if (topic.available) {
+            return (
+              <Link
+                key={topic.title}
+                to="/learn"
+                aria-label={`Start learning: ${topic.title}`}
+                className="group block h-full rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2"
+              >
+                <Card className="h-full rounded-2xl border bg-card transition-colors hover:border-[var(--sea-ink)]/30 hover:bg-accent/30">
+                  {content}
+                </Card>
+              </Link>
+            );
+          }
+
+          return (
             <Card
               key={topic.title}
               aria-label={`${topic.title}, coming soon`}
-              className="group relative h-full overflow-hidden rounded-3xl border-dashed border-[var(--foam)] bg-white/55 shadow-none transition-all duration-300 hover:bg-white/80"
+              className="h-full rounded-2xl border-dashed bg-muted/20"
             >
-              {cardContent}
+              {content}
             </Card>
           );
         })}
       </div>
 
-      {/* Small footer message */}
-      <div className="flex items-center gap-3 rounded-2xl bg-[var(--foam)]/50 px-4 py-3.5">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white">
-          <ArrowDownRight className="h-4 w-4 text-[var(--sea-ink)]" />
+      {/* Supporting message */}
+      <div className="flex items-start gap-3 rounded-2xl border bg-card p-4">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-muted">
+          <BookOpen className="h-5 w-5 text-[var(--sea-ink)]" />
         </div>
 
-        <p className="text-sm leading-5 text-muted-foreground">
-          <span className="font-semibold text-[var(--sea-ink)]">
-            Start small.
-          </span>{" "}
-          Master one topic at a time, then move on to the next.
-        </p>
+        <div className="space-y-1">
+          <p className="text-sm font-semibold">One topic at a time</p>
+          <p className="text-sm leading-6 text-muted-foreground">
+            Begin with greetings and build a foundation you can use in real
+            conversations.
+          </p>
+        </div>
       </div>
     </section>
   );
