@@ -1,5 +1,5 @@
 import { LockKeyhole, Check, Star, Play, Trophy } from "lucide-react";
-
+import { Link } from "@tanstack/react-router";
 type LessonStatus = "completed" | "current" | "locked";
 
 type Lesson = {
@@ -31,14 +31,14 @@ const units: Unit[] = [
         id: 1,
         title: "Greetings",
         subtitle: "Say hello in Afaan Oromoo",
-        status: "completed",
+        status: "current",
         wordCount: 12,
       },
       {
         id: 2,
         title: "Basic Responses",
         subtitle: "Learn common replies",
-        status: "current",
+        status: "locked",
         wordCount: 10,
       },
       {
@@ -140,42 +140,48 @@ function LessonNode({
     >
       <div className="relative">
         {isCurrent && (
+
           <div
             className="absolute -inset-2 animate-pulse rounded-full opacity-30"
             style={{ backgroundColor: color }}
           />
         )}
-
-        <button
-          type="button"
-          disabled={isLocked}
-          aria-label={`${lesson.title}${isLocked ? ", locked" : ""}`}
-          className={[
-            "relative flex h-[68px] w-[68px] items-center justify-center rounded-full",
-            "border-b-[6px] transition-transform duration-200",
-            "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2",
-            isCompleted
-              ? "border-[#239B65] bg-[#39C987] text-white hover:scale-105"
-              : "",
-            isCurrent ? "border-transparent text-white hover:scale-105" : "",
-            isLocked
-              ? "cursor-not-allowed border-[#D8DCE3] bg-[#ECEEF2] text-[#A6ACB8]"
-              : "",
-          ].join(" ")}
-          style={
-            isCurrent
-              ? {
-                backgroundColor: color,
-                borderBottomColor: `${color}B0`,
-              }
-              : undefined
-          }
+        <Link
+          to="/test"
+          className="relative z-10 hidden shrink-0 items-center gap-2.5 md:flex"
+          aria-label="Fidel home"
         >
-          {isCompleted && <Check className="h-8 w-8 stroke-[3]" />}
-          {isCurrent && <Play className="ml-1 h-7 w-7 fill-current" />}
-          {isLocked && <LockKeyhole className="h-6 w-6" />}
-        </button>
 
+          <button
+            type="button"
+            disabled={isLocked}
+            aria-label={`${lesson.title}${isLocked ? ", locked" : ""}`}
+            className={[
+              "relative flex h-[68px] w-[68px] items-center justify-center rounded-full",
+              "border-b-[6px] transition-transform duration-200",
+              "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2",
+              isCompleted
+                ? "border-[#239B65] bg-[#39C987] text-white hover:scale-105"
+                : "",
+              isCurrent ? "border-transparent text-white hover:scale-105" : "",
+              isLocked
+                ? "cursor-not-allowed border-[#D8DCE3] bg-[#ECEEF2] text-[#A6ACB8]"
+                : "",
+            ].join(" ")}
+            style={
+              isCurrent
+                ? {
+                  backgroundColor: color,
+                  borderBottomColor: `${color}B0`,
+                }
+                : undefined
+            }
+          >
+            {isCompleted && <Check className="h-8 w-8 stroke-[3]" />}
+            {isCurrent && <Play className="ml-1 h-7 w-7 fill-current" />}
+            {isLocked && <LockKeyhole className="h-6 w-6" />}
+          </button>
+        </Link>
         {isCurrent && (
           <span
             className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-extrabold text-white shadow-sm"

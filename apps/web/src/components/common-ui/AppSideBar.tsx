@@ -20,7 +20,7 @@ const mainLinks = [
   { title: "Home", url: "/home", icon: House },
   { title: "Learn", url: "/learn", icon: BookOpen },
   { title: "Review", url: "/review", icon: Library },
-  { title: "Progress", url: "/profile", icon: Trophy },
+  { title: "Dictionary", url: "/dictionary", icon: Trophy },
 ];
 
 export function AppSidebar() {

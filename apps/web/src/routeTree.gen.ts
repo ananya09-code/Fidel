@@ -16,6 +16,10 @@ import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as AppHomeRouteImport } from './routes/_app/Home'
 import { Route as AppLearnRouteImport } from './routes/_app/Learn'
+import { Route as AppDictionaryRouteImport } from './routes/_app/dictionary'
+import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppReviewRouteImport } from './routes/_app/review'
+import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppTestRouteImport } from './routes/_app/test'
 import { Route as AdminAudioReviewRouteImport } from './routes/admin.audio-review'
 
@@ -53,6 +57,26 @@ const AppLearnRoute = AppLearnRouteImport.update({
   path: '/Learn',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppDictionaryRoute = AppDictionaryRouteImport.update({
+  id: '/dictionary',
+  path: '/dictionary',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppReviewRoute = AppReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppTestRoute = AppTestRouteImport.update({
   id: '/test',
   path: '/test',
@@ -71,6 +95,10 @@ export interface FileRoutesByFullPath {
   '/sign-up': typeof SignUpRoute
   '/Home': typeof AppHomeRoute
   '/Learn': typeof AppLearnRoute
+  '/dictionary': typeof AppDictionaryRoute
+  '/profile': typeof AppProfileRoute
+  '/review': typeof AppReviewRoute
+  '/settings': typeof AppSettingsRoute
   '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
@@ -81,6 +109,10 @@ export interface FileRoutesByTo {
   '/sign-up': typeof SignUpRoute
   '/Home': typeof AppHomeRoute
   '/Learn': typeof AppLearnRoute
+  '/dictionary': typeof AppDictionaryRoute
+  '/profile': typeof AppProfileRoute
+  '/review': typeof AppReviewRoute
+  '/settings': typeof AppSettingsRoute
   '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
@@ -93,6 +125,10 @@ export interface FileRoutesById {
   '/sign-up': typeof SignUpRoute
   '/_app/Home': typeof AppHomeRoute
   '/_app/Learn': typeof AppLearnRoute
+  '/_app/dictionary': typeof AppDictionaryRoute
+  '/_app/profile': typeof AppProfileRoute
+  '/_app/review': typeof AppReviewRoute
+  '/_app/settings': typeof AppSettingsRoute
   '/_app/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
 }
@@ -105,6 +141,10 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/Home'
     | '/Learn'
+    | '/dictionary'
+    | '/profile'
+    | '/review'
+    | '/settings'
     | '/test'
     | '/admin/audio-review'
   fileRoutesByTo: FileRoutesByTo
@@ -115,6 +155,10 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/Home'
     | '/Learn'
+    | '/dictionary'
+    | '/profile'
+    | '/review'
+    | '/settings'
     | '/test'
     | '/admin/audio-review'
   id:
@@ -126,6 +170,10 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/_app/Home'
     | '/_app/Learn'
+    | '/_app/dictionary'
+    | '/_app/profile'
+    | '/_app/review'
+    | '/_app/settings'
     | '/_app/test'
     | '/admin/audio-review'
   fileRoutesById: FileRoutesById
@@ -190,6 +238,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppLearnRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/dictionary': {
+      id: '/_app/dictionary'
+      path: '/dictionary'
+      fullPath: '/dictionary'
+      preLoaderRoute: typeof AppDictionaryRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/profile': {
+      id: '/_app/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/review': {
+      id: '/_app/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof AppReviewRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/test': {
       id: '/_app/test'
       path: '/test'
@@ -210,12 +286,20 @@ declare module '@tanstack/react-router' {
 interface AppRouteRouteChildren {
   AppHomeRoute: typeof AppHomeRoute
   AppLearnRoute: typeof AppLearnRoute
+  AppDictionaryRoute: typeof AppDictionaryRoute
+  AppProfileRoute: typeof AppProfileRoute
+  AppReviewRoute: typeof AppReviewRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   AppTestRoute: typeof AppTestRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppHomeRoute: AppHomeRoute,
   AppLearnRoute: AppLearnRoute,
+  AppDictionaryRoute: AppDictionaryRoute,
+  AppProfileRoute: AppProfileRoute,
+  AppReviewRoute: AppReviewRoute,
+  AppSettingsRoute: AppSettingsRoute,
   AppTestRoute: AppTestRoute,
 }
 

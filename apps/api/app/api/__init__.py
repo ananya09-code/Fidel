@@ -1,5 +1,9 @@
-"""Router modules exposed by the API."""
+"""Top-level API router."""
 
-from app.api.v1 import api_router
+from fastapi import APIRouter
 
-__all__ = ["api_router"]
+from app.api.v1 import api_router as v1_router
+
+api_router = APIRouter()
+
+api_router.include_router(v1_router)
