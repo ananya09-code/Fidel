@@ -2,11 +2,21 @@
 
 import re
 from typing import Any
-
+from collections import defaultdict
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-
+from typing import Any, Mapping
+from app.api.v1.endpoints.words import (
+    _load_translations,
+    _load_audio,
+    _audio_payload,
+    _meaning,
+)
+from sqlalchemy import bindparam, text
+from app.core.config import get_settings
+from app.schemas.words import WordAudio, WordTranslation
+from app.services import storage
 from app.db.database import SessionLocal
 
 router = APIRouter(prefix="/learning", tags=["Learning"])
@@ -217,4 +227,167 @@ def get_learning_path(
         "language_code": language_code,
         "total_words": len(rows),
         "levels": levels,
+    }
+
+@router.get("/lessons/{lesson_id}/words")
+def get_lesson_words(
+    lesson_id: str,
+    language_code: str = Query(min_length=2, max_length=10),
+    limit: int = Query(default=5, ge=1, le=50),
+    offset: int = Query(default=0, ge=0),
+    db: Session = Depends(get_db),
+):
+    """Return paginated words for a lesson, including translations and audio."""
+
+    # Find the difficulty/category combination represented by this lesson.
+    result = db.execute(
+        text("""
+            SELECT
+                difficulty,
+                COALESCE(NULLIF(TRIM(category), ''), 'uncategorized') AS category,
+                COUNT(*) AS word_count
+            FROM words
+            WHERE language_code = :language_code
+              AND status = 'approved'
+            GROUP BY
+                difficulty,
+                COALESCE(NULLIF(TRIM(category), ''), 'uncategorized')
+            ORDER BY difficulty, category
+        """),
+        {"language_code": language_code},
+    ).mappings().all()
+
+    lesson = None
+
+    for row in result:
+        level_key = normalize_level(row["difficulty"])
+        category_key = row["category"]
+
+        generated_id = (
+            f"{make_slug(language_code)}-"
+            f"{make_slug(level_key)}-"
+            f"{make_slug(category_key)}"
+        )
+
+        if generated_id == lesson_id:
+            lesson = {
+                "difficulty": row["difficulty"],
+                "category": category_key,
+                "word_count": row["word_count"],
+            }
+            break
+
+    if lesson is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Lesson not found",
+        )
+
+    # Count all words belonging to this lesson.
+    total = db.execute(
+        text("""
+            SELECT COUNT(*)
+            FROM words
+            WHERE language_code = :language_code
+              AND status = 'approved'
+              AND COALESCE(NULLIF(TRIM(category), ''), 'uncategorized')
+                    = :category
+              AND (
+                    difficulty = :difficulty
+                    OR (
+                        difficulty IS NULL
+                        AND :difficulty IS NULL
+                    )
+              )
+        """),
+        {
+            "language_code": language_code,
+            "category": lesson["category"],
+            "difficulty": lesson["difficulty"],
+        },
+    ).scalar_one()
+
+    # Fetch the requested page of words.
+    rows = db.execute(
+        text("""
+            SELECT
+                id,
+                language_code,
+                text,
+                transliteration,
+                content_type,
+                category,
+                difficulty
+            FROM words
+            WHERE language_code = :language_code
+              AND status = 'approved'
+              AND COALESCE(NULLIF(TRIM(category), ''), 'uncategorized')
+                    = :category
+              AND (
+                    difficulty = :difficulty
+                    OR (
+                        difficulty IS NULL
+                        AND :difficulty IS NULL
+                    )
+              )
+            ORDER BY created_at ASC, id ASC
+            LIMIT :limit
+            OFFSET :offset
+        """),
+        {
+            "language_code": language_code,
+            "category": lesson["category"],
+            "difficulty": lesson["difficulty"],
+            "limit": limit,
+            "offset": offset,
+        },
+    ).mappings().all()
+
+    # Load translations and approved audio using the existing helpers.
+    word_ids = [row["id"] for row in rows]
+    translations_by_word = _load_translations(db, word_ids)
+    audio_by_word = _load_audio(db, word_ids)
+
+    words = []
+
+    for row in rows:
+        word_id = str(row["id"])
+        word_translations = translations_by_word.get(word_id, [])
+        audio_payload = _audio_payload(audio_by_word.get(word_id))
+
+        words.append({
+            "id": word_id,
+            "language_code": row["language_code"],
+            "text": row["text"],
+            "transliteration": row["transliteration"],
+            "content_type": row["content_type"],
+            "category": row["category"],
+            "difficulty": row["difficulty"],
+            "meaning": _meaning(word_translations),
+            "translations": [
+                {
+                    "language_code": translation["language_code"],
+                    "meaning": translation["meaning"],
+                    "context_note": translation["context_note"],
+                }
+                for translation in word_translations
+            ],
+            "audio": audio_payload.model_dump(),
+        })
+
+    return {
+        "lesson": {
+            "id": lesson_id,
+            "language_code": language_code,
+            "category": lesson["category"],
+            "difficulty": lesson["difficulty"],
+            "word_count": total,
+        },
+        "words": words,
+        "pagination": {
+            "limit": limit,
+            "offset": offset,
+            "total": total,
+            "has_more": offset + len(words) < total,
+        },
     }

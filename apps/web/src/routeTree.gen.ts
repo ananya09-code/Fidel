@@ -22,6 +22,7 @@ import { Route as AppReviewRouteImport } from './routes/_app/review'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppTestRouteImport } from './routes/_app/test'
 import { Route as AdminAudioReviewRouteImport } from './routes/admin.audio-review'
+import { Route as AppLearnLessonIdRouteImport } from './routes/_app/Learn/$lessonId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -87,6 +88,11 @@ const AdminAudioReviewRoute = AdminAudioReviewRouteImport.update({
   path: '/admin/audio-review',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppLearnLessonIdRoute = AppLearnLessonIdRouteImport.update({
+  id: '/$lessonId',
+  path: '/$lessonId',
+  getParentRoute: () => AppLearnRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -94,13 +100,14 @@ export interface FileRoutesByFullPath {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/Home': typeof AppHomeRoute
-  '/Learn': typeof AppLearnRoute
+  '/Learn': typeof AppLearnRouteWithChildren
   '/dictionary': typeof AppDictionaryRoute
   '/profile': typeof AppProfileRoute
   '/review': typeof AppReviewRoute
   '/settings': typeof AppSettingsRoute
   '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
+  '/Learn/$lessonId': typeof AppLearnLessonIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -108,13 +115,14 @@ export interface FileRoutesByTo {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/Home': typeof AppHomeRoute
-  '/Learn': typeof AppLearnRoute
+  '/Learn': typeof AppLearnRouteWithChildren
   '/dictionary': typeof AppDictionaryRoute
   '/profile': typeof AppProfileRoute
   '/review': typeof AppReviewRoute
   '/settings': typeof AppSettingsRoute
   '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
+  '/Learn/$lessonId': typeof AppLearnLessonIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -124,13 +132,14 @@ export interface FileRoutesById {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/_app/Home': typeof AppHomeRoute
-  '/_app/Learn': typeof AppLearnRoute
+  '/_app/Learn': typeof AppLearnRouteWithChildren
   '/_app/dictionary': typeof AppDictionaryRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/review': typeof AppReviewRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
+  '/_app/Learn/$lessonId': typeof AppLearnLessonIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/test'
     | '/admin/audio-review'
+    | '/Learn/$lessonId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -161,6 +171,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/test'
     | '/admin/audio-review'
+    | '/Learn/$lessonId'
   id:
     | '__root__'
     | '/'
@@ -176,6 +187,7 @@ export interface FileRouteTypes {
     | '/_app/settings'
     | '/_app/test'
     | '/admin/audio-review'
+    | '/_app/Learn/$lessonId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -280,12 +292,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAudioReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/Learn/$lessonId': {
+      id: '/_app/Learn/$lessonId'
+      path: '/$lessonId'
+      fullPath: '/Learn/$lessonId'
+      preLoaderRoute: typeof AppLearnLessonIdRouteImport
+      parentRoute: typeof AppLearnRoute
+    }
   }
 }
 
+interface AppLearnRouteChildren {
+  AppLearnLessonIdRoute: typeof AppLearnLessonIdRoute
+}
+
+const AppLearnRouteChildren: AppLearnRouteChildren = {
+  AppLearnLessonIdRoute: AppLearnLessonIdRoute,
+}
+
+const AppLearnRouteWithChildren = AppLearnRoute._addFileChildren(
+  AppLearnRouteChildren,
+)
+
 interface AppRouteRouteChildren {
   AppHomeRoute: typeof AppHomeRoute
-  AppLearnRoute: typeof AppLearnRoute
+  AppLearnRoute: typeof AppLearnRouteWithChildren
   AppDictionaryRoute: typeof AppDictionaryRoute
   AppProfileRoute: typeof AppProfileRoute
   AppReviewRoute: typeof AppReviewRoute
@@ -295,7 +326,7 @@ interface AppRouteRouteChildren {
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppHomeRoute: AppHomeRoute,
-  AppLearnRoute: AppLearnRoute,
+  AppLearnRoute: AppLearnRouteWithChildren,
   AppDictionaryRoute: AppDictionaryRoute,
   AppProfileRoute: AppProfileRoute,
   AppReviewRoute: AppReviewRoute,

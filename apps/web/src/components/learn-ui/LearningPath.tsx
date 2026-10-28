@@ -1,10 +1,9 @@
-
+import { useNavigate } from "@tanstack/react-router";
 import { LockKeyhole, Check, Star, Play, Trophy } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useLearningPath } from "@/hooks/use-learning-path";
 
 type LessonStatus = "completed" | "current" | "locked";
-
 type Lesson = {
   id: string;
   title: string;
@@ -28,10 +27,12 @@ function LessonNode({
   lesson,
   index,
   color,
+  languageCode,
 }: {
   lesson: Lesson;
   index: number;
   color: string;
+  languageCode: string;
 }) {
   const isCompleted = lesson.status === "completed";
   const isCurrent = lesson.status === "current";
@@ -53,7 +54,6 @@ function LessonNode({
             style={{ backgroundColor: color }}
           />
         )}
-
         {isLocked ? (
           <button
             type="button"
@@ -65,7 +65,9 @@ function LessonNode({
           </button>
         ) : (
           <Link
-            to="/test"
+            to="/Learn/$lessonId"
+            params={{ lessonId: lesson.id }}
+            search={{ language_code: languageCode }}
             className={[
               "relative z-10 hidden h-[68px] w-[68px] items-center justify-center rounded-full border-b-[6px] transition-transform duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 md:flex",
               isCompleted
@@ -84,9 +86,7 @@ function LessonNode({
           >
             {isCompleted && <Check className="h-8 w-8 stroke-[3]" />}
             {isCurrent && <Play className="ml-1 h-7 w-7 fill-current" />}
-          </Link>
-        )}
-
+          </Link>)}
         {isCurrent && (
           <span
             className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-extrabold text-white shadow-sm"
@@ -128,7 +128,6 @@ function LessonNode({
     </div>
   );
 }
-
 export function LearningPath() {
   const {
     data: learningPath,
@@ -150,18 +149,22 @@ export function LearningPath() {
     );
   }
 
-  if (isError) {
+  if (isError || !learningPath) {
     return (
       <section className="mx-auto w-full max-w-3xl rounded-3xl border border-border bg-card p-8 text-center">
-        <h2 className="text-lg font-bold">Couldn't load your learning path</h2>
+        <h2 className="text-lg font-bold">
+          Couldn't load your learning path
+        </h2>
+
         <p className="mt-2 text-sm text-muted-foreground">
-          {error.message}
+          {error?.message ?? "No learning path data was returned."}
         </p>
+
         <button
           type="button"
           onClick={() => void refetch()}
           disabled={isFetching}
-          className="mt-5 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+          className="mt-4 rounded-xl bg-primary px-4 py-2 text-primary-foreground disabled:opacity-50"
         >
           {isFetching ? "Retrying..." : "Try again"}
         </button>
@@ -169,22 +172,25 @@ export function LearningPath() {
     );
   }
 
-  const units: Unit[] = learningPath.levels.map((level, levelIndex) => ({
-    id: level.id,
-    title: level.title,
-    subtitle: level.subtitle,
-    color: LEVEL_COLORS[levelIndex % LEVEL_COLORS.length],
-    totalWords: level.total_words,
-    lessons: level.lessons.map((lesson, lessonIndex) => ({
-      id: lesson.id,
-      title: lesson.title,
-      subtitle: lesson.subtitle,
-      wordCount: lesson.word_count,
-      // Progress is not available from the API yet.
-      status:
-        levelIndex === 0 && lessonIndex === 0 ? "current" : "locked",
-    })),
-  }));
+  const units: Unit[] = learningPath.levels.map(
+    (level, levelIndex) => ({
+      id: level.id,
+      title: level.title,
+      subtitle: level.subtitle,
+      color: LEVEL_COLORS[levelIndex % LEVEL_COLORS.length],
+      totalWords: level.total_words,
+      lessons: level.lessons.map((lesson, lessonIndex) => ({
+        id: lesson.id,
+        title: lesson.title,
+        subtitle: lesson.subtitle,
+        wordCount: lesson.word_count,
+        status:
+          levelIndex === 0 && lessonIndex === 0
+            ? "current"
+            : "locked",
+      })),
+    }),
+  );
 
   return (
     <section className="mx-auto w-full max-w-3xl">
@@ -205,7 +211,9 @@ export function LearningPath() {
       {units.length === 0 ? (
         <div className="rounded-3xl border border-[var(--sea-ink)]/10 bg-white/60 p-8 text-center">
           <Star className="mx-auto h-8 w-8 text-amber-500" />
-          <h3 className="mt-3 font-bold">Your journey starts soon</h3>
+          <h3 className="mt-3 font-bold">
+            Your journey starts soon
+          </h3>
           <p className="mt-2 text-sm text-muted-foreground">
             No lessons are available for this language yet.
           </p>
@@ -312,6 +320,7 @@ export function LearningPath() {
                           lesson={lesson}
                           index={index}
                           color={unit.color}
+                          languageCode="om"
                         />
                       </div>
                     </div>
