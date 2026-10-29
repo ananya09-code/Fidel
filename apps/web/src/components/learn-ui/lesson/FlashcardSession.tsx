@@ -37,6 +37,7 @@ export function FlashcardSession({
   const [sessionStarted, setSessionStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sessionCompleted, setSessionCompleted] = useState(false);
+  const [direction, setDirection] = useState<"next" | "previous">("next");
 
   const sessionWords = availableWords.slice(0, wordLimit);
   const currentWord = sessionWords[currentIndex];
@@ -46,6 +47,7 @@ export function FlashcardSession({
 
     setCurrentIndex(0);
     setSessionCompleted(false);
+    setDirection("next");
     setSessionStarted(true);
   }
 
@@ -56,12 +58,14 @@ export function FlashcardSession({
   }
 
   function handleNext() {
+    setDirection("next");
     setCurrentIndex((index) =>
       Math.min(index + 1, sessionWords.length - 1),
     );
   }
 
   function handlePrevious() {
+    setDirection("previous");
     setCurrentIndex((index) => Math.max(index - 1, 0));
   }
 
@@ -217,6 +221,7 @@ export function FlashcardSession({
           word={currentWord}
           currentIndex={currentIndex}
           total={sessionWords.length}
+          direction={direction}
           onPrevious={handlePrevious}
           onNext={handleNext}
           onFinish={finishSession}

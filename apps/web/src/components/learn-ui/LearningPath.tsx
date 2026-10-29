@@ -1,4 +1,3 @@
-import { useNavigate } from "@tanstack/react-router";
 import { LockKeyhole, Check, Star, Play, Trophy } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useLearningPath } from "@/hooks/use-learning-path";

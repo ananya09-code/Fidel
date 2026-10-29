@@ -15,13 +15,14 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as AppHomeRouteImport } from './routes/_app/Home'
-import { Route as AppLearnRouteImport } from './routes/_app/Learn'
+import { Route as AppLearnRouteRouteImport } from './routes/_app/Learn/route'
 import { Route as AppDictionaryRouteImport } from './routes/_app/dictionary'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppReviewRouteImport } from './routes/_app/review'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppTestRouteImport } from './routes/_app/test'
 import { Route as AdminAudioReviewRouteImport } from './routes/admin.audio-review'
+import { Route as AppLearnIndexRouteImport } from './routes/_app/Learn/index'
 import { Route as AppLearnLessonIdRouteImport } from './routes/_app/Learn/$lessonId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,7 +54,7 @@ const AppHomeRoute = AppHomeRouteImport.update({
   path: '/Home',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppLearnRoute = AppLearnRouteImport.update({
+const AppLearnRouteRoute = AppLearnRouteRouteImport.update({
   id: '/Learn',
   path: '/Learn',
   getParentRoute: () => AppRouteRoute,
@@ -88,10 +89,15 @@ const AdminAudioReviewRoute = AdminAudioReviewRouteImport.update({
   path: '/admin/audio-review',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppLearnIndexRoute = AppLearnIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppLearnRouteRoute,
+} as any)
 const AppLearnLessonIdRoute = AppLearnLessonIdRouteImport.update({
   id: '/$lessonId',
   path: '/$lessonId',
-  getParentRoute: () => AppLearnRoute,
+  getParentRoute: () => AppLearnRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -99,8 +105,8 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/Learn': typeof AppLearnRouteRouteWithChildren
   '/Home': typeof AppHomeRoute
-  '/Learn': typeof AppLearnRouteWithChildren
   '/dictionary': typeof AppDictionaryRoute
   '/profile': typeof AppProfileRoute
   '/review': typeof AppReviewRoute
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
   '/Learn/$lessonId': typeof AppLearnLessonIdRoute
+  '/Learn/': typeof AppLearnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -115,7 +122,6 @@ export interface FileRoutesByTo {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/Home': typeof AppHomeRoute
-  '/Learn': typeof AppLearnRouteWithChildren
   '/dictionary': typeof AppDictionaryRoute
   '/profile': typeof AppProfileRoute
   '/review': typeof AppReviewRoute
@@ -123,6 +129,7 @@ export interface FileRoutesByTo {
   '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
   '/Learn/$lessonId': typeof AppLearnLessonIdRoute
+  '/Learn': typeof AppLearnIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -131,8 +138,8 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/_app/Learn': typeof AppLearnRouteRouteWithChildren
   '/_app/Home': typeof AppHomeRoute
-  '/_app/Learn': typeof AppLearnRouteWithChildren
   '/_app/dictionary': typeof AppDictionaryRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/review': typeof AppReviewRoute
@@ -140,6 +147,7 @@ export interface FileRoutesById {
   '/_app/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
   '/_app/Learn/$lessonId': typeof AppLearnLessonIdRoute
+  '/_app/Learn/': typeof AppLearnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -148,8 +156,8 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/sign-in'
     | '/sign-up'
-    | '/Home'
     | '/Learn'
+    | '/Home'
     | '/dictionary'
     | '/profile'
     | '/review'
@@ -157,6 +165,7 @@ export interface FileRouteTypes {
     | '/test'
     | '/admin/audio-review'
     | '/Learn/$lessonId'
+    | '/Learn/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -164,7 +173,6 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/Home'
-    | '/Learn'
     | '/dictionary'
     | '/profile'
     | '/review'
@@ -172,6 +180,7 @@ export interface FileRouteTypes {
     | '/test'
     | '/admin/audio-review'
     | '/Learn/$lessonId'
+    | '/Learn'
   id:
     | '__root__'
     | '/'
@@ -179,8 +188,8 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/sign-in'
     | '/sign-up'
-    | '/_app/Home'
     | '/_app/Learn'
+    | '/_app/Home'
     | '/_app/dictionary'
     | '/_app/profile'
     | '/_app/review'
@@ -188,6 +197,7 @@ export interface FileRouteTypes {
     | '/_app/test'
     | '/admin/audio-review'
     | '/_app/Learn/$lessonId'
+    | '/_app/Learn/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -247,7 +257,7 @@ declare module '@tanstack/react-router' {
       id: '/_app/Learn'
       path: '/Learn'
       fullPath: '/Learn'
-      preLoaderRoute: typeof AppLearnRouteImport
+      preLoaderRoute: typeof AppLearnRouteRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/dictionary': {
@@ -292,31 +302,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAudioReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/Learn/': {
+      id: '/_app/Learn/'
+      path: '/'
+      fullPath: '/Learn/'
+      preLoaderRoute: typeof AppLearnIndexRouteImport
+      parentRoute: typeof AppLearnRouteRoute
+    }
     '/_app/Learn/$lessonId': {
       id: '/_app/Learn/$lessonId'
       path: '/$lessonId'
       fullPath: '/Learn/$lessonId'
       preLoaderRoute: typeof AppLearnLessonIdRouteImport
-      parentRoute: typeof AppLearnRoute
+      parentRoute: typeof AppLearnRouteRoute
     }
   }
 }
 
-interface AppLearnRouteChildren {
+interface AppLearnRouteRouteChildren {
   AppLearnLessonIdRoute: typeof AppLearnLessonIdRoute
+  AppLearnIndexRoute: typeof AppLearnIndexRoute
 }
 
-const AppLearnRouteChildren: AppLearnRouteChildren = {
+const AppLearnRouteRouteChildren: AppLearnRouteRouteChildren = {
   AppLearnLessonIdRoute: AppLearnLessonIdRoute,
+  AppLearnIndexRoute: AppLearnIndexRoute,
 }
 
-const AppLearnRouteWithChildren = AppLearnRoute._addFileChildren(
-  AppLearnRouteChildren,
+const AppLearnRouteRouteWithChildren = AppLearnRouteRoute._addFileChildren(
+  AppLearnRouteRouteChildren,
 )
 
 interface AppRouteRouteChildren {
+  AppLearnRouteRoute: typeof AppLearnRouteRouteWithChildren
   AppHomeRoute: typeof AppHomeRoute
-  AppLearnRoute: typeof AppLearnRouteWithChildren
   AppDictionaryRoute: typeof AppDictionaryRoute
   AppProfileRoute: typeof AppProfileRoute
   AppReviewRoute: typeof AppReviewRoute
@@ -325,8 +344,8 @@ interface AppRouteRouteChildren {
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppLearnRouteRoute: AppLearnRouteRouteWithChildren,
   AppHomeRoute: AppHomeRoute,
-  AppLearnRoute: AppLearnRouteWithChildren,
   AppDictionaryRoute: AppDictionaryRoute,
   AppProfileRoute: AppProfileRoute,
   AppReviewRoute: AppReviewRoute,

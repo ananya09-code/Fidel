@@ -155,7 +155,7 @@ export function ExploreTopics() {
             return (
               <Link
                 key={topic.title}
-                to="/learn"
+                to="/Learn"
                 aria-label={`Start learning: ${topic.title}`}
                 className="group block h-full rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2"
               >

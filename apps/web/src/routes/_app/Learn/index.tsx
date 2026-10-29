@@ -1,11 +1,10 @@
-
 import { createFileRoute } from "@tanstack/react-router";
 
 import { LearnOverview } from "@/components/learn-ui/LearnOverview";
 import { LearningPath } from "@/components/learn-ui/LearningPath";
 import { LearnProgress } from "@/components/learn-ui/LearnProgress";
 
-export const Route = createFileRoute("/_app/Learn")({
+export const Route = createFileRoute("/_app/Learn/")({
   component: LearnPage,
 });
 

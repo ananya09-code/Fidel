@@ -34,7 +34,7 @@ export function Hero() {
               size="lg"
               className="bg-[var(--foam)] text-[var(--sea-ink)] hover:bg-[var(--foam)]/90"
             >
-              <Link to="/learn">
+              <Link to="/Learn">
                 Continue learning
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>

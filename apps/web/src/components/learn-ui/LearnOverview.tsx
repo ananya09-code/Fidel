@@ -106,7 +106,7 @@ export function LearnOverview() {
 
             <div className="mt-7 sm:mt-8">
               <Link
-                to="/learn"
+                to="/Learn"
                 className="group inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full bg-[var(--foam)] px-6 text-sm font-semibold text-[var(--sea-ink)] transition duration-200 hover:bg-[var(--hero-b)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--hero-a)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--sea-ink)] sm:w-auto sm:justify-start"
               >
                 Begin lesson

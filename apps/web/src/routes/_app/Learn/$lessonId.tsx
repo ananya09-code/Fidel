@@ -72,7 +72,7 @@ function LessonPage() {
       }
 
       const response = await fetch(
-        `${apiUrl}/api/v1/learning/lessons/${encodeURIComponent(
+        `${apiUrl}/api/api/v1/learning/lessons/${encodeURIComponent(
           lessonId,
         )}/words?language_code=${encodeURIComponent(
           language_code,
@@ -90,7 +90,7 @@ function LessonPage() {
   });
 
   function goBack() {
-    void navigate({ to: "/_app/Learn" });
+    void navigate({ to: "/Learn" });
   }
 
   if (isPending) {
@@ -179,11 +179,16 @@ function LessonPage() {
       (translation) => translation.language_code === "en",
     );
 
+    const amharicTranslation = translations.find(
+      (translation) => translation.language_code === "am",
+    );
+
     return {
       id: item.id,
       word: item.text,
       transliteration: item.transliteration,
       meaning,
+      amharic: amharicTranslation?.meaning ?? null,
       example: englishTranslation?.context_note ?? null,
       audioUrl: item.audio?.available ? item.audio.url ?? null : null,
     };
