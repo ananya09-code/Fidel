@@ -2,22 +2,22 @@
 import { ArrowUpRight, BookOpen, CheckCircle2, Sparkles } from "lucide-react";
 
 type LearnProgressProps = {
-  wordsLearned?: number;
+  correctAnswers?: number;
   lessonsCompleted?: number;
 };
 
 export function LearnProgress({
-  wordsLearned = 0,
+  correctAnswers = 0,
   lessonsCompleted = 0,
 }: LearnProgressProps) {
   const stats = [
     {
-      label: "Words learned",
-      value: wordsLearned,
+      label: "Correct answers",
+      value: correctAnswers,
       description:
-        wordsLearned === 0
-          ? "Your first word is waiting"
-          : "Words added to your journey",
+        correctAnswers === 0
+          ? "Your first practice awaits"
+          : "Answers saved from your lessons",
       icon: BookOpen,
     },
     {
@@ -31,7 +31,7 @@ export function LearnProgress({
     },
   ];
 
-  const hasProgress = wordsLearned > 0 || lessonsCompleted > 0;
+  const hasProgress = correctAnswers > 0 || lessonsCompleted > 0;
 
   return (
     <section className="space-y-5">

@@ -1,6 +1,8 @@
 import { LockKeyhole, Check, Star, Play, Trophy } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useLearningPath } from "@/hooks/use-learning-path";
+import { useLearningProgress } from "@/hooks/use-learning-progress";
+import { usePreferences } from "@/hooks/use-preferences";
 
 type LessonStatus = "completed" | "current" | "locked";
 type Lesson = {
@@ -128,6 +130,9 @@ function LessonNode({
   );
 }
 export function LearningPath() {
+  const preferences = usePreferences();
+  const progressQuery = useLearningProgress();
+  const languageCode = preferences.data?.learning_language ?? "om";
   const {
     data: learningPath,
     isPending,
@@ -135,9 +140,9 @@ export function LearningPath() {
     error,
     refetch,
     isFetching,
-  } = useLearningPath("om");
+  } = useLearningPath(languageCode);
 
-  if (isPending) {
+  if (isPending || preferences.isPending || progressQuery.isPending) {
     return (
       <section className="mx-auto w-full max-w-3xl py-16 text-center">
         <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-border border-t-amber-500" />
@@ -148,7 +153,7 @@ export function LearningPath() {
     );
   }
 
-  if (isError || !learningPath) {
+  if (isError || preferences.isError || progressQuery.isError || !learningPath) {
     return (
       <section className="mx-auto w-full max-w-3xl rounded-3xl border border-border bg-card p-8 text-center">
         <h2 className="text-lg font-bold">
@@ -156,7 +161,10 @@ export function LearningPath() {
         </h2>
 
         <p className="mt-2 text-sm text-muted-foreground">
-          {error?.message ?? "No learning path data was returned."}
+          {error?.message ??
+            preferences.error?.message ??
+            progressQuery.error?.message ??
+            "No learning path data was returned."}
         </p>
 
         <button
@@ -171,6 +179,14 @@ export function LearningPath() {
     );
   }
 
+  const completedLessons = new Set(progressQuery.data?.completed_lesson_keys ?? []);
+  const allLessonIds = learningPath.levels.flatMap((level) =>
+    level.lessons.map((lesson) => lesson.id),
+  );
+  const activeLesson = progressQuery.data?.in_progress[0]?.lesson_key;
+  const currentLesson =
+    activeLesson ?? allLessonIds.find((lessonId) => !completedLessons.has(lessonId));
+
   const units: Unit[] = learningPath.levels.map(
     (level, levelIndex) => ({
       id: level.id,
@@ -178,13 +194,14 @@ export function LearningPath() {
       subtitle: level.subtitle,
       color: LEVEL_COLORS[levelIndex % LEVEL_COLORS.length],
       totalWords: level.total_words,
-      lessons: level.lessons.map((lesson, lessonIndex) => ({
+      lessons: level.lessons.map((lesson) => ({
         id: lesson.id,
         title: lesson.title,
         subtitle: lesson.subtitle,
         wordCount: lesson.word_count,
-        status:
-          levelIndex === 0 && lessonIndex === 0
+        status: completedLessons.has(lesson.id)
+          ? "completed"
+          : lesson.id === currentLesson
             ? "current"
             : "locked",
       })),
@@ -319,7 +336,7 @@ export function LearningPath() {
                           lesson={lesson}
                           index={index}
                           color={unit.color}
-                          languageCode="om"
+                          languageCode={languageCode}
                         />
                       </div>
                     </div>

@@ -1,8 +1,7 @@
 """Version 1 of the HTTP API."""
-from app.api.v1.endpoints.learning import router as learning_router
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import auth, health, preferences, recordings, words, learning
+from app.api.v1.endpoints import auth, health, learning, preferences, progress, recordings, words
 
 api_router = APIRouter()
 
@@ -25,8 +24,13 @@ api_router.include_router(
 )
 
 api_router.include_router(
+    progress.router,
+    prefix="/v1",
+)
+
+api_router.include_router(
     words.router,
     prefix="/v1/words",
     tags=["words"],
 )
-api_router.include_router(learning_router, prefix="/api/v1")
+api_router.include_router(learning.router, prefix="/v1")

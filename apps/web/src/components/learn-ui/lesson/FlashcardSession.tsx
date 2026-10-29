@@ -15,8 +15,12 @@ type FlashcardSessionProps = {
   category?: string;
   words?: FlashcardWord[];
   initialWordLimit?: number;
+  resumeActive?: boolean;
+  resumeFromIndex?: number;
   onBack?: () => void;
-  onComplete?: (words: FlashcardWord[]) => void;
+  onStart?: (questionCount: number) => Promise<void>;
+  onProgress?: (questionIndex: number) => Promise<void> | void;
+  onComplete?: (words: FlashcardWord[]) => Promise<void> | void;
 };
 
 const WORD_LIMITS = [5, 10, 15, 20];
@@ -25,7 +29,11 @@ export function FlashcardSession({
   category = "Everyday words",
   words = [],
   initialWordLimit = 10,
+  resumeActive = false,
+  resumeFromIndex = 0,
   onBack,
+  onStart,
+  onProgress,
   onComplete,
 }: FlashcardSessionProps) {
   const availableWords = words;
@@ -34,21 +42,35 @@ export function FlashcardSession({
     Math.min(initialWordLimit, availableWords.length),
   );
 
-  const [sessionStarted, setSessionStarted] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [sessionCompleted, setSessionCompleted] = useState(false);
+  const [sessionStarted, setSessionStarted] = useState(resumeActive);
+  const [currentIndex, setCurrentIndex] = useState(() =>
+    Math.min(resumeFromIndex, Math.max(availableWords.length - 1, 0)),
+  );
+  const [sessionCompleted, setSessionCompleted] = useState(
+    resumeActive && resumeFromIndex >= Math.min(initialWordLimit, availableWords.length),
+  );
   const [direction, setDirection] = useState<"next" | "previous">("next");
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const sessionWords = availableWords.slice(0, wordLimit);
   const currentWord = sessionWords[currentIndex];
 
-  function startSession() {
+  async function startSession() {
     if (sessionWords.length === 0) return;
-
-    setCurrentIndex(0);
-    setSessionCompleted(false);
-    setDirection("next");
-    setSessionStarted(true);
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      await onStart?.(sessionWords.length);
+      setCurrentIndex(0);
+      setSessionCompleted(false);
+      setDirection("next");
+      setSessionStarted(true);
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : "Unable to start this lesson.");
+    } finally {
+      setIsSaving(false);
+    }
   }
 
   function goBackToSetup() {
@@ -59,9 +81,9 @@ export function FlashcardSession({
 
   function handleNext() {
     setDirection("next");
-    setCurrentIndex((index) =>
-      Math.min(index + 1, sessionWords.length - 1),
-    );
+    const nextIndex = Math.min(currentIndex + 1, sessionWords.length - 1);
+    setCurrentIndex(nextIndex);
+    void onProgress?.(nextIndex);
   }
 
   function handlePrevious() {
@@ -71,10 +93,19 @@ export function FlashcardSession({
 
   function finishSession() {
     setSessionCompleted(true);
+    void onProgress?.(sessionWords.length);
   }
 
-  function handlePractice() {
-    onComplete?.(sessionWords);
+  async function handlePractice() {
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      await onComplete?.(sessionWords);
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : "Unable to save lesson progress.");
+    } finally {
+      setIsSaving(false);
+    }
   }
 
   function handleBack() {
@@ -166,10 +197,11 @@ export function FlashcardSession({
             <div className="mx-auto mt-8 flex max-w-sm flex-col gap-3">
               <button
                 type="button"
-                onClick={handlePractice}
+                onClick={() => void handlePractice()}
+                disabled={isSaving}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
               >
-                Continue to practice
+                {isSaving ? "Saving..." : "Continue to practice"}
                 <ArrowRight className="h-4 w-4" />
               </button>
 
@@ -192,6 +224,7 @@ export function FlashcardSession({
                 </button>
               )}
             </div>
+            {saveError && <p className="mt-4 text-sm text-red-600" role="alert">{saveError}</p>}
           </div>
         </div>
       </section>
@@ -314,11 +347,11 @@ export function FlashcardSession({
         <div className="mt-7 flex flex-col gap-3 sm:flex-row">
           <button
             type="button"
-            onClick={startSession}
-            disabled={sessionWords.length === 0}
+            onClick={() => void startSession()}
+            disabled={sessionWords.length === 0 || isSaving}
             className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Start learning
+            {isSaving ? "Starting..." : "Start learning"}
             <ArrowRight className="h-4 w-4" />
           </button>
 
@@ -330,6 +363,7 @@ export function FlashcardSession({
             Not now
           </button>
         </div>
+        {saveError && <p className="mt-4 text-sm text-red-600" role="alert">{saveError}</p>}
       </div>
     </section>
   );

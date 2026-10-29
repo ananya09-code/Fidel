@@ -13,13 +13,21 @@ import {
 type LessonQuizProps = {
   words: FlashcardWord[];
   category?: string;
+  initialQuestionIndex?: number;
+  initialAnswers?: Record<string, boolean>;
   onBack?: () => void;
   onRetryMissed?: (words: FlashcardWord[]) => void;
+  onAnswer?: (answer: {
+    questionId: string;
+    wordId: string;
+    selectedWordId: string;
+    questionIndex: number;
+  }) => Promise<void> | void;
   onFinish?: (result: {
     score: number;
     total: number;
     missedWords: FlashcardWord[];
-  }) => void;
+  }) => Promise<void> | void;
 };
 
 type QuizQuestion = {
@@ -41,8 +49,11 @@ function shuffle<T>(items: T[]): T[] {
 export function LessonQuiz({
   words,
   category = "Practice",
+  initialQuestionIndex = 0,
+  initialAnswers = {},
   onBack,
   onRetryMissed,
+  onAnswer,
   onFinish,
 }: LessonQuizProps) {
   const questions = useMemo<QuizQuestion[]>(() => {
@@ -62,9 +73,20 @@ export function LessonQuiz({
     });
   }, [words]);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [currentIndex, setCurrentIndex] = useState(() =>
+    Math.min(initialQuestionIndex, Math.max(questions.length - 1, 0)),
+  );
+  const [answers, setAnswers] = useState<Record<string, string>>(() =>
+    Object.fromEntries(
+      Object.entries(initialAnswers).map(([questionId, isCorrect]) => [
+        questionId,
+        isCorrect ? questionId : "__incorrect__",
+      ]),
+    ),
+  );
   const [finished, setFinished] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const currentQuestion = questions[currentIndex];
   const selectedId = currentQuestion
@@ -84,19 +106,30 @@ export function LessonQuiz({
       ? Math.round((score / questions.length) * 100)
       : 0;
 
-  function selectAnswer(wordId: string) {
-    if (answered || !currentQuestion) return;
-
-    setAnswers((previous) => ({
-      ...previous,
-      [currentQuestion.word.id]: wordId,
-    }));
+  async function selectAnswer(wordId: string) {
+    if (answered || isSaving || !currentQuestion) return;
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      await onAnswer?.({
+        questionId: currentQuestion.word.id,
+        wordId: currentQuestion.word.id,
+        selectedWordId: wordId,
+        questionIndex: currentIndex,
+      });
+      setAnswers((previous) => ({
+        ...previous,
+        [currentQuestion.word.id]: wordId,
+      }));
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : "Unable to save your answer.");
+    } finally {
+      setIsSaving(false);
+    }
   }
 
-  function nextQuestion() {
+  async function nextQuestion() {
     if (currentIndex === questions.length - 1) {
-      setFinished(true);
-
       const nextAnswers = answers;
       const finalMissedWords = questions
         .filter(
@@ -107,11 +140,20 @@ export function LessonQuiz({
 
       const finalScore = questions.length - finalMissedWords.length;
 
-      onFinish?.({
-        score: finalScore,
-        total: questions.length,
-        missedWords: finalMissedWords,
-      });
+      setIsSaving(true);
+      setSaveError(null);
+      try {
+        await onFinish?.({
+          score: finalScore,
+          total: questions.length,
+          missedWords: finalMissedWords,
+        });
+        setFinished(true);
+      } catch (error) {
+        setSaveError(error instanceof Error ? error.message : "Unable to complete this lesson.");
+      } finally {
+        setIsSaving(false);
+      }
 
       return;
     }
@@ -359,8 +401,8 @@ export function LessonQuiz({
               <button
                 key={option.id}
                 type="button"
-                disabled={answered}
-                onClick={() => selectAnswer(option.id)}
+                disabled={answered || isSaving}
+                onClick={() => void selectAnswer(option.id)}
                 className={`flex min-h-[76px] items-center gap-4 rounded-2xl border-2 p-4 text-left transition duration-200 disabled:cursor-default ${optionStyle}`}
               >
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-current/15 text-sm font-semibold opacity-70">
@@ -419,16 +461,19 @@ export function LessonQuiz({
         <div className="mt-6 flex justify-end">
           <button
             type="button"
-            disabled={!answered}
-            onClick={nextQuestion}
+            disabled={!answered || isSaving}
+            onClick={() => void nextQuestion()}
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--sea-ink)] px-6 py-4 font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
           >
-            {currentIndex === questions.length - 1
+            {isSaving
+              ? "Saving..."
+              : currentIndex === questions.length - 1
               ? "See my results"
               : "Continue"}
             <ArrowRight className="size-4" />
           </button>
         </div>
+        {saveError && <p className="mt-4 text-sm text-rose-700" role="alert">{saveError}</p>}
       </section>
     </main>
   );
