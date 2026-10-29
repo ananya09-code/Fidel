@@ -29,16 +29,16 @@ export function DictionaryOverview({
     error,
     refetch,
   } = useWords({
-    language: "om",
+    language_code: "om",
   });
 
-  const words = data?.data ?? [];
+  const words = useMemo(() => data?.data ?? [], [data]);
   const featuredWord = words[0];
 
   const filteredWords = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
 
-    return words.filter((word: any) => {
+    return words.filter((word) => {
       const matchesCategory =
         activeCategory === "All words" ||
         word.category.toLocaleLowerCase() ===
@@ -46,14 +46,14 @@ export function DictionaryOverview({
 
       const searchableValues = [
         word.text,
-        word.meaning,
+        word.meaning ?? "",
         word.transliteration ?? "",
         word.category,
         word.content_type,
         word.difficulty,
-        ...word.translations.map((translation: any) => translation.meaning),
+        ...word.translations.map((translation) => translation.meaning),
         ...word.translations.map(
-          (translation: any) => translation.context_note ?? "",
+          (translation) => translation.context_note ?? "",
         ),
       ];
 

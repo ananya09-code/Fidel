@@ -14,16 +14,19 @@ from datetime import datetime, timezone
 from typing import Any
 
 from sqlalchemy import (
+    Boolean,
     CheckConstraint,
     Column,
     DateTime,
     ForeignKey,
     Index,
     Integer,
+    JSON,
     MetaData,
     String,
     Table,
     Text,
+    UniqueConstraint,
     Uuid,
     create_engine,
     event,
@@ -79,6 +82,29 @@ word_translations = Table(
         nullable=False,
         server_default=text("CURRENT_TIMESTAMP"),
     ),
+)
+
+users = Table(
+    "users",
+    metadata,
+    Column("id", Uuid, primary_key=True, default=uuid.uuid4),
+    Column("clerk_id", String, nullable=False),
+    Column("email", String),
+    Column("display_name", String),
+    Column(
+        "created_at",
+        DateTime(timezone=True),
+        nullable=False,
+        server_default=text("CURRENT_TIMESTAMP"),
+    ),
+    Column(
+        "updated_at",
+        DateTime(timezone=True),
+        nullable=False,
+        server_default=text("CURRENT_TIMESTAMP"),
+    ),
+    UniqueConstraint("clerk_id", name="users_clerk_id_key"),
+    Index("users_email_idx", "email"),
 )
 
 generation_batches = Table(
@@ -160,6 +186,98 @@ audio_recordings = Table(
         sqlite_where=text("superseded_at IS NULL"),
         postgresql_where=text("superseded_at IS NULL"),
     ),
+)
+
+lesson_attempts = Table(
+    "lesson_attempts",
+    metadata,
+    Column("id", Uuid, primary_key=True),
+    Column("user_id", Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False),
+    Column("lesson_key", String, nullable=False),
+    Column("difficulty", String, nullable=False),
+    Column("category_key", String, nullable=False),
+    Column("category_label", String),
+    Column("difficulty_label", String),
+    Column("status", String, nullable=False, server_default="in_progress"),
+    Column("stage", String, nullable=False, server_default="vocabulary"),
+    Column("question_index", Integer, nullable=False, server_default="0"),
+    Column("question_count", Integer, nullable=False),
+    Column("correct_count", Integer, nullable=False, server_default="0"),
+    Column("started_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    Column("completed_at", DateTime(timezone=True)),
+    Column("updated_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    CheckConstraint("status IN ('in_progress','completed')", name="lesson_attempts_status_check"),
+    CheckConstraint("stage IN ('vocabulary','practice')", name="lesson_attempts_stage_check"),
+    CheckConstraint("question_index >= 0", name="lesson_attempts_question_index_check"),
+    CheckConstraint("question_count >= 0", name="lesson_attempts_question_count_check"),
+    CheckConstraint("correct_count >= 0", name="lesson_attempts_correct_count_check"),
+    CheckConstraint("(status = 'completed') = (completed_at IS NOT NULL)", name="lesson_attempts_completion_check"),
+    Index("lesson_attempts_user_recent_idx", "user_id", "updated_at"),
+    Index("lesson_attempts_user_status_idx", "user_id", "status"),
+    Index(
+        "lesson_attempts_one_in_progress_per_lesson",
+        "user_id",
+        "lesson_key",
+        unique=True,
+        sqlite_where=text("status = 'in_progress'"),
+        postgresql_where=text("status = 'in_progress'"),
+    ),
+)
+
+answer_attempts = Table(
+    "answer_attempts",
+    metadata,
+    Column("attempt_id", Uuid, ForeignKey("lesson_attempts.id", ondelete="CASCADE"), primary_key=True),
+    Column("user_id", Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False),
+    Column("question_id", String, primary_key=True),
+    Column("question_type", String, nullable=False),
+    Column("word_ids", JSON, nullable=False),
+    Column("is_correct", Boolean, nullable=False),
+    Column("answered_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    Index("answer_attempts_attempt_idx", "attempt_id"),
+    Index("answer_attempts_user_correct_idx", "user_id", "is_correct"),
+    Index("answer_attempts_user_recent_idx", "user_id", "answered_at"),
+)
+
+user_words = Table(
+    "user_words",
+    metadata,
+    Column("user_id", Uuid, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True),
+    Column("word_id", Uuid, ForeignKey("words.id", ondelete="CASCADE"), primary_key=True),
+    Column("times_seen", Integer, nullable=False, server_default="0"),
+    Column("times_correct", Integer, nullable=False, server_default="0"),
+    Column("text", String),
+    Column("meaning", String),
+    Column("first_seen_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    Column("last_seen_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    CheckConstraint("times_seen >= 0", name="user_words_times_seen_check"),
+    CheckConstraint("times_correct >= 0", name="user_words_times_correct_check"),
+    CheckConstraint("times_correct <= times_seen", name="user_words_correct_not_above_seen_check"),
+    Index("user_words_user_recent_idx", "user_id", "last_seen_at"),
+)
+
+user_preferences = Table(
+    "user_preferences",
+    metadata,
+    Column("user_id", Uuid, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True),
+    Column("learning_language", String, nullable=False, server_default="om"),
+    Column("proficiency_level", String),
+    Column("motivations", JSON, nullable=False, server_default="[]"),
+    Column("daily_goal_minutes", Integer, nullable=False, server_default="5"),
+    Column("interface_language", String, nullable=False, server_default="en"),
+    Column("reminders_enabled", Boolean, nullable=False, server_default="1"),
+    Column("reminder_time", String, nullable=False, server_default="19:00"),
+    Column("sound_enabled", Boolean, nullable=False, server_default="1"),
+    Column("appearance", String, nullable=False, server_default="system"),
+    Column("timezone", String, nullable=False, server_default="UTC"),
+    Column("onboarding_completed", Boolean, nullable=False, server_default="0"),
+    Column("created_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    Column("updated_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    CheckConstraint("learning_language IN ('om','am')", name="user_preferences_learning_language_check"),
+    CheckConstraint("proficiency_level IS NULL OR proficiency_level IN ('beginner','some','conversational','improving')", name="user_preferences_proficiency_level_check"),
+    CheckConstraint("daily_goal_minutes IN (5,10,15,20)", name="user_preferences_daily_goal_check"),
+    CheckConstraint("interface_language IN ('en','om','am')", name="user_preferences_interface_language_check"),
+    CheckConstraint("appearance IN ('light','dark','system')", name="user_preferences_appearance_check"),
 )
 
 

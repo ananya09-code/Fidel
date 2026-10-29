@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getWords, type GetWordsParams } from "@/services/word";
+import { getWords, type GetWordsParams } from "@/lib/api/words";
 
 export function useWords(params: GetWordsParams = {}) {
   return useQuery({

@@ -6,6 +6,7 @@ dependencies = [
     "addisai>=0.6.0",
     "alembic>=1.14",
     "boto3>=1.43.112",
+    "clerk-backend-api>=7.0.0",
     "fastapi[standard]>=0.143.0",
     "httpx>=0.28.1",
     "psycopg[binary]>=3.3.6",

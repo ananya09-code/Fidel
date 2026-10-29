@@ -13,6 +13,10 @@ API_ROOT = Path(__file__).parent
 # Test-only administrative key. Never a real credential.
 TEST_ADMIN_KEY = "test-admin-key"
 
+# Test-only Clerk configuration. No network request is made in the test suite.
+TEST_CLERK_ISSUER = "https://clerk.example.test"
+AUTH_HEADERS = {"Authorization": "Bearer test-session-token"}
+
 
 @pytest.fixture(scope="session")
 def client() -> Generator[TestClient, None, None]:
@@ -108,6 +112,94 @@ def anonymous_admin_client(client, session_factory, monkeypatch):
         yield client
     finally:
         client.app.dependency_overrides.clear()
+
+
+@pytest.fixture()
+def auth_client(client, session_factory, monkeypatch):
+    """Test client with Clerk configured and the profile DB isolated."""
+
+    from pydantic import SecretStr
+
+    from app.api.v1.endpoints import auth as endpoint_module
+    from app.api.v1.endpoints import preferences as preferences_module
+    from app.core.config import get_settings
+    from app.services.clerk_users import ClerkProfileData
+
+    settings = get_settings()
+    monkeypatch.setattr(
+        settings, "clerk_secret_key", SecretStr("sk_test"), raising=False
+    )
+    monkeypatch.setattr(settings, "clerk_issuer", TEST_CLERK_ISSUER, raising=False)
+    monkeypatch.setattr(settings, "clerk_jwt_key", None, raising=False)
+    monkeypatch.setattr(
+        settings, "clerk_authorized_parties", None, raising=False
+    )
+
+    def override_get_db():
+        with session_factory() as session:
+            yield session
+
+    client.app.dependency_overrides[endpoint_module.get_db] = override_get_db
+    client.app.dependency_overrides[preferences_module.get_db] = override_get_db
+    monkeypatch.setattr(
+        endpoint_module,
+        "fetch_clerk_profile",
+        lambda user_id, secret_key: ClerkProfileData(
+            email=f"{user_id}@example.test",
+            first_name="Test",
+            last_name="Learner",
+            username=user_id,
+            image_url="https://images.example.test/avatar.png",
+        ),
+    )
+
+    try:
+        yield client
+    finally:
+        client.app.dependency_overrides.clear()
+        client.headers.pop("Authorization", None)
+
+
+@pytest.fixture()
+def mock_clerk(monkeypatch):
+    """Install a fake Clerk verifier; return a function to change its state."""
+
+    from app.core import clerk_auth
+    from clerk_backend_api.security import (
+        AuthErrorReason,
+        AuthStatus,
+        RequestState,
+    )
+
+    def install(
+        user_id: str = "user_test",
+        issuer: str = TEST_CLERK_ISSUER,
+        reason=None,
+    ) -> None:
+        if user_id:
+            state = RequestState(
+                status=AuthStatus.SIGNED_IN,
+                token="test-session-token",
+                payload={
+                    "sub": user_id,
+                    "sid": "sess_test",
+                    "iss": issuer,
+                },
+            )
+        else:
+            state = RequestState(
+                status=AuthStatus.SIGNED_OUT,
+                reason=reason or AuthErrorReason.SESSION_TOKEN_MISSING,
+            )
+
+        monkeypatch.setattr(
+            clerk_auth,
+            "authenticate_request",
+            lambda request, options: state,
+        )
+
+    install()
+    return install
 
 
 @pytest.fixture()

@@ -54,16 +54,10 @@ export function getApiBaseUrl(): string {
   return trimTrailingSlash(configured && configured.length > 0 ? configured : DEFAULT_API_URL)
 }
 
-/**
- * Perform a JSON request against the backend API.
- *
- * @throws {ApiError} on network failure or a non-2xx response.
- */
-export async function apiFetch<T>(
+async function request(
   path: string,
-  schema: z.ZodType<T>,
   init?: RequestInit,
-): Promise<T> {
+): Promise<{ response: Response; url: string }> {
   const url = `${getApiBaseUrl()}${path.startsWith('/') ? path : `/${path}`}`
 
   let response: Response
@@ -83,12 +77,55 @@ export async function apiFetch<T>(
     )
   }
 
+  return { response, url }
+}
+
+async function errorMessage(response: Response, url: string): Promise<string> {
+  const fallback = `Fidel API request failed at ${url}: ${response.status} ${response.statusText}`
+
+  try {
+    const body: unknown = await response.json()
+    if (!body || typeof body !== 'object' || !('detail' in body)) {
+      return fallback
+    }
+
+    const detail = (body as { detail: unknown }).detail
+    if (typeof detail === 'string' && detail.trim().length > 0) {
+      return detail
+    }
+
+    if (Array.isArray(detail)) {
+      const messages = detail
+        .map((item) =>
+          item && typeof item === 'object' && 'msg' in item
+            ? String((item as { msg: unknown }).msg)
+            : null,
+        )
+        .filter((item): item is string => Boolean(item))
+
+      if (messages.length > 0) return messages.join('; ')
+    }
+  } catch {
+    // The response body was not JSON; use the status-line fallback.
+  }
+
+  return fallback
+}
+
+/**
+ * Perform a JSON request against the backend API.
+ *
+ * @throws {ApiError} on network failure or a non-2xx response.
+ */
+export async function apiFetch<T>(
+  path: string,
+  schema: z.ZodType<T>,
+  init?: RequestInit,
+): Promise<T> {
+  const { response, url } = await request(path, init)
+
   if (!response.ok) {
-    throw new ApiError(
-      `Fidel API request failed: ${response.status} ${response.statusText}`,
-      response.status,
-      url,
-    )
+    throw new ApiError(await errorMessage(response, url), response.status, url)
   }
 
   let payload: unknown
@@ -108,6 +145,22 @@ export async function apiFetch<T>(
   }
 
   return parsed.data
+}
+
+/**
+ * Perform a request whose success response has no JSON body.
+ *
+ * @throws {ApiError} on network failure or a non-2xx response.
+ */
+export async function apiFetchVoid(
+  path: string,
+  init?: RequestInit,
+): Promise<void> {
+  const { response, url } = await request(path, init)
+
+  if (!response.ok) {
+    throw new ApiError(await errorMessage(response, url), response.status, url)
+  }
 }
 
 /**

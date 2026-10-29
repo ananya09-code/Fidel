@@ -1,8 +1,9 @@
 
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useAuth } from "@clerk/tanstack-react-start";
 import fidelLogo from "@/assets/fidallogo.png";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -22,6 +23,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { AuthLoading } from "@/components/auth/AuthLoading";
+import {
+  usePreferences,
+  useUpdatePreferences,
+} from "@/hooks/use-preferences";
+import type { UserPreferences } from "@/lib/api/preferences";
 
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
@@ -184,14 +191,59 @@ const dailyGoals = [
 ];
 
 function OnboardingPage() {
-  const [step, setStep] = useState(0);
-  const [completed, setCompleted] = useState(false);
+  const { isLoaded, isSignedIn } = useAuth();
+  const preferencesQuery = usePreferences();
 
+  useEffect(() => {
+    if (!isLoaded || isSignedIn) return;
+    window.location.replace("/sign-in?redirect=%2Fonboarding");
+  }, [isLoaded, isSignedIn]);
+
+  if (!isLoaded || !isSignedIn || preferencesQuery.isPending) {
+    return <AuthLoading />;
+  }
+
+  if (preferencesQuery.isError) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[var(--bg-base)] px-5">
+        <div className="max-w-md rounded-3xl border border-red-500/20 bg-white/80 p-7 text-center">
+          <h1 className="text-xl font-bold text-[var(--sea-ink)]">
+            We couldn't load your setup
+          </h1>
+          <p role="alert" className="mt-2 text-sm text-red-700">
+            {preferencesQuery.error.message}
+          </p>
+          <Button
+            type="button"
+            onClick={() => void preferencesQuery.refetch()}
+            className="mt-5 bg-[var(--sea-ink)] text-white"
+          >
+            Try again
+          </Button>
+        </div>
+      </main>
+    );
+  }
+
+  return <OnboardingFlow initialPreferences={preferencesQuery.data} />;
+}
+
+function OnboardingFlow({
+  initialPreferences,
+}: {
+  initialPreferences: UserPreferences;
+}) {
+  const navigate = useNavigate();
+  const updatePreferences = useUpdatePreferences();
+  const [step, setStep] = useState(0);
+  const [completed, setCompleted] = useState(
+    initialPreferences.onboarding_completed,
+  );
   const [data, setData] = useState<OnboardingData>({
-    language: null,
-    level: null,
-    motivations: [],
-    dailyGoal: 5,
+    language: initialPreferences.learning_language,
+    level: initialPreferences.proficiency_level,
+    motivations: initialPreferences.motivations,
+    dailyGoal: initialPreferences.daily_goal_minutes,
   });
 
   const progress = completed ? 100 : ((step + 1) / steps.length) * 100;
@@ -217,7 +269,7 @@ function OnboardingPage() {
     }));
   }
 
-  function handleContinue() {
+  async function handleContinue() {
     if (!canContinue) return;
 
     if (step < steps.length - 1) {
@@ -225,9 +277,21 @@ function OnboardingPage() {
       return;
     }
 
-    // UI-only for now. Connect this data to FastAPI later.
-    console.log("Fidel onboarding completed:", data);
-    setCompleted(true);
+    if (!data.language || !data.level) return;
+
+    try {
+      await updatePreferences.mutateAsync({
+        learning_language: data.language,
+        proficiency_level: data.level,
+        motivations: data.motivations,
+        daily_goal_minutes: data.dailyGoal,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
+        onboarding_completed: true,
+      });
+      setCompleted(true);
+    } catch {
+      // The mutation exposes the API error beside the navigation controls.
+    }
   }
 
   function handleBack() {
@@ -243,8 +307,7 @@ function OnboardingPage() {
   }
 
   function handleStartLearning() {
-    // Connect to the first lesson route when it is ready.
-    console.log("Ready to start learning:", data);
+    void navigate({ to: "/Learn" });
   }
 
   return (
@@ -499,6 +562,11 @@ function OnboardingPage() {
             )}
 
             {/* Navigation */}
+            {updatePreferences.isError && (
+              <p role="alert" className="mt-5 text-center text-sm text-red-700">
+                {updatePreferences.error.message}
+              </p>
+            )}
             <div className="mt-8 flex items-center justify-between gap-4 border-t border-slate-200/60 pt-6 sm:mt-10">
               <Button
                 type="button"
@@ -513,11 +581,15 @@ function OnboardingPage() {
 
               <Button
                 type="button"
-                onClick={handleContinue}
-                disabled={!canContinue}
+                onClick={() => void handleContinue()}
+                disabled={!canContinue || updatePreferences.isPending}
                 className="h-12 min-w-36 gap-2 rounded-xl bg-[var(--sea-ink)] px-6 text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
               >
-                {step === steps.length - 1 ? "Finish setup" : "Continue"}
+                {updatePreferences.isPending
+                  ? "Saving..."
+                  : step === steps.length - 1
+                    ? "Finish setup"
+                    : "Continue"}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>

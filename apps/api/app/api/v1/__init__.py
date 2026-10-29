@@ -2,7 +2,7 @@
 from app.api.v1.endpoints.learning import router as learning_router
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import health, recordings, words,learning 
+from app.api.v1.endpoints import auth, health, preferences, recordings, words, learning
 
 api_router = APIRouter()
 
@@ -12,6 +12,16 @@ api_router.include_router(
     recordings.router,
     prefix="/audio-review",
     tags=["audio-review"],
+)
+
+api_router.include_router(
+    auth.router,
+    prefix="/v1",
+)
+
+api_router.include_router(
+    preferences.router,
+    prefix="/v1",
 )
 
 api_router.include_router(

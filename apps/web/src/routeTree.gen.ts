@@ -22,6 +22,8 @@ import { Route as AppReviewRouteImport } from './routes/_app/review'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppTestRouteImport } from './routes/_app/test'
 import { Route as AdminAudioReviewRouteImport } from './routes/admin.audio-review'
+import { Route as SignInSplatRouteImport } from './routes/sign-in.$'
+import { Route as SignUpSplatRouteImport } from './routes/sign-up.$'
 import { Route as AppLearnIndexRouteImport } from './routes/_app/Learn/index'
 import { Route as AppLearnLessonIdRouteImport } from './routes/_app/Learn/$lessonId'
 
@@ -89,6 +91,16 @@ const AdminAudioReviewRoute = AdminAudioReviewRouteImport.update({
   path: '/admin/audio-review',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SignInSplatRoute = SignInSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => SignInRoute,
+} as any)
+const SignUpSplatRoute = SignUpSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => SignUpRoute,
+} as any)
 const AppLearnIndexRoute = AppLearnIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -103,8 +115,8 @@ const AppLearnLessonIdRoute = AppLearnLessonIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
-  '/sign-in': typeof SignInRoute
-  '/sign-up': typeof SignUpRoute
+  '/sign-in': typeof SignInRouteWithChildren
+  '/sign-up': typeof SignUpRouteWithChildren
   '/Learn': typeof AppLearnRouteRouteWithChildren
   '/Home': typeof AppHomeRoute
   '/dictionary': typeof AppDictionaryRoute
@@ -113,14 +125,16 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AppSettingsRoute
   '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
+  '/sign-in/$': typeof SignInSplatRoute
+  '/sign-up/$': typeof SignUpSplatRoute
   '/Learn/$lessonId': typeof AppLearnLessonIdRoute
   '/Learn/': typeof AppLearnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
-  '/sign-in': typeof SignInRoute
-  '/sign-up': typeof SignUpRoute
+  '/sign-in': typeof SignInRouteWithChildren
+  '/sign-up': typeof SignUpRouteWithChildren
   '/Home': typeof AppHomeRoute
   '/dictionary': typeof AppDictionaryRoute
   '/profile': typeof AppProfileRoute
@@ -128,6 +142,8 @@ export interface FileRoutesByTo {
   '/settings': typeof AppSettingsRoute
   '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
+  '/sign-in/$': typeof SignInSplatRoute
+  '/sign-up/$': typeof SignUpSplatRoute
   '/Learn/$lessonId': typeof AppLearnLessonIdRoute
   '/Learn': typeof AppLearnIndexRoute
 }
@@ -136,8 +152,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteRouteWithChildren
   '/onboarding': typeof OnboardingRoute
-  '/sign-in': typeof SignInRoute
-  '/sign-up': typeof SignUpRoute
+  '/sign-in': typeof SignInRouteWithChildren
+  '/sign-up': typeof SignUpRouteWithChildren
   '/_app/Learn': typeof AppLearnRouteRouteWithChildren
   '/_app/Home': typeof AppHomeRoute
   '/_app/dictionary': typeof AppDictionaryRoute
@@ -146,6 +162,8 @@ export interface FileRoutesById {
   '/_app/settings': typeof AppSettingsRoute
   '/_app/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
+  '/sign-in/$': typeof SignInSplatRoute
+  '/sign-up/$': typeof SignUpSplatRoute
   '/_app/Learn/$lessonId': typeof AppLearnLessonIdRoute
   '/_app/Learn/': typeof AppLearnIndexRoute
 }
@@ -164,6 +182,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/test'
     | '/admin/audio-review'
+    | '/sign-in/$'
+    | '/sign-up/$'
     | '/Learn/$lessonId'
     | '/Learn/'
   fileRoutesByTo: FileRoutesByTo
@@ -179,6 +199,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/test'
     | '/admin/audio-review'
+    | '/sign-in/$'
+    | '/sign-up/$'
     | '/Learn/$lessonId'
     | '/Learn'
   id:
@@ -196,6 +218,8 @@ export interface FileRouteTypes {
     | '/_app/settings'
     | '/_app/test'
     | '/admin/audio-review'
+    | '/sign-in/$'
+    | '/sign-up/$'
     | '/_app/Learn/$lessonId'
     | '/_app/Learn/'
   fileRoutesById: FileRoutesById
@@ -204,8 +228,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRouteRoute: typeof AppRouteRouteWithChildren
   OnboardingRoute: typeof OnboardingRoute
-  SignInRoute: typeof SignInRoute
-  SignUpRoute: typeof SignUpRoute
+  SignInRoute: typeof SignInRouteWithChildren
+  SignUpRoute: typeof SignUpRouteWithChildren
   AdminAudioReviewRoute: typeof AdminAudioReviewRoute
 }
 
@@ -302,6 +326,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAudioReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sign-in/$': {
+      id: '/sign-in/$'
+      path: '/$'
+      fullPath: '/sign-in/$'
+      preLoaderRoute: typeof SignInSplatRouteImport
+      parentRoute: typeof SignInRoute
+    }
+    '/sign-up/$': {
+      id: '/sign-up/$'
+      path: '/$'
+      fullPath: '/sign-up/$'
+      preLoaderRoute: typeof SignUpSplatRouteImport
+      parentRoute: typeof SignUpRoute
+    }
     '/_app/Learn/': {
       id: '/_app/Learn/'
       path: '/'
@@ -357,12 +395,34 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
   AppRouteRouteChildren,
 )
 
+interface SignInRouteChildren {
+  SignInSplatRoute: typeof SignInSplatRoute
+}
+
+const SignInRouteChildren: SignInRouteChildren = {
+  SignInSplatRoute: SignInSplatRoute,
+}
+
+const SignInRouteWithChildren =
+  SignInRoute._addFileChildren(SignInRouteChildren)
+
+interface SignUpRouteChildren {
+  SignUpSplatRoute: typeof SignUpSplatRoute
+}
+
+const SignUpRouteChildren: SignUpRouteChildren = {
+  SignUpSplatRoute: SignUpSplatRoute,
+}
+
+const SignUpRouteWithChildren =
+  SignUpRoute._addFileChildren(SignUpRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
   OnboardingRoute: OnboardingRoute,
-  SignInRoute: SignInRoute,
-  SignUpRoute: SignUpRoute,
+  SignInRoute: SignInRouteWithChildren,
+  SignUpRoute: SignUpRouteWithChildren,
   AdminAudioReviewRoute: AdminAudioReviewRoute,
 }
 export const routeTree = rootRouteImport

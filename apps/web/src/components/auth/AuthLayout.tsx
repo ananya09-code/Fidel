@@ -6,9 +6,14 @@ import fidelLogo from "@/assets/fidallogo.png";
 interface AuthLayoutProps {
   children: ReactNode;
   variant: "sign-in" | "sign-up";
+  contained?: boolean;
 }
 
-export function AuthLayout({ children, variant }: AuthLayoutProps) {
+export function AuthLayout({
+  children,
+  variant,
+  contained = true,
+}: AuthLayoutProps) {
   return (
     <div className="relative isolate min-h-screen overflow-hidden bg-gradient-to-br from-sky-50 via-white to-amber-50">
       {/* Ambient gradient lighting */}
@@ -90,11 +95,15 @@ export function AuthLayout({ children, variant }: AuthLayoutProps) {
 
           {/* Authentication card */}
           <section className="mx-auto w-full max-w-md">
-            <Card className="gap-0 rounded-[2rem] border-white/80 bg-white/75 py-0 shadow-2xl shadow-slate-900/[0.07] backdrop-blur-2xl">
-              <CardContent className="p-6 sm:p-9">
-                {children}
-              </CardContent>
-            </Card>
+            {contained ? (
+              <Card className="gap-0 rounded-[2rem] border-white/80 bg-white/75 py-0 shadow-2xl shadow-slate-900/[0.07] backdrop-blur-2xl">
+                <CardContent className="p-6 sm:p-9">
+                  {children}
+                </CardContent>
+              </Card>
+            ) : (
+              children
+            )}
 
             {variant === "sign-up" && (
               <p className="mt-5 px-4 text-center text-xs leading-5 text-slate-500">

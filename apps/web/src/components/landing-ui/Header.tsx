@@ -1,8 +1,11 @@
 
 import { Link } from "@tanstack/react-router";
+import { useAuth } from "@clerk/tanstack-react-start";
 import fidelLogo from "@/assets/fidallogo.png";
 
 export function LandingHeader() {
+  const { isLoaded, isSignedIn } = useAuth();
+
   return (
     <header className="sticky top-0 z-50 w-full px-4 pt-4 sm:px-6">
       <div
@@ -45,40 +48,65 @@ export function LandingHeader() {
 
         {/* Actions */}
         <div className="relative z-10 flex items-center gap-2 sm:gap-3">
-          <Link
-            to="/sign-in"
-            className="
-              rounded-xl px-3 py-2.5 text-sm font-semibold
-              text-[var(--sea-ink)]
-              transition-all duration-200
-              hover:bg-white/40
-              active:scale-95
-              sm:px-4
-            "
-          >
-            Log in
-          </Link>
+          {isLoaded && isSignedIn ? (
+            <Link
+              to="/Home"
+              className="
+                group relative overflow-hidden rounded-xl
+                border border-white/20
+                bg-[var(--sea-ink)] px-4 py-2.5
+                text-sm font-semibold text-white
+                shadow-[0_3px_12px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.2)]
+                transition-all duration-200
+                hover:-translate-y-0.5 hover:shadow-lg
+                active:translate-y-0 active:scale-95
+                sm:px-5
+              "
+            >
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/15 to-transparent"
+              />
+              <span className="relative">Go to dashboard</span>
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/sign-in"
+                className="
+                  rounded-xl px-3 py-2.5 text-sm font-semibold
+                  text-[var(--sea-ink)]
+                  transition-all duration-200
+                  hover:bg-white/40
+                  active:scale-95
+                  sm:px-4
+                "
+              >
+                Log in
+              </Link>
 
-          <Link
-            to="/sign-up"
-            className="
-              group relative overflow-hidden rounded-xl
-              border border-white/20
-              bg-[var(--sea-ink)] px-4 py-2.5
-              text-sm font-semibold text-white
-              shadow-[0_3px_12px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.2)]
-              transition-all duration-200
-              hover:-translate-y-0.5 hover:shadow-lg
-              active:translate-y-0 active:scale-95
-              sm:px-5
-            "
-          >
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/15 to-transparent"
-            />
-            <span className="relative">Start learning</span>
-          </Link>
+              <Link
+                to="/sign-up"
+                className="
+                  group relative overflow-hidden rounded-xl
+                  border border-white/20
+                  bg-[var(--sea-ink)] px-4 py-2.5
+                  text-sm font-semibold text-white
+                  shadow-[0_3px_12px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.2)]
+                  transition-all duration-200
+                  hover:-translate-y-0.5 hover:shadow-lg
+                  active:translate-y-0 active:scale-95
+                  sm:px-5
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/15 to-transparent"
+                />
+                <span className="relative">Start learning</span>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

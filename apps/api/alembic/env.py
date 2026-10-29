@@ -23,13 +23,17 @@ from dotenv import load_dotenv  # noqa: E402
 load_dotenv(API_ROOT / ".env")
 
 from app.db.database import DATABASE_URL  # noqa: E402
+from app.db.url import escape_alembic_config_value  # noqa: E402
 
 config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
+config.set_main_option(
+    "sqlalchemy.url",
+    escape_alembic_config_value(DATABASE_URL),
+)
 
 target_metadata = None
 

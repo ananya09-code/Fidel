@@ -1,6 +1,11 @@
 
 import { useState } from "react";
 import {
+  useAuth,
+  useClerk,
+  useUser,
+} from "@clerk/tanstack-react-start";
+import {
   Bell,
   Check,
   Globe2,
@@ -10,10 +15,28 @@ import {
   Save,
   Sun,
   Target,
+  Trash2,
   Volume2,
 } from "lucide-react";
 
-const initialSettings = {
+import { deleteProfile } from "@/lib/api/profile";
+import {
+  usePreferences,
+  useUpdatePreferences,
+} from "@/hooks/use-preferences";
+import type { UserPreferences } from "@/lib/api/preferences";
+
+type Settings = {
+  learningLanguage: "Afaan Oromoo" | "Amharic";
+  interfaceLanguage: "English" | "Afaan Oromoo" | "Amharic";
+  dailyGoal: 5 | 10 | 15 | 20;
+  remindersEnabled: boolean;
+  reminderTime: string;
+  soundEnabled: boolean;
+  appearance: "light" | "dark" | "system";
+};
+
+const initialSettings: Settings = {
   learningLanguage: "Afaan Oromoo",
   interfaceLanguage: "English",
   dailyGoal: 10,
@@ -23,7 +46,27 @@ const initialSettings = {
   appearance: "system",
 };
 
-type Settings = typeof initialSettings;
+function settingsFromPreferences(
+  preferences: UserPreferences | undefined,
+): Settings {
+  if (!preferences) return initialSettings;
+
+  return {
+    learningLanguage:
+      preferences.learning_language === "am" ? "Amharic" : "Afaan Oromoo",
+    interfaceLanguage:
+      preferences.interface_language === "am"
+        ? "Amharic"
+        : preferences.interface_language === "om"
+          ? "Afaan Oromoo"
+          : "English",
+    dailyGoal: preferences.daily_goal_minutes,
+    remindersEnabled: preferences.reminders_enabled,
+    reminderTime: preferences.reminder_time,
+    soundEnabled: preferences.sound_enabled,
+    appearance: preferences.appearance,
+  };
+}
 
 function SectionHeading({
   icon: Icon,
@@ -106,20 +149,96 @@ function SelectField({
 }
 
 export default function SettingsOverview() {
-  const [settings, setSettings] = useState<Settings>(initialSettings);
+  const [draft, setDraft] = useState<{
+    userId: string;
+    settings: Settings;
+  } | null>(null);
   const [saved, setSaved] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [accountError, setAccountError] = useState<string | null>(null);
+  const { getToken, userId } = useAuth();
+  const { signOut } = useClerk();
+  const { user } = useUser();
+  const preferencesQuery = usePreferences();
+  const updatePreferences = useUpdatePreferences();
+
+  const settings =
+    draft && draft.userId === userId
+      ? draft.settings
+      : settingsFromPreferences(preferencesQuery.data);
+
+  async function handleDeleteAccount() {
+    if (!user || deleting) return;
+
+    const confirmed = window.confirm(
+      "Delete your Fidel account and local profile? This cannot be undone.",
+    );
+    if (!confirmed) return;
+
+    setDeleting(true);
+    setAccountError(null);
+
+    try {
+      const token = await getToken();
+      if (token) {
+        await deleteProfile(token);
+      }
+
+      await user.delete();
+      await signOut({ redirectUrl: "/" });
+    } catch (error) {
+      setAccountError(
+        error instanceof Error
+          ? error.message
+          : "Unable to delete your account. Please try again.",
+      );
+    } finally {
+      setDeleting(false);
+    }
+  }
 
   function updateSetting<K extends keyof Settings>(
     key: K,
     value: Settings[K],
   ) {
-    setSettings((current) => ({ ...current, [key]: value }));
+    if (!userId) return;
+    setDraft({
+      userId,
+      settings: { ...settings, [key]: value },
+    });
     setSaved(false);
   }
 
-  function saveSettings() {
-    console.log("Demo settings:", settings);
-    setSaved(true);
+  async function saveSettings() {
+    setSaved(false);
+    try {
+      await updatePreferences.mutateAsync({
+        learning_language:
+          settings.learningLanguage === "Amharic" ? "am" : "om",
+        interface_language:
+          settings.interfaceLanguage === "Amharic"
+            ? "am"
+            : settings.interfaceLanguage === "Afaan Oromoo"
+              ? "om"
+              : "en",
+        daily_goal_minutes: settings.dailyGoal,
+        reminders_enabled: settings.remindersEnabled,
+        reminder_time: settings.reminderTime,
+        sound_enabled: settings.soundEnabled,
+        appearance: settings.appearance,
+      });
+      setSaved(true);
+    } catch {
+      // The mutation error is rendered next to the save action.
+    }
+  }
+
+  if (preferencesQuery.isPending) {
+    return (
+      <div className="py-16 text-center text-sm text-[var(--sea-ink)]/60">
+        Loading your settings...
+      </div>
+    );
   }
 
   return (<div className="mx-auto w-full max-w-5xl space-y-7 pb-10"> <div> <p className="mb-2 text-sm font-medium text-[var(--sea-ink)]/55">
@@ -128,7 +247,6 @@ export default function SettingsOverview() {
       Set your learning goals, choose your preferences, and make Fidel feel
       right for you. </p> </div>
 
-    ```
     {/* Language preferences */}
     <section className="rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--bg-base)] p-5 sm:p-7">
       <SectionHeading
@@ -145,7 +263,12 @@ export default function SettingsOverview() {
         <SelectField
           label="Learning language"
           value={settings.learningLanguage}
-          onChange={(value) => updateSetting("learningLanguage", value)}
+          onChange={(value) =>
+            updateSetting(
+              "learningLanguage",
+              value === "Amharic" ? "Amharic" : "Afaan Oromoo",
+            )
+          }
           options={["Afaan Oromoo", "Amharic"]}
         />
       </SettingRow>
@@ -158,7 +281,16 @@ export default function SettingsOverview() {
         <SelectField
           label="Interface language"
           value={settings.interfaceLanguage}
-          onChange={(value) => updateSetting("interfaceLanguage", value)}
+          onChange={(value) =>
+            updateSetting(
+              "interfaceLanguage",
+              value === "Amharic"
+                ? "Amharic"
+                : value === "Afaan Oromoo"
+                  ? "Afaan Oromoo"
+                  : "English",
+            )
+          }
           options={["English", "Afaan Oromoo", "Amharic"]}
         />
       </SettingRow>
@@ -173,12 +305,12 @@ export default function SettingsOverview() {
       />
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {[
+        {([
           { minutes: 5, label: "Casual", detail: "A little every day" },
           { minutes: 10, label: "Regular", detail: "A steady pace" },
           { minutes: 15, label: "Serious", detail: "Make real progress" },
           { minutes: 20, label: "Intense", detail: "Challenge yourself" },
-        ].map((goal) => {
+        ] as const).map((goal) => {
           const selected = settings.dailyGoal === goal.minutes;
 
           return (
@@ -272,11 +404,11 @@ export default function SettingsOverview() {
       />
 
       <div className="grid gap-3 sm:grid-cols-3">
-        {[
+        {([
           { value: "light", label: "Light", icon: Sun },
           { value: "dark", label: "Dark", icon: Moon },
           { value: "system", label: "System", icon: Laptop },
-        ].map((option) => {
+        ] as const).map((option) => {
           const Icon = option.icon;
           const selected = settings.appearance === option.value;
 
@@ -299,8 +431,7 @@ export default function SettingsOverview() {
       </div>
 
       <p className="mt-3 text-xs leading-relaxed text-[var(--sea-ink)]/50">
-        These appearance options are demo preferences. Selecting one does not
-        yet change the app theme.
+        Your appearance choice is saved for future theme support.
       </p>
     </section>
 
@@ -309,8 +440,17 @@ export default function SettingsOverview() {
       <SectionHeading
         icon={LogOut}
         title="Account"
-        description="Account actions will be connected to authentication later."
+        description="Manage your Fidel session and account."
       />
+
+      {accountError && (
+        <p
+          role="alert"
+          className="mb-4 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3 text-sm text-red-700"
+        >
+          {accountError}
+        </p>
+      )}
 
       <div className="flex flex-col gap-3 border-t border-[var(--sea-ink)]/10 pt-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -318,18 +458,38 @@ export default function SettingsOverview() {
             Sign out
           </p>
           <p className="mt-1 text-xs text-[var(--sea-ink)]/55">
-            Demo only — no account session will be ended.
+            End your session on this device.
           </p>
         </div>
         <button
           type="button"
-          onClick={() =>
-            console.log("Demo sign-out action; authentication is not connected.")
-          }
-          className="inline-flex items-center justify-center gap-2 rounded-xl border border-red-500/20 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-500/5"
+          onClick={() => {
+            void signOut({ redirectUrl: "/" });
+          }}
+          className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--sea-ink)]/15 px-4 py-2.5 text-sm font-medium text-[var(--sea-ink)] transition hover:bg-[var(--sand)]/40"
         >
           <LogOut size={16} />
           Sign out
+        </button>
+      </div>
+
+      <div className="mt-4 flex flex-col gap-3 border-t border-[var(--sea-ink)]/10 pt-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm font-medium text-red-700">Delete account</p>
+          <p className="mt-1 text-xs text-red-700/70">
+            Permanently delete your Clerk account and local Fidel profile.
+          </p>
+        </div>
+        <button
+          type="button"
+          disabled={deleting}
+          onClick={() => {
+            void handleDeleteAccount();
+          }}
+          className="inline-flex items-center justify-center gap-2 rounded-xl border border-red-500/20 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-500/5 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          <Trash2 size={16} />
+          {deleting ? "Deleting…" : "Delete account"}
         </button>
       </div>
     </section>
@@ -337,16 +497,27 @@ export default function SettingsOverview() {
     {/* Save settings */}
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <p className="text-xs leading-relaxed text-[var(--sea-ink)]/55">
-        Demo preferences reset when the page reloads.
+        Changes are saved to your Fidel account.
       </p>
+
+      {(preferencesQuery.isError || updatePreferences.isError) && (
+        <p role="alert" className="text-sm text-red-700">
+          {updatePreferences.error?.message ?? preferencesQuery.error?.message}
+        </p>
+      )}
 
       <button
         type="button"
-        onClick={saveSettings}
+        onClick={() => void saveSettings()}
+        disabled={updatePreferences.isPending}
         className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--sea-ink)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2"
       >
         {saved ? <Check size={17} /> : <Save size={17} />}
-        {saved ? "Demo settings saved" : "Save changes"}
+        {updatePreferences.isPending
+          ? "Saving..."
+          : saved
+            ? "Settings saved"
+            : "Save changes"}
       </button>
     </div>
   </div>

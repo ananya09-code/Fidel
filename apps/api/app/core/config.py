@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 
+from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -34,6 +35,16 @@ class Settings(BaseSettings):
 
     # Lifetime of presigned audio URLs handed to the review dashboard.
     audio_url_expires_in: int = 3600
+
+    # Clerk user authentication. The secret key is used to fetch signing keys
+    # and the issuer is checked explicitly after the SDK verifies the token.
+    clerk_secret_key: SecretStr | None = None
+    clerk_issuer: str | None = None
+
+    # Optional networkless verification key and allowed browser origins. If the
+    # JWT key is set, tokens are verified without calling Clerk's JWKS endpoint.
+    clerk_jwt_key: SecretStr | None = None
+    clerk_authorized_parties: list[str] | None = None
 
 
 @lru_cache

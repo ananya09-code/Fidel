@@ -1,5 +1,6 @@
 import { useSidebar } from "@/components/ui/sidebar";
 import { Link } from "@tanstack/react-router";
+import { useClerk, useUser } from "@clerk/tanstack-react-start";
 
 import {
   Bell,
@@ -13,7 +14,7 @@ import {
 import fidelLogo from "@/assets/fidallogo.png";
 
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
   DropdownMenu,
@@ -26,8 +27,20 @@ import {
 
 export function Header() {
   const { state, isMobile, openMobile } = useSidebar();
+  const { user } = useUser();
+  const { signOut } = useClerk();
 
   const sidebarIsOpen = isMobile ? openMobile : state === "expanded";
+  const displayName =
+    user?.fullName || user?.username || "Fidel learner";
+  const email = user?.primaryEmailAddress?.emailAddress ?? "";
+  const initials =
+    displayName
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join("") || "F";
 
   return (
     <div className="flex w-full min-w-0 items-center justify-between gap-3">
@@ -109,9 +122,14 @@ export function Header() {
               aria-label="Open profile menu"
               className="flex items-center gap-2 rounded-xl border border-white/70 bg-white/50 p-1.5 pr-2 shadow-sm backdrop-blur-xl transition hover:bg-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--hero-b)]"
             >
+              <span className="hidden max-w-36 truncate text-sm font-medium text-slate-700 lg:block">
+                {displayName}
+              </span>
+
               <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage src={user?.imageUrl} alt="" />
                 <AvatarFallback className="rounded-lg bg-[var(--sea-ink)] text-sm font-semibold text-[var(--foam)]">
-                  U
+                  {initials}
                 </AvatarFallback>
               </Avatar>
 
@@ -124,37 +142,38 @@ export function Header() {
             className="w-56 rounded-2xl border-white/60 bg-white/95 p-2 shadow-xl backdrop-blur-xl"
           >
             <DropdownMenuLabel className="px-3 py-2">
-              <p className="font-semibold text-[var(--sea-ink)]">My account</p>
-              <p className="mt-1 text-xs font-normal text-slate-500">
-                Your Fidel learning journey
+              <p className="truncate font-semibold text-[var(--sea-ink)]">
+                {displayName}
+              </p>
+              <p className="mt-1 truncate text-xs font-normal text-slate-500">
+                {email || "Your Fidel learning journey"}
               </p>
             </DropdownMenuLabel>
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem
-              className="rounded-lg"
-              onSelect={() => {
-                window.location.href = "/profile";
-              }}
-            >
-              <UserRound className="mr-2 h-4 w-4" />
-              My profile
+            <DropdownMenuItem asChild className="rounded-lg">
+              <Link to="/profile">
+                <UserRound className="mr-2 h-4 w-4" />
+                My profile
+              </Link>
             </DropdownMenuItem>
 
-            <DropdownMenuItem
-              className="rounded-lg"
-              onSelect={() => {
-                window.location.href = "/settings";
-              }}
-            >
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
+            <DropdownMenuItem asChild className="rounded-lg">
+              <Link to="/settings">
+                <Settings className="mr-2 h-4 w-4" />
+                Settings
+              </Link>
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem disabled className="rounded-lg">
+            <DropdownMenuItem
+              className="rounded-lg text-rose-600 focus:text-rose-700"
+              onSelect={() => {
+                void signOut({ redirectUrl: "/" });
+              }}
+            >
               <LogOut className="mr-2 h-4 w-4" />
               Sign out
             </DropdownMenuItem>

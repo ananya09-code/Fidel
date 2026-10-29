@@ -1,7 +1,11 @@
+import { useEffect } from "react";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { useAuth } from "@clerk/tanstack-react-start";
 
+import { AuthLoading } from "@/components/auth/AuthLoading";
 import { AppSidebar } from "@/components/common-ui/AppSideBar";
 import { Header } from "@/components/common-ui/Header";
+import { useProfile } from "@/hooks/use-profile";
 
 import {
   SidebarProvider,
@@ -14,6 +18,22 @@ export const Route = createFileRoute("/_app")({
 });
 
 function AppLayout() {
+  const { isLoaded, isSignedIn } = useAuth();
+  useProfile();
+
+  useEffect(() => {
+    if (!isLoaded || isSignedIn) return;
+
+    const target = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    window.location.replace(
+      `/sign-in?redirect=${encodeURIComponent(target)}`,
+    );
+  }, [isLoaded, isSignedIn]);
+
+  if (!isLoaded || !isSignedIn) {
+    return <AuthLoading />;
+  }
+
   return (
     <SidebarProvider defaultOpen={true}>
       <AppSidebar />
