@@ -248,12 +248,20 @@ user_words = Table(
     Column("times_correct", Integer, nullable=False, server_default="0"),
     Column("text", String),
     Column("meaning", String),
+    Column("is_favorite", Boolean, nullable=False, server_default="0"),
+    Column("learning_state", String, nullable=False, server_default="learning"),
     Column("first_seen_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
     Column("last_seen_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
     CheckConstraint("times_seen >= 0", name="user_words_times_seen_check"),
     CheckConstraint("times_correct >= 0", name="user_words_times_correct_check"),
     CheckConstraint("times_correct <= times_seen", name="user_words_correct_not_above_seen_check"),
+    CheckConstraint(
+        "learning_state IN ('learning','learned','needs_review')",
+        name="user_words_learning_state_check",
+    ),
     Index("user_words_user_recent_idx", "user_id", "last_seen_at"),
+    Index("user_words_user_state_idx", "user_id", "learning_state"),
+    Index("user_words_user_favorite_idx", "user_id", "is_favorite"),
 )
 
 user_preferences = Table(

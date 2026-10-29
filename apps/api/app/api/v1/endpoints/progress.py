@@ -334,6 +334,20 @@ def save_answer(
 
     now = datetime.now(timezone.utc)
     word_ids = [str(payload.word_id), str(payload.selected_word_id)]
+    previous_correct = db.execute(
+        text(
+            """
+            SELECT is_correct FROM answer_attempts
+            WHERE attempt_id = :attempt_id AND question_id = :question_id
+              AND user_id = :user_id
+            """
+        ),
+        {
+            "attempt_id": attempt_id,
+            "question_id": payload.question_id,
+            "user_id": user_id,
+        },
+    ).scalar_one_or_none()
     statement = text(
         """
         INSERT INTO answer_attempts (
@@ -359,6 +373,43 @@ def save_answer(
             "question_type": payload.question_type,
             "word_ids": word_ids,
             "is_correct": payload.word_id == payload.selected_word_id,
+            "now": now,
+        },
+    )
+    is_correct = payload.word_id == payload.selected_word_id
+    seen_increment = 1 if previous_correct is None else 0
+    correct_delta = int(is_correct) - (
+        int(previous_correct) if previous_correct is not None else 0
+    )
+    db.execute(
+        text(
+            """
+            INSERT INTO user_words (
+                user_id, word_id, times_seen, times_correct, text, meaning,
+                first_seen_at, last_seen_at, is_favorite, learning_state
+            )
+            SELECT
+                :user_id, w.id, 1, :correct_increment, w.text,
+                (SELECT wt.meaning FROM word_translations AS wt
+                 WHERE wt.word_id = w.id AND wt.language_code = 'en'
+                 ORDER BY wt.created_at LIMIT 1),
+                :now, :now, false, :learning_state
+            FROM words AS w
+            WHERE w.id = :word_id AND w.status = 'approved'
+            ON CONFLICT (user_id, word_id) DO UPDATE SET
+                times_seen = user_words.times_seen + :seen_increment,
+                times_correct = user_words.times_correct + :correct_delta,
+                learning_state = :learning_state,
+                last_seen_at = :now
+            """
+        ),
+        {
+            "user_id": user_id,
+            "word_id": payload.word_id,
+            "correct_increment": 1 if is_correct else 0,
+            "seen_increment": seen_increment,
+            "correct_delta": correct_delta,
+            "learning_state": "learned" if is_correct else "needs_review",
             "now": now,
         },
     )

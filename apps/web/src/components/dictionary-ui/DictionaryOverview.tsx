@@ -3,7 +3,10 @@ import { useMemo, useState } from "react";
 import { ArrowDownRight } from "lucide-react";
 
 import { useWords } from "@/hooks/use-words";
+import { usePreferences } from "@/hooks/use-preferences";
+import { useUpdateVocabularyState, useVocabularyState } from "@/hooks/use-vocabulary-state";
 import type { DictionaryWord } from "@/lib/api/words";
+import type { LearningState } from "@/lib/api/vocabulary";
 
 import { DictionaryHeader } from "./DictionaryHeader";
 import { DictionaryFilters } from "./DictionaryFilters";
@@ -19,8 +22,10 @@ export function DictionaryOverview({
 }: DictionaryOverviewProps) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All words");
-  const [favorites, setFavorites] = useState<string[]>([]);
   const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const preferences = usePreferences();
+  const vocabulary = useVocabularyState();
+  const updateVocabulary = useUpdateVocabularyState();
 
   const {
     data,
@@ -29,10 +34,18 @@ export function DictionaryOverview({
     error,
     refetch,
   } = useWords({
-    language_code: "om",
+    language_code: preferences.data?.learning_language ?? "om",
   });
 
   const words = useMemo(() => data?.data ?? [], [data]);
+  const states = useMemo(
+    () => Object.fromEntries((vocabulary.data?.data ?? []).map((item) => [item.word_id, item])),
+    [vocabulary.data],
+  );
+  const favorites = useMemo(
+    () => Object.values(states).filter((item) => item.is_favorite).map((item) => item.word_id),
+    [states],
+  );
   const featuredWord = words[0];
 
   const filteredWords = useMemo(() => {
@@ -71,11 +84,11 @@ export function DictionaryOverview({
   }, [words, query, activeCategory, favoritesOnly, favorites]);
 
   function toggleFavorite(id: string) {
-    setFavorites((current) =>
-      current.includes(id)
-        ? current.filter((favorite) => favorite !== id)
-        : [...current, id],
-    );
+    updateVocabulary.mutate({ wordId: id, update: { is_favorite: !states[id]?.is_favorite } });
+  }
+
+  function setLearningState(id: string, learningState: LearningState) {
+    updateVocabulary.mutate({ wordId: id, update: { learning_state: learningState } });
   }
 
   function playAudio(word: DictionaryWord) {
@@ -96,7 +109,7 @@ export function DictionaryOverview({
     setFavoritesOnly(false);
   }
 
-  if (isPending) {
+  if (isPending || preferences.isPending || vocabulary.isPending) {
     return (
       <main className="mx-auto w-full max-w-7xl px-4 py-16 text-center sm:px-6 lg:px-8">
         <p className="text-sm text-[var(--sea-ink)]/65">
@@ -106,7 +119,7 @@ export function DictionaryOverview({
     );
   }
 
-  if (isError) {
+  if (isError || preferences.isError || vocabulary.isError) {
     return (
       <main className="mx-auto w-full max-w-7xl px-4 py-16 text-center sm:px-6 lg:px-8">
         <h1 className="text-2xl font-semibold text-[var(--sea-ink)]">
@@ -114,8 +127,8 @@ export function DictionaryOverview({
         </h1>
 
         <p className="mt-2 text-sm text-[var(--sea-ink)]/65">
-          {error instanceof Error
-            ? error.message
+          {(error ?? preferences.error ?? vocabulary.error) instanceof Error
+            ? (error ?? preferences.error ?? vocabulary.error)?.message
             : "Something went wrong while loading vocabulary."}
         </p>
 
@@ -157,10 +170,12 @@ export function DictionaryOverview({
         words={filteredWords}
         favorites={favorites}
         favoritesOnly={favoritesOnly}
+        states={states}
         onToggleFavoritesOnly={() =>
           setFavoritesOnly((current) => !current)
         }
         onToggleFavorite={toggleFavorite}
+        onSetLearningState={setLearningState}
         onPlayAudio={playAudio}
         onPracticeWord={onPracticeWord}
         onClearFilters={clearFilters}
@@ -176,8 +191,7 @@ export function DictionaryOverview({
             Your vocabulary
           </p>
           <p className="mt-1 text-xs leading-5 text-[var(--sea-ink)]/55">
-            Words are loaded from the Fidel API. Favorites are currently saved
-            in component state and will reset when the page reloads.
+            Favorites and learning status are saved to your account.
           </p>
         </div>
       </footer>

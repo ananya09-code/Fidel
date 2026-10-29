@@ -10,13 +10,16 @@ import {
 } from "lucide-react";
 
 import type { DictionaryWord } from "@/lib/api/words";
+import type { LearningState, VocabularyState } from "@/lib/api/vocabulary";
 
 type VocabularyListProps = {
   words: DictionaryWord[];
   favorites: string[];
   favoritesOnly: boolean;
+  states: Record<string, VocabularyState>;
   onToggleFavoritesOnly: () => void;
   onToggleFavorite: (id: string) => void;
+  onSetLearningState: (id: string, state: LearningState) => void;
   onPlayAudio: (word: DictionaryWord) => void;
   onPracticeWord?: (word: DictionaryWord) => void;
   onClearFilters: () => void;
@@ -26,8 +29,10 @@ export function VocabularyList({
   words,
   favorites,
   favoritesOnly,
+  states,
   onToggleFavoritesOnly,
   onToggleFavorite,
+  onSetLearningState,
   onPlayAudio,
   onPracticeWord,
   onClearFilters,
@@ -72,6 +77,7 @@ export function VocabularyList({
           {words.map((word, index) => {
             const expanded = expandedWord === word.id;
             const favorite = favorites.includes(word.id);
+            const learningState = states[word.id]?.learning_state ?? "learning";
 
             const englishMeaning =
               word.translations.find(
@@ -110,6 +116,11 @@ export function VocabularyList({
                         <span className="rounded-full bg-[var(--sea-ink)]/5 px-2 py-0.5 text-[10px] text-[var(--sea-ink)]/60">
                           {word.category}
                         </span>
+                        {learningState !== "learning" && (
+                          <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] text-emerald-700">
+                            {learningState === "learned" ? "Learned" : "Needs review"}
+                          </span>
+                        )}
                       </div>
 
                       <p className="mt-1 truncate text-sm text-[var(--sea-ink)]/65">
@@ -216,6 +227,22 @@ export function VocabularyList({
                       >
                         Practice this word
                         <ArrowRight size={15} />
+                      </button>
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => onSetLearningState(word.id, "learned")}
+                        className="rounded-lg border border-emerald-200 px-3 py-2 text-xs font-medium text-emerald-700"
+                      >
+                        Mark learned
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onSetLearningState(word.id, "needs_review")}
+                        className="rounded-lg border border-amber-200 px-3 py-2 text-xs font-medium text-amber-700"
+                      >
+                        Needs review
                       </button>
                     </div>
                   </div>

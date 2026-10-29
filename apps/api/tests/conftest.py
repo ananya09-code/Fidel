@@ -123,6 +123,7 @@ def auth_client(client, session_factory, monkeypatch):
     from app.api.v1.endpoints import auth as endpoint_module
     from app.api.v1.endpoints import preferences as preferences_module
     from app.api.v1.endpoints import progress as progress_module
+    from app.api.v1.endpoints import vocabulary as vocabulary_module
     from app.core.config import get_settings
     from app.services.clerk_users import ClerkProfileData
 
@@ -143,6 +144,7 @@ def auth_client(client, session_factory, monkeypatch):
     client.app.dependency_overrides[endpoint_module.get_db] = override_get_db
     client.app.dependency_overrides[preferences_module.get_db] = override_get_db
     client.app.dependency_overrides[progress_module.get_db] = override_get_db
+    client.app.dependency_overrides[vocabulary_module.get_db] = override_get_db
     monkeypatch.setattr(
         endpoint_module,
         "fetch_clerk_profile",

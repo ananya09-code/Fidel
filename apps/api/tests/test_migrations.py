@@ -15,8 +15,9 @@ def _config() -> Config:
 def test_revision_graph_matches_deployed_head() -> None:
     script = ScriptDirectory.from_config(_config())
 
-    assert script.get_current_head() == "0005_user_preferences"
+    assert script.get_current_head() == "0006_user_word_state"
     assert [revision.revision for revision in script.walk_revisions()] == [
+        "0006_user_word_state",
         "0005_user_preferences",
         "0004_progress",
         "0003_users",
@@ -54,5 +55,7 @@ def test_fresh_postgresql_upgrade_sql_contains_complete_schema(monkeypatch) -> N
         assert f"CREATE TABLE {table_name}" in sql
 
     assert "0005_user_preferences" in sql
+    assert "0006_user_word_state" in sql
+    assert "user_words_learning_state_check" in sql
     assert "lesson_attempts_one_in_progress_per_lesson" in sql
     assert "audio_recordings_one_active_per_config" in sql
