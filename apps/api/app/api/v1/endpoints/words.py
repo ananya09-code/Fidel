@@ -14,6 +14,8 @@ from app.core.config import get_settings
 from app.db.database import SessionLocal
 from app.schemas.words import (
     WordAudio,
+    WordCategory,
+    WordCategoryListResponse,
     WordDetail,
     WordListMeta,
     WordListResponse,
@@ -139,6 +141,7 @@ def get_vocabulary(
         None,
         pattern="^(word|phrase|sentence)$",
     ),
+    audio_available: bool | None = None,
     search: str | None = Query(None, max_length=100),
     db: Session = Depends(get_db),
 ) -> WordListResponse:
@@ -166,9 +169,20 @@ def get_vocabulary(
         filters.append("w.content_type = :content_type")
         params["content_type"] = content_type
 
+    if audio_available is True:
+        filters.append(
+            "EXISTS (SELECT 1 FROM audio_recordings filter_audio "
+            "WHERE filter_audio.word_id = w.id "
+            "AND filter_audio.status = 'approved' "
+            "AND filter_audio.superseded_at IS NULL "
+            "AND filter_audio.storage_key IS NOT NULL)"
+        )
+
     if search:
         filters.append(
-            "(LOWER(w.text) LIKE LOWER(:search) OR EXISTS ("
+            "(LOWER(w.text) LIKE LOWER(:search) "
+            "OR LOWER(COALESCE(w.transliteration, '')) LIKE LOWER(:search) "
+            "OR LOWER(COALESCE(w.category, '')) LIKE LOWER(:search) OR EXISTS ("
             "SELECT 1 FROM word_translations search_wt "
             "WHERE search_wt.word_id = w.id "
             "AND LOWER(search_wt.meaning) LIKE LOWER(:search)))"
@@ -211,6 +225,7 @@ def get_vocabulary(
     word_ids = [row["id"] for row in rows]
     translations = _load_translations(db, word_ids)
     audio = _load_audio(db, word_ids)
+    total_pages = ceil(count / page_size) if count else 0
 
     data = []
     for row in rows:
@@ -237,8 +252,6 @@ def get_vocabulary(
                 audio=_audio_payload(audio.get(word_id)),
             )
         )
-        total_pages = ceil(count / page_size) if count else 0
-
     return WordListResponse(
         data=data,
         meta=WordListMeta(
@@ -252,6 +265,41 @@ def get_vocabulary(
                 has_previous=page > 1 and total_pages > 0,
             ),
         ),
+    )
+
+
+@router.get(
+    "/categories",
+    response_model=WordCategoryListResponse,
+    summary="Get vocabulary categories",
+)
+def get_categories(
+    language_code: str = Query("om", min_length=2, max_length=10),
+    db: Session = Depends(get_db),
+) -> WordCategoryListResponse:
+    """Return categories and counts from approved words for one language."""
+    rows = db.execute(
+        text(
+            """
+            SELECT
+                COALESCE(NULLIF(TRIM(category), ''), 'Uncategorized') AS name,
+                COUNT(*) AS word_count
+            FROM words
+            WHERE status = 'approved' AND language_code = :language_code
+            GROUP BY COALESCE(NULLIF(TRIM(category), ''), 'Uncategorized')
+            ORDER BY LOWER(
+                COALESCE(NULLIF(TRIM(category), ''), 'Uncategorized')
+            )
+            """
+        ),
+        {"language_code": language_code},
+    ).mappings().all()
+
+    return WordCategoryListResponse(
+        data=[
+            WordCategory(name=row["name"], word_count=row["word_count"])
+            for row in rows
+        ]
     )
 
 

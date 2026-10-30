@@ -23,6 +23,11 @@ type VocabularyListProps = {
   onPlayAudio: (word: DictionaryWord) => void;
   onPracticeWord?: (word: DictionaryWord) => void;
   onClearFilters: () => void;
+  totalItems: number;
+  hasNextPage: boolean;
+  isLoadingMore: boolean;
+  onLoadMore: () => void;
+  updatingWordId?: string;
 };
 
 export function VocabularyList({
@@ -36,6 +41,11 @@ export function VocabularyList({
   onPlayAudio,
   onPracticeWord,
   onClearFilters,
+  totalItems,
+  hasNextPage,
+  isLoadingMore,
+  onLoadMore,
+  updatingWordId,
 }: VocabularyListProps) {
   const [expandedWord, setExpandedWord] = useState<string | null>(null);
 
@@ -48,7 +58,7 @@ export function VocabularyList({
           </h2>
 
           <p className="mt-1 text-sm text-[var(--sea-ink)]/55">
-            {words.length} {words.length === 1 ? "word" : "words"} found
+            {totalItems} {totalItems === 1 ? "word" : "words"} found
           </p>
         </div>
 
@@ -78,11 +88,15 @@ export function VocabularyList({
             const expanded = expandedWord === word.id;
             const favorite = favorites.includes(word.id);
             const learningState = states[word.id]?.learning_state ?? "learning";
+            const isUpdating = updatingWordId === word.id;
 
             const englishMeaning =
               word.translations.find(
                 (translation) => translation.language_code === "en",
               )?.meaning || word.meaning;
+            const amharicMeaning = word.translations.find(
+              (translation) => translation.language_code === "am",
+            )?.meaning;
 
             return (
               <article
@@ -123,9 +137,16 @@ export function VocabularyList({
                         )}
                       </div>
 
-                      <p className="mt-1 truncate text-sm text-[var(--sea-ink)]/65">
-                        {englishMeaning}
-                      </p>
+                      <div className="mt-1 space-y-0.5 text-sm text-[var(--sea-ink)]/65">
+                        <p className="truncate">
+                          <span className="font-medium">English:</span>{" "}
+                          {englishMeaning ?? "Translation unavailable"}
+                        </p>
+                        <p className="truncate">
+                          <span className="font-medium">Amharic:</span>{" "}
+                          {amharicMeaning ?? "Translation unavailable"}
+                        </p>
+                      </div>
 
                       {word.transliteration && (
                         <p className="mt-1 text-xs text-[var(--sea-ink)]/40">
@@ -180,10 +201,16 @@ export function VocabularyList({
                   <div className="border-t border-[var(--sea-ink)]/8 bg-[var(--sand)]/10 px-4 py-4 sm:px-5 sm:pl-[4.5rem]">
                     <div className="space-y-1">
                       <p className="text-xs font-medium uppercase tracking-wider text-[var(--sea-ink)]/45">
-                        Meaning
+                        English meaning
                       </p>
                       <p className="text-sm font-medium text-[var(--sea-ink)]">
-                        {word.meaning}
+                        {englishMeaning ?? "Translation unavailable"}
+                      </p>
+                      <p className="mt-3 text-xs font-medium uppercase tracking-wider text-[var(--sea-ink)]/45">
+                        Amharic meaning
+                      </p>
+                      <p className="text-sm font-medium text-[var(--sea-ink)]">
+                        {amharicMeaning ?? "Translation unavailable"}
                       </p>
                     </div>
 
@@ -223,9 +250,10 @@ export function VocabularyList({
                       <button
                         type="button"
                         onClick={() => onPracticeWord?.(word)}
+                        disabled={isUpdating}
                         className="inline-flex items-center gap-2 rounded-xl bg-[var(--sea-ink)] px-3 py-2 text-sm font-medium text-white transition hover:opacity-85"
                       >
-                        Practice this word
+                        {isUpdating ? "Saving..." : "Practice this word"}
                         <ArrowRight size={15} />
                       </button>
                     </div>
@@ -233,16 +261,18 @@ export function VocabularyList({
                       <button
                         type="button"
                         onClick={() => onSetLearningState(word.id, "learned")}
-                        className="rounded-lg border border-emerald-200 px-3 py-2 text-xs font-medium text-emerald-700"
+                        disabled={isUpdating || learningState === "learned"}
+                        className="rounded-lg border border-emerald-200 px-3 py-2 text-xs font-medium text-emerald-700 disabled:opacity-50"
                       >
-                        Mark learned
+                        {learningState === "learned" ? "Learned" : "Mark learned"}
                       </button>
                       <button
                         type="button"
                         onClick={() => onSetLearningState(word.id, "needs_review")}
-                        className="rounded-lg border border-amber-200 px-3 py-2 text-xs font-medium text-amber-700"
+                        disabled={isUpdating || learningState === "needs_review"}
+                        className="rounded-lg border border-amber-200 px-3 py-2 text-xs font-medium text-amber-700 disabled:opacity-50"
                       >
-                        Needs review
+                        {learningState === "needs_review" ? "Added to review" : "Needs review"}
                       </button>
                     </div>
                   </div>
@@ -273,6 +303,19 @@ export function VocabularyList({
             className="mt-4 rounded-xl border border-[var(--sea-ink)]/10 px-4 py-2 text-sm text-[var(--sea-ink)] transition hover:bg-[var(--sand)]/30"
           >
             Clear filters
+          </button>
+        </div>
+      )}
+
+      {words.length > 0 && hasNextPage && (
+        <div className="flex justify-center pt-2">
+          <button
+            type="button"
+            onClick={onLoadMore}
+            disabled={isLoadingMore}
+            className="rounded-xl border border-[var(--sea-ink)]/15 bg-white px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition hover:bg-[var(--sand)]/25 disabled:opacity-50"
+          >
+            {isLoadingMore ? "Loading more..." : "Load more words"}
           </button>
         </div>
       )}

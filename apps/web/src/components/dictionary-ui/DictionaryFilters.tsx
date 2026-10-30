@@ -1,22 +1,14 @@
 
 import { Search, X } from "lucide-react";
 
-const categories = [
-  "All words",
-  "Greetings",
-  "Everyday",
-  "Questions",
-  "Food & Drink",
-  "Places",
-  "Family",
-  "Numbers",
-];
+import type { WordCategory } from "@/lib/api/words";
 
 type DictionaryFiltersProps = {
   query: string;
   onQueryChange: (query: string) => void;
   activeCategory: string;
   onCategoryChange: (category: string) => void;
+  categories: WordCategory[];
 };
 
 export function DictionaryFilters({
@@ -24,7 +16,9 @@ export function DictionaryFilters({
   onQueryChange,
   activeCategory,
   onCategoryChange,
+  categories,
 }: DictionaryFiltersProps) {
+  const options = [{ name: "All words", word_count: 0 }, ...categories];
   return (
     <section className="space-y-4">
       <div className="relative">
@@ -54,21 +48,24 @@ export function DictionaryFilters({
       </div>
 
       <div className="flex gap-2 overflow-x-auto pb-1">
-        {categories.map((category) => {
-          const active = activeCategory === category;
+        {options.map((category) => {
+          const active = activeCategory === category.name;
 
           return (
             <button
-              key={category}
+              key={category.name}
               type="button"
-              onClick={() => onCategoryChange(category)}
+              onClick={() => onCategoryChange(category.name)}
               aria-pressed={active}
               className={`shrink-0 rounded-full px-4 py-2 text-sm transition ${active
                   ? "bg-[var(--sea-ink)] text-white"
                   : "border border-[var(--sea-ink)]/10 bg-white/40 text-[var(--sea-ink)]/70 hover:bg-[var(--sand)]/30"
                 }`}
             >
-              {category}
+              {category.name}
+              {category.name !== "All words" && (
+                <span className="ml-1 opacity-60">{category.word_count}</span>
+              )}
             </button>
           );
         })}

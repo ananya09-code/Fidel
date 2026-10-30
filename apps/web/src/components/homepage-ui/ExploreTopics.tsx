@@ -1,194 +1,159 @@
-
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   BookOpen,
-  CheckCircle2,
   Coffee,
-  LockKeyhole,
+  Hash,
+  MapPin,
   MessageCircle,
+  Shapes,
   Utensils,
   Users,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { PageState } from "@/components/common-ui/PageState";
+import { usePreferences } from "@/hooks/use-preferences";
+import { useWordCategories } from "@/hooks/use-words";
 
-const topics = [
-  {
-    title: "Greetings",
-    description:
-      "Learn how to say hello, introduce yourself, and start everyday conversations.",
-    icon: MessageCircle,
-    number: "01",
-    available: true,
-    lessons: "Beginner",
-  },
-  {
-    title: "Daily life",
-    description:
-      "Talk about your routine, daily activities, and everyday situations.",
-    icon: Coffee,
-    number: "02",
-    available: false,
-    lessons: "Coming soon",
-  },
-  {
-    title: "Food & drinks",
-    description:
-      "Learn food vocabulary and useful phrases for ordering meals.",
-    icon: Utensils,
-    number: "03",
-    available: false,
-    lessons: "Coming soon",
-  },
-  {
-    title: "People & family",
-    description:
-      "Talk about your family, friends, and the people around you.",
-    icon: Users,
-    number: "04",
-    available: false,
-    lessons: "Coming soon",
-  },
-];
+const topicIcons = [MessageCircle, Coffee, Utensils, Users, MapPin, Hash, Shapes];
 
 export function ExploreTopics() {
-  const availableTopics = topics.filter((topic) => topic.available).length;
+  const [visibleCount, setVisibleCount] = useState(4);
+  const preferences = usePreferences();
+  const languageCode = preferences.data?.learning_language ?? "om";
+  const categories = useWordCategories(languageCode);
+
+  if (preferences.isPending || categories.isPending) {
+    return <PageState kind="loading" title="Loading vocabulary topics" compact />;
+  }
+
+  if (preferences.isError || categories.isError) {
+    const error = preferences.error ?? categories.error;
+    return (
+      <PageState
+        kind="error"
+        title="Couldn't load vocabulary topics"
+        description={error?.message ?? "Topic data is unavailable."}
+        actionLabel="Try again"
+        onAction={() => {
+          void preferences.refetch();
+          void categories.refetch();
+        }}
+        compact
+      />
+    );
+  }
+
+  const topics = categories.data?.data ?? [];
+  const visibleTopics = topics.slice(0, visibleCount);
+  const remainingTopics = Math.max(0, topics.length - visibleTopics.length);
 
   return (
     <section className="space-y-6">
-      {/* Section heading */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-2">
-          <p className="text-sm font-medium text-muted-foreground">
-            Explore your learning path
+          <p className="text-sm font-medium text-[var(--sea-ink)]/55">
+            Explore your vocabulary
           </p>
-
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          <h2 className="text-2xl font-bold tracking-tight text-[var(--sea-ink)] sm:text-3xl">
             Learn by topic
           </h2>
-
-          <p className="max-w-xl text-sm leading-6 text-muted-foreground">
-            Start with useful words and phrases, then build your confidence
-            one conversation at a time.
+          <p className="max-w-xl text-sm leading-6 text-[var(--sea-ink)]/55">
+            Choose a topic to open its approved words in your dictionary.
           </p>
         </div>
 
-        <Badge
-          variant="secondary"
-          className="w-fit rounded-full px-3 py-1.5 font-medium"
-        >
-          {availableTopics} of {topics.length} available
-        </Badge>
+        <span className="w-fit rounded-full bg-[var(--sand)]/35 px-3 py-1.5 text-sm font-medium text-[var(--sea-ink)]">
+          {topics.length} {topics.length === 1 ? "topic" : "topics"}
+        </span>
       </div>
 
-      {/* Topic cards */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {topics.map((topic) => {
-          const Icon = topic.icon;
-
-          const content = (
-            <CardContent className="flex h-full flex-col p-5">
-              <div className="flex items-start justify-between gap-3">
-                <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-2xl ${topic.available
-                      ? "bg-[var(--sea-ink)] text-[var(--foam)]"
-                      : "bg-muted text-muted-foreground"
-                    }`}
-                >
-                  <Icon className="h-5 w-5" strokeWidth={1.8} />
-                </div>
-
-                {topic.available ? (
-                  <Badge
-                    variant="secondary"
-                    className="gap-1 rounded-full"
-                  >
-                    <CheckCircle2 className="h-3 w-3" />
-                    Available
-                  </Badge>
-                ) : (
-                  <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <LockKeyhole className="h-3.5 w-3.5" />
-                    Coming soon
-                  </span>
-                )}
-              </div>
-
-              <div className="mt-5 flex-1">
-                <p className="text-xs font-medium text-muted-foreground">
-                  TOPIC {topic.number}
-                </p>
-
-                <h3 className="mt-1 text-lg font-semibold tracking-tight">
-                  {topic.title}
-                </h3>
-
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  {topic.description}
-                </p>
-              </div>
-
-              <div className="mt-5 flex items-center justify-between border-t pt-4">
-                <span className="text-sm font-medium text-muted-foreground">
-                  {topic.lessons}
-                </span>
-
-                {topic.available ? (
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--sea-ink)] text-[var(--foam)] transition-transform group-hover:translate-x-1">
-                    <ArrowRight className="h-4 w-4" />
-                  </span>
-                ) : (
-                  <span
-                    aria-hidden="true"
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-muted/70 text-muted-foreground"
-                  >
-                    <LockKeyhole className="h-4 w-4" />
-                  </span>
-                )}
-              </div>
-            </CardContent>
-          );
-
-          if (topic.available) {
+      {topics.length === 0 ? (
+        <PageState
+          kind="empty"
+          title="No topics available yet"
+          description="Approved vocabulary categories will appear here."
+          compact
+        />
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {visibleTopics.map((topic, index) => {
+            const Icon = topicIcons[index % topicIcons.length];
             return (
               <Link
-                key={topic.title}
-                to="/Learn"
-                aria-label={`Start learning: ${topic.title}`}
-                className="group block h-full rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2"
+                key={topic.name}
+                to="/dictionary"
+                search={{ category: topic.name }}
+                aria-label={`Open ${topic.name} vocabulary`}
+                className="group flex h-full flex-col rounded-2xl border border-[var(--sea-ink)]/10 bg-white/60 p-5 outline-none transition hover:-translate-y-0.5 hover:border-[var(--sea-ink)]/25 hover:bg-[var(--sand)]/15 focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)]"
               >
-                <Card className="h-full rounded-2xl border bg-card transition-colors hover:border-[var(--sea-ink)]/30 hover:bg-accent/30">
-                  {content}
-                </Card>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex size-12 items-center justify-center rounded-2xl bg-[var(--sea-ink)] text-white">
+                    <Icon className="size-5" strokeWidth={1.8} />
+                  </div>
+                  <span className="rounded-full bg-[var(--sand)]/35 px-2.5 py-1 text-xs font-semibold text-[var(--sea-ink)]">
+                    {topic.word_count} {topic.word_count === 1 ? "word" : "words"}
+                  </span>
+                </div>
+
+                <div className="mt-5 flex-1">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[var(--sea-ink)]/45">
+                    Topic {String(index + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-1 text-lg font-semibold tracking-tight text-[var(--sea-ink)]">
+                    {topic.name}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-[var(--sea-ink)]/55">
+                    Explore the approved words and phrases in this topic.
+                  </p>
+                </div>
+
+                <div className="mt-5 flex items-center justify-between border-t border-[var(--sea-ink)]/8 pt-4">
+                  <span className="text-sm font-medium text-[var(--sea-ink)]/55">
+                    Open dictionary
+                  </span>
+                  <span className="flex size-9 items-center justify-center rounded-full bg-[var(--sea-ink)] text-white transition-transform group-hover:translate-x-1">
+                    <ArrowRight className="size-4" />
+                  </span>
+                </div>
               </Link>
             );
-          }
-
-          return (
-            <Card
-              key={topic.title}
-              aria-label={`${topic.title}, coming soon`}
-              className="h-full rounded-2xl border-dashed bg-muted/20"
-            >
-              {content}
-            </Card>
-          );
-        })}
-      </div>
-
-      {/* Supporting message */}
-      <div className="flex items-start gap-3 rounded-2xl border bg-card p-4">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-muted">
-          <BookOpen className="h-5 w-5 text-[var(--sea-ink)]" />
+          })}
         </div>
+      )}
 
-        <div className="space-y-1">
-          <p className="text-sm font-semibold">One topic at a time</p>
-          <p className="text-sm leading-6 text-muted-foreground">
-            Begin with greetings and build a foundation you can use in real
-            conversations.
+      {(remainingTopics > 0 || visibleCount > 4) && (
+        <div className="flex flex-wrap justify-center gap-3">
+          {visibleCount > 4 && (
+            <button
+              type="button"
+              onClick={() => setVisibleCount(4)}
+              className="rounded-xl border border-[var(--sea-ink)]/15 bg-white/60 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition hover:bg-[var(--sand)]/25"
+            >
+              Show fewer topics
+            </button>
+          )}
+          {remainingTopics > 0 && (
+          <button
+            type="button"
+            onClick={() => setVisibleCount((count) => count + 4)}
+            className="rounded-xl bg-[var(--sea-ink)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+          >
+            Load more topics ({remainingTopics} remaining)
+          </button>
+          )}
+        </div>
+      )}
+
+      <div className="flex items-start gap-3 rounded-2xl border border-[var(--sea-ink)]/10 bg-white/50 p-4">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[var(--sand)]/35">
+          <BookOpen className="size-5 text-[var(--sea-ink)]" />
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-[var(--sea-ink)]">Learn one topic at a time</p>
+          <p className="mt-1 text-sm leading-6 text-[var(--sea-ink)]/55">
+            Every card is connected to the live vocabulary in your dictionary.
           </p>
         </div>
       </div>

@@ -18,6 +18,7 @@ import {
   Trash2,
   Volume2,
 } from "lucide-react";
+import { PageState } from "@/components/common-ui/PageState";
 
 import { deleteProfile } from "@/lib/api/profile";
 import {
@@ -234,11 +235,11 @@ export default function SettingsOverview() {
   }
 
   if (preferencesQuery.isPending) {
-    return (
-      <div className="py-16 text-center text-sm text-[var(--sea-ink)]/60">
-        Loading your settings...
-      </div>
-    );
+    return <PageState kind="loading" title="Loading your settings" />;
+  }
+
+  if (preferencesQuery.isError) {
+    return <PageState kind="error" title="Couldn't load your settings" description={preferencesQuery.error.message} actionLabel="Try again" onAction={() => void preferencesQuery.refetch()} />;
   }
 
   return (<div className="mx-auto w-full max-w-5xl space-y-7 pb-10"> <div> <p className="mb-2 text-sm font-medium text-[var(--sea-ink)]/55">
@@ -500,9 +501,9 @@ export default function SettingsOverview() {
         Changes are saved to your Fidel account.
       </p>
 
-      {(preferencesQuery.isError || updatePreferences.isError) && (
+      {updatePreferences.isError && (
         <p role="alert" className="text-sm text-red-700">
-          {updatePreferences.error?.message ?? preferencesQuery.error?.message}
+          {updatePreferences.error.message}
         </p>
       )}
 

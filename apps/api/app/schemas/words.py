@@ -69,3 +69,16 @@ class WordListResponse(BaseModel):
 
     data: list[WordSummary]
     meta: WordListMeta
+
+
+class WordCategory(BaseModel):
+    """One category represented by approved vocabulary."""
+
+    name: str
+    word_count: int
+
+
+class WordCategoryListResponse(BaseModel):
+    """Categories available for a language."""
+
+    data: list[WordCategory]

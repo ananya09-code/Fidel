@@ -264,6 +264,38 @@ user_words = Table(
     Index("user_words_user_favorite_idx", "user_id", "is_favorite"),
 )
 
+review_sessions = Table(
+    "review_sessions",
+    metadata,
+    Column("id", Uuid, primary_key=True),
+    Column("user_id", Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False),
+    Column("word_ids", JSON, nullable=False),
+    Column("status", String, nullable=False, server_default="in_progress"),
+    Column("total_count", Integer, nullable=False),
+    Column("correct_count", Integer, nullable=False, server_default="0"),
+    Column("started_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    Column("completed_at", DateTime(timezone=True)),
+    Column("updated_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    CheckConstraint("status IN ('in_progress','completed')", name="review_sessions_status_check"),
+    CheckConstraint("total_count > 0", name="review_sessions_total_count_check"),
+    CheckConstraint("correct_count >= 0 AND correct_count <= total_count", name="review_sessions_correct_count_check"),
+    CheckConstraint("(status = 'completed') = (completed_at IS NOT NULL)", name="review_sessions_completion_check"),
+    Index("review_sessions_user_recent_idx", "user_id", "started_at"),
+    Index("review_sessions_one_in_progress_per_user", "user_id", unique=True, sqlite_where=text("status = 'in_progress'"), postgresql_where=text("status = 'in_progress'")),
+)
+
+review_answers = Table(
+    "review_answers",
+    metadata,
+    Column("session_id", Uuid, ForeignKey("review_sessions.id", ondelete="CASCADE"), primary_key=True),
+    Column("user_id", Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False),
+    Column("word_id", Uuid, ForeignKey("words.id", ondelete="CASCADE"), primary_key=True),
+    Column("selected_word_id", Uuid, nullable=False),
+    Column("is_correct", Boolean, nullable=False),
+    Column("answered_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    Index("review_answers_user_recent_idx", "user_id", "answered_at"),
+)
+
 user_preferences = Table(
     "user_preferences",
     metadata,

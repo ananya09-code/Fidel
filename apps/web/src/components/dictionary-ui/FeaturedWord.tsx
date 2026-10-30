@@ -19,6 +19,9 @@ export function FeaturedWord({
     word.translations.find(
       (translation) => translation.language_code === "en",
     )?.meaning || word.meaning;
+  const amharicMeaning = word.translations.find(
+    (translation) => translation.language_code === "am",
+  )?.meaning;
 
   return (
     <section className="relative overflow-hidden rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--hero-a)] p-6 sm:p-8">
@@ -46,9 +49,16 @@ export function FeaturedWord({
             </p>
           )}
 
-          <p className="mt-4 text-lg text-[var(--sea-ink)]">
-            {englishMeaning}
-          </p>
+          <div className="mt-4 grid gap-2 text-[var(--sea-ink)] sm:grid-cols-2">
+            <p className="rounded-xl bg-white/25 px-3 py-2 text-sm">
+              <span className="font-semibold">English:</span>{" "}
+              {englishMeaning ?? "Translation unavailable"}
+            </p>
+            <p className="rounded-xl bg-white/25 px-3 py-2 text-sm">
+              <span className="font-semibold">Amharic:</span>{" "}
+              {amharicMeaning ?? "Translation unavailable"}
+            </p>
+          </div>
         </div>
 
         <div className="flex shrink-0 items-center gap-3">

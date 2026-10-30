@@ -152,7 +152,7 @@ export function Flashcard({
       {/* Progress */}
       <div className="mb-6">
         <div className="mb-3 flex items-center justify-between gap-4">
-          <span className="text-sm font-medium text-muted-foreground">
+          <span className="text-sm font-medium text-[var(--sea-ink)]/55">
             Your vocabulary
           </span>
 
@@ -213,7 +213,7 @@ export function Flashcard({
           </div>
 
           <div className="relative z-10 flex w-full flex-col items-center">
-            <span className="mb-8 rounded-full border border-[var(--sea-ink)]/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+            <span className="mb-8 rounded-full border border-[var(--sea-ink)]/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--sea-ink)]/55">
               Learn this word
             </span>
 
@@ -222,7 +222,7 @@ export function Flashcard({
             </h2>
 
             {word.transliteration && (
-              <p className="mt-4 text-base text-muted-foreground sm:text-lg">
+              <p className="mt-4 text-base text-[var(--sea-ink)]/55 sm:text-lg">
                 {word.transliteration}
               </p>
             )}
@@ -249,7 +249,7 @@ export function Flashcard({
             )}
 
             {!word.audioUrl && (
-              <span className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="mt-6 inline-flex items-center gap-2 text-sm text-[var(--sea-ink)]/55">
                 <Headphones className="h-4 w-4" />
                 Pronunciation unavailable
               </span>
@@ -277,7 +277,7 @@ export function Flashcard({
 
             {word.example && (
               <div className="mt-4 w-full rounded-2xl border border-[var(--sea-ink)]/10 bg-white/70 p-4 text-left">
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-[var(--sea-ink)]/50">
                   Example
                 </p>
 
@@ -291,7 +291,7 @@ export function Flashcard({
       </div>
 
       {/* Swipe hint */}
-      <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
+      <div className="mt-6 flex items-center justify-center gap-2 text-sm text-[var(--sea-ink)]/55">
         <ArrowLeftRight className="h-4 w-4" />
         {isLast
           ? "Swipe left to finish"

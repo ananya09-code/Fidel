@@ -161,6 +161,20 @@ def test_list_returns_only_approved_words(words_client: TestClient, session_fact
     assert body["meta"]["pagination"]["total_items"] == 1
 
 
+def test_list_can_require_playable_audio(words_client: TestClient, session_factory) -> None:
+    with session_factory() as session:
+        playable = _insert_word(session, "sagalee")
+        _insert_audio(session, playable, "afaan-oromoo/sagalee.mp3")
+        _insert_word(session, "silent")
+
+    response = words_client.get(
+        "/api/v1/words",
+        params={"audio_available": True},
+    )
+
+    assert [item["id"] for item in response.json()["data"]] == [str(playable)]
+
+
 def test_list_filters_and_paginates(words_client: TestClient, session_factory) -> None:
     with session_factory() as session:
         first = _insert_word(session, "akkam jirta", content_type="phrase")
@@ -193,6 +207,64 @@ def test_list_filters_and_paginates(words_client: TestClient, session_factory) -
     assert body["meta"]["pagination"]["total_items"] == 3
     assert body["meta"]["pagination"]["total_pages"] == 2
     assert body["meta"]["pagination"]["has_next"] is True
+
+
+def test_list_searches_transliteration_and_category(
+    words_client: TestClient,
+    session_factory,
+) -> None:
+    with session_factory() as session:
+        word_id = _insert_word(session, "bishaan", category="Everyday")
+        session.execute(
+            text("UPDATE words SET transliteration = 'bee-shaan' WHERE id = :id"),
+            {"id": word_id},
+        )
+        session.commit()
+
+    transliteration = words_client.get(
+        "/api/v1/words",
+        params={"search": "bee-shaan"},
+    )
+    category = words_client.get(
+        "/api/v1/words",
+        params={"search": "everyday"},
+    )
+
+    assert [item["id"] for item in transliteration.json()["data"]] == [str(word_id)]
+    assert [item["id"] for item in category.json()["data"]] == [str(word_id)]
+
+
+def test_empty_page_has_valid_pagination(words_client: TestClient) -> None:
+    response = words_client.get("/api/v1/words", params={"search": "not-present"})
+
+    assert response.status_code == 200
+    assert response.json()["data"] == []
+    assert response.json()["meta"]["pagination"]["total_pages"] == 0
+
+
+def test_categories_come_from_approved_words(
+    words_client: TestClient,
+    session_factory,
+) -> None:
+    with session_factory() as session:
+        _insert_word(session, "akkam", category="Greetings")
+        _insert_word(session, "galatoomi", category="Everyday")
+        _insert_word(session, "nagaa", category="Everyday")
+        _insert_word(session, "draft", category="Hidden", status="draft")
+        _insert_word(session, "hello", category="English", language_code="en")
+
+    response = words_client.get(
+        "/api/v1/words/categories",
+        params={"language_code": "om"},
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "data": [
+            {"name": "Everyday", "word_count": 2},
+            {"name": "Greetings", "word_count": 1},
+        ]
+    }
 
 
 def test_single_word_returns_translations_and_active_audio(

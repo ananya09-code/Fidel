@@ -9,6 +9,7 @@ type WordOfTheDayProps = {
   word?: string;
   pronunciation?: string;
   meaning?: string;
+  amharicMeaning?: string;
   audioSrc?: string;
   language?: string;
 };
@@ -17,12 +18,16 @@ export function WordOfTheDay({
   word = "Akkam",
   pronunciation,
   meaning = "Hello / How are you?",
+  amharicMeaning,
   audioSrc,
   language = "Afaan Oromoo",
 }: WordOfTheDayProps) {
   const [playing, setPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const resolvedAmharic =
+    amharicMeaning ??
+    (word === "Akkam" ? "ሰላም / እንዴት ነህ?" : "Translation unavailable");
 
   useEffect(() => {
     return () => {
@@ -66,16 +71,16 @@ export function WordOfTheDay({
   return (
     <section className="space-y-4">
       <div>
-        <p className="text-sm font-medium text-muted-foreground">
+        <p className="text-sm font-medium text-[var(--sea-ink)]/55">
           Build your vocabulary
         </p>
 
-        <h2 className="mt-1 text-2xl font-bold tracking-tight">
+        <h2 className="mt-1 text-2xl font-bold tracking-tight text-[var(--sea-ink)]">
           Word of the day
         </h2>
       </div>
 
-      <Card className="overflow-hidden rounded-2xl border bg-card shadow-sm">
+      <Card className="overflow-hidden rounded-2xl border border-[var(--sea-ink)]/10 bg-white/60 shadow-sm">
         <CardContent className="flex flex-col gap-6 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
           <div className="flex min-w-0 items-start gap-4 sm:items-center sm:gap-5">
             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[var(--sand)]">
@@ -86,7 +91,7 @@ export function WordOfTheDay({
             </div>
 
             <div className="min-w-0">
-              <p className="text-xs font-medium text-muted-foreground">
+              <p className="text-xs font-medium text-[var(--sea-ink)]/50">
                 {language}
               </p>
 
@@ -95,12 +100,15 @@ export function WordOfTheDay({
               </h3>
 
               {pronunciation && (
-                <p className="mt-1 text-sm text-muted-foreground">
+                <p className="mt-1 text-sm text-[var(--sea-ink)]/55">
                   {pronunciation}
                 </p>
               )}
 
-              <p className="mt-2 text-base font-medium">{meaning}</p>
+              <div className="mt-3 space-y-1 text-sm text-[var(--sea-ink)]/70">
+                <p><span className="font-semibold">English:</span> {meaning}</p>
+                <p><span className="font-semibold">Amharic:</span> {resolvedAmharic}</p>
+              </div>
             </div>
           </div>
 
@@ -110,7 +118,7 @@ export function WordOfTheDay({
               variant="outline"
               onClick={playAudio}
               disabled={!audioSrc || playing}
-              className="w-full rounded-xl sm:w-auto"
+              className="w-full rounded-xl border-[var(--sea-ink)]/15 bg-white/60 text-[var(--sea-ink)] hover:bg-[var(--sand)]/25 sm:w-auto"
               aria-label={`Listen to ${word} pronunciation`}
             >
               <Volume2 className="mr-2 h-4 w-4" />
@@ -124,7 +132,7 @@ export function WordOfTheDay({
             )}
 
             {!audioSrc && (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-[var(--sea-ink)]/50">
                 Audio unavailable
               </p>
             )}

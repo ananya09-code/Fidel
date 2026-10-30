@@ -1,23 +1,31 @@
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { DictionaryOverview } from "@/components/dictionary-ui/DictionaryOverview";
-import { useWords } from "@/hooks/use-words"
-
-
 
 export const Route = createFileRoute("/_app/dictionary")({
+  validateSearch: (search: Record<string, unknown>): { category?: string } => {
+    const category =
+      typeof search.category === "string" && search.category.trim()
+        ? search.category.trim()
+        : undefined;
+    return category ? { category } : {};
+  },
   component: DictionaryPage,
 });
 
-
 function DictionaryPage() {
-  const words = useWords();
-  console.log(words)
+  const { category } = Route.useSearch();
+  const navigate = useNavigate();
   return (
     <DictionaryOverview
-      onPracticeWord={(word) => {
-        console.log("Practice dictionary word:", word);
-      }}
+      initialCategory={category}
+      onCategoryChange={(nextCategory) =>
+        void navigate({
+          to: "/dictionary",
+          search: nextCategory === "All words" ? {} : { category: nextCategory },
+          replace: true,
+        })
+      }
     />
   );
 }

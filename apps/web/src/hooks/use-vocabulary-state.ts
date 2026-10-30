@@ -34,10 +34,14 @@ export function useUpdateVocabularyState() {
       if (!token) throw new Error("Your session expired. Please sign in again.");
       return updateVocabularyState(token, wordId, update);
     },
-    onSuccess: (saved) => {
+    onSuccess: async (saved) => {
       queryClient.setQueryData<{ data: typeof saved[] }>(key(userId), (current) => ({
         data: [saved, ...(current?.data ?? []).filter((item) => item.word_id !== saved.word_id)],
       }));
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["auth", "reviews", userId ?? "signed-out"] }),
+        queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId ?? "signed-out"] }),
+      ]);
     },
   });
 }

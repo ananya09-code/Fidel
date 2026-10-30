@@ -45,6 +45,15 @@ export const dictionaryResponseSchema = z.object({
   }),
 });
 
+export const wordCategorySchema = z.object({
+  name: z.string(),
+  word_count: z.number().int().nonnegative(),
+});
+
+const wordCategoryListSchema = z.object({
+  data: z.array(wordCategorySchema),
+});
+
 export type DictionaryTranslation = z.infer<
   typeof dictionaryTranslationSchema
 >;
@@ -54,6 +63,7 @@ export type DictionaryPagination = z.infer<
   typeof dictionaryPaginationSchema
 >;
 export type DictionaryResponse = z.infer<typeof dictionaryResponseSchema>;
+export type WordCategory = z.infer<typeof wordCategorySchema>;
 
 export type DictionaryOverviewProps = {
   words?: DictionaryWord[];
@@ -65,6 +75,7 @@ export type GetWordsParams = {
   category?: string;
   difficulty?: string;
   content_type?: "word" | "phrase" | "sentence";
+  audio_available?: boolean;
   page?: number;
   page_size?: number;
   search?: string;
@@ -80,6 +91,9 @@ export function getWords(
   if (params.category) query.set("category", params.category);
   if (params.difficulty) query.set("difficulty", params.difficulty);
   if (params.content_type) query.set("content_type", params.content_type);
+  if (params.audio_available !== undefined) {
+    query.set("audio_available", String(params.audio_available));
+  }
   if (params.page !== undefined) query.set("page", String(params.page));
   if (params.page_size !== undefined) {
     query.set("page_size", String(params.page_size));
@@ -91,6 +105,18 @@ export function getWords(
   return apiFetch(
     `/api/v1/words${suffix}`,
     dictionaryResponseSchema,
+    signal ? { signal } : undefined,
+  );
+}
+
+export function getWordCategories(
+  languageCode: string,
+  signal?: AbortSignal,
+) {
+  const query = new URLSearchParams({ language_code: languageCode });
+  return apiFetch(
+    `/api/v1/words/categories?${query.toString()}`,
+    wordCategoryListSchema,
     signal ? { signal } : undefined,
   );
 }

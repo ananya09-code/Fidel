@@ -49,11 +49,11 @@ export function LearningProgress({
   return (
     <section className="space-y-5">
       <div>
-        <p className="text-sm font-medium text-muted-foreground">
+        <p className="text-sm font-medium text-[var(--sea-ink)]/55">
           Your journey so far
         </p>
 
-        <h2 className="mt-1 text-2xl font-bold tracking-tight">
+        <h2 className="mt-1 text-2xl font-bold tracking-tight text-[var(--sea-ink)]">
           Your learning progress
         </h2>
       </div>
@@ -65,7 +65,7 @@ export function LearningProgress({
           return (
             <Card
               key={stat.label}
-              className="rounded-2xl border bg-card shadow-sm transition-colors hover:bg-accent/20"
+              className="rounded-2xl border border-[var(--sea-ink)]/10 bg-white/60 shadow-sm transition-colors hover:bg-[var(--sand)]/15"
             >
               <CardContent className="flex items-start gap-4 p-5 sm:p-6">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--sand)]">
@@ -76,7 +76,7 @@ export function LearningProgress({
                 </div>
 
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-muted-foreground">
+                  <p className="text-sm font-medium text-[var(--sea-ink)]/55">
                     {stat.label}
                   </p>
 
@@ -84,7 +84,7 @@ export function LearningProgress({
                     {stat.value}
                   </p>
 
-                  <p className="mt-1 text-sm leading-5 text-muted-foreground">
+                  <p className="mt-1 text-sm leading-5 text-[var(--sea-ink)]/55">
                     {stat.description}
                   </p>
                 </div>

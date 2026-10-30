@@ -24,7 +24,7 @@ export function DictionaryHeader() {
         <Languages size={17} />
         <span>Afaan Oromoo</span>
         <span className="text-[var(--sea-ink)]/30">→</span>
-        <span>English</span>
+        <span>English + Amharic</span>
       </div>
     </section>
   );

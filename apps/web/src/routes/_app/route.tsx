@@ -40,7 +40,7 @@ function AppLayout() {
 
       <SidebarInset className="min-h-svh min-w-0">
         <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-white/50 bg-white/60 px-3 backdrop-blur-2xl sm:px-5">
-          <SidebarTrigger className="shrink-0 rounded-xl text-slate-600 hover:bg-white/80" />
+          <SidebarTrigger className="shrink-0 rounded-xl text-[var(--sea-ink)]/65 hover:bg-[var(--sand)]/30" />
 
           <div className="min-w-0 flex-1">
             <Header />

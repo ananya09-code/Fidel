@@ -14,6 +14,7 @@ const languageCards = [
     native: "አማርኛ",
     word: "ሰላም",
     meaning: "Hello · Peace",
+    amharicMeaning: "ሰላም",
   },
   {
     number: "02",
@@ -21,13 +22,15 @@ const languageCards = [
     native: "Afaan Oromoo",
     word: "Akkam",
     meaning: "Hello · How are you?",
+    amharicMeaning: "ሰላም · እንዴት ነህ?",
   },
   {
     number: "03",
-    language: "Tigrinya",
-    native: "ትግርኛ",
-    word: "ሰላም",
-    meaning: "Hello · Peace",
+    language: "English guidance",
+    native: "Clear translations",
+    word: "Meaning",
+    meaning: "Understand every word",
+    amharicMeaning: "ትርጉም",
   },
 ];
 
@@ -37,6 +40,10 @@ export function Hero() {
 
   // Automatically rotate the cards.
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
     const interval = window.setInterval(() => {
       setCenterIndex((current) => (current + 1) % languageCards.length);
     }, 3500);
@@ -81,20 +88,20 @@ export function Hero() {
           {/* Actions */}
           <div className="flex flex-wrap items-center gap-3">
             <Link
-              to="/sign-in"
+              to="/sign-up"
               className="group inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-[var(--sea-ink)] px-6 py-4 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(15,23,42,0.16),inset_0_1px_0_rgba(255,255,255,0.16)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(15,23,42,0.2)] active:translate-y-0"
             >
               Start learning
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
 
-            <Link
-              to="/sign-up"
+            <a
+              href="#languages"
               className="inline-flex items-center gap-2 rounded-2xl border border-white/80 bg-white/50 px-6 py-4 text-sm font-semibold text-[var(--sea-ink)] shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_4px_16px_rgba(15,23,42,0.04)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/75 active:translate-y-0"
             >
               <BookOpen className="h-4 w-4" />
               Explore words
-            </Link>
+            </a>
           </div>
 
           <p className="text-sm text-[var(--sea-ink)]/50">
@@ -187,29 +194,30 @@ export function Hero() {
                       </p>
 
                       <h2
-                        className={`mt-2 whitespace-nowrap font-bold tracking-[-0.06em] text-white ${card.word === "Akkam"
-                          ? "text-5xl sm:text-6xl"
-                          : "text-6xl sm:text-7xl"
+                        className={`mt-2 whitespace-nowrap font-bold tracking-[-0.06em] text-white ${card.word.length > 6
+                          ? "text-4xl sm:text-5xl"
+                          : card.word === "Akkam"
+                            ? "text-5xl sm:text-6xl"
+                            : "text-6xl sm:text-7xl"
                           }`}
                       >
                         {card.word}
                       </h2>
 
-                      <p className="mt-3 text-sm leading-6 text-white/65">
-                        {card.meaning}
-                      </p>
+                      <div className="mt-3 space-y-1 text-sm leading-6 text-white/65">
+                        <p><span className="font-semibold text-white/80">English:</span> {card.meaning}</p>
+                        <p><span className="font-semibold text-white/80">Amharic:</span> {card.amharicMeaning}</p>
+                      </div>
                     </div>
 
                     {/* Pronunciation button */}
                     <div className="flex justify-center">
-                      <button
-                        type="button"
-                        aria-label={`Listen to ${card.word} in ${card.language}`}
-                        title={`Listen to ${card.word}`}
-                        className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-white/15 text-white shadow-[0_8px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.3)] backdrop-blur-2xl transition-all duration-300 hover:scale-110 hover:bg-white/25 active:scale-95"
+                      <span
+                        aria-label="Audio-led lessons"
+                        className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-white/15 text-white shadow-[0_8px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.3)] backdrop-blur-2xl"
                       >
                         <Volume2 className="h-5 w-5" />
-                      </button>
+                      </span>
                     </div>
                   </div>
                 </article>
@@ -222,7 +230,7 @@ export function Hero() {
             <div className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/65 px-4 py-2.5 shadow-[0_8px_24px_rgba(15,23,42,0.06),inset_0_1px_0_white] backdrop-blur-2xl">
               <Sparkles className="h-4 w-4 text-emerald-600" />
               <span className="text-xs font-medium text-[var(--sea-ink)] sm:text-sm">
-                Three languages. One place to begin.
+                Two languages, with English guidance.
               </span>
             </div>
           </div>

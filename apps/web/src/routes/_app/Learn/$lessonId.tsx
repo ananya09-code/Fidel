@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "@clerk/tanstack-react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, LoaderCircle } from "lucide-react";
+import { PageState } from "@/components/common-ui/PageState";
 
 import type { FlashcardWord } from "@/components/learn-ui/lesson/Flashcard";
 import { FlashcardSession } from "@/components/learn-ui/lesson/FlashcardSession";
@@ -106,46 +106,16 @@ function LessonPage() {
   }
 
   if (lesson.isPending || savedProgress.isPending) {
-    return (
-      <main className="flex min-h-80 items-center justify-center gap-3">
-        <LoaderCircle className="h-5 w-5 animate-spin text-[var(--sea-ink)]" />
-        <p className="text-sm text-[var(--sea-ink)]/65">Preparing your lesson...</p>
-      </main>
-    );
+    return <PageState kind="loading" title="Preparing your lesson" />;
   }
 
   if (lesson.isError || savedProgress.isError) {
     const error = lesson.error ?? savedProgress.error;
-    return (
-      <main className="mx-auto w-full max-w-xl px-4 py-10">
-        <button type="button" onClick={goBack} className="mb-6 inline-flex items-center gap-2 text-sm text-[var(--sea-ink)]/70">
-          <ArrowLeft className="h-4 w-4" /> Back to learning
-        </button>
-        <div className="rounded-3xl border border-red-200 bg-white/80 p-6">
-          <h1 className="text-xl font-bold text-[var(--sea-ink)]">Couldn't load your lesson</h1>
-          <p className="mt-2 text-sm text-red-600">
-            {error instanceof Error ? error.message : "Something went wrong while loading the lesson."}
-          </p>
-          <button type="button" onClick={() => { void lesson.refetch(); void savedProgress.refetch(); }} className="mt-5 min-h-11 rounded-xl bg-[var(--sea-ink)] px-5 text-sm font-semibold text-white">
-            Try again
-          </button>
-        </div>
-      </main>
-    );
+    return <PageState kind="error" title="Couldn't load your lesson" description={error instanceof Error ? error.message : "Something went wrong while loading the lesson."} actionLabel="Try again" onAction={() => { void lesson.refetch(); void savedProgress.refetch(); }} />;
   }
 
   if (!lesson.data || lesson.data.words.length === 0) {
-    return (
-      <main className="mx-auto w-full max-w-xl px-4 py-10">
-        <button type="button" onClick={goBack} className="mb-6 inline-flex items-center gap-2 text-sm text-[var(--sea-ink)]/70">
-          <ArrowLeft className="h-4 w-4" /> Back to learning
-        </button>
-        <div className="rounded-3xl border border-[var(--sea-ink)]/10 bg-white/80 p-8 text-center">
-          <h1 className="text-xl font-bold text-[var(--sea-ink)]">No words available yet</h1>
-          <p className="mt-2 text-sm text-[var(--sea-ink)]/60">This lesson doesn't have any approved vocabulary words yet.</p>
-        </div>
-      </main>
-    );
+    return <PageState kind="empty" title="No words available yet" description="This lesson doesn't have any approved vocabulary words yet." actionLabel="Back to learning" onAction={goBack} />;
   }
 
   const words: FlashcardWord[] = lesson.data.words.map((item) => {

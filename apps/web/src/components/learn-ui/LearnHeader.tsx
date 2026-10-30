@@ -2,7 +2,7 @@ export function LearnHeader() {
   return (
     <section className="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--sea-ink)]/50">
           Learn
         </p>
 
@@ -10,7 +10,7 @@ export function LearnHeader() {
           Afaan Oromoo
         </h1>
 
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="mt-2 text-sm text-[var(--sea-ink)]/60">
           Your journey starts with a few simple words.
         </p>
       </div>

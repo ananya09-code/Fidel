@@ -277,7 +277,10 @@ export function LessonQuiz({
                     </span>
 
                     <span className="text-right text-sm text-[var(--sea-ink)]/65">
-                      {word.meaning}
+                      <span className="block">English: {word.meaning}</span>
+                      <span className="mt-1 block">
+                        Amharic: {word.amharic ?? "Translation unavailable"}
+                      </span>
                     </span>
                   </div>
                 ))}
@@ -373,13 +376,24 @@ export function LessonQuiz({
         </h1>
 
         <div className="mt-8 rounded-3xl border border-[var(--sea-ink)]/10 bg-white px-5 py-8 text-center shadow-sm sm:px-8 sm:py-10">
-          <p className="text-sm text-[var(--sea-ink)]/55">
-            English meaning
-          </p>
-
-          <p className="mt-3 text-2xl font-bold text-[var(--sea-ink)] sm:text-3xl">
-            {currentQuestion.word.meaning}
-          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl bg-[#39C987]/10 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#239B65]">
+                English
+              </p>
+              <p className="mt-2 text-xl font-bold text-[var(--sea-ink)] sm:text-2xl">
+                {currentQuestion.word.meaning}
+              </p>
+            </div>
+            <div className="rounded-2xl bg-[#E9A23B]/10 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#9A6515]">
+                Amharic
+              </p>
+              <p className="mt-2 text-xl font-bold text-[var(--sea-ink)] sm:text-2xl">
+                {currentQuestion.word.amharic ?? "Translation unavailable"}
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -452,6 +466,9 @@ export function LessonQuiz({
                   {currentQuestion.word.meaning} means{" "}
                   <strong>{currentQuestion.word.word}</strong> in Afaan
                   Oromoo.
+                </p>
+                <p className="mt-1 text-sm leading-6 text-[var(--sea-ink)]/75">
+                  Amharic: {currentQuestion.word.amharic ?? "Translation unavailable"}
                 </p>
               </div>
             </div>

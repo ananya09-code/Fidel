@@ -5,27 +5,27 @@ import {
 } from "lucide-react";
 
 type DailyGoalCardProps = {
-  goalMinutes: number;
-  completedMinutes: number;
+  goalWords: number;
+  completedWords: number;
   streak: number;
   wordsLearned: number;
 };
 
 export function DailyGoalCard({
-  goalMinutes,
-  completedMinutes,
+  goalWords,
+  completedWords,
   streak,
   wordsLearned,
 }: DailyGoalCardProps) {
-  const safeGoal = Math.max(0, goalMinutes);
-  const safeCompleted = Math.max(0, completedMinutes);
+  const safeGoal = Math.max(1, goalWords);
+  const safeCompleted = Math.max(0, completedWords);
 
   const progress =
     safeGoal === 0
       ? 100
       : Math.min(100, (safeCompleted / safeGoal) * 100);
 
-  const minutesRemaining = Math.max(
+  const wordsRemaining = Math.max(
     0,
     safeGoal - safeCompleted,
   );
@@ -44,13 +44,13 @@ export function DailyGoalCard({
             </span>
 
             <span className="text-sm text-[#85897F]">
-              / {safeGoal} min
+              / {safeGoal} words
             </span>
           </div>
 
           <p className="mt-2 text-sm text-[#777D75]">
-            {minutesRemaining > 0
-              ? `${minutesRemaining} min to go`
+            {wordsRemaining > 0
+              ? `${wordsRemaining} ${wordsRemaining === 1 ? "word" : "words"} to go`
               : "Daily goal completed. Well done!"}
           </p>
         </div>
@@ -63,7 +63,7 @@ export function DailyGoalCard({
       <div
         className="mt-6 h-2 overflow-hidden rounded-full bg-[#F0EEE7]"
         role="progressbar"
-        aria-label="Daily learning goal"
+        aria-label="Daily word learning goal"
         aria-valuenow={safeGoal === 0 ? 0 : Math.min(safeCompleted, safeGoal)}
         aria-valuemin={0}
         aria-valuemax={safeGoal || 1}

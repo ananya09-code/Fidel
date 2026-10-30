@@ -5,8 +5,8 @@ import {
 } from "lucide-react";
 
 type ContinueLessonCardProps = {
-  unitNumber: number;
-  lessonNumber: number;
+  unitNumber?: number;
+  lessonNumber?: number;
   completedCards: number;
   totalCards: number;
   title?: string;
@@ -44,12 +44,11 @@ export function ContinueLessonCard({
       <div className="relative">
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full bg-white/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#64725E]">
-            Unit {String(unitNumber).padStart(2, "0")}
+            {unitNumber ? `Unit ${String(unitNumber).padStart(2, "0")}` : "In progress"}
           </span>
 
           <span className="text-xs text-[#85897F]">
-            Lesson {String(lessonNumber).padStart(2, "0")}
-            {" · "}
+            {lessonNumber ? `Lesson ${String(lessonNumber).padStart(2, "0")} · ` : ""}
             {safeTotal} words
           </span>
         </div>

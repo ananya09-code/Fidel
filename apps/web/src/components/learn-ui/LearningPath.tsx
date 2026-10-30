@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useLearningPath } from "@/hooks/use-learning-path";
 import { useLearningProgress } from "@/hooks/use-learning-progress";
 import { usePreferences } from "@/hooks/use-preferences";
+import { PageState } from "@/components/common-ui/PageState";
 
 type LessonStatus = "completed" | "current" | "locked";
 type Lesson = {
@@ -40,14 +41,16 @@ function LessonNode({
   const isLocked = lesson.status === "locked";
 
   const horizontalPosition = [0, 1, 2, 1, 0][index % 5];
+  const horizontalOffset = [
+    "md:-translate-x-[66px]",
+    "md:translate-x-0",
+    "md:translate-x-[66px]",
+    "md:translate-x-0",
+    "md:-translate-x-[66px]",
+  ][horizontalPosition];
 
   return (
-    <div
-      className="relative flex flex-col items-center"
-      style={{
-        transform: `translateX(${(horizontalPosition - 1) * 66}px)`,
-      }}
-    >
+    <div className={`relative flex flex-col items-center ${horizontalOffset}`}>
       <div className="relative">
         {isCurrent && (
           <div
@@ -60,7 +63,7 @@ function LessonNode({
             type="button"
             disabled
             aria-label={`${lesson.title}, locked`}
-            className="relative z-10 hidden h-[68px] w-[68px] cursor-not-allowed items-center justify-center rounded-full border-b-[6px] border-[#D8DCE3] bg-[#ECEEF2] text-[#A6ACB8] md:flex"
+            className="relative z-10 flex h-[68px] w-[68px] cursor-not-allowed items-center justify-center rounded-full border-b-[6px] border-[var(--sea-ink)]/15 bg-white/55 text-[var(--sea-ink)]/35"
           >
             <LockKeyhole className="h-6 w-6" />
           </button>
@@ -70,7 +73,7 @@ function LessonNode({
             params={{ lessonId: lesson.id }}
             search={{ language_code: languageCode }}
             className={[
-              "relative z-10 hidden h-[68px] w-[68px] items-center justify-center rounded-full border-b-[6px] transition-transform duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 md:flex",
+              "relative z-10 flex h-[68px] w-[68px] items-center justify-center rounded-full border-b-[6px] transition-transform duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2",
               isCompleted
                 ? "border-[#239B65] bg-[#39C987] text-white hover:scale-105"
                 : "text-white hover:scale-105",
@@ -111,18 +114,18 @@ function LessonNode({
           className={[
             "text-sm font-bold",
             isLocked
-              ? "text-muted-foreground"
+              ? "text-[var(--sea-ink)]/40"
               : "text-[var(--sea-ink)]",
           ].join(" ")}
         >
           {lesson.title}
         </p>
 
-        <p className="mt-1 text-xs leading-4 text-muted-foreground">
+        <p className="mt-1 text-xs leading-4 text-[var(--sea-ink)]/55">
           {lesson.subtitle}
         </p>
 
-        <p className="mt-1 text-xs font-medium text-muted-foreground">
+        <p className="mt-1 text-xs font-medium text-[var(--sea-ink)]/50">
           {lesson.wordCount} words
         </p>
       </div>
@@ -143,40 +146,11 @@ export function LearningPath() {
   } = useLearningPath(languageCode);
 
   if (isPending || preferences.isPending || progressQuery.isPending) {
-    return (
-      <section className="mx-auto w-full max-w-3xl py-16 text-center">
-        <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-border border-t-amber-500" />
-        <p className="mt-4 text-sm text-muted-foreground">
-          Loading your learning path...
-        </p>
-      </section>
-    );
+    return <PageState kind="loading" title="Loading your learning path" />;
   }
 
   if (isError || preferences.isError || progressQuery.isError || !learningPath) {
-    return (
-      <section className="mx-auto w-full max-w-3xl rounded-3xl border border-border bg-card p-8 text-center">
-        <h2 className="text-lg font-bold">
-          Couldn't load your learning path
-        </h2>
-
-        <p className="mt-2 text-sm text-muted-foreground">
-          {error?.message ??
-            preferences.error?.message ??
-            progressQuery.error?.message ??
-            "No learning path data was returned."}
-        </p>
-
-        <button
-          type="button"
-          onClick={() => void refetch()}
-          disabled={isFetching}
-          className="mt-4 rounded-xl bg-primary px-4 py-2 text-primary-foreground disabled:opacity-50"
-        >
-          {isFetching ? "Retrying..." : "Try again"}
-        </button>
-      </section>
-    );
+    return <PageState kind="error" title="Couldn't load your learning path" description={error?.message ?? preferences.error?.message ?? progressQuery.error?.message ?? "No learning path data was returned."} actionLabel={isFetching ? "Retrying..." : "Try again"} onAction={() => void refetch()} />;
   }
 
   const completedLessons = new Set(progressQuery.data?.completed_lesson_keys ?? []);
@@ -211,7 +185,7 @@ export function LearningPath() {
   return (
     <section className="mx-auto w-full max-w-3xl">
       <div className="mb-8">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--sea-ink)]/50">
           Your adventure
         </p>
 
@@ -219,21 +193,13 @@ export function LearningPath() {
           Your learning path
         </h2>
 
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="mt-2 text-sm text-[var(--sea-ink)]/55">
           One little step at a time. You're doing great!
         </p>
       </div>
 
       {units.length === 0 ? (
-        <div className="rounded-3xl border border-[var(--sea-ink)]/10 bg-white/60 p-8 text-center">
-          <Star className="mx-auto h-8 w-8 text-amber-500" />
-          <h3 className="mt-3 font-bold">
-            Your journey starts soon
-          </h3>
-          <p className="mt-2 text-sm text-muted-foreground">
-            No lessons are available for this language yet.
-          </p>
-        </div>
+        <PageState kind="empty" title="Your journey starts soon" description="No lessons are available for this language yet." compact />
       ) : (
         <div className="space-y-12">
           {units.map((unit, unitIndex) => {
@@ -266,7 +232,7 @@ export function LearningPath() {
                   </div>
 
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--sea-ink)]/45">
                       LEVEL {String(unitIndex + 1).padStart(2, "0")}
                     </p>
 
@@ -274,16 +240,16 @@ export function LearningPath() {
                       {unit.title}
                     </h3>
 
-                    <p className="mt-1 text-sm text-muted-foreground">
+                    <p className="mt-1 text-sm text-[var(--sea-ink)]/55">
                       {unit.subtitle}
                     </p>
 
-                    <p className="mt-1 text-xs text-muted-foreground">
+                    <p className="mt-1 text-xs text-[var(--sea-ink)]/50">
                       {unit.totalWords} words in this level
                     </p>
                   </div>
 
-                  <span className="shrink-0 text-xs font-bold text-muted-foreground">
+                  <span className="shrink-0 text-xs font-bold text-[var(--sea-ink)]/50">
                     {progress}%
                   </span>
                 </div>

@@ -46,6 +46,15 @@ export function LandingHeader() {
           </span>
         </Link>
 
+        <nav className="relative z-10 hidden items-center gap-1 md:flex" aria-label="Landing page">
+          <a href="#how-it-works" className="rounded-xl px-4 py-2 text-sm font-medium text-[var(--sea-ink)]/65 transition hover:bg-white/45 hover:text-[var(--sea-ink)]">
+            How it works
+          </a>
+          <a href="#languages" className="rounded-xl px-4 py-2 text-sm font-medium text-[var(--sea-ink)]/65 transition hover:bg-white/45 hover:text-[var(--sea-ink)]">
+            Languages
+          </a>
+        </nav>
+
         {/* Actions */}
         <div className="relative z-10 flex items-center gap-2 sm:gap-3">
           {isLoaded && isSignedIn ? (

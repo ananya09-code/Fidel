@@ -10,27 +10,39 @@ import {
 } from "lucide-react";
 
 import { useProfile } from "@/hooks/use-profile";
-
-const stats = [
-  { label: "Words learned", value: "124", icon: BookOpen },
-  { label: "Day streak", value: "7", icon: Flame },
-  { label: "Lessons completed", value: "18", icon: Trophy },
-  { label: "Daily goal", value: "10 min", icon: Target },
-];
-
-const activity = [
-  { day: "Mon", minutes: 12 },
-  { day: "Tue", minutes: 8 },
-  { day: "Wed", minutes: 15 },
-  { day: "Thu", minutes: 10 },
-  { day: "Fri", minutes: 6 },
-  { day: "Sat", minutes: 18 },
-  { day: "Sun", minutes: 4 },
-];
+import { useDashboard } from "@/hooks/use-dashboard";
+import { usePreferences } from "@/hooks/use-preferences";
+import { PageState } from "@/components/common-ui/PageState";
 
 export default function ProfileOverview() {
   const { user } = useUser();
-  const { data: localProfile } = useProfile();
+  const profile = useProfile();
+  const localProfile = profile.data;
+  const dashboard = useDashboard();
+  const preferences = usePreferences();
+
+  if (profile.isPending || dashboard.isPending || preferences.isPending) {
+    return <PageState kind="loading" title="Loading your profile" />;
+  }
+
+  if (profile.isError || dashboard.isError || preferences.isError) {
+    const error = profile.error ?? dashboard.error ?? preferences.error;
+    return <PageState kind="error" title="Couldn't load your profile" description={error?.message ?? "Your profile data is unavailable."} actionLabel="Try again" onAction={() => { void profile.refetch(); void dashboard.refetch(); void preferences.refetch(); }} />;
+  }
+
+  const stats = [
+    { label: "Words learned", value: dashboard.data?.learned_words ?? 0, icon: BookOpen },
+    { label: "Day streak", value: dashboard.data?.streak_days ?? 0, icon: Flame },
+    { label: "Lessons completed", value: dashboard.data?.lessons_completed ?? 0, icon: Trophy },
+    { label: "Daily goal", value: `${dashboard.data?.daily_word_goal ?? 5} words`, icon: Target },
+  ];
+  const activity = (dashboard.data?.weekly_activity ?? []).map((item) => ({
+    day: new Date(`${item.date}T12:00:00`).toLocaleDateString(undefined, { weekday: "short" }),
+    minutes: item.minutes,
+  }));
+  const maxMinutes = Math.max(1, ...activity.map((item) => item.minutes));
+  const weeklyMinutes = activity.reduce((total, item) => total + item.minutes, 0);
+  const language = preferences.data?.learning_language === "am" ? "Amharic" : "Afaan Oromoo";
 
   const name =
     user?.fullName ||
@@ -113,7 +125,7 @@ export default function ProfileOverview() {
               )}
               <span className="inline-flex items-center gap-2">
                 <Globe2 size={16} />
-                Learning Afaan Oromoo
+                Learning {language}
               </span>
               <span className="inline-flex items-center gap-2">
                 <CalendarDays size={16} />
@@ -153,9 +165,6 @@ export default function ProfileOverview() {
             </div>
           ))}
         </div>
-        <p className="mt-3 text-xs text-[var(--sea-ink)]/45">
-          Illustrative demo statistics — not your actual learning history.
-        </p>
       </section>
 
       {/* Weekly activity */}
@@ -170,7 +179,7 @@ export default function ProfileOverview() {
             </p>
           </div>
           <span className="rounded-full bg-[var(--sand)]/60 px-3 py-1.5 text-xs font-medium text-[var(--sea-ink)]">
-            Demo data
+            {weeklyMinutes} min total
           </span>
         </div>
 
@@ -186,7 +195,7 @@ export default function ProfileOverview() {
               <div className="flex h-24 w-full max-w-12 items-end overflow-hidden rounded-t-lg bg-[var(--sand)]/40">
                 <div
                   className="w-full rounded-t-lg bg-[var(--sea-ink)]/75 transition-all"
-                  style={{ height: `${(minutes / 20) * 100}%` }}
+                  style={{ height: `${(minutes / maxMinutes) * 100}%` }}
                   title={`${minutes} minutes`}
                 />
               </div>
@@ -213,7 +222,7 @@ export default function ProfileOverview() {
         </div>
         <span className="inline-flex w-fit items-center gap-2 rounded-xl border border-[var(--sea-ink)]/10 px-4 py-3 text-sm font-medium text-[var(--sea-ink)]">
           <span className="size-2 rounded-full bg-[var(--sea-ink)]/60" />
-          Afaan Oromoo
+          {language}
         </span>
       </section>
     </div>

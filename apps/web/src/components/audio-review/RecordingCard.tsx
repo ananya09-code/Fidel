@@ -20,9 +20,9 @@ const STATUS_STYLES: Record<string, string> = {
   draft: 'bg-slate-100 text-slate-600 ring-slate-200',
 }
 
-function primaryTranslation(recording: Recording): string {
-  const english = recording.translations.find((t) => t.language_code === 'en')
-  return english?.meaning ?? recording.translations[0]?.meaning ?? '—'
+function translation(recording: Recording, languageCode: string): string {
+  return recording.translations.find((item) => item.language_code === languageCode)?.meaning
+    ?? 'Translation unavailable'
 }
 
 export default function RecordingCard({ recording, isWorking, onApprove, onReject, onRegenerate }: Props) {
@@ -55,7 +55,10 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
             ) : null}
           </div>
 
-          <p className="mt-1 text-sm text-slate-600">{primaryTranslation(recording)}</p>
+          <div className="mt-1 space-y-0.5 text-sm text-slate-600">
+            <p><span className="font-medium">English:</span> {translation(recording, 'en')}</p>
+            <p><span className="font-medium">Amharic:</span> {translation(recording, 'am')}</p>
+          </div>
 
           <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
             <div className="flex gap-1">

@@ -1,8 +1,10 @@
 
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { ArrowDownRight } from "lucide-react";
 
-import { useWords } from "@/hooks/use-words";
+import { PageState } from "@/components/common-ui/PageState";
+import { useInfiniteWords, useWordCategories } from "@/hooks/use-words";
 import { usePreferences } from "@/hooks/use-preferences";
 import { useUpdateVocabularyState, useVocabularyState } from "@/hooks/use-vocabulary-state";
 import type { DictionaryWord } from "@/lib/api/words";
@@ -14,18 +16,24 @@ import { FeaturedWord } from "./FeaturedWord";
 import { VocabularyList } from "./VocabularyList";
 
 type DictionaryOverviewProps = {
-  onPracticeWord?: (word: DictionaryWord) => void;
+  initialCategory?: string;
+  onCategoryChange?: (category: string) => void;
 };
 
 export function DictionaryOverview({
-  onPracticeWord,
+  initialCategory,
+  onCategoryChange,
 }: DictionaryOverviewProps) {
   const [query, setQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All words");
+  const activeCategory = initialCategory ?? "All words";
   const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const deferredQuery = useDeferredValue(query.trim());
+  const navigate = useNavigate();
   const preferences = usePreferences();
   const vocabulary = useVocabularyState();
   const updateVocabulary = useUpdateVocabularyState();
+  const languageCode = preferences.data?.learning_language ?? "om";
+  const categories = useWordCategories(languageCode);
 
   const {
     data,
@@ -33,11 +41,20 @@ export function DictionaryOverview({
     isError,
     error,
     refetch,
-  } = useWords({
-    language_code: preferences.data?.learning_language ?? "om",
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteWords({
+    language_code: languageCode,
+    category: activeCategory === "All words" ? undefined : activeCategory,
+    search: deferredQuery || undefined,
+    page_size: 20,
   });
 
-  const words = useMemo(() => data?.data ?? [], [data]);
+  const words = useMemo(
+    () => data?.pages.flatMap((page) => page.data) ?? [],
+    [data],
+  );
   const states = useMemo(
     () => Object.fromEntries((vocabulary.data?.data ?? []).map((item) => [item.word_id, item])),
     [vocabulary.data],
@@ -48,40 +65,15 @@ export function DictionaryOverview({
   );
   const featuredWord = words[0];
 
-  const filteredWords = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase();
-
-    return words.filter((word) => {
-      const matchesCategory =
-        activeCategory === "All words" ||
-        word.category.toLocaleLowerCase() ===
-        activeCategory.toLocaleLowerCase();
-
-      const searchableValues = [
-        word.text,
-        word.meaning ?? "",
-        word.transliteration ?? "",
-        word.category,
-        word.content_type,
-        word.difficulty,
-        ...word.translations.map((translation) => translation.meaning),
-        ...word.translations.map(
-          (translation) => translation.context_note ?? "",
-        ),
-      ];
-
-      const matchesQuery =
-        !normalizedQuery ||
-        searchableValues.some((value) =>
-          value.toLocaleLowerCase().includes(normalizedQuery),
-        );
-
-      const matchesFavorites =
-        !favoritesOnly || favorites.includes(word.id);
-
-      return matchesCategory && matchesQuery && matchesFavorites;
-    });
-  }, [words, query, activeCategory, favoritesOnly, favorites]);
+  const filteredWords = useMemo(
+    () =>
+      favoritesOnly
+        ? words.filter((word) => favorites.includes(word.id))
+        : words,
+    [words, favoritesOnly, favorites],
+  );
+  const totalItems =
+    data?.pages[data.pages.length - 1]?.meta.pagination.total_items ?? 0;
 
   function toggleFavorite(id: string) {
     updateVocabulary.mutate({ wordId: id, update: { is_favorite: !states[id]?.is_favorite } });
@@ -89,6 +81,18 @@ export function DictionaryOverview({
 
   function setLearningState(id: string, learningState: LearningState) {
     updateVocabulary.mutate({ wordId: id, update: { learning_state: learningState } });
+  }
+
+  async function practiceWord(word: DictionaryWord) {
+    try {
+      await updateVocabulary.mutateAsync({
+        wordId: word.id,
+        update: { learning_state: "needs_review" },
+      });
+      await navigate({ to: "/review", search: { start: true } });
+    } catch {
+      // The mutation error is rendered below the filters.
+    }
   }
 
   function playAudio(word: DictionaryWord) {
@@ -105,42 +109,21 @@ export function DictionaryOverview({
 
   function clearFilters() {
     setQuery("");
-    setActiveCategory("All words");
+    onCategoryChange?.("All words");
     setFavoritesOnly(false);
   }
 
-  if (isPending || preferences.isPending || vocabulary.isPending) {
-    return (
-      <main className="mx-auto w-full max-w-7xl px-4 py-16 text-center sm:px-6 lg:px-8">
-        <p className="text-sm text-[var(--sea-ink)]/65">
-          Loading your vocabulary...
-        </p>
-      </main>
-    );
+  function changeCategory(category: string) {
+    onCategoryChange?.(category);
   }
 
-  if (isError || preferences.isError || vocabulary.isError) {
-    return (
-      <main className="mx-auto w-full max-w-7xl px-4 py-16 text-center sm:px-6 lg:px-8">
-        <h1 className="text-2xl font-semibold text-[var(--sea-ink)]">
-          Couldn't load your dictionary
-        </h1>
+  if (isPending || preferences.isPending || vocabulary.isPending || categories.isPending) {
+    return <PageState kind="loading" title="Loading your vocabulary" />;
+  }
 
-        <p className="mt-2 text-sm text-[var(--sea-ink)]/65">
-          {(error ?? preferences.error ?? vocabulary.error) instanceof Error
-            ? (error ?? preferences.error ?? vocabulary.error)?.message
-            : "Something went wrong while loading vocabulary."}
-        </p>
-
-        <button
-          type="button"
-          onClick={() => void refetch()}
-          className="mt-5 rounded-xl bg-[var(--sea-ink)] px-4 py-2 text-sm font-medium text-white"
-        >
-          Try again
-        </button>
-      </main>
-    );
+  if (isError || preferences.isError || vocabulary.isError || categories.isError) {
+    const loadError = error ?? preferences.error ?? vocabulary.error ?? categories.error;
+    return <PageState kind="error" title="Couldn't load your dictionary" description={loadError instanceof Error ? loadError.message : "Something went wrong while loading vocabulary."} actionLabel="Try again" onAction={() => void Promise.all([refetch(), categories.refetch(), vocabulary.refetch()])} />;
   }
 
   return (
@@ -151,8 +134,15 @@ export function DictionaryOverview({
         query={query}
         onQueryChange={setQuery}
         activeCategory={activeCategory}
-        onCategoryChange={setActiveCategory}
+        onCategoryChange={changeCategory}
+        categories={categories.data?.data ?? []}
       />
+
+      {updateVocabulary.isError && (
+        <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700" role="alert">
+          {updateVocabulary.error.message}
+        </p>
+      )}
 
       {featuredWord &&
         !query &&
@@ -177,8 +167,13 @@ export function DictionaryOverview({
         onToggleFavorite={toggleFavorite}
         onSetLearningState={setLearningState}
         onPlayAudio={playAudio}
-        onPracticeWord={onPracticeWord}
+        onPracticeWord={(word) => void practiceWord(word)}
         onClearFilters={clearFilters}
+        totalItems={favoritesOnly ? filteredWords.length : totalItems}
+        hasNextPage={Boolean(hasNextPage)}
+        isLoadingMore={isFetchingNextPage}
+        onLoadMore={() => void fetchNextPage()}
+        updatingWordId={updateVocabulary.isPending ? updateVocabulary.variables?.wordId : undefined}
       />
 
       <footer className="flex items-start gap-3 rounded-2xl border border-[var(--sea-ink)]/8 bg-white/30 p-4">
