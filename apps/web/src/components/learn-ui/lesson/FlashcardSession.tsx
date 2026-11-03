@@ -257,7 +257,6 @@ export function FlashcardSession({
         </div>
 
         <Flashcard
-          key={currentWord.id}
           word={currentWord}
           currentIndex={currentIndex}
           total={sessionWords.length}
