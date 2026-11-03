@@ -270,12 +270,13 @@ def get_lesson_words(
         )
 
         if generated_id == lesson_id:
-            lesson = {
-                "difficulty": row["difficulty"],
-                "category": category_key,
-                "word_count": row["word_count"],
-            }
-            break
+            if lesson is None:
+                lesson = {
+                    "difficulty": row["difficulty"],
+                    "category": category_key,
+                    "difficulties": [],
+                }
+            lesson["difficulties"].append(row["difficulty"])
 
     if lesson is None:
         raise HTTPException(
@@ -293,17 +294,18 @@ def get_lesson_words(
               AND COALESCE(NULLIF(TRIM(category), ''), 'uncategorized')
                     = :category
               AND (
-                    difficulty = :difficulty
+                    difficulty IN :difficulties
                     OR (
                         difficulty IS NULL
-                        AND :difficulty IS NULL
+                        AND :include_null
                     )
               )
-        """),
+        """).bindparams(bindparam("difficulties", expanding=True)),
         {
             "language_code": language_code,
             "category": lesson["category"],
-            "difficulty": lesson["difficulty"],
+            "difficulties": [value for value in lesson["difficulties"] if value is not None],
+            "include_null": None in lesson["difficulties"],
         },
     ).scalar_one()
 
@@ -324,20 +326,21 @@ def get_lesson_words(
               AND COALESCE(NULLIF(TRIM(category), ''), 'uncategorized')
                     = :category
               AND (
-                    difficulty = :difficulty
+                    difficulty IN :difficulties
                     OR (
                         difficulty IS NULL
-                        AND :difficulty IS NULL
+                        AND :include_null
                     )
               )
             ORDER BY created_at ASC, id ASC
             LIMIT :limit
             OFFSET :offset
-        """),
+        """).bindparams(bindparam("difficulties", expanding=True)),
         {
             "language_code": language_code,
             "category": lesson["category"],
-            "difficulty": lesson["difficulty"],
+            "difficulties": [value for value in lesson["difficulties"] if value is not None],
+            "include_null": None in lesson["difficulties"],
             "limit": limit,
             "offset": offset,
         },

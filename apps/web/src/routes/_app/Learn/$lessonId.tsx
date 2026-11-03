@@ -10,6 +10,7 @@ import { LessonQuiz } from "@/components/learn-ui/lesson/LessonQuiz";
 import {
   learningProgressKeys,
   useLessonProgress,
+  useLearningProgress,
 } from "@/hooks/use-learning-progress";
 import {
   checkpointLesson,
@@ -34,7 +35,9 @@ function LessonPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const savedProgress = useLessonProgress(lessonId);
+  const progress = useLearningProgress();
   const [localAttempt, setLocalAttempt] = useState<LessonAttempt | null>(null);
+  const [sessionWordIds, setSessionWordIds] = useState<string[] | null>(null);
 
   const lesson = useQuery({
     queryKey: ["lesson-words", lessonId, language_code],
@@ -67,6 +70,7 @@ function LessonPage() {
       difficulty_label: lesson.data.lesson.difficulty,
       question_count: questionCount,
     });
+    setSessionWordIds(words.slice(0, value.question_count).map((word) => word.id));
     cacheAttempt(value);
   }
 
@@ -94,31 +98,42 @@ function LessonPage() {
 
   async function finish() {
     if (!attempt) throw new Error("No lesson attempt is active.");
+    setSessionWordIds(sessionWords.map((word) => word.id));
     const value = await completeLesson(await token(), attempt.id);
     cacheAttempt(value);
     await queryClient.invalidateQueries({
       queryKey: learningProgressKeys.all(userId),
     });
+    await queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
   }
 
   function goBack() {
     void navigate({ to: "/Learn" });
   }
 
-  if (lesson.isPending || savedProgress.isPending) {
+  if (lesson.isPending || savedProgress.isPending || progress.isPending) {
     return <PageState kind="loading" title="Preparing your lesson" />;
   }
 
-  if (lesson.isError || savedProgress.isError) {
-    const error = lesson.error ?? savedProgress.error;
-    return <PageState kind="error" title="Couldn't load your lesson" description={error instanceof Error ? error.message : "Something went wrong while loading the lesson."} actionLabel="Try again" onAction={() => { void lesson.refetch(); void savedProgress.refetch(); }} />;
+  if (lesson.isError || savedProgress.isError || progress.isError) {
+    const error = lesson.error ?? savedProgress.error ?? progress.error;
+    return <PageState kind="error" title="Couldn't load your lesson" description={error instanceof Error ? error.message : "Something went wrong while loading the lesson."} actionLabel="Try again" onAction={() => { void lesson.refetch(); void savedProgress.refetch(); void progress.refetch(); }} />;
   }
 
   if (!lesson.data || lesson.data.words.length === 0) {
     return <PageState kind="empty" title="No words available yet" description="This lesson doesn't have any approved vocabulary words yet." actionLabel="Back to learning" onAction={goBack} />;
   }
 
-  const words: FlashcardWord[] = lesson.data.words.map((item) => {
+  const practicedIds = new Set(progress.data?.practiced_word_ids_by_lesson[lessonId] ?? []);
+  const currentIds = new Set(attempt?.answers.map((answer) => answer.question_id) ?? []);
+  const remainingWords = lesson.data.words.filter((word) => !practicedIds.has(word.id) || currentIds.has(word.id));
+  // A fully finished lesson can still be replayed. Active sessions retain their words.
+  const availableWords = sessionWordIds
+    ? sessionWordIds.flatMap((id) => lesson.data.words.filter((word) => word.id === id))
+    : progress.data?.completed_lesson_keys.includes(lessonId) || remainingWords.length === 0
+      ? lesson.data.words
+      : remainingWords;
+  const words: FlashcardWord[] = availableWords.map((item) => {
     const english = item.translations.find((translation) => translation.language_code === "en");
     const amharic = item.translations.find((translation) => translation.language_code === "am");
     return {
@@ -137,6 +152,7 @@ function LessonPage() {
   if (attempt?.stage === "practice") {
     return (
       <LessonQuiz
+        key={attempt.id}
         words={sessionWords}
         category={lesson.data.lesson.category}
         initialQuestionIndex={attempt.question_index}
@@ -144,6 +160,11 @@ function LessonPage() {
           attempt.answers.map((answer) => [answer.question_id, answer.is_correct]),
         )}
         onBack={goBack}
+        remainingWordCount={lesson.data.words.filter((word) => !practicedIds.has(word.id)).length}
+        onContinue={() => {
+          setLocalAttempt(null);
+          setSessionWordIds(null);
+        }}
         onAnswer={saveAnswer}
         onFinish={finish}
       />

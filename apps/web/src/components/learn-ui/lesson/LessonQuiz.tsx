@@ -16,6 +16,8 @@ type LessonQuizProps = {
   initialQuestionIndex?: number;
   initialAnswers?: Record<string, boolean>;
   onBack?: () => void;
+  onContinue?: () => void;
+  remainingWordCount?: number;
   onRetryMissed?: (words: FlashcardWord[]) => void;
   onAnswer?: (answer: {
     questionId: string;
@@ -52,6 +54,8 @@ export function LessonQuiz({
   initialQuestionIndex = 0,
   initialAnswers = {},
   onBack,
+  onContinue,
+  remainingWordCount = 0,
   onRetryMissed,
   onAnswer,
   onFinish,
@@ -289,6 +293,16 @@ export function LessonQuiz({
           )}
 
           <div className="flex flex-col gap-3 border-t border-[var(--sea-ink)]/10 p-6 sm:flex-row sm:px-10">
+            {remainingWordCount > 0 && onContinue && (
+              <button
+                type="button"
+                onClick={onContinue}
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--sea-ink)] px-5 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
+              >
+                Continue lesson ({remainingWordCount} left)
+                <ArrowRight className="size-4" />
+              </button>
+            )}
             {missedWords.length > 0 && (
               <button
                 type="button"

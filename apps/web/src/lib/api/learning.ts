@@ -56,6 +56,7 @@ export const progressSummarySchema = z.object({
   questions_answered: z.number().int().nonnegative(),
   correct_answers: z.number().int().nonnegative(),
   completed_lesson_keys: z.array(z.string()),
+  practiced_word_ids_by_lesson: z.record(z.string(), z.array(z.string())).default({}),
   in_progress: z.array(lessonAttemptSchema),
 });
 
@@ -75,12 +76,19 @@ export function getLearningPath(languageCode: string, signal?: AbortSignal) {
   const params = new URLSearchParams({ language_code: languageCode });
   return apiFetch(`/api/v1/learning/path?${params}`, learningPathSchema, { signal });
 }
-export function getLessonWords(lessonKey: string, languageCode: string, signal?: AbortSignal) {
+export async function getLessonWords(lessonKey: string, languageCode: string, signal?: AbortSignal) {
   const params = new URLSearchParams({ language_code: languageCode, limit: "50", offset: "0" });
-  return apiFetch(
-    `/api/v1/learning/lessons/${encodeURIComponent(lessonKey)}/words?${params}`,
-    lessonWordsSchema, { signal },
-  );
+  const path = `/api/v1/learning/lessons/${encodeURIComponent(lessonKey)}/words`;
+  const result = await apiFetch(`${path}?${params}`, lessonWordsSchema, { signal });
+  let page = result;
+  while (page.pagination.has_more) {
+    const offset = page.pagination.offset + page.words.length;
+    if (offset <= page.pagination.offset) throw new Error("Unable to load the remaining lesson words.");
+    params.set("offset", String(offset));
+    page = await apiFetch(`${path}?${params}`, lessonWordsSchema, { signal });
+    result.words.push(...page.words);
+  }
+  return { ...result, pagination: { ...page.pagination, offset: 0, limit: result.words.length } };
 }
 export function getProgress(token: string, signal?: AbortSignal) {
   return apiFetch("/api/v1/progress", progressSummarySchema, {
