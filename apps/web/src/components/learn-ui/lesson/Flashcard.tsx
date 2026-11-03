@@ -1,5 +1,7 @@
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import {
+  ArrowLeft,
+  ArrowRight,
   ArrowLeftRight,
   Headphones,
   Volume2,
@@ -25,8 +27,12 @@ type FlashcardProps = {
   onFinish: () => void;
 };
 
-const SWIPE_THRESHOLD = 90;
-const EXIT_DURATION = 240;
+const SWIPE_THRESHOLD = 64;
+const MOTION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
 export function Flashcard({
   word,
@@ -37,12 +43,54 @@ export function Flashcard({
   onNext,
   onFinish,
 }: FlashcardProps) {
-  const [audioError, setAudioError] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
   const [dragX, setDragX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [isExiting, setIsExiting] = useState(false);
-
   const startX = useRef(0);
+  const startY = useRef(0);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const animations = useRef<Animation[]>([]);
+  const isMoving = useRef(false);
+  const previousWord = useRef(word.id);
+  const previousHeight = useRef<number | null>(null);
+
+  useLayoutEffect(() => {
+    const content = contentRef.current;
+    const card = cardRef.current;
+    const changed = previousWord.current !== word.id;
+    previousWord.current = word.id;
+    isMoving.current = false;
+
+    if (changed && content && card && !prefersReducedMotion()) {
+      isMoving.current = true;
+      const entry = content.animate(
+        [
+          { transform: `translate3d(${direction === "previous" ? -20 : 20}px, 0, 0)`, opacity: 0 },
+          { transform: "translate3d(0, 0, 0)", opacity: 1 },
+        ],
+        { duration: 220, easing: MOTION_EASING },
+      );
+      animations.current.push(entry);
+      if (previousHeight.current !== null) {
+        const height = card.getBoundingClientRect().height;
+        if (Math.abs(height - previousHeight.current) > 1) {
+          animations.current.push(card.animate(
+            [{ height: `${previousHeight.current}px` }, { height: `${height}px` }],
+            { duration: 220, easing: MOTION_EASING },
+          ));
+        }
+      }
+      void entry.finished.then(() => { isMoving.current = false; }).catch(() => {});
+    }
+    previousHeight.current = null;
+
+    return () => {
+      animations.current.forEach((animation) => animation.cancel());
+      animations.current = [];
+      isMoving.current = false;
+    };
+  }, [word.id, direction]);
 
   const isFirst = currentIndex === 0;
   const isLast = currentIndex === total - 1;
@@ -51,16 +99,19 @@ export function Flashcard({
   function playAudio() {
     if (!word.audioUrl) return;
 
-    setAudioError(false);
+    setAudioError(null);
 
     const audio = new Audio(word.audioUrl);
 
     audio.play().catch(() => {
-      setAudioError(true);
+      setAudioError(word.id);
     });
   }
 
   function moveTo(target: "next" | "previous") {
+    setDragX(0);
+    setIsDragging(false);
+    setAudioError(null);
     if (target === "next") {
       if (isLast) {
         onFinish();
@@ -72,26 +123,56 @@ export function Flashcard({
 
     if (isFirst) {
       setDragX(0);
-      setIsExiting(false);
       return;
     }
 
     onPrevious();
   }
 
+  function navigate(target: "next" | "previous") {
+    if (isMoving.current) return;
+    if (target === "previous" && isFirst) {
+      setDragX(0);
+      return;
+    }
+    const content = contentRef.current;
+    if (!content || prefersReducedMotion()) {
+      moveTo(target);
+      return;
+    }
+    isMoving.current = true;
+    previousHeight.current = cardRef.current?.getBoundingClientRect().height ?? null;
+    const distance = Math.max(24, Math.abs(dragX * 0.25) + 16);
+    const exit = content.animate(
+      [{}, { transform: `translate3d(${target === "next" ? -distance : distance}px, 0, 0)`, opacity: 0 }],
+      { duration: 120, easing: "ease-out", fill: "forwards" },
+    );
+    animations.current.push(exit);
+    // Cancelled animations must never advance a session after leaving the page.
+    void exit.finished.then(() => moveTo(target)).catch(() => {});
+  }
+
   function handlePointerDown(event: React.PointerEvent<HTMLDivElement>) {
-    if (isExiting) return;
+    if (isMoving.current) return;
     if (event.pointerType === "mouse" && event.button !== 0) return;
 
     startX.current = event.clientX;
+    startY.current = event.clientY;
     setIsDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
   }
 
   function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
-    if (!isDragging || isExiting) return;
+    if (!isDragging || isMoving.current) return;
 
-    setDragX(event.clientX - startX.current);
+    const deltaX = event.clientX - startX.current;
+    const deltaY = event.clientY - startY.current;
+    if (Math.abs(deltaY) > 12 && Math.abs(deltaY) > Math.abs(deltaX)) {
+      cancelDrag();
+      return;
+    }
+
+    setDragX(Math.max(-240, Math.min(240, deltaX)));
   }
 
   function finishDrag(event: React.PointerEvent<HTMLDivElement>) {
@@ -100,6 +181,9 @@ export function Flashcard({
     const delta = event.clientX - startX.current;
 
     setIsDragging(false);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
 
     if (Math.abs(delta) < SWIPE_THRESHOLD) {
       setDragX(0);
@@ -113,39 +197,24 @@ export function Flashcard({
       return;
     }
 
-    setIsExiting(true);
-    setDragX(goingNext ? -window.innerWidth : window.innerWidth);
-
-    window.setTimeout(() => {
-      moveTo(goingNext ? "next" : "previous");
-    }, EXIT_DURATION);
+    navigate(goingNext ? "next" : "previous");
   }
 
   function cancelDrag() {
-    if (isExiting) return;
+    if (isMoving.current) return;
 
     setIsDragging(false);
     setDragX(0);
   }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (isExiting) return;
-
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      setIsExiting(true);
-      setDragX(-window.innerWidth);
-      window.setTimeout(() => moveTo("next"), EXIT_DURATION);
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      setIsExiting(true);
-      setDragX(window.innerWidth);
-      window.setTimeout(() => moveTo("previous"), EXIT_DURATION);
-    }
+    if (event.target !== event.currentTarget) return;
+    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+    // Held keys should not scroll the page while a card is transitioning.
+    event.preventDefault();
+    if (isMoving.current) return;
+    navigate(event.key === "ArrowRight" ? "next" : "previous");
   }
-
-  const rotation = dragX * 0.03;
-  const dragOpacity = 1 - Math.min(Math.abs(dragX) / 900, 0.35);
 
   return (
     <section className="mx-auto w-full max-w-2xl">
@@ -170,15 +239,16 @@ export function Flashcard({
           aria-valuenow={currentIndex + 1}
         >
           <div
-            className="h-full rounded-full bg-[#E9A23B] transition-[width] duration-300 ease-out"
+            className="h-full rounded-full bg-[#E9A23B] transition-[width] duration-300 ease-out motion-reduce:transition-none"
             style={{ width: `${progress}%` }}
           />
         </div>
       </div>
 
       {/* Swipeable flashcard */}
-      <div className={direction === "previous" ? "slide-in-prev" : "slide-in-next"}>
+      <div>
         <div
+          ref={cardRef}
           role="group"
           tabIndex={0}
           aria-roledescription="swipeable flashcard"
@@ -197,11 +267,6 @@ export function Flashcard({
           ].join(" ")}
           style={{
             touchAction: "pan-y",
-            transform: `translateX(${dragX}px) rotate(${rotation}deg)`,
-            opacity: isExiting ? 0 : dragOpacity,
-            transition: isDragging
-              ? "none"
-              : `transform ${EXIT_DURATION}ms cubic-bezier(0.16, 1, 0.3, 1), opacity ${EXIT_DURATION}ms ease`,
           }}
         >
           <div
@@ -212,7 +277,14 @@ export function Flashcard({
             <div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-[#7C83FD]/10 blur-3xl" />
           </div>
 
-          <div className="relative z-10 flex w-full flex-col items-center">
+          <div
+            ref={contentRef}
+            className="relative z-10 flex w-full flex-col items-center motion-reduce:!transition-none"
+            style={{
+              transform: `translate3d(${dragX * 0.25}px, 0, 0)`,
+              transition: isDragging ? "none" : `transform 220ms ${MOTION_EASING}`,
+            }}
+          >
             <span className="mb-8 rounded-full border border-[var(--sea-ink)]/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--sea-ink)]/55">
               Learn this word
             </span>
@@ -242,7 +314,7 @@ export function Flashcard({
               </button>
             )}
 
-            {audioError && (
+            {audioError === word.id && (
               <p className="mt-3 text-sm text-red-600" role="alert">
                 Audio could not be played. Please try again.
               </p>
@@ -288,6 +360,26 @@ export function Flashcard({
             )}
           </div>
         </div>
+      </div>
+
+      <div className="mt-5 flex items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={() => navigate("previous")}
+          disabled={isFirst}
+          className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--sea-ink)]/10 bg-white/60 px-4 py-2 text-sm font-medium text-[var(--sea-ink)] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Previous
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate("next")}
+          className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[var(--sea-ink)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        >
+          {isLast ? "Finish session" : "Next word"}
+          <ArrowRight className="h-4 w-4" />
+        </button>
       </div>
 
       {/* Swipe hint */}
