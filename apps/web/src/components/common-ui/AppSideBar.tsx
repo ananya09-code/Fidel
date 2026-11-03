@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { BookOpen, House, Library, Settings, Trophy } from "lucide-react";
 
 import fidelLogo from "@/assets/fidallogo.png";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import {
   Sidebar,
@@ -24,9 +25,13 @@ const mainLinks = [
 ];
 
 export function AppSidebar() {
+  const isMobile = useIsMobile();
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
+
+  // The authenticated mobile layout uses bottom tabs, never a modal drawer.
+  if (isMobile) return null;
 
   return (
     <Sidebar collapsible="icon" variant="sidebar">
