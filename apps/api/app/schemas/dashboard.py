@@ -31,7 +31,10 @@ class RecentActivity(BaseModel):
 class DashboardSummary(BaseModel):
     daily_word_goal: int
     words_learned_today: int
-    goal_minutes: int
+    goal_minutes: int = Field(
+        deprecated=True,
+        description="Legacy alias of daily_word_goal; retained for older clients.",
+    )
     study_minutes_today: int
     streak_days: int
     learned_words: int

@@ -31,7 +31,7 @@ export const userPreferencesSchema = z.object({
   learning_language: learningLanguageSchema,
   proficiency_level: proficiencyLevelSchema.nullable(),
   motivations: z.array(motivationSchema),
-  daily_goal_minutes: dailyGoalSchema,
+  daily_goal_words: dailyGoalSchema,
   interface_language: interfaceLanguageSchema,
   reminders_enabled: z.boolean(),
   reminder_time: z.string(),

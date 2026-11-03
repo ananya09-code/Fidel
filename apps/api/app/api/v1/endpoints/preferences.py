@@ -57,7 +57,7 @@ def _serialize(row: Mapping[str, Any] | None) -> UserPreferences:
         learning_language=row["learning_language"],
         proficiency_level=row["proficiency_level"],
         motivations=motivations,
-        daily_goal_minutes=row["daily_goal_minutes"],
+        daily_goal_words=row["daily_goal_minutes"],
         interface_language=row["interface_language"],
         reminders_enabled=bool(row["reminders_enabled"]),
         reminder_time=row["reminder_time"],
@@ -108,13 +108,15 @@ def update_preferences(
 
     existing = _serialize(_load_row(db, current_user.user_id))
     changes = payload.model_dump(exclude_unset=True, exclude_none=True)
-    values = existing.model_dump(exclude={"created_at", "updated_at"})
+    values = existing.model_dump(exclude={"created_at", "updated_at", "daily_goal_minutes"})
     values.update(changes)
 
     now = datetime.now(timezone.utc)
     user_id = _ensure_user(db, current_user.user_id, now)
     params = {
         **values,
+        # Keep the deployed column name; its saved value now represents words.
+        "daily_goal_minutes": values["daily_goal_words"],
         "user_id": user_id,
         "motivations": values["motivations"],
         "now": now,

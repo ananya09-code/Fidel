@@ -52,7 +52,7 @@ def test_complete_journey_persists_and_is_user_isolated(
         json={
             "learning_language": "om",
             "proficiency_level": "beginner",
-            "daily_goal_minutes": 10,
+            "daily_goal_words": 10,
             "onboarding_completed": True,
         },
     )
@@ -119,6 +119,7 @@ def test_complete_journey_persists_and_is_user_isolated(
 
     dashboard = auth_client.get("/api/v1/dashboard", headers=AUTH_HEADERS).json()
     assert dashboard["goal_minutes"] == 10
+    assert dashboard["daily_word_goal"] == 10
     assert dashboard["lessons_completed"] == 1
     assert dashboard["reviews_completed"] == 1
     assert dashboard["learned_words"] == 2

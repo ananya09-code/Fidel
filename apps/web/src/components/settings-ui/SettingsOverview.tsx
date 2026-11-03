@@ -61,7 +61,7 @@ function settingsFromPreferences(
         : preferences.interface_language === "om"
           ? "Afaan Oromoo"
           : "English",
-    dailyGoal: preferences.daily_goal_minutes,
+    dailyGoal: preferences.daily_goal_words,
     remindersEnabled: preferences.reminders_enabled,
     reminderTime: preferences.reminder_time,
     soundEnabled: preferences.sound_enabled,
@@ -222,7 +222,7 @@ export default function SettingsOverview() {
             : settings.interfaceLanguage === "Afaan Oromoo"
               ? "om"
               : "en",
-        daily_goal_minutes: settings.dailyGoal,
+        daily_goal_words: settings.dailyGoal,
         reminders_enabled: settings.remindersEnabled,
         reminder_time: settings.reminderTime,
         sound_enabled: settings.soundEnabled,
@@ -302,23 +302,24 @@ export default function SettingsOverview() {
       <SectionHeading
         icon={Target}
         title="Daily learning goal"
-        description="Choose a realistic daily target. Consistency matters more than intensity."
+        description="Choose how many words to learn each day. Consistency matters more than intensity."
       />
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {([
-          { minutes: 5, label: "Casual", detail: "A little every day" },
-          { minutes: 10, label: "Regular", detail: "A steady pace" },
-          { minutes: 15, label: "Serious", detail: "Make real progress" },
-          { minutes: 20, label: "Intense", detail: "Challenge yourself" },
+          { words: 5, label: "Casual", detail: "A little every day" },
+          { words: 10, label: "Regular", detail: "A steady pace" },
+          { words: 15, label: "Serious", detail: "Make real progress" },
+          { words: 20, label: "Intense", detail: "Challenge yourself" },
         ] as const).map((goal) => {
-          const selected = settings.dailyGoal === goal.minutes;
+          const selected = settings.dailyGoal === goal.words;
 
           return (
             <button
-              key={goal.minutes}
+              key={goal.words}
               type="button"
-              onClick={() => updateSetting("dailyGoal", goal.minutes)}
+              onClick={() => updateSetting("dailyGoal", goal.words)}
+              aria-pressed={selected}
               className={`relative rounded-2xl border p-4 text-left transition ${selected
                   ? "border-[var(--sea-ink)] bg-[var(--sand)]/60"
                   : "border-[var(--sea-ink)]/10 hover:border-[var(--sea-ink)]/30"
@@ -330,8 +331,8 @@ export default function SettingsOverview() {
                 </span>
               )}
               <p className="text-2xl font-bold text-[var(--sea-ink)]">
-                {goal.minutes}
-                <span className="ml-1 text-xs font-medium">min</span>
+                {goal.words}
+                <span className="ml-1 text-xs font-medium">words</span>
               </p>
               <p className="mt-2 text-sm font-semibold text-[var(--sea-ink)]">
                 {goal.label}

@@ -67,7 +67,7 @@ def test_dashboard_uses_persisted_user_data(auth_client, mock_clerk, session_fac
 
     body = auth_client.get(BASE, headers=AUTH_HEADERS).json()
     assert body["goal_minutes"] == 15
-    assert body["daily_word_goal"] == 5
+    assert body["daily_word_goal"] == 15
     assert body["words_learned_today"] == 1
     assert body["learned_words"] == 1
     assert body["needs_review_words"] == 1

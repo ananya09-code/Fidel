@@ -43,6 +43,7 @@ export function useUpdatePreferences() {
         preferencesQueryKeys.byUser(userId),
         preferences,
       );
+      void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
     },
   });
 }
