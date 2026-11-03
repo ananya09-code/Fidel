@@ -9,7 +9,6 @@ import {
   ArrowRight,
   BookOpen,
   Check,
-  Clock3,
   GraduationCap,
   Heart,
   Languages,
@@ -68,7 +67,7 @@ const steps = [
   },
   {
     title: "Set your daily goal",
-    description: "Small steps can lead to big progress.",
+    description: "How many words would you like to learn each day?",
   },
 ];
 
@@ -166,25 +165,25 @@ const motivations = [
 const dailyGoals = [
   {
     id: 5 as const,
-    title: "5 minutes",
+    title: "5 words",
     description: "A small daily habit",
     icon: Zap,
   },
   {
     id: 10 as const,
-    title: "10 minutes",
+    title: "10 words",
     description: "A comfortable pace",
-    icon: Clock3,
+    icon: BookOpen,
   },
   {
     id: 15 as const,
-    title: "15 minutes",
+    title: "15 words",
     description: "Ready to make progress",
     icon: Target,
   },
   {
     id: 20 as const,
-    title: "20 minutes",
+    title: "20 words",
     description: "I'm ready for more",
     icon: Trophy,
   },
@@ -243,7 +242,7 @@ function OnboardingFlow({
     language: initialPreferences.learning_language,
     level: initialPreferences.proficiency_level,
     motivations: initialPreferences.motivations,
-    dailyGoal: initialPreferences.daily_goal_minutes,
+    dailyGoal: initialPreferences.daily_goal_words,
   });
 
   const progress = completed ? 100 : ((step + 1) / steps.length) * 100;
@@ -284,7 +283,7 @@ function OnboardingFlow({
         learning_language: data.language,
         proficiency_level: data.level,
         motivations: data.motivations,
-        daily_goal_minutes: data.dailyGoal,
+        daily_goal_words: data.dailyGoal,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
         onboarding_completed: true,
       });
@@ -719,9 +718,9 @@ function CompletionScreen({
           />
 
           <SummaryRow
-            icon={<Clock3 className="h-4 w-4" />}
+            icon={<BookOpen className="h-4 w-4" />}
             label="Daily goal"
-            value={`${dailyGoal} minutes a day`}
+            value={`${dailyGoal} words a day`}
           />
         </div>
       </Card>

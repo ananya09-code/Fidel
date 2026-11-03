@@ -87,7 +87,7 @@ def get_dashboard(
     user = db.execute(
         text(
             """
-            SELECT u.id, COALESCE(p.daily_goal_minutes, 5) AS goal_minutes,
+            SELECT u.id, COALESCE(p.daily_goal_minutes, 5) AS daily_word_goal,
                    COALESCE(p.timezone, 'UTC') AS timezone
             FROM users AS u
             LEFT JOIN user_preferences AS p ON p.user_id = u.id
@@ -214,9 +214,9 @@ def get_dashboard(
     week = [today - timedelta(days=offset) for offset in range(6, -1, -1)]
     recent.sort(key=lambda item: item.occurred_at, reverse=True)
     return DashboardSummary(
-        daily_word_goal=DAILY_WORD_GOAL,
+        daily_word_goal=user["daily_word_goal"],
         words_learned_today=int(words_learned_today),
-        goal_minutes=user["goal_minutes"],
+        goal_minutes=user["daily_word_goal"],
         study_minutes_today=minutes_by_date[today],
         streak_days=streak,
         learned_words=int(word_counts["learned"]),

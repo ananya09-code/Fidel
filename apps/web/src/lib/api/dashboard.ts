@@ -9,7 +9,6 @@ const currentLessonSchema = z.object({
 export const dashboardSchema = z.object({
   daily_word_goal: z.number().int().positive(),
   words_learned_today: z.number().int().nonnegative(),
-  goal_minutes: z.number().int().nonnegative(),
   study_minutes_today: z.number().int().nonnegative(),
   streak_days: z.number().int().nonnegative(),
   learned_words: z.number().int().nonnegative(),

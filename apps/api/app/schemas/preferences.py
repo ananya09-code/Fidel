@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import AliasChoices, BaseModel, Field, computed_field, field_validator
 
 LanguageCode = Literal["om", "am"]
 ProficiencyLevel = Literal["beginner", "some", "conversational", "improving"]
@@ -21,7 +21,10 @@ class UserPreferencesUpdate(BaseModel):
     learning_language: LanguageCode | None = None
     proficiency_level: ProficiencyLevel | None = None
     motivations: list[Motivation] | None = Field(default=None, max_length=7)
-    daily_goal_minutes: DailyGoal | None = None
+    daily_goal_words: DailyGoal | None = Field(
+        default=None,
+        validation_alias=AliasChoices("daily_goal_words", "daily_goal_minutes"),
+    )
     interface_language: InterfaceLanguage | None = None
     reminders_enabled: bool | None = None
     reminder_time: str | None = Field(
@@ -46,7 +49,10 @@ class UserPreferences(BaseModel):
     learning_language: LanguageCode = "om"
     proficiency_level: ProficiencyLevel | None = None
     motivations: list[Motivation] = Field(default_factory=list)
-    daily_goal_minutes: DailyGoal = 5
+    daily_goal_words: DailyGoal = Field(
+        default=5,
+        validation_alias=AliasChoices("daily_goal_words", "daily_goal_minutes"),
+    )
     interface_language: InterfaceLanguage = "en"
     reminders_enabled: bool = True
     reminder_time: str = "19:00"
@@ -56,3 +62,9 @@ class UserPreferences(BaseModel):
     onboarding_completed: bool = False
     created_at: datetime | None = None
     updated_at: datetime | None = None
+
+    @computed_field(json_schema_extra={"deprecated": True})
+    @property
+    def daily_goal_minutes(self) -> DailyGoal:
+        """Legacy response key for clients deployed before word-based goals."""
+        return self.daily_goal_words

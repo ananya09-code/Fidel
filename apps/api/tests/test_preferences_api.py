@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import pytest
 from sqlalchemy import text
 
 from tests.conftest import AUTH_HEADERS
@@ -124,4 +125,42 @@ def test_invalid_preferences_are_rejected(auth_client, mock_clerk):
         },
     )
 
+    assert response.status_code == 422
+
+
+@pytest.mark.parametrize("word_goal", [5, 10, 15, 20])
+def test_word_goal_persists_and_drives_dashboard(auth_client, mock_clerk, word_goal):
+    saved = auth_client.patch(
+        BASE, headers=AUTH_HEADERS, json={"daily_goal_words": word_goal}
+    )
+    assert saved.status_code == 200
+    assert saved.json()["daily_goal_words"] == word_goal
+    assert saved.json()["daily_goal_minutes"] == word_goal  # Older clients.
+
+    loaded = auth_client.get(BASE, headers=AUTH_HEADERS).json()
+    assert loaded["daily_goal_words"] == word_goal
+    dashboard = auth_client.get("/api/v1/dashboard", headers=AUTH_HEADERS).json()
+    assert dashboard["daily_word_goal"] == word_goal
+    assert dashboard["words_learned_today"] == 0
+
+    # Unrelated settings must not overwrite the chosen word target.
+    auth_client.patch(BASE, headers=AUTH_HEADERS, json={"sound_enabled": False})
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["daily_goal_words"] == word_goal
+
+    mock_clerk(user_id="another_learner")
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["daily_goal_words"] == 5
+    assert auth_client.get("/api/v1/dashboard", headers=AUTH_HEADERS).json()["daily_word_goal"] == 5
+
+
+def test_legacy_goal_maps_to_words_without_rewriting_data(
+    auth_client, mock_clerk, session_factory,
+):
+    auth_client.patch(BASE, headers=AUTH_HEADERS, json={"daily_goal_minutes": 15})
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["daily_goal_words"] == 15
+    with session_factory() as session:
+        assert session.execute(text("SELECT daily_goal_minutes FROM user_preferences")).scalar_one() == 15
+
+
+def test_invalid_word_goal_is_rejected(auth_client, mock_clerk):
+    response = auth_client.patch(BASE, headers=AUTH_HEADERS, json={"daily_goal_words": 999})
     assert response.status_code == 422
