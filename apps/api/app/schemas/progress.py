@@ -61,5 +61,6 @@ class ProgressSummary(BaseModel):
     questions_answered: int
     correct_answers: int
     completed_lesson_keys: list[str]
+    practiced_word_ids_by_lesson: dict[str, list[str]] = Field(default_factory=dict)
     in_progress: list[LessonAttempt]
 

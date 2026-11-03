@@ -15,6 +15,7 @@ from sqlalchemy.orm import Session
 
 from app.core.clerk_auth import ClerkUser, get_current_user
 from app.db.database import SessionLocal
+from app.services.lesson_progress import lesson_word_coverage
 from app.schemas.dashboard import (
     CurrentLesson,
     DailyActivity,
@@ -220,7 +221,7 @@ def get_dashboard(
         streak_days=streak,
         learned_words=int(word_counts["learned"]),
         needs_review_words=int(word_counts["review"]),
-        lessons_completed=len({row["lesson_key"] for row in lesson_rows if row["status"] == "completed"}),
+        lessons_completed=len(lesson_word_coverage(db, user_id)[0]),
         reviews_completed=sum(row["status"] == "completed" for row in review_rows),
         correct_answers=int(correct_answers),
         current_lesson=current,

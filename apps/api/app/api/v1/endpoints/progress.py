@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 
 from app.core.clerk_auth import ClerkUser, get_current_user
 from app.db.database import SessionLocal
+from app.services.lesson_progress import lesson_word_coverage
 from app.schemas.progress import (
     AnswerRequest,
     LessonAttempt,
@@ -139,17 +140,7 @@ def get_progress_summary(
             in_progress=[],
         )
 
-    completed = db.execute(
-        text(
-            """
-            SELECT DISTINCT lesson_key
-            FROM lesson_attempts
-            WHERE user_id = :user_id AND status = 'completed'
-            ORDER BY lesson_key
-            """
-        ),
-        {"user_id": user_id},
-    ).scalars().all()
+    completed, practiced = lesson_word_coverage(db, user_id)
     counts = db.execute(
         text(
             """
@@ -180,6 +171,7 @@ def get_progress_summary(
         questions_answered=int(counts["answered"]),
         correct_answers=int(counts["correct"]),
         completed_lesson_keys=list(completed),
+        practiced_word_ids_by_lesson=practiced,
         in_progress=[_serialize(db, row, user_id) for row in active],
     )
 

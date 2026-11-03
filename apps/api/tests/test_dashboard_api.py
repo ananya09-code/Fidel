@@ -51,7 +51,7 @@ def test_dashboard_uses_persisted_user_data(auth_client, mock_clerk, session_fac
             session.execute(text("INSERT INTO user_words (user_id, word_id, times_seen, times_correct, first_seen_at, last_seen_at, is_favorite, learning_state) VALUES (:user, :word, 1, :correct, :now, :now, false, :state)"), {"user": user_id, "word": word_id, "correct": 1 if value == "learned" else 0, "state": value, "now": now})
         session.execute(text("""
             INSERT INTO lesson_attempts (id, user_id, lesson_key, difficulty, category_key, category_label, status, stage, question_index, question_count, correct_count, started_at, completed_at, updated_at)
-            VALUES (:id, :user, 'lesson-complete', 'beginner', 'greetings', 'Greetings', 'completed', 'practice', 1, 1, 1, :started, :now, :now)
+            VALUES (:id, :user, 'om-beginner-greetings', 'beginner', 'greetings', 'Greetings', 'completed', 'practice', 1, 1, 1, :started, :now, :now)
         """), {"id": completed_attempt, "user": user_id, "started": started, "now": now})
         session.execute(text("""
             INSERT INTO lesson_attempts (id, user_id, lesson_key, difficulty, category_key, category_label, status, stage, question_index, question_count, correct_count, started_at, completed_at, updated_at)
@@ -71,7 +71,8 @@ def test_dashboard_uses_persisted_user_data(auth_client, mock_clerk, session_fac
     assert body["words_learned_today"] == 1
     assert body["learned_words"] == 1
     assert body["needs_review_words"] == 1
-    assert body["lessons_completed"] == 1
+    # A completed practice session with only one of two category words is partial.
+    assert body["lessons_completed"] == 0
     assert body["reviews_completed"] == 1
     assert body["correct_answers"] == 2
     assert body["streak_days"] == 1
