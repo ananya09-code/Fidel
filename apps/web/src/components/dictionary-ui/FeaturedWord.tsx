@@ -50,11 +50,11 @@ export function FeaturedWord({
           )}
 
           <div className="mt-4 grid gap-2 text-[var(--sea-ink)] sm:grid-cols-2">
-            <p className="rounded-xl bg-white/25 px-3 py-2 text-sm">
+            <p className="rounded-xl bg-[var(--panel)]/50 px-3 py-2 text-sm">
               <span className="font-semibold">English:</span>{" "}
               {englishMeaning ?? "Translation unavailable"}
             </p>
-            <p className="rounded-xl bg-white/25 px-3 py-2 text-sm">
+            <p className="rounded-xl bg-[var(--panel)]/50 px-3 py-2 text-sm">
               <span className="font-semibold">Amharic:</span>{" "}
               {amharicMeaning ?? "Translation unavailable"}
             </p>
@@ -70,7 +70,7 @@ export function FeaturedWord({
                 ? "Remove featured word from favorites"
                 : "Add featured word to favorites"
             }
-            className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--sea-ink)]/15 bg-white/40 text-[var(--sea-ink)] transition hover:bg-white/70"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--sea-ink)]/15 bg-[var(--panel)]/40 text-[var(--sea-ink)] transition hover:bg-[var(--panel)]/70"
           >
             <Heart
               size={20}
@@ -84,7 +84,7 @@ export function FeaturedWord({
             disabled={!word.audio?.available || !word.audio.url}
             title="Play pronunciation"
             aria-label="Play featured word pronunciation"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--sea-ink)] text-white transition hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--action)] text-white transition hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Volume2 size={20} />
           </button>
@@ -92,7 +92,7 @@ export function FeaturedWord({
       </div>
 
       <div className="relative mt-6 flex items-center gap-2 text-xs text-[var(--sea-ink)]/55">
-        <span className="rounded-full bg-white/40 px-2.5 py-1">
+        <span className="rounded-full bg-[var(--panel)]/40 px-2.5 py-1">
           {word.category}
         </span>
         <span>{word.difficulty}</span>

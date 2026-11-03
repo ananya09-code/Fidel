@@ -126,9 +126,9 @@ export default function WordQuestionCard({
               "border-[var(--foam)] bg-[var(--bg-base)] hover:border-[var(--hero-b)] hover:bg-[var(--sand)]";
 
             if (selectedAnswer && correct) {
-              optionStyle = "border-teal-600 bg-teal-50 text-teal-900";
+              optionStyle = "border-teal-600 bg-teal-50 dark:bg-teal-500/10 text-teal-900 dark:text-teal-300";
             } else if (selected && !isCorrect) {
-              optionStyle = "border-orange-400 bg-orange-50 text-orange-900";
+              optionStyle = "border-orange-400 bg-orange-50 dark:bg-orange-500/10 text-orange-900 dark:text-orange-300";
             }
 
             return (
@@ -146,11 +146,11 @@ export default function WordQuestionCard({
                 <span className="flex-1 font-medium">{option}</span>
 
                 {selectedAnswer && correct && (
-                  <Check className="h-5 w-5 shrink-0 text-teal-700" />
+                  <Check className="h-5 w-5 shrink-0 text-teal-700 dark:text-teal-300" />
                 )}
 
                 {selected && !isCorrect && (
-                  <X className="h-5 w-5 shrink-0 text-orange-600" />
+                  <X className="h-5 w-5 shrink-0 text-orange-600 dark:text-orange-300" />
                 )}
               </button>
             );
@@ -164,8 +164,8 @@ export default function WordQuestionCard({
           role="status"
           className={`mt-6 rounded-2xl border p-4 ${
             isCorrect
-              ? "border-teal-200 bg-teal-50 text-teal-900"
-              : "border-orange-200 bg-orange-50 text-orange-900"
+              ? "border-teal-200 bg-teal-50 dark:bg-teal-500/10 text-teal-900 dark:text-teal-300"
+              : "border-orange-200 bg-orange-50 dark:bg-orange-500/10 text-orange-900 dark:text-orange-300"
           }`}
         >
           <div className="flex items-center gap-2 font-bold">
@@ -191,7 +191,7 @@ export default function WordQuestionCard({
         type="button"
         disabled={!selectedAnswer}
         onClick={continueLesson}
-        className="mt-6 flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl bg-[var(--sea-ink)] px-5 py-4 font-bold text-[var(--foam)] transition hover:opacity-90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40"
+        className="mt-6 flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl bg-[var(--action)] px-5 py-4 font-bold text-white transition hover:opacity-90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40"
       >
         Continue
         <ArrowRight className="h-5 w-5" />

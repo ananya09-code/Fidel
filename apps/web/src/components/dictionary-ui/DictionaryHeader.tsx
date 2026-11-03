@@ -20,7 +20,7 @@ export function DictionaryHeader() {
         </p>
       </div>
 
-      <div className="flex items-center gap-2 self-start rounded-xl border border-[var(--sea-ink)]/10 bg-white/50 px-3 py-2 text-sm text-[var(--sea-ink)]/70 sm:self-auto">
+      <div className="flex items-center gap-2 self-start rounded-xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/50 px-3 py-2 text-sm text-[var(--sea-ink)]/70 sm:self-auto">
         <Languages size={17} />
         <span>Afaan Oromoo</span>
         <span className="text-[var(--sea-ink)]/30">→</span>

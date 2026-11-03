@@ -190,7 +190,7 @@ export function LessonQuiz({
         <button
           type="button"
           onClick={onBack}
-          className="mt-6 rounded-xl bg-[var(--sea-ink)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+          className="mt-6 rounded-xl bg-[var(--action)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
         >
           Back to learning
         </button>
@@ -204,7 +204,7 @@ export function LessonQuiz({
 
     return (
       <main className="mx-auto min-h-[80vh] max-w-2xl px-4 py-8 sm:px-6">
-        <section className="overflow-hidden rounded-3xl border border-[var(--sea-ink)]/10 bg-white shadow-sm">
+        <section className="overflow-hidden rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--panel)] shadow-sm">
           <div className="flex flex-col items-center px-6 pb-8 pt-10 text-center sm:px-10">
             <div className="mb-5 flex size-20 items-center justify-center rounded-3xl bg-[var(--sand)]">
               <Trophy className="size-9 text-[var(--sea-ink)]" />
@@ -297,7 +297,7 @@ export function LessonQuiz({
               <button
                 type="button"
                 onClick={onContinue}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--sea-ink)] px-5 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-5 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
               >
                 Continue lesson ({remainingWordCount} left)
                 <ArrowRight className="size-4" />
@@ -307,7 +307,7 @@ export function LessonQuiz({
               <button
                 type="button"
                 onClick={() => onRetryMissed?.(missedWords)}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--sea-ink)] px-5 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-5 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
               >
                 <RotateCcw className="size-4" />
                 Practise missed words
@@ -372,7 +372,7 @@ export function LessonQuiz({
               aria-valuenow={currentIndex + 1}
             >
               <div
-                className="h-full rounded-full bg-[var(--sea-ink)] transition-all duration-300"
+                className="h-full rounded-full bg-[var(--action)] transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -389,10 +389,10 @@ export function LessonQuiz({
           What is this in Afaan Oromoo?
         </h1>
 
-        <div className="mt-8 rounded-3xl border border-[var(--sea-ink)]/10 bg-white px-5 py-8 text-center shadow-sm sm:px-8 sm:py-10">
+        <div className="mt-8 rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--panel)] px-5 py-8 text-center shadow-sm sm:px-8 sm:py-10">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl bg-[#39C987]/10 p-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#239B65]">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#239B65] dark:text-emerald-300">
                 English
               </p>
               <p className="mt-2 text-xl font-bold text-[var(--sea-ink)] sm:text-2xl">
@@ -400,7 +400,7 @@ export function LessonQuiz({
               </p>
             </div>
             <div className="rounded-2xl bg-[#E9A23B]/10 p-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#9A6515]">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#9A6515] dark:text-amber-300">
                 Amharic
               </p>
               <p className="mt-2 text-xl font-bold text-[var(--sea-ink)] sm:text-2xl">
@@ -416,13 +416,13 @@ export function LessonQuiz({
             const isCorrect = option.id === currentQuestion.word.id;
 
             let optionStyle =
-              "border-[var(--sea-ink)]/15 bg-white hover:border-[var(--sea-ink)]/40 hover:bg-[var(--bg-base)]";
+              "border-[var(--sea-ink)]/15 bg-[var(--panel)] hover:border-[var(--sea-ink)]/40 hover:bg-[var(--bg-base)]";
 
             if (answered && isCorrect) {
               optionStyle =
-                "border-emerald-500 bg-emerald-50 text-emerald-950";
+                "border-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-950 dark:text-emerald-300";
             } else if (answered && isSelected && !isCorrect) {
-              optionStyle = "border-rose-400 bg-rose-50 text-rose-950";
+              optionStyle = "border-rose-400 bg-rose-50 dark:bg-rose-500/10 text-rose-950 dark:text-rose-300";
             }
 
             return (
@@ -442,11 +442,11 @@ export function LessonQuiz({
                 </span>
 
                 {answered && isCorrect && (
-                  <CheckCircle2 className="size-5 shrink-0 text-emerald-600" />
+                  <CheckCircle2 className="size-5 shrink-0 text-emerald-600 dark:text-emerald-300" />
                 )}
 
                 {answered && isSelected && !isCorrect && (
-                  <XCircle className="size-5 shrink-0 text-rose-600" />
+                  <XCircle className="size-5 shrink-0 text-rose-600 dark:text-rose-300" />
                 )}
               </button>
             );
@@ -457,20 +457,20 @@ export function LessonQuiz({
           <div
             aria-live="polite"
             className={`mt-5 rounded-2xl border p-4 ${correct
-                ? "border-emerald-200 bg-emerald-50"
-                : "border-rose-200 bg-rose-50"
+                ? "border-emerald-200 bg-emerald-50 dark:bg-emerald-500/10"
+                : "border-rose-200 bg-rose-50 dark:bg-rose-500/10"
               }`}
           >
             <div className="flex items-start gap-3">
               {correct ? (
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" />
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600 dark:text-emerald-300" />
               ) : (
-                <XCircle className="mt-0.5 size-5 shrink-0 text-rose-600" />
+                <XCircle className="mt-0.5 size-5 shrink-0 text-rose-600 dark:text-rose-300" />
               )}
 
               <div>
                 <p
-                  className={`font-bold ${correct ? "text-emerald-900" : "text-rose-900"
+                  className={`font-bold ${correct ? "text-emerald-900 dark:text-emerald-300" : "text-rose-900 dark:text-rose-300"
                     }`}
                 >
                   {correct ? "That's right!" : "Not quite!"}
@@ -494,7 +494,7 @@ export function LessonQuiz({
             type="button"
             disabled={!answered || isSaving}
             onClick={() => void nextQuestion()}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--sea-ink)] px-6 py-4 font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-6 py-4 font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
           >
             {isSaving
               ? "Saving..."
@@ -504,7 +504,7 @@ export function LessonQuiz({
             <ArrowRight className="size-4" />
           </button>
         </div>
-        {saveError && <p className="mt-4 text-sm text-rose-700" role="alert">{saveError}</p>}
+        {saveError && <p className="mt-4 text-sm text-rose-700 dark:text-rose-300" role="alert">{saveError}</p>}
       </section>
     </main>
   );

@@ -7,6 +7,15 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  color-scheme: light;
+  --panel: #ffffff;
+  --action: #173a40;
+  --page-top: #eff6ef;
+  --activity-0: #e6ece3;
+  --activity-1: #c7e2bd;
+  --activity-2: #8ac183;
+  --activity-3: #4e9864;
+  --activity-4: #245d41;
   --sea-ink: #173a40;
   --sea-ink-soft: #416166;
   --lagoon: #4fb8b2;
@@ -63,6 +72,15 @@
 }
 
 .dark {
+  color-scheme: dark;
+  --panel: #162b30;
+  --action: #245f59;
+  --page-top: #0f1d22;
+  --activity-0: #20343a;
+  --activity-1: #28543e;
+  --activity-2: #367a50;
+  --activity-3: #55a96d;
+  --activity-4: #86d99b;
   --sea-ink: #d7ece8;
   --sea-ink-soft: #afcdc8;
   --lagoon: #60d7cf;
@@ -116,6 +134,38 @@
   --sidebar-border: oklch(0.274 0.006 286.033);
   --sidebar-ring: oklch(0.442 0.017 285.786);
 }
+
+/* Shared controls, portals and the Fidel palette use the same surfaces. */
+:root, .dark {
+  --background: var(--bg-base);
+  --foreground: var(--sea-ink);
+  --card: var(--panel);
+  --card-foreground: var(--sea-ink);
+  --popover: var(--panel);
+  --popover-foreground: var(--sea-ink);
+  --primary: var(--action);
+  --primary-foreground: #ffffff;
+  --secondary: var(--sand);
+  --secondary-foreground: var(--sea-ink);
+  --muted: var(--sand);
+  --muted-foreground: var(--sea-ink-soft);
+  --accent: var(--sand);
+  --accent-foreground: var(--sea-ink);
+  --destructive-foreground: #ffffff;
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--lagoon-deep);
+  --sidebar: var(--panel);
+  --sidebar-foreground: var(--sea-ink);
+  --sidebar-primary: var(--action);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--sand);
+  --sidebar-accent-foreground: var(--sea-ink);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--lagoon-deep);
+}
+
+.dark body::before { opacity: 0.08; }
 
 @theme inline {
   --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
@@ -177,7 +227,7 @@ body {
     radial-gradient(1100px 620px at -8% -10%, var(--hero-a), transparent 58%),
     radial-gradient(1050px 620px at 112% -12%, var(--hero-b), transparent 62%),
     radial-gradient(720px 380px at 50% 115%, rgba(79, 184, 178, 0.1), transparent 68%),
-    linear-gradient(180deg, color-mix(in oklab, var(--sand) 68%, white) 0%, var(--foam) 44%, var(--bg-base) 100%);
+    linear-gradient(180deg, var(--page-top) 0%, var(--foam) 44%, var(--bg-base) 100%);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -210,6 +260,7 @@ body::after {
   mask-image: radial-gradient(circle at 50% 30%, black, transparent 78%);
 }
 
+@layer base {
 a {
   color: var(--lagoon-deep);
   text-decoration-color: rgba(50, 143, 151, 0.4);
@@ -218,7 +269,8 @@ a {
 }
 
 a:hover {
-  color: #246f76;
+  color: var(--sea-ink);
+}
 }
 
 code {

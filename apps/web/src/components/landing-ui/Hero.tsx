@@ -66,8 +66,8 @@ export function Hero() {
       <div className="grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
         {/* Left: Introduction */}
         <div className="relative z-10 space-y-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/50 px-4 py-2 text-sm font-medium text-[var(--sea-ink)] shadow-[0_4px_16px_rgba(15,23,42,0.04),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl">
-            <Sparkles className="h-4 w-4 text-orange-500" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--panel)]/50 px-4 py-2 text-sm font-medium text-[var(--sea-ink)] shadow-[0_4px_16px_rgba(15,23,42,0.04),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl">
+            <Sparkles className="h-4 w-4 text-orange-500 dark:text-orange-300" />
             Learn at your own pace
           </div>
 
@@ -89,7 +89,7 @@ export function Hero() {
           <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/sign-up"
-              className="group inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-[var(--sea-ink)] px-6 py-4 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(15,23,42,0.16),inset_0_1px_0_rgba(255,255,255,0.16)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(15,23,42,0.2)] active:translate-y-0"
+              className="group inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-[var(--action)] px-6 py-4 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(15,23,42,0.16),inset_0_1px_0_rgba(255,255,255,0.16)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(15,23,42,0.2)] active:translate-y-0"
             >
               Start learning
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -97,7 +97,7 @@ export function Hero() {
 
             <a
               href="#languages"
-              className="inline-flex items-center gap-2 rounded-2xl border border-white/80 bg-white/50 px-6 py-4 text-sm font-semibold text-[var(--sea-ink)] shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_4px_16px_rgba(15,23,42,0.04)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/75 active:translate-y-0"
+              className="inline-flex items-center gap-2 rounded-2xl border border-[var(--line)] bg-[var(--panel)]/50 px-6 py-4 text-sm font-semibold text-[var(--sea-ink)] shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_4px_16px_rgba(15,23,42,0.04)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--panel)]/75 active:translate-y-0"
             >
               <BookOpen className="h-4 w-4" />
               Explore words
@@ -227,8 +227,8 @@ export function Hero() {
 
           {/* Caption */}
           <div className="relative z-30 -mt-1 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/65 px-4 py-2.5 shadow-[0_8px_24px_rgba(15,23,42,0.06),inset_0_1px_0_white] backdrop-blur-2xl">
-              <Sparkles className="h-4 w-4 text-emerald-600" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--panel)]/65 px-4 py-2.5 shadow-[0_8px_24px_rgba(15,23,42,0.06),inset_0_1px_0_white] backdrop-blur-2xl">
+              <Sparkles className="h-4 w-4 text-emerald-600 dark:text-emerald-300" />
               <span className="text-xs font-medium text-[var(--sea-ink)] sm:text-sm">
                 Two languages, with English guidance.
               </span>
@@ -236,7 +236,7 @@ export function Hero() {
           </div>
 
           {/* Floating badge */}
-          <div className="absolute -right-1 top-1 z-40 hidden items-center gap-2 rounded-2xl border border-white/80 bg-white/80 px-4 py-3 shadow-[0_12px_32px_rgba(15,23,42,0.1),inset_0_1px_0_white] backdrop-blur-2xl sm:flex lg:-right-3">
+          <div className="absolute -right-1 top-1 z-40 hidden items-center gap-2 rounded-2xl border border-[var(--line)] bg-[var(--panel)]/80 px-4 py-3 shadow-[0_12px_32px_rgba(15,23,42,0.1),inset_0_1px_0_white] backdrop-blur-2xl sm:flex lg:-right-3">
             <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
             <span className="text-xs font-medium text-[var(--sea-ink)]">
               A new language awaits

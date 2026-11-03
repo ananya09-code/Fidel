@@ -35,50 +35,50 @@ export function ContinueLessonCard({
       : (safeCompleted / safeTotal) * 100;
 
   return (
-    <article className="relative overflow-hidden rounded-[28px] border border-[#E6E8DD] bg-[#EDF0E7] p-6 sm:p-8">
+    <article className="relative overflow-hidden rounded-[28px] border border-[var(--line)] bg-[var(--sand)] p-6 sm:p-8">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-10 -top-12 h-48 w-48 rounded-full bg-[#DCE4D5] opacity-70"
+        className="pointer-events-none absolute -right-10 -top-12 h-48 w-48 rounded-full bg-[var(--sand)] opacity-70"
       />
 
       <div className="relative">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full bg-white/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.13em] text-[#64725E]">
+          <span className="rounded-full bg-[var(--panel)]/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.13em] text-[var(--sea-ink)]/70">
             {unitNumber ? `Unit ${String(unitNumber).padStart(2, "0")}` : "In progress"}
           </span>
 
-          <span className="text-xs text-[#85897F]">
+          <span className="text-xs text-[var(--sea-ink)]/60">
             {lessonNumber ? `Lesson ${String(lessonNumber).padStart(2, "0")} · ` : ""}
             {safeTotal} words
           </span>
         </div>
 
-        <h2 className="mt-6 text-2xl font-semibold tracking-tight text-[#252D29]">
+        <h2 className="mt-6 text-2xl font-semibold tracking-tight text-[var(--sea-ink)]">
           {title}
         </h2>
 
-        <p className="mt-2 max-w-sm text-sm leading-6 text-[#70776C]">
+        <p className="mt-2 max-w-sm text-sm leading-6 text-[var(--sea-ink)]/65">
           {description}
         </p>
 
         <div className="mt-6 flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#526B53]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--panel)] text-[var(--palm)]">
             <BookOpen size={18} />
           </div>
 
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-              <span className="font-medium text-[#4C5C4A]">
+              <span className="font-medium text-[var(--sea-ink)]/80">
                 Lesson progress
               </span>
 
-              <span className="text-[#777D75]">
+              <span className="text-[var(--sea-ink)]/65">
                 {safeCompleted} of {safeTotal} cards
               </span>
             </div>
 
             <div
-              className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/80"
+              className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--panel)]/80"
               role="progressbar"
               aria-label="Lesson progress"
               aria-valuenow={safeCompleted}

@@ -59,7 +59,7 @@ export default function AudioPlayer({ recordingId, durationMs, hasAudio, compact
   }, [recordingId, url])
 
   if (!hasAudio) {
-    return <p className="text-xs text-amber-700">No audio file</p>
+    return <p className="text-xs text-amber-700 dark:text-amber-300">No audio file</p>
   }
 
   const toggle = async () => {
@@ -124,25 +124,25 @@ export default function AudioPlayer({ recordingId, durationMs, hasAudio, compact
           onClick={toggle}
           disabled={isLoading}
           aria-label={isPlaying ? 'Pause audio' : 'Play audio'}
-          className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-slate-900 text-white transition-colors hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:opacity-60"
+          className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-[var(--action)] text-white transition-colors hover:bg-[var(--action)]/85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:opacity-60"
         >
           {isPlaying ? <Pause className="size-4" /> : <Play className="size-4" />}
         </button>
 
-        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200">
+        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-[var(--sand)]">
           <div
-            className="h-full rounded-full bg-slate-900 transition-[width] duration-150"
+            className="h-full rounded-full bg-[var(--action)] transition-[width] duration-150"
             style={{ width: `${Math.min(100, progress * 100)}%` }}
           />
         </div>
 
-        <span className="w-10 shrink-0 text-right font-mono text-xs tabular-nums text-slate-500">
+        <span className="w-10 shrink-0 text-right font-mono text-xs tabular-nums text-[var(--sea-ink)]/65">
           {formatSeconds(duration)}
         </span>
       </div>
 
       {error ? (
-        <p className="text-xs text-red-700" role="alert">
+        <p className="text-xs text-red-700 dark:text-red-300" role="alert">
           {error}
         </p>
       ) : null}
@@ -152,7 +152,7 @@ export default function AudioPlayer({ recordingId, durationMs, hasAudio, compact
           type="button"
           onClick={replay}
           disabled={isLoading}
-          className="text-xs font-medium text-slate-600 underline-offset-2 hover:underline disabled:opacity-60"
+          className="text-xs font-medium text-[var(--sea-ink)]/75 underline-offset-2 hover:underline disabled:opacity-60"
         >
           {isLoading ? 'Preparing audio…' : 'Replay from the start'}
         </button>

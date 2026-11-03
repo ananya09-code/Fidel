@@ -44,7 +44,7 @@ export function AuthLayout({
             Fidel
           </span>
         </Link>
-        <p className="hidden text-sm text-slate-500 sm:block">
+        <p className="hidden text-sm text-[var(--sea-ink)]/65 sm:block">
           Ethiopian languages. A closer you.
         </p>
       </header>
@@ -55,22 +55,22 @@ export function AuthLayout({
           {/* Brand panel */}
           <section className="hidden lg:block">
             <div className="max-w-md">
-              <div className="inline-flex rounded-full border border-orange-200/60 bg-white/60 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur-md">
+              <div className="inline-flex rounded-full border border-orange-200/60 bg-[var(--panel)]/60 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur-md">
                 <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-amber-400 bg-clip-text text-transparent">
                   Your language journey starts here
                 </span>
               </div>
 
 
-              <h1 className="mt-6 text-5xl font-bold leading-[1.12] tracking-tight text-slate-900 xl:text-6xl">
+              <h1 className="mt-6 text-5xl font-bold leading-[1.12] tracking-tight text-[var(--sea-ink)]/100 xl:text-6xl">
                 Every language
                 <br />
                 brings us
                 <br />
-                <span className="text-teal-700">closer.</span>
+                <span className="text-teal-700 dark:text-teal-300">closer.</span>
               </h1>
 
-              <p className="mt-6 max-w-sm text-lg leading-8 text-slate-600">
+              <p className="mt-6 max-w-sm text-lg leading-8 text-[var(--sea-ink)]/75">
                 Discover the beauty of Ethiopian languages, one word,
                 one conversation, and one day at a time.
               </p>
@@ -78,15 +78,15 @@ export function AuthLayout({
               <div className="relative mt-10 flex h-40 w-64 items-center justify-center">
                 <div className="absolute inset-4 rounded-full bg-teal-200/40 blur-2xl" />
 
-                <div className="relative flex size-32 items-center justify-center rounded-[2.5rem] border border-white/80 bg-white/65 text-6xl shadow-xl shadow-teal-900/5 backdrop-blur-xl">
+                <div className="relative flex size-32 items-center justify-center rounded-[2.5rem] border border-[var(--line)] bg-[var(--panel)]/65 text-6xl shadow-xl shadow-teal-900/5 backdrop-blur-xl">
                   🦌
                 </div>
 
-                <div className="absolute right-0 top-2 rounded-2xl border border-white/80 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-lg backdrop-blur-md">
+                <div className="absolute right-0 top-2 rounded-2xl border border-[var(--line)] bg-[var(--panel)]/80 px-4 py-2 text-sm font-medium text-[var(--sea-ink)]/85 shadow-lg backdrop-blur-md">
                   እንኳን ደህና መጡ!
                 </div>
 
-                <div className="absolute bottom-1 left-0 rounded-2xl border border-white/80 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-lg backdrop-blur-md">
+                <div className="absolute bottom-1 left-0 rounded-2xl border border-[var(--line)] bg-[var(--panel)]/80 px-4 py-2 text-sm font-medium text-[var(--sea-ink)]/85 shadow-lg backdrop-blur-md">
                   Akkam jirtu?
                 </div>
               </div>
@@ -96,7 +96,7 @@ export function AuthLayout({
           {/* Authentication card */}
           <section className="mx-auto w-full max-w-md">
             {contained ? (
-              <Card className="gap-0 rounded-[2rem] border-white/80 bg-white/75 py-0 shadow-2xl shadow-slate-900/[0.07] backdrop-blur-2xl">
+              <Card className="gap-0 rounded-[2rem] border-[var(--line)] bg-[var(--panel)]/75 py-0 shadow-2xl shadow-slate-900/[0.07] backdrop-blur-2xl">
                 <CardContent className="p-6 sm:p-9">
                   {children}
                 </CardContent>
@@ -106,7 +106,7 @@ export function AuthLayout({
             )}
 
             {variant === "sign-up" && (
-              <p className="mt-5 px-4 text-center text-xs leading-5 text-slate-500">
+              <p className="mt-5 px-4 text-center text-xs leading-5 text-[var(--sea-ink)]/65">
                 By creating an account, you agree to our{" "}
                 <Link to="/" className="underline underline-offset-4">
                   Terms of Service

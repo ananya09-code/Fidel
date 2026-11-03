@@ -15,7 +15,7 @@ export function LearnHeader() {
         </p>
       </div>
 
-      <span className="inline-flex items-center rounded-full border border-[var(--sea-ink)]/10 bg-white/60 px-3 py-1.5 text-sm font-medium text-[var(--sea-ink)]">
+      <span className="inline-flex items-center rounded-full border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 px-3 py-1.5 text-sm font-medium text-[var(--sea-ink)]">
         Beginner
       </span>
     </section>

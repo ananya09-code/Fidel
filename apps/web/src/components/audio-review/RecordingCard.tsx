@@ -13,11 +13,11 @@ type Props = {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  pending: 'bg-amber-100 text-amber-800 ring-amber-200',
-  approved: 'bg-emerald-100 text-emerald-800 ring-emerald-200',
-  rejected: 'bg-rose-100 text-rose-800 ring-rose-200',
-  failed: 'bg-slate-200 text-slate-700 ring-slate-300',
-  draft: 'bg-slate-100 text-slate-600 ring-slate-200',
+  pending: 'bg-amber-100 dark:bg-amber-500/10 text-amber-800 dark:text-amber-300 ring-amber-200',
+  approved: 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 ring-emerald-200',
+  rejected: 'bg-rose-100 dark:bg-rose-500/10 text-rose-800 dark:text-rose-300 ring-rose-200',
+  failed: 'bg-[var(--sand)] text-[var(--sea-ink)]/85 ring-slate-300',
+  draft: 'bg-[var(--sand)] text-[var(--sea-ink)]/75 ring-slate-200',
 }
 
 function translation(recording: Recording, languageCode: string): string {
@@ -34,11 +34,11 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
   const isFailed = recording.status === 'failed'
 
   return (
-    <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <article className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-5 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
           <div className="flex items-center gap-2.5">
-            <h3 className="truncate text-lg font-semibold tracking-tight text-slate-900">
+            <h3 className="truncate text-lg font-semibold tracking-tight text-[var(--sea-ink)]/100">
               {recording.text}
             </h3>
             <span
@@ -49,35 +49,35 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
               {recording.status}
             </span>
             {recording.attempt > 1 ? (
-              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
+              <span className="rounded-full bg-[var(--sand)] px-2 py-0.5 text-xs text-[var(--sea-ink)]/75">
                 attempt {recording.attempt}
               </span>
             ) : null}
           </div>
 
-          <div className="mt-1 space-y-0.5 text-sm text-slate-600">
+          <div className="mt-1 space-y-0.5 text-sm text-[var(--sea-ink)]/75">
             <p><span className="font-medium">English:</span> {translation(recording, 'en')}</p>
             <p><span className="font-medium">Amharic:</span> {translation(recording, 'am')}</p>
           </div>
 
-          <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
+          <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[var(--sea-ink)]/65">
             <div className="flex gap-1">
               <dt>voice</dt>
-              <dd className="font-medium text-slate-700">{recording.speaker_id ?? '—'}</dd>
+              <dd className="font-medium text-[var(--sea-ink)]/85">{recording.speaker_id ?? '—'}</dd>
             </div>
             <div className="flex gap-1">
               <dt>speed</dt>
-              <dd className="font-medium text-slate-700">{recording.speed}</dd>
+              <dd className="font-medium text-[var(--sea-ink)]/85">{recording.speed}</dd>
             </div>
             <div className="flex gap-1">
               <dt>generated</dt>
-              <dd className="font-medium text-slate-700">
+              <dd className="font-medium text-[var(--sea-ink)]/85">
                 {recording.created_at ? new Date(recording.created_at).toLocaleString() : '—'}
               </dd>
             </div>
             <div className="flex gap-1">
               <dt>batch</dt>
-              <dd className="font-mono text-slate-700">
+              <dd className="font-mono text-[var(--sea-ink)]/85">
                 {recording.batch_id ? recording.batch_id.slice(0, 8) : '—'}
               </dd>
             </div>
@@ -96,7 +96,7 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
 
       {recording.generation_error ? (
         <p
-          className="mt-4 flex items-start gap-2 rounded-lg bg-slate-100 px-3 py-2 text-xs text-slate-700"
+          className="mt-4 flex items-start gap-2 rounded-lg bg-[var(--sand)] px-3 py-2 text-xs text-[var(--sea-ink)]/85"
           role="alert"
         >
           <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
@@ -108,13 +108,13 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
       ) : null}
 
       {recording.rejection_reason ? (
-        <p className="mt-4 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-800">
+        <p className="mt-4 rounded-lg bg-rose-50 dark:bg-rose-500/10 px-3 py-2 text-xs text-rose-800 dark:text-rose-300">
           <span className="font-semibold">Rejected:</span> {recording.rejection_reason}
           {recording.reviewed_by ? ` — ${recording.reviewed_by}` : ''}
         </p>
       ) : null}
 
-      <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-4">
+      <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[var(--line)] pt-4">
         {isPending ? (
           <>
             <button
@@ -130,7 +130,7 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
               type="button"
               disabled={isWorking}
               onClick={() => setShowRejectForm((value) => !value)}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] px-3 py-1.5 text-sm font-medium text-[var(--sea-ink)]/85 transition-colors hover:bg-[var(--sand)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:opacity-50"
             >
               <Ban className="size-4" />
               Reject
@@ -143,7 +143,7 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
             type="button"
             disabled={isWorking}
             onClick={() => onRegenerate(recording)}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--action)] px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-[var(--action)]/85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:opacity-50"
           >
             <RotateCcw className="size-4" />
             Regenerate
@@ -155,7 +155,7 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
             type="button"
             disabled={isWorking}
             onClick={() => onRegenerate(recording)}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-slate-700 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--action)] px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-[var(--action)]/85 disabled:opacity-50"
           >
             <RotateCcw className="size-4" />
             Retry generation
@@ -163,7 +163,7 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
         ) : null}
 
         {recording.status === 'approved' ? (
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[var(--sea-ink)]/65">
             Approved{recording.reviewed_at
               ? ` on ${new Date(recording.reviewed_at).toLocaleString()}`
               : ''}
@@ -174,7 +174,7 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
 
       {showRejectForm && isPending ? (
         <form
-          className="mt-3 flex flex-wrap items-end gap-2 rounded-lg bg-slate-50 p-3"
+          className="mt-3 flex flex-wrap items-end gap-2 rounded-lg bg-[var(--sand)] p-3"
           onSubmit={(event) => {
             event.preventDefault()
             onReject(recording, reason)
@@ -183,7 +183,7 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
           }}
         >
           <label className="flex-1 text-sm">
-            <span className="mb-1 block text-xs font-medium text-slate-600">
+            <span className="mb-1 block text-xs font-medium text-[var(--sea-ink)]/75">
               Rejection reason (optional)
             </span>
             <input
@@ -191,7 +191,7 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
               value={reason}
               onChange={(event) => setReason(event.target.value)}
               placeholder="e.g. word is spelled out letter by letter"
-              className="w-full rounded-lg border border-slate-300 px-3 py-1.5 text-sm outline-none focus:border-slate-900"
+              className="w-full rounded-lg border border-[var(--line)] px-3 py-1.5 text-sm outline-none focus:border-[var(--lagoon-deep)]"
             />
           </label>
           <button
@@ -204,7 +204,7 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
           <button
             type="button"
             onClick={() => setShowRejectForm(false)}
-            className="px-2 py-1.5 text-sm text-slate-600 hover:underline"
+            className="px-2 py-1.5 text-sm text-[var(--sea-ink)]/75 hover:underline"
           >
             Cancel
           </button>

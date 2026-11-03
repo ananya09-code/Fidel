@@ -80,7 +80,7 @@ export function WordOfTheDay({
         </h2>
       </div>
 
-      <Card className="overflow-hidden rounded-2xl border border-[var(--sea-ink)]/10 bg-white/60 shadow-sm">
+      <Card className="overflow-hidden rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 shadow-sm">
         <CardContent className="flex flex-col gap-6 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
           <div className="flex min-w-0 items-start gap-4 sm:items-center sm:gap-5">
             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[var(--sand)]">
@@ -118,7 +118,7 @@ export function WordOfTheDay({
               variant="outline"
               onClick={playAudio}
               disabled={!audioSrc || playing}
-              className="w-full rounded-xl border-[var(--sea-ink)]/15 bg-white/60 text-[var(--sea-ink)] hover:bg-[var(--sand)]/25 sm:w-auto"
+              className="w-full rounded-xl border-[var(--sea-ink)]/15 bg-[var(--panel)]/60 text-[var(--sea-ink)] hover:bg-[var(--sand)]/25 sm:w-auto"
               aria-label={`Listen to ${word} pronunciation`}
             >
               <Volume2 className="mr-2 h-4 w-4" />
@@ -126,7 +126,7 @@ export function WordOfTheDay({
             </Button>
 
             {audioError && (
-              <p role="status" className="text-xs text-destructive">
+              <p role="status" className="text-xs text-destructive dark:text-red-300">
                 Audio couldn't be played. Try again later.
               </p>
             )}

@@ -53,10 +53,10 @@ function HomePage() {
             })}
           />
         ) : (
-          <section className="flex flex-col justify-center rounded-[28px] border border-[var(--sea-ink)]/10 bg-white/55 p-8">
+          <section className="flex flex-col justify-center rounded-[28px] border border-[var(--sea-ink)]/10 bg-[var(--panel)]/55 p-8">
             <h2 className="text-2xl font-semibold text-[var(--sea-ink)]">Choose your next lesson</h2>
             <p className="mt-2 text-sm text-[var(--sea-ink)]/55">Your next available lesson is waiting on the learning path.</p>
-            <button type="button" onClick={() => void navigate({ to: "/Learn" })} className="mt-6 w-fit rounded-xl bg-[var(--sea-ink)] px-5 py-3 text-sm font-semibold text-white">View learning path</button>
+            <button type="button" onClick={() => void navigate({ to: "/Learn" })} className="mt-6 w-fit rounded-xl bg-[var(--action)] px-5 py-3 text-sm font-semibold text-white">View learning path</button>
           </section>
         )}
       </section>

@@ -12,8 +12,8 @@ export function LandingHeader() {
         className="
           relative mx-auto flex h-[68px] max-w-7xl items-center
           justify-between gap-4 overflow-hidden rounded-[22px]
-          border border-white/70
-          bg-white/35 px-4
+          border border-[var(--line)]
+          bg-[var(--panel)]/35 px-4
           shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(255,255,255,0.2)]
           backdrop-blur-2xl backdrop-saturate-200
           sm:px-6
@@ -22,12 +22,12 @@ export function LandingHeader() {
         {/* Glossy light reflections */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 rounded-[22px] bg-gradient-to-b from-white/65 via-white/15 to-white/5"
+          className="pointer-events-none absolute inset-0 rounded-[22px] bg-gradient-to-b from-[var(--panel)]/65 via-white/15 to-white/5"
         />
 
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -top-12 left-[15%] h-20 w-2/3 rounded-full bg-white/50 blur-2xl"
+          className="pointer-events-none absolute -top-12 left-[15%] h-20 w-2/3 rounded-full bg-[var(--panel)]/50 blur-2xl"
         />
 
         {/* Logo */}
@@ -47,10 +47,10 @@ export function LandingHeader() {
         </Link>
 
         <nav className="relative z-10 hidden items-center gap-1 md:flex" aria-label="Landing page">
-          <a href="#how-it-works" className="rounded-xl px-4 py-2 text-sm font-medium text-[var(--sea-ink)]/65 transition hover:bg-white/45 hover:text-[var(--sea-ink)]">
+          <a href="#how-it-works" className="rounded-xl px-4 py-2 text-sm font-medium text-[var(--sea-ink)]/65 transition hover:bg-[var(--panel)]/45 hover:text-[var(--sea-ink)]">
             How it works
           </a>
-          <a href="#languages" className="rounded-xl px-4 py-2 text-sm font-medium text-[var(--sea-ink)]/65 transition hover:bg-white/45 hover:text-[var(--sea-ink)]">
+          <a href="#languages" className="rounded-xl px-4 py-2 text-sm font-medium text-[var(--sea-ink)]/65 transition hover:bg-[var(--panel)]/45 hover:text-[var(--sea-ink)]">
             Languages
           </a>
         </nav>
@@ -63,7 +63,7 @@ export function LandingHeader() {
               className="
                 group relative overflow-hidden rounded-xl
                 border border-white/20
-                bg-[var(--sea-ink)] px-4 py-2.5
+                bg-[var(--action)] px-4 py-2.5
                 text-sm font-semibold text-white
                 shadow-[0_3px_12px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.2)]
                 transition-all duration-200
@@ -86,7 +86,7 @@ export function LandingHeader() {
                   rounded-xl px-3 py-2.5 text-sm font-semibold
                   text-[var(--sea-ink)]
                   transition-all duration-200
-                  hover:bg-white/40
+                  hover:bg-[var(--panel)]/40
                   active:scale-95
                   sm:px-4
                 "
@@ -99,7 +99,7 @@ export function LandingHeader() {
                 className="
                   group relative overflow-hidden rounded-xl
                   border border-white/20
-                  bg-[var(--sea-ink)] px-4 py-2.5
+                  bg-[var(--action)] px-4 py-2.5
                   text-sm font-semibold text-white
                   shadow-[0_3px_12px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.2)]
                   transition-all duration-200

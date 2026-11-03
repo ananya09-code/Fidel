@@ -6,12 +6,12 @@ import { getSafeAuthRedirect } from "@/lib/auth-redirect";
 
 const appearance = {
   variables: {
-    colorPrimary: "#115e59",
-    colorText: "#0f172a",
-    colorTextSecondary: "#64748b",
-    colorBackground: "rgba(255, 255, 255, 0.75)",
-    colorInputBackground: "rgba(255, 255, 255, 0.7)",
-    colorInputText: "#0f172a",
+    colorPrimary: "var(--lagoon-deep)",
+    colorText: "var(--sea-ink)",
+    colorTextSecondary: "var(--sea-ink-soft)",
+    colorBackground: "var(--panel)",
+    colorInputBackground: "var(--panel)",
+    colorInputText: "var(--sea-ink)",
     borderRadius: "0.75rem",
     fontFamily: "inherit",
   },
@@ -19,17 +19,17 @@ const appearance = {
     rootBox: "w-full",
     cardBox: "w-full shadow-none",
     card: "border-0 bg-transparent p-0 shadow-none",
-    headerTitle: "text-2xl font-bold tracking-tight text-slate-900",
-    headerSubtitle: "text-sm leading-6 text-slate-500",
+    headerTitle: "text-2xl font-bold tracking-tight text-[var(--sea-ink)]/100",
+    headerSubtitle: "text-sm leading-6 text-[var(--sea-ink)]/65",
     formButtonPrimary:
       "bg-teal-700 text-white shadow-lg shadow-teal-900/10 hover:bg-teal-800",
     socialButtonsBlockButton:
-      "border-slate-200 bg-white/70 text-slate-700 hover:bg-white",
+      "border-[var(--line)] bg-[var(--panel)]/70 text-[var(--sea-ink)]/85 hover:bg-[var(--panel)]",
     formFieldInput:
-      "border-slate-200 bg-white/70 focus:border-teal-600 focus:ring-teal-600/20",
-    footerActionLink: "text-teal-800 hover:text-teal-900",
-    dividerLine: "bg-slate-200",
-    dividerText: "text-slate-400",
+      "border-[var(--line)] bg-[var(--panel)]/70 focus:border-teal-600 focus:ring-teal-600/20",
+    footerActionLink: "text-teal-800 dark:text-teal-300 hover:text-teal-900",
+    dividerLine: "bg-[var(--sand)]",
+    dividerText: "text-[var(--sea-ink)]/55",
   },
 } as const;
 
@@ -65,7 +65,7 @@ export function ClerkAuthPage({ mode, redirect }: ClerkAuthPageProps) {
 
   return (
     <AuthLayout variant={mode} contained={false}>
-      <div className="rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-2xl shadow-slate-900/[0.07] backdrop-blur-2xl sm:p-9">
+      <div className="rounded-[2rem] border border-[var(--line)] bg-[var(--panel)]/75 p-6 shadow-2xl shadow-slate-900/[0.07] backdrop-blur-2xl sm:p-9">
         {isSignIn ? (
           <SignIn
             routing="path"

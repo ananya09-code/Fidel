@@ -164,3 +164,28 @@ def test_legacy_goal_maps_to_words_without_rewriting_data(
 def test_invalid_word_goal_is_rejected(auth_client, mock_clerk):
     response = auth_client.patch(BASE, headers=AUTH_HEADERS, json={"daily_goal_words": 999})
     assert response.status_code == 422
+
+
+@pytest.mark.parametrize("appearance", ["light", "dark", "system"])
+def test_appearance_persists_and_is_isolated(auth_client, mock_clerk, appearance):
+    saved = auth_client.patch(
+        BASE, headers=AUTH_HEADERS,
+        json={"appearance": appearance, "learning_language": "am"},
+    )
+    assert saved.status_code == 200
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["appearance"] == appearance
+    # Saving other settings must not reset the theme.
+    auth_client.patch(BASE, headers=AUTH_HEADERS, json={"sound_enabled": False})
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["appearance"] == appearance
+    mock_clerk(user_id="another_theme_user")
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["appearance"] == "system"
+    auth_client.patch(BASE, headers=AUTH_HEADERS, json={"appearance": "light"})
+    mock_clerk(user_id="user_test")
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["appearance"] == appearance
+
+
+def test_invalid_appearance_does_not_change_saved_choice(auth_client, mock_clerk):
+    auth_client.patch(BASE, headers=AUTH_HEADERS, json={"appearance": "dark"})
+    rejected = auth_client.patch(BASE, headers=AUTH_HEADERS, json={"appearance": "invalid"})
+    assert rejected.status_code == 422
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["appearance"] == "dark"

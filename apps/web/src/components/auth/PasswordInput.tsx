@@ -22,7 +22,7 @@ export function PasswordInput({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={id} className="text-sm font-medium text-slate-700">
+      <Label htmlFor={id} className="text-sm font-medium text-[var(--sea-ink)]/85">
         {label}
       </Label>
 
@@ -34,7 +34,7 @@ export function PasswordInput({
           placeholder={placeholder}
           autoComplete={autoComplete}
           required
-          className="h-12 rounded-xl border-slate-200/90 bg-white/70 pr-12 placeholder:text-slate-400 focus-visible:border-teal-600 focus-visible:ring-teal-600/20"
+          className="h-12 rounded-xl border-[var(--line)]/90 bg-[var(--panel)]/70 pr-12 placeholder:text-[var(--sea-ink)]/55 focus-visible:border-teal-600 focus-visible:ring-teal-600/20"
         />
 
         <Button
@@ -44,7 +44,7 @@ export function PasswordInput({
           aria-label={visible ? "Hide password" : "Show password"}
           aria-pressed={visible}
           onClick={() => setVisible((current) => !current)}
-          className="absolute right-1 top-1/2 size-10 -translate-y-1/2 text-slate-400 hover:text-slate-700"
+          className="absolute right-1 top-1/2 size-10 -translate-y-1/2 text-[var(--sea-ink)]/55 hover:text-[var(--sea-ink)]/85"
         >
           {visible ? (
             <EyeOff className="size-4" />

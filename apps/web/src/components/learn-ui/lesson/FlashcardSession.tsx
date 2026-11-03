@@ -127,7 +127,7 @@ export function FlashcardSession({
   if (availableWords.length === 0) {
     return (
       <section className="mx-auto w-full max-w-2xl px-4 py-10">
-        <div className="rounded-[2rem] border border-[var(--sea-ink)]/10 bg-white/60 px-6 py-12 text-center backdrop-blur sm:px-10">
+        <div className="rounded-[2rem] border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 px-6 py-12 text-center backdrop-blur sm:px-10">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--sand)]/45">
             <BookOpen className="h-7 w-7 text-[var(--sea-ink)]" />
           </div>
@@ -145,7 +145,7 @@ export function FlashcardSession({
             <button
               type="button"
               onClick={onBack}
-              className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--sea-ink)]/12 bg-white/50 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition-colors hover:bg-[var(--sand)]/30"
+              className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--sea-ink)]/12 bg-[var(--panel)]/50 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition-colors hover:bg-[var(--sand)]/30"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to lessons
@@ -159,13 +159,13 @@ export function FlashcardSession({
   if (sessionCompleted) {
     return (
       <section className="mx-auto w-full max-w-2xl px-4 py-8 sm:py-12">
-        <div className="overflow-hidden rounded-[2rem] border border-[var(--sea-ink)]/10 bg-white/60 backdrop-blur">
+        <div className="overflow-hidden rounded-[2rem] border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 backdrop-blur">
           <div className="px-6 py-12 text-center sm:px-12">
             <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#39C987]/15">
-              <CheckCircle2 className="h-10 w-10 text-[#239B65]" />
+              <CheckCircle2 className="h-10 w-10 text-[#239B65] dark:text-emerald-300" />
             </div>
 
-            <div className="mt-7 inline-flex items-center gap-2 rounded-full border border-[var(--sea-ink)]/10 bg-white/60 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[var(--sea-ink)]/55">
+            <div className="mt-7 inline-flex items-center gap-2 rounded-full border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[var(--sea-ink)]/55">
               <Sparkles className="h-4 w-4 text-[#E9A23B]" />
               Session completed
             </div>
@@ -184,7 +184,7 @@ export function FlashcardSession({
             </p>
 
             <div className="mx-auto mt-8 grid max-w-sm grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-[var(--sea-ink)]/10 bg-white/55 p-4">
+              <div className="rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/55 p-4">
                 <p className="text-2xl font-bold text-[var(--sea-ink)]">
                   {sessionWords.length}
                 </p>
@@ -193,7 +193,7 @@ export function FlashcardSession({
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-[var(--sea-ink)]/10 bg-white/55 p-4">
+              <div className="rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/55 p-4">
                 <p className="text-2xl font-bold text-[var(--sea-ink)]">100%</p>
                 <p className="mt-1 text-xs text-[var(--sea-ink)]/55">
                   Cards completed
@@ -206,7 +206,7 @@ export function FlashcardSession({
                 type="button"
                 onClick={() => void handlePractice()}
                 disabled={isSaving}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--sea-ink)] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
               >
                 {isSaving ? "Saving..." : "Continue to practice"}
                 <ArrowRight className="h-4 w-4" />
@@ -215,7 +215,7 @@ export function FlashcardSession({
               <button
                 type="button"
                 onClick={startSession}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[var(--sea-ink)]/12 bg-white/50 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition-colors hover:bg-[var(--sand)]/30"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[var(--sea-ink)]/12 bg-[var(--panel)]/50 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition-colors hover:bg-[var(--sand)]/30"
               >
                 <RotateCcw className="h-4 w-4" />
                 Review these words again
@@ -231,7 +231,7 @@ export function FlashcardSession({
                 </button>
               )}
             </div>
-            {saveError && <p className="mt-4 text-sm text-red-600" role="alert">{saveError}</p>}
+            {saveError && <p className="mt-4 text-sm text-red-600 dark:text-red-300" role="alert">{saveError}</p>}
           </div>
         </div>
       </section>
@@ -251,7 +251,7 @@ export function FlashcardSession({
             Exit session
           </button>
 
-          <span className="max-w-[55%] truncate rounded-full border border-[var(--sea-ink)]/10 bg-white/60 px-3 py-1.5 text-xs font-medium text-[var(--sea-ink)]/60">
+          <span className="max-w-[55%] truncate rounded-full border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 px-3 py-1.5 text-xs font-medium text-[var(--sea-ink)]/60">
             {category}
           </span>
         </div>
@@ -280,7 +280,7 @@ export function FlashcardSession({
         Back to lessons
       </button>
 
-      <div className="relative overflow-hidden rounded-[2rem] border border-[var(--sea-ink)]/10 bg-white/60 p-6 backdrop-blur sm:p-10">
+      <div className="relative overflow-hidden rounded-[2rem] border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 p-6 backdrop-blur sm:p-10">
         <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#E9A23B]/10 blur-3xl" aria-hidden="true" />
         <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-[#7C83FD]/10 blur-3xl" aria-hidden="true" />
 
@@ -288,7 +288,7 @@ export function FlashcardSession({
           <BookOpen className="h-7 w-7 text-[var(--sea-ink)]" />
         </div>
 
-        <p className="relative mt-6 text-sm font-semibold text-[#9A6515]">
+        <p className="relative mt-6 text-sm font-semibold text-[#9A6515] dark:text-amber-300">
           YOUR NEXT LEARNING SESSION
         </p>
 
@@ -301,7 +301,7 @@ export function FlashcardSession({
           when audio is available. Choose how many words you want to explore.
         </p>
 
-        <div className="relative mt-8 rounded-2xl border border-[var(--sea-ink)]/10 bg-white/55 p-5">
+        <div className="relative mt-8 rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/55 p-5">
           <div className="flex items-center justify-between gap-4">
             <div>
               <h2 className="font-semibold text-[var(--sea-ink)]">
@@ -314,7 +314,7 @@ export function FlashcardSession({
               </p>
             </div>
 
-            <span className="rounded-xl bg-[#E9A23B]/15 px-3 py-2 text-sm font-bold text-[#9A6515]">
+            <span className="rounded-xl bg-[#E9A23B]/15 px-3 py-2 text-sm font-bold text-[#9A6515] dark:text-amber-300">
               {Math.min(wordLimit, availableWords.length)}
             </span>
           </div>
@@ -332,8 +332,8 @@ export function FlashcardSession({
                   className={[
                     "flex min-h-20 flex-col items-center justify-center rounded-2xl border px-3 py-3 transition-all",
                     selected
-                      ? "border-[#E9A23B] bg-[#E9A23B]/15 text-[#7A4E0E] shadow-sm"
-                      : "border-[var(--sea-ink)]/10 bg-white/65 text-[var(--sea-ink)] hover:border-[var(--sea-ink)]/20 hover:bg-[var(--sand)]/25",
+                      ? "border-[#E9A23B] bg-[#E9A23B]/15 text-[#7A4E0E] dark:text-amber-300 shadow-sm"
+                      : "border-[var(--sea-ink)]/10 bg-[var(--panel)]/65 text-[var(--sea-ink)] hover:border-[var(--sea-ink)]/20 hover:bg-[var(--sand)]/25",
                   ].join(" ")}
                 >
                   <span className="text-2xl font-bold tabular-nums">{limit}</span>
@@ -359,7 +359,7 @@ export function FlashcardSession({
             type="button"
             onClick={() => void startSession()}
             disabled={sessionWords.length === 0 || isSaving}
-            className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--sea-ink)] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSaving ? "Starting..." : "Start learning"}
             <ArrowRight className="h-4 w-4" />
@@ -368,12 +368,12 @@ export function FlashcardSession({
           <button
             type="button"
             onClick={onBack}
-            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[var(--sea-ink)]/12 bg-white/50 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition-colors hover:bg-[var(--sand)]/30"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[var(--sea-ink)]/12 bg-[var(--panel)]/50 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition-colors hover:bg-[var(--sand)]/30"
           >
             Not now
           </button>
         </div>
-        {saveError && <p className="mt-4 text-sm text-red-600" role="alert">{saveError}</p>}
+        {saveError && <p className="mt-4 text-sm text-red-600 dark:text-red-300" role="alert">{saveError}</p>}
       </div>
     </section>
   );

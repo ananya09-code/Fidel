@@ -241,14 +241,14 @@ function AdminDashboard({
   const items = recordingsQuery.data?.items ?? []
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="border-b border-slate-200 bg-white">
+    <div className="min-h-screen bg-[var(--sand)]">
+      <header className="border-b border-[var(--line)] bg-[var(--panel)]">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-6">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+            <p className="text-xs font-medium uppercase tracking-wide text-[var(--sea-ink)]/65">
               Fidel admin
             </p>
-            <h1 className="text-xl font-semibold tracking-tight text-slate-900">
+            <h1 className="text-xl font-semibold tracking-tight text-[var(--sea-ink)]/100">
               Audio review
             </h1>
           </div>
@@ -256,7 +256,7 @@ function AdminDashboard({
           <div className="flex items-center gap-2">
             <a
               href="/"
-              className="text-sm text-slate-600 underline-offset-2 hover:underline"
+              className="text-sm text-[var(--sea-ink)]/75 underline-offset-2 hover:underline"
             >
               Back to app
             </a>
@@ -264,7 +264,7 @@ function AdminDashboard({
               <button
                 type="button"
                 onClick={onSignOut}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm text-slate-700 transition-colors hover:bg-slate-50"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] px-2.5 py-1.5 text-sm text-[var(--sea-ink)]/85 transition-colors hover:bg-[var(--sand)]"
               >
                 <LogOut className="size-3.5" />
                 Lock
@@ -276,14 +276,14 @@ function AdminDashboard({
 
       <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6">
         {!isAuthenticated ? (
-          <section className="mx-auto max-w-md rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="flex items-center gap-2 text-base font-semibold text-slate-900">
+          <section className="mx-auto max-w-md rounded-xl border border-[var(--line)] bg-[var(--panel)] p-6 shadow-sm">
+            <h2 className="flex items-center gap-2 text-base font-semibold text-[var(--sea-ink)]/100">
               <KeyRound className="size-4" />
               Administrative key required
             </h2>
-            <p className="mt-1.5 text-sm text-slate-600">
+            <p className="mt-1.5 text-sm text-[var(--sea-ink)]/75">
               The review endpoints are protected by the server's{' '}
-              <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">ADMIN_API_KEY</code>.
+              <code className="rounded bg-[var(--sand)] px-1 py-0.5 text-xs">ADMIN_API_KEY</code>.
               Enter it to continue. The key is kept in this browser tab only.
             </p>
             <form
@@ -298,12 +298,12 @@ function AdminDashboard({
                 value={keyDraft}
                 onChange={(event) => setKeyDraft(event.target.value)}
                 placeholder="Admin key"
-                className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900"
+                className="flex-1 rounded-lg border border-[var(--line)] px-3 py-2 text-sm outline-none focus:border-[var(--lagoon-deep)]"
               />
               <button
                 type="submit"
                 disabled={keyDraft.trim().length === 0}
-                className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white disabled:opacity-40"
+                className="rounded-lg bg-[var(--action)] px-3 py-2 text-sm font-medium text-white disabled:opacity-40"
               >
                 Unlock
               </button>
@@ -325,8 +325,8 @@ function AdminDashboard({
                 role="status"
                 className={`rounded-lg px-3 py-2 text-sm ${
                   notice.kind === 'ok'
-                    ? 'bg-emerald-50 text-emerald-800'
-                    : 'bg-rose-50 text-rose-800'
+                    ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-300'
+                    : 'bg-rose-50 dark:bg-rose-500/10 text-rose-800 dark:text-rose-300'
                 }`}
               >
                 {notice.text}
@@ -334,7 +334,7 @@ function AdminDashboard({
             ) : null}
 
             {summaryError ? (
-              <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-800" role="alert">
+              <p className="rounded-lg bg-rose-50 dark:bg-rose-500/10 px-3 py-2 text-sm text-rose-800 dark:text-rose-300" role="alert">
                 {describeError(summaryError)}
               </p>
             ) : null}
@@ -350,8 +350,8 @@ function AdminDashboard({
                       aria-pressed={statusFilter === filter.value}
                       className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
                         statusFilter === filter.value
-                          ? 'bg-slate-900 text-white'
-                          : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100'
+                          ? 'bg-[var(--action)] text-white'
+                          : 'bg-[var(--panel)] text-[var(--sea-ink)]/85 ring-1 ring-slate-200 hover:bg-[var(--sand)]'
                       }`}
                     >
                       {filter.label}
@@ -362,7 +362,7 @@ function AdminDashboard({
                 <select
                   value={batchFilter}
                   onChange={(event) => setBatchFilter(event.target.value)}
-                  className="rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm"
+                  className="rounded-lg border border-[var(--line)] bg-[var(--panel)] px-2.5 py-1.5 text-sm"
                 >
                   <option value="">All batches</option>
                   {batches.map((batch) => (
@@ -375,7 +375,7 @@ function AdminDashboard({
                 <button
                   type="button"
                   onClick={refresh}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm text-slate-700 transition-colors hover:bg-slate-100"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] bg-[var(--panel)] px-2.5 py-1.5 text-sm text-[var(--sea-ink)]/85 transition-colors hover:bg-[var(--sand)]"
                 >
                   <RefreshCw
                     className={`size-3.5 ${recordingsQuery.isFetching ? 'animate-spin' : ''}`}
@@ -387,7 +387,7 @@ function AdminDashboard({
                   <button
                     type="button"
                     onClick={handleRetryAllFailed}
-                    className="rounded-lg bg-slate-900 px-2.5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-slate-700"
+                    className="rounded-lg bg-[var(--action)] px-2.5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-[var(--action)]/85"
                   >
                     Retry {items.length} failed
                   </button>
@@ -395,7 +395,7 @@ function AdminDashboard({
               </div>
 
               {recordingsError ? (
-                <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-800" role="alert">
+                <p className="rounded-lg bg-rose-50 dark:bg-rose-500/10 px-3 py-2 text-sm text-rose-800 dark:text-rose-300" role="alert">
                   {describeError(recordingsError)}
                 </p>
               ) : null}
@@ -405,16 +405,16 @@ function AdminDashboard({
                   {Array.from({ length: 3 }).map((_, index) => (
                     <div
                       key={index}
-                      className="h-32 animate-pulse rounded-xl border border-slate-200 bg-white"
+                      className="h-32 animate-pulse rounded-xl border border-[var(--line)] bg-[var(--panel)]"
                     />
                   ))}
                 </div>
               ) : items.length === 0 ? (
-                <div className="rounded-xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
-                  <p className="text-sm font-medium text-slate-900">
+                <div className="rounded-xl border border-dashed border-[var(--line)] bg-[var(--panel)] px-6 py-12 text-center">
+                  <p className="text-sm font-medium text-[var(--sea-ink)]/100">
                     Nothing to review here
                   </p>
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 text-sm text-[var(--sea-ink)]/65">
                     {statusFilter || batchFilter
                       ? 'No recordings match this filter. Try “All”.'
                       : 'Start a batch to generate the first recordings.'}
@@ -455,7 +455,7 @@ function AdminDashboard({
               )}
 
               {recordingsQuery.data && recordingsQuery.data.total_pages > 1 ? (
-                <div className="flex items-center justify-between pt-1 text-sm text-slate-600">
+                <div className="flex items-center justify-between pt-1 text-sm text-[var(--sea-ink)]/75">
                   <span className="tabular-nums">
                     Page {recordingsQuery.data.page} of {recordingsQuery.data.total_pages} ·{' '}
                     {recordingsQuery.data.total} recording
@@ -466,7 +466,7 @@ function AdminDashboard({
                       type="button"
                       disabled={page <= 1}
                       onClick={() => setPage(Math.max(1, page - 1))}
-                      className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-medium disabled:opacity-40"
+                      className="rounded-lg border border-[var(--line)] bg-[var(--panel)] px-3 py-1.5 font-medium disabled:opacity-40"
                     >
                       Previous
                     </button>
@@ -474,7 +474,7 @@ function AdminDashboard({
                       type="button"
                       disabled={page >= recordingsQuery.data.total_pages}
                       onClick={() => setPage(page + 1)}
-                      className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-medium disabled:opacity-40"
+                      className="rounded-lg border border-[var(--line)] bg-[var(--panel)] px-3 py-1.5 font-medium disabled:opacity-40"
                     >
                       Next
                     </button>

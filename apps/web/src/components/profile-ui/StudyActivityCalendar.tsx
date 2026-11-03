@@ -4,7 +4,7 @@ import { CalendarDays } from "lucide-react";
 import type { StudyActivity } from "@/lib/api/dashboard";
 import { activityDateLabel, activityKeyboardDate, activityLevel, activityWeeks } from "@/lib/study-activity";
 
-const colors = ["#e6ece3", "#c7e2bd", "#8ac183", "#4e9864", "#245d41"];
+const colors = Array.from({ length: 5 }, (_, index) => `var(--activity-${index})`);
 const intensityLabels = ["No answers", "1–4 answers", "5–9 answers", "10–19 answers", "20+ answers"];
 
 export function StudyActivityCalendar({ activity }: { activity: StudyActivity }) {
