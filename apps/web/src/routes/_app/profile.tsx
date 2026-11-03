@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_app/profile")({
 
 function ProfilePage() {
   return (
-    <div className="w-full">
+    <div className="w-full min-w-0 px-4 py-6 sm:px-7 sm:py-8 lg:px-10 lg:py-10 xl:px-12">
       <ProfileOverview />
     </div>
   );
