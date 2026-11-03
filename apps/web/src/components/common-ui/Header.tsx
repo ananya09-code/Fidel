@@ -26,11 +26,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function Header() {
-  const { state, isMobile, openMobile } = useSidebar();
+  const { state } = useSidebar();
   const { user } = useUser();
   const { signOut } = useClerk();
 
-  const sidebarIsOpen = isMobile ? openMobile : state === "expanded";
   const displayName =
     user?.fullName || user?.username || "Fidel learner";
   const email = user?.primaryEmailAddress?.emailAddress ?? "";
@@ -44,10 +43,9 @@ export function Header() {
 
   return (
     <div className="flex w-full min-w-0 items-center justify-between gap-3">
-      {!sidebarIsOpen && (
         <Link
           to="/"
-          className="flex min-w-0 shrink-0 items-center gap-2.5"
+          className={`flex min-w-0 shrink-0 items-center gap-2.5 ${state === "expanded" ? "md:hidden" : ""}`}
           aria-label="Fidel home"
         >
           <img
@@ -60,7 +58,6 @@ export function Header() {
             Fidel
           </span>
         </Link>
-      )}
 
       <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
         {/* Language selector */}

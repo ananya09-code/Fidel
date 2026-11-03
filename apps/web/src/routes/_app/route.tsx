@@ -5,6 +5,7 @@ import { useAuth } from "@clerk/tanstack-react-start";
 import { AuthLoading } from "@/components/auth/AuthLoading";
 import { AppSidebar } from "@/components/common-ui/AppSideBar";
 import { Header } from "@/components/common-ui/Header";
+import { MobileBottomNavigation } from "@/components/common-ui/MobileBottomNavigation";
 import { useProfile } from "@/hooks/use-profile";
 
 import {
@@ -39,18 +40,19 @@ function AppLayout() {
       <AppSidebar />
 
       <SidebarInset className="min-h-svh min-w-0">
-        <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-white/50 bg-white/60 px-3 backdrop-blur-2xl sm:px-5">
-          <SidebarTrigger className="shrink-0 rounded-xl text-[var(--sea-ink)]/65 hover:bg-[var(--sand)]/30" />
+        <header className="sticky top-0 z-40 flex h-[calc(4rem+env(safe-area-inset-top,0px))] items-center gap-3 border-b border-white/50 bg-white/60 px-3 pt-[env(safe-area-inset-top,0px)] backdrop-blur-2xl sm:px-5 md:h-16 md:pt-0">
+          <SidebarTrigger className="hidden shrink-0 rounded-xl text-[var(--sea-ink)]/65 hover:bg-[var(--sand)]/30 md:inline-flex" />
 
           <div className="min-w-0 flex-1">
             <Header />
           </div>
         </header>
 
-        <main className="min-w-0 flex-1">
+        <main className="min-w-0 flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] md:pb-0">
           <Outlet />
         </main>
       </SidebarInset>
+      <MobileBottomNavigation />
     </SidebarProvider>
   );
 }
