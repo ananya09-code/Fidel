@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@clerk/tanstack-react-start";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import type { FlashcardWord } from "@/components/learn-ui/lesson/Flashcard";
@@ -24,6 +24,7 @@ export const Route = createFileRoute("/_app/review")({
 
 function ReviewPage() {
   const { getToken, userId } = useAuth();
+  const queryClient = useQueryClient();
   const { start } = Route.useSearch();
   const [session, setSession] = useState<ReviewSession | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
@@ -103,10 +104,12 @@ function ReviewPage() {
       onAnswer={async ({ wordId, selectedWordId }) => {
         const saved = await saveReviewAnswer(await token(), active.id, wordId, selectedWordId);
         setSession(saved);
+        void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
       }}
       onFinish={async () => {
         const completed = await completeReview(await token(), active.id);
         setSession(completed);
+        void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
         await overview.refetch();
       }}
     />

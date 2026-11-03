@@ -79,6 +79,9 @@ def test_dashboard_uses_persisted_user_data(auth_client, mock_clerk, session_fac
     assert body["study_minutes_today"] == 16
     assert body["current_lesson"]["lesson_key"] == "lesson-current"
     assert len(body["recent_activity"]) == 2
+    activity = auth_client.get(f"{BASE}/activity", headers=AUTH_HEADERS).json()
+    # One lesson answer + one review answer, not two extra session completions.
+    assert sum(day["answers"] for day in activity["days"]) == 2
 
 
 def test_dashboard_is_cross_user_isolated(auth_client, mock_clerk, session_factory):

@@ -94,6 +94,7 @@ function LessonPage() {
       question_index: answer.questionIndex,
     });
     cacheAttempt(value);
+    void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
   }
 
   async function finish() {

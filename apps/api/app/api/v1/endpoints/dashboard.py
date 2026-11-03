@@ -21,6 +21,8 @@ from app.schemas.dashboard import (
     DailyActivity,
     DashboardSummary,
     RecentActivity,
+    StudyActivity,
+    StudyActivityDay,
 )
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
@@ -56,6 +58,60 @@ def _calculate_streak(activity_dates: set[date], today: date) -> int:
         streak += 1
         cursor -= timedelta(days=1)
     return streak
+
+
+def _learner_timezone(value: str) -> ZoneInfo:
+    try:
+        return ZoneInfo(value)
+    except (ZoneInfoNotFoundError, ValueError):
+        return ZoneInfo("UTC")
+
+
+def _local_today(learner_tz: ZoneInfo) -> date:
+    return datetime.now(learner_tz).date()
+
+
+@router.get("/activity", response_model=StudyActivity)
+def get_study_activity(
+    current_user: Annotated[ClerkUser, Depends(get_current_user)],
+    db: Session = Depends(get_db),
+) -> StudyActivity:
+    """Return a rolling year of saved answers, grouped by the learner's local day.
+
+    Each persisted lesson/review answer counts once, correct or incorrect.
+    Completion records are not extra contributions. Reading never creates a user.
+    """
+    user = db.execute(text("""
+        SELECT u.id, COALESCE(p.timezone, 'UTC') AS timezone
+        FROM users AS u
+        LEFT JOIN user_preferences AS p ON p.user_id = u.id
+        WHERE u.clerk_id = :clerk_id
+    """), {"clerk_id": current_user.user_id}).mappings().first()
+    learner_tz = _learner_timezone(user["timezone"] if user else "UTC")
+    today = _local_today(learner_tz)
+    start = today - timedelta(days=364)
+    counts: Counter[date] = Counter()
+    if user:
+        # Convert local midnights separately, so daylight-saving days may be 23/25h.
+        start_at = datetime.combine(start, time.min, tzinfo=learner_tz).astimezone(timezone.utc)
+        end_at = datetime.combine(today + timedelta(days=1), time.min, tzinfo=learner_tz).astimezone(timezone.utc)
+        timestamps = db.execute(text("""
+            SELECT answered_at FROM answer_attempts
+            WHERE user_id = :user_id AND answered_at >= :start_at AND answered_at < :end_at
+            UNION ALL
+            SELECT answered_at FROM review_answers
+            WHERE user_id = :user_id AND answered_at >= :start_at AND answered_at < :end_at
+        """), {"user_id": user["id"], "start_at": start_at, "end_at": end_at}).scalars()
+        counts.update(_as_datetime(value).astimezone(learner_tz).date() for value in timestamps)
+    return StudyActivity(
+        timezone=learner_tz.key,
+        start_date=start,
+        end_date=today,
+        days=[
+            StudyActivityDay(date=start + timedelta(days=offset), answers=counts[start + timedelta(days=offset)])
+            for offset in range(365)
+        ],
+    )
 
 
 def _empty(today: date) -> DashboardSummary:
@@ -99,11 +155,8 @@ def get_dashboard(
     if user is None:
         return _empty(datetime.now(timezone.utc).date())
     user_id: UUID = user["id"]
-    try:
-        learner_tz = ZoneInfo(user["timezone"])
-    except (ZoneInfoNotFoundError, ValueError):
-        learner_tz = ZoneInfo("UTC")
-    today = datetime.now(learner_tz).date()
+    learner_tz = _learner_timezone(user["timezone"])
+    today = _local_today(learner_tz)
     today_start = datetime.combine(today, time.min, tzinfo=learner_tz).astimezone(timezone.utc)
     tomorrow_start = (today_start.astimezone(learner_tz) + timedelta(days=1)).astimezone(timezone.utc)
 

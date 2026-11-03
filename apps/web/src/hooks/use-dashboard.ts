@@ -1,7 +1,22 @@
 import { useAuth } from "@clerk/tanstack-react-start";
 import { useQuery } from "@tanstack/react-query";
 
-import { getDashboard } from "@/lib/api/dashboard";
+import { getDashboard, getStudyActivity } from "@/lib/api/dashboard";
+
+export function useStudyActivity() {
+  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+  return useQuery({
+    queryKey: ["auth", "dashboard", userId ?? "signed-out", "activity"],
+    queryFn: async ({ signal }) => {
+      const token = await getToken();
+      if (!token) throw new Error("Your session expired. Please sign in again.");
+      return getStudyActivity(token, signal);
+    },
+    enabled: isLoaded && Boolean(isSignedIn && userId),
+    staleTime: 30_000,
+    retry: false,
+  });
+}
 
 export function useDashboard() {
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
