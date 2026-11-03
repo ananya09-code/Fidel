@@ -13,6 +13,7 @@ import { useProfile } from "@/hooks/use-profile";
 import { useDashboard } from "@/hooks/use-dashboard";
 import { usePreferences } from "@/hooks/use-preferences";
 import { PageState } from "@/components/common-ui/PageState";
+import { StudyActivitySection } from "@/components/profile-ui/StudyActivitySection";
 
 export default function ProfileOverview() {
   const { user } = useUser();
@@ -36,12 +37,6 @@ export default function ProfileOverview() {
     { label: "Lessons completed", value: dashboard.data?.lessons_completed ?? 0, icon: Trophy },
     { label: "Daily goal", value: `${dashboard.data?.daily_word_goal ?? 5} words`, icon: Target },
   ];
-  const activity = (dashboard.data?.weekly_activity ?? []).map((item) => ({
-    day: new Date(`${item.date}T12:00:00`).toLocaleDateString(undefined, { weekday: "short" }),
-    minutes: item.minutes,
-  }));
-  const maxMinutes = Math.max(1, ...activity.map((item) => item.minutes));
-  const weeklyMinutes = activity.reduce((total, item) => total + item.minutes, 0);
   const language = preferences.data?.learning_language === "am" ? "Amharic" : "Afaan Oromoo";
 
   const name =
@@ -167,43 +162,7 @@ export default function ProfileOverview() {
         </div>
       </section>
 
-      {/* Weekly activity */}
-      <section className="rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--bg-base)] p-5 sm:p-7">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <h2 className="font-semibold text-[var(--sea-ink)]">
-              This week's activity
-            </h2>
-            <p className="mt-1 text-sm text-[var(--sea-ink)]/60">
-              Daily learning time, in minutes.
-            </p>
-          </div>
-          <span className="rounded-full bg-[var(--sand)]/60 px-3 py-1.5 text-xs font-medium text-[var(--sea-ink)]">
-            {weeklyMinutes} min total
-          </span>
-        </div>
-
-        <div className="mt-7 flex h-40 items-end justify-between gap-2 sm:gap-4">
-          {activity.map(({ day, minutes }) => (
-            <div
-              key={day}
-              className="flex h-full flex-1 flex-col items-center justify-end gap-2"
-            >
-              <span className="text-xs font-medium text-[var(--sea-ink)]/65">
-                {minutes}m
-              </span>
-              <div className="flex h-24 w-full max-w-12 items-end overflow-hidden rounded-t-lg bg-[var(--sand)]/40">
-                <div
-                  className="w-full rounded-t-lg bg-[var(--sea-ink)]/75 transition-all"
-                  style={{ height: `${(minutes / maxMinutes) * 100}%` }}
-                  title={`${minutes} minutes`}
-                />
-              </div>
-              <span className="text-xs text-[var(--sea-ink)]/55">{day}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+      <StudyActivitySection />
 
       {/* Learning language */}
       <section className="flex flex-col gap-4 rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--bg-base)] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">

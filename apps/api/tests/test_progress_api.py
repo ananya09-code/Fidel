@@ -136,6 +136,8 @@ def test_answers_are_idempotent_and_completion_is_persisted(auth_client, mock_cl
     assert summary["correct_answers"] == 2
     assert summary["completed_lesson_keys"] == ["om-beginner-greetings"]
     assert summary["in_progress"] == []
+    calendar = auth_client.get("/api/v1/dashboard/activity", headers=AUTH_HEADERS).json()
+    assert sum(day["answers"] for day in calendar["days"]) == 2
 
 
 def seed_lesson_words(session_factory, word_ids):

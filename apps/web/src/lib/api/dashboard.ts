@@ -27,6 +27,23 @@ export const dashboardSchema = z.object({
 });
 export type DashboardSummary = z.infer<typeof dashboardSchema>;
 
+export const studyActivitySchema = z.object({
+  timezone: z.string(),
+  start_date: z.string(),
+  end_date: z.string(),
+  days: z.array(z.object({
+    date: z.string(), answers: z.number().int().nonnegative(),
+  })).length(365),
+});
+export type StudyActivity = z.infer<typeof studyActivitySchema>;
+export type StudyActivityDay = StudyActivity["days"][number];
+
+export function getStudyActivity(token: string, signal?: AbortSignal) {
+  return apiFetch("/api/v1/dashboard/activity", studyActivitySchema, {
+    headers: { Authorization: `Bearer ${token}` }, signal,
+  });
+}
+
 export function getDashboard(token: string, signal?: AbortSignal) {
   return apiFetch("/api/v1/dashboard", dashboardSchema, {
     headers: { Authorization: `Bearer ${token}` }, signal,

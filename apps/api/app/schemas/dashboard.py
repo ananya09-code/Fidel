@@ -20,6 +20,18 @@ class DailyActivity(BaseModel):
     events: int
 
 
+class StudyActivityDay(BaseModel):
+    date: date
+    answers: int = Field(ge=0)
+
+
+class StudyActivity(BaseModel):
+    timezone: str
+    start_date: date
+    end_date: date
+    days: list[StudyActivityDay]
+
+
 class RecentActivity(BaseModel):
     kind: Literal["lesson", "review"]
     title: str
