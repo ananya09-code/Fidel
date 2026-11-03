@@ -46,28 +46,28 @@ export function LearnOverview() {
       </header>
 
       {/* Featured lesson */}
-      <article className="relative isolate overflow-hidden rounded-[1.6rem] bg-[var(--sea-ink)] text-[var(--foam)] shadow-sm sm:rounded-[2rem]">
+      <article className="relative isolate overflow-hidden rounded-[1.6rem] bg-[var(--action)] text-white shadow-sm sm:rounded-[2rem]">
         {/* Subtle decorative background */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-20 -z-10 h-64 w-64 rounded-full border border-[var(--foam)]/[0.08] sm:-right-12 sm:-top-28 sm:h-80 sm:w-80"
+          className="pointer-events-none absolute -right-16 -top-20 -z-10 h-64 w-64 rounded-full border border-white/[0.08] sm:-right-12 sm:-top-28 sm:h-80 sm:w-80"
         />
 
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-5 top-8 -z-10 h-40 w-40 rounded-full border border-[var(--foam)]/[0.08] sm:right-8 sm:top-12 sm:h-52 sm:w-52"
+          className="pointer-events-none absolute -right-5 top-8 -z-10 h-40 w-40 rounded-full border border-white/[0.08] sm:right-8 sm:top-12 sm:h-52 sm:w-52"
         />
 
         <div className="grid sm:grid-cols-[minmax(0,1fr)_200px] lg:grid-cols-[minmax(0,1fr)_250px]">
           {/* Lesson information */}
           <div className="min-w-0 p-5 sm:p-7 lg:p-9">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-2 rounded-full border border-[var(--foam)]/15 bg-[var(--foam)]/[0.06] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.13em] text-[var(--foam)]/85 sm:text-[11px]">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-[var(--foam)]/[0.06] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.13em] text-white/85 sm:text-[11px]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[var(--hero-a)]" />
                 Up next
               </span>
 
-              <span className="text-xs text-[var(--foam)]/45">
+              <span className="text-xs text-white/45">
                 Lesson 01
               </span>
             </div>
@@ -80,13 +80,13 @@ export function LearnOverview() {
               </span>
             </h2>
 
-            <p className="mt-4 max-w-sm text-sm leading-6 text-[var(--foam)]/65 sm:text-base sm:leading-7">
+            <p className="mt-4 max-w-sm text-sm leading-6 text-white/65 sm:text-base sm:leading-7">
               Learn your first greetings and discover how to start a
               conversation in Afaan Oromoo.
             </p>
 
             {/* Lesson details */}
-            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs text-[var(--foam)]/70 sm:text-sm">
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs text-white/70 sm:text-sm">
               <span className="inline-flex items-center gap-2">
                 <Headphones
                   aria-hidden="true"
@@ -120,16 +120,16 @@ export function LearnOverview() {
           </div>
 
           {/* Decorative lesson artwork */}
-          <div className="relative flex min-h-[155px] items-center justify-center overflow-hidden border-t border-[var(--foam)]/10 sm:min-h-full sm:border-l sm:border-t-0">
+          <div className="relative flex min-h-[155px] items-center justify-center overflow-hidden border-t border-white/10 sm:min-h-full sm:border-l sm:border-t-0">
             {/* Orbital rings */}
             <div
               aria-hidden="true"
-              className="absolute h-36 w-36 rounded-full border border-[var(--foam)]/10 sm:h-44 sm:w-44 lg:h-52 lg:w-52"
+              className="absolute h-36 w-36 rounded-full border border-white/10 sm:h-44 sm:w-44 lg:h-52 lg:w-52"
             />
 
             <div
               aria-hidden="true"
-              className="absolute h-28 w-28 rounded-full border border-[var(--foam)]/15 sm:h-32 sm:w-32 lg:h-40 lg:w-40"
+              className="absolute h-28 w-28 rounded-full border border-white/15 sm:h-32 sm:w-32 lg:h-40 lg:w-40"
             />
 
             {/* Main lesson tile */}
@@ -142,7 +142,7 @@ export function LearnOverview() {
             </div>
 
             {/* Artwork caption */}
-            <span className="absolute bottom-4 right-4 text-[9px] font-semibold uppercase tracking-[0.2em] text-[var(--foam)]/40 sm:bottom-6 sm:right-6 sm:text-[10px]">
+            <span className="absolute bottom-4 right-4 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/40 sm:bottom-6 sm:right-6 sm:text-[10px]">
               One word at a time
             </span>
           </div>

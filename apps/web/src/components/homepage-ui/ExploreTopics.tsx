@@ -86,10 +86,10 @@ export function ExploreTopics() {
                 to="/dictionary"
                 search={{ category: topic.name }}
                 aria-label={`Open ${topic.name} vocabulary`}
-                className="group flex h-full flex-col rounded-2xl border border-[var(--sea-ink)]/10 bg-white/60 p-5 outline-none transition hover:-translate-y-0.5 hover:border-[var(--sea-ink)]/25 hover:bg-[var(--sand)]/15 focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)]"
+                className="group flex h-full flex-col rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 p-5 outline-none transition hover:-translate-y-0.5 hover:border-[var(--sea-ink)]/25 hover:bg-[var(--sand)]/15 focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)]"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div className="flex size-12 items-center justify-center rounded-2xl bg-[var(--sea-ink)] text-white">
+                  <div className="flex size-12 items-center justify-center rounded-2xl bg-[var(--action)] text-white">
                     <Icon className="size-5" strokeWidth={1.8} />
                   </div>
                   <span className="rounded-full bg-[var(--sand)]/35 px-2.5 py-1 text-xs font-semibold text-[var(--sea-ink)]">
@@ -113,7 +113,7 @@ export function ExploreTopics() {
                   <span className="text-sm font-medium text-[var(--sea-ink)]/55">
                     Open dictionary
                   </span>
-                  <span className="flex size-9 items-center justify-center rounded-full bg-[var(--sea-ink)] text-white transition-transform group-hover:translate-x-1">
+                  <span className="flex size-9 items-center justify-center rounded-full bg-[var(--action)] text-white transition-transform group-hover:translate-x-1">
                     <ArrowRight className="size-4" />
                   </span>
                 </div>
@@ -129,7 +129,7 @@ export function ExploreTopics() {
             <button
               type="button"
               onClick={() => setVisibleCount(4)}
-              className="rounded-xl border border-[var(--sea-ink)]/15 bg-white/60 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition hover:bg-[var(--sand)]/25"
+              className="rounded-xl border border-[var(--sea-ink)]/15 bg-[var(--panel)]/60 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition hover:bg-[var(--sand)]/25"
             >
               Show fewer topics
             </button>
@@ -138,7 +138,7 @@ export function ExploreTopics() {
           <button
             type="button"
             onClick={() => setVisibleCount((count) => count + 4)}
-            className="rounded-xl bg-[var(--sea-ink)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            className="rounded-xl bg-[var(--action)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
           >
             Load more topics ({remainingTopics} remaining)
           </button>
@@ -146,7 +146,7 @@ export function ExploreTopics() {
         </div>
       )}
 
-      <div className="flex items-start gap-3 rounded-2xl border border-[var(--sea-ink)]/10 bg-white/50 p-4">
+      <div className="flex items-start gap-3 rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/50 p-4">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[var(--sand)]/35">
           <BookOpen className="size-5 text-[var(--sea-ink)]" />
         </div>

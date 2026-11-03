@@ -9,9 +9,7 @@ import {
   Bell,
   Check,
   Globe2,
-  Laptop,
   LogOut,
-  Moon,
   Save,
   Sun,
   Target,
@@ -19,6 +17,8 @@ import {
   Volume2,
 } from "lucide-react";
 import { PageState } from "@/components/common-ui/PageState";
+import { AppearancePicker } from "@/components/theme/AppearancePicker";
+import { useThemePreview } from "@/components/theme/ThemeProvider";
 
 import { deleteProfile } from "@/lib/api/profile";
 import {
@@ -115,7 +115,7 @@ function Toggle({
       aria-checked={checked}
       aria-label={label}
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2 ${checked ? "bg-[var(--sea-ink)]" : "bg-[var(--sea-ink)]/20"
+      className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2 ${checked ? "bg-[var(--action)]" : "bg-[var(--sea-ink)]/20"
         }`}
     >
       <span
@@ -150,6 +150,7 @@ function SelectField({
 }
 
 export default function SettingsOverview() {
+  const previewAppearance = useThemePreview();
   const [draft, setDraft] = useState<{
     userId: string;
     settings: Settings;
@@ -326,7 +327,7 @@ export default function SettingsOverview() {
                 }`}
             >
               {selected && (
-                <span className="absolute right-3 top-3 flex size-5 items-center justify-center rounded-full bg-[var(--sea-ink)] text-white">
+                <span className="absolute right-3 top-3 flex size-5 items-center justify-center rounded-full bg-[var(--action)] text-white">
                   <Check size={12} />
                 </span>
               )}
@@ -405,36 +406,11 @@ export default function SettingsOverview() {
         description="Choose your preferred appearance for Fidel."
       />
 
-      <div className="grid gap-3 sm:grid-cols-3">
-        {([
-          { value: "light", label: "Light", icon: Sun },
-          { value: "dark", label: "Dark", icon: Moon },
-          { value: "system", label: "System", icon: Laptop },
-        ] as const).map((option) => {
-          const Icon = option.icon;
-          const selected = settings.appearance === option.value;
-
-          return (
-            <button
-              key={option.value}
-              type="button"
-              onClick={() => updateSetting("appearance", option.value)}
-              className={`flex items-center gap-3 rounded-2xl border p-4 text-sm font-medium transition ${selected
-                  ? "border-[var(--sea-ink)] bg-[var(--sand)]/60 text-[var(--sea-ink)]"
-                  : "border-[var(--sea-ink)]/10 text-[var(--sea-ink)]/70 hover:border-[var(--sea-ink)]/30"
-                }`}
-            >
-              <Icon size={18} />
-              {option.label}
-              {selected && <Check size={15} className="ml-auto" />}
-            </button>
-          );
-        })}
-      </div>
-
-      <p className="mt-3 text-xs leading-relaxed text-[var(--sea-ink)]/50">
-        Your appearance choice is saved for future theme support.
-      </p>
+      <AppearancePicker value={settings.appearance} onChange={(value) => {
+        updateSetting("appearance", value);
+        previewAppearance(value);
+      }} />
+      <p className="mt-3 text-xs text-[var(--sea-ink)]/60">Preview your theme now. Select Save changes to remember it on your account.</p>
     </section>
 
     {/* Account */}
@@ -448,7 +424,7 @@ export default function SettingsOverview() {
       {accountError && (
         <p
           role="alert"
-          className="mb-4 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3 text-sm text-red-700"
+          className="mb-4 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3 text-sm text-red-700 dark:text-red-300"
         >
           {accountError}
         </p>
@@ -477,7 +453,7 @@ export default function SettingsOverview() {
 
       <div className="mt-4 flex flex-col gap-3 border-t border-[var(--sea-ink)]/10 pt-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm font-medium text-red-700">Delete account</p>
+          <p className="text-sm font-medium text-red-700 dark:text-red-300">Delete account</p>
           <p className="mt-1 text-xs text-red-700/70">
             Permanently delete your Clerk account and local Fidel profile.
           </p>
@@ -488,7 +464,7 @@ export default function SettingsOverview() {
           onClick={() => {
             void handleDeleteAccount();
           }}
-          className="inline-flex items-center justify-center gap-2 rounded-xl border border-red-500/20 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-500/5 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex items-center justify-center gap-2 rounded-xl border border-red-500/20 px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-300 transition hover:bg-red-500/5 disabled:cursor-not-allowed disabled:opacity-60"
         >
           <Trash2 size={16} />
           {deleting ? "Deleting…" : "Delete account"}
@@ -503,7 +479,7 @@ export default function SettingsOverview() {
       </p>
 
       {updatePreferences.isError && (
-        <p role="alert" className="text-sm text-red-700">
+        <p role="alert" className="text-sm text-red-700 dark:text-red-300">
           {updatePreferences.error.message}
         </p>
       )}
@@ -512,7 +488,7 @@ export default function SettingsOverview() {
         type="button"
         onClick={() => void saveSettings()}
         disabled={updatePreferences.isPending}
-        className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--sea-ink)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2"
+        className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2"
       >
         {saved ? <Check size={17} /> : <Save size={17} />}
         {updatePreferences.isPending

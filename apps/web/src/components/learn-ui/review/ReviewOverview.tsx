@@ -37,7 +37,7 @@ export function ReviewOverview({ data, onStart, isStarting = false, error }: Pro
         />
       </section>
 
-      <section className="mt-6 rounded-3xl border border-[var(--sea-ink)]/10 bg-white p-6 shadow-sm sm:p-9">
+      <section className="mt-6 rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--panel)] p-6 shadow-sm sm:p-9">
         <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
           <div>
             <h2 className="text-2xl font-bold text-[var(--sea-ink)]">
@@ -53,13 +53,13 @@ export function ReviewOverview({ data, onStart, isStarting = false, error }: Pro
             type="button"
             disabled={isStarting || (!data.active_session && data.queue.length === 0)}
             onClick={onStart}
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--sea-ink)] px-6 text-sm font-semibold text-white disabled:opacity-40"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-6 text-sm font-semibold text-white disabled:opacity-40"
           >
             {isStarting ? "Starting..." : data.active_session ? "Continue review" : "Start review"}
             <ArrowRight className="size-4" />
           </button>
         </div>
-        {error && <p className="mt-4 text-sm text-rose-700" role="alert">{error}</p>}
+        {error && <p className="mt-4 text-sm text-rose-700 dark:text-rose-300" role="alert">{error}</p>}
       </section>
 
       <section className="mt-10">
@@ -69,7 +69,7 @@ export function ReviewOverview({ data, onStart, isStarting = false, error }: Pro
             <PageState kind="empty" title="You're all caught up" description="Nothing needs review right now." compact />
           </div>
         ) : (
-          <div className="mt-4 overflow-hidden rounded-2xl border border-[var(--sea-ink)]/10 bg-white">
+          <div className="mt-4 overflow-hidden rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]">
             {data.queue.map((word, index) => (
               <div key={word.id} className={`flex items-center justify-between gap-4 p-4 ${index ? "border-t border-[var(--sea-ink)]/10" : ""}`}>
                 <div>
@@ -81,7 +81,7 @@ export function ReviewOverview({ data, onStart, isStarting = false, error }: Pro
                     Amharic: {word.amharic ?? "Translation unavailable"}
                   </p>
                 </div>
-                <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700">Needs review</span>
+                <span className="rounded-full bg-rose-50 dark:bg-rose-500/10 px-3 py-1 text-xs font-semibold text-rose-700 dark:text-rose-300">Needs review</span>
               </div>
             ))}
           </div>
@@ -99,7 +99,7 @@ export function ReviewOverview({ data, onStart, isStarting = false, error }: Pro
 
 function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; value: number | string }) {
   return (
-    <article className="rounded-2xl border border-[var(--sea-ink)]/10 bg-white p-5">
+    <article className="rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)] p-5">
       <div className="flex items-center justify-between"><span className="text-sm text-[var(--sea-ink)]/65">{label}</span><span className="text-[var(--sea-ink)]">{icon}</span></div>
       <p className="mt-3 text-3xl font-bold text-[var(--sea-ink)]">{value}</p>
     </article>

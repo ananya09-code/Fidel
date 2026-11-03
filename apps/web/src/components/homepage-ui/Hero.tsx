@@ -7,12 +7,12 @@ import { Badge } from "@/components/ui/badge";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-[var(--sea-ink)] px-6 py-8 text-[var(--foam)] sm:px-10 sm:py-10">
+    <section className="relative overflow-hidden rounded-3xl bg-[var(--action)] px-6 py-8 text-white sm:px-10 sm:py-10">
       <div className="relative z-10 flex flex-col justify-between gap-8 sm:flex-row sm:items-center">
         <div className="max-w-2xl space-y-5">
           <Badge
             variant="outline"
-            className="border-[var(--foam)]/20 bg-[var(--foam)]/10 text-[var(--foam)]"
+            className="border-white/20 bg-[var(--foam)]/10 text-white"
           >
             Your learning journey
           </Badge>
@@ -22,7 +22,7 @@ export function Hero() {
               Every word brings you closer.
             </h1>
 
-            <p className="max-w-lg text-sm leading-6 text-[var(--foam)]/70 sm:text-base">
+            <p className="max-w-lg text-sm leading-6 text-white/70 sm:text-base">
               Build your vocabulary, practice pronunciation, and learn
               Ethiopian languages one lesson at a time.
             </p>
@@ -44,7 +44,7 @@ export function Hero() {
               asChild
               size="lg"
               variant="outline"
-              className="border-[var(--foam)]/20 bg-transparent text-[var(--foam)] hover:bg-[var(--foam)]/10 hover:text-[var(--foam)]"
+              className="border-white/20 bg-transparent text-white hover:bg-[var(--foam)]/10 hover:text-white"
             >
               <Link to="/dictionary">
                 <BookOpen className="mr-2 h-4 w-4" />
@@ -55,7 +55,7 @@ export function Hero() {
         </div>
 
         <div className="hidden shrink-0 items-center justify-center sm:flex">
-          <div className="flex h-28 w-28 items-center justify-center rounded-full border border-[var(--foam)]/15 bg-[var(--foam)]/5">
+          <div className="flex h-28 w-28 items-center justify-center rounded-full border border-white/15 bg-[var(--foam)]/5">
             <span
               className="text-5xl font-bold text-[var(--sand)]"
               aria-label="Amharic character ፊ"

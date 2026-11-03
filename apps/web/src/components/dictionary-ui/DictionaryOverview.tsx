@@ -139,7 +139,7 @@ export function DictionaryOverview({
       />
 
       {updateVocabulary.isError && (
-        <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700" role="alert">
+        <p className="rounded-xl border border-rose-200 bg-rose-50 dark:bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-300" role="alert">
           {updateVocabulary.error.message}
         </p>
       )}
@@ -176,7 +176,7 @@ export function DictionaryOverview({
         updatingWordId={updateVocabulary.isPending ? updateVocabulary.variables?.wordId : undefined}
       />
 
-      <footer className="flex items-start gap-3 rounded-2xl border border-[var(--sea-ink)]/8 bg-white/30 p-4">
+      <footer className="flex items-start gap-3 rounded-2xl border border-[var(--sea-ink)]/8 bg-[var(--panel)]/30 p-4">
         <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--sand)]/40 text-[var(--sea-ink)]">
           <ArrowDownRight size={17} />
         </div>

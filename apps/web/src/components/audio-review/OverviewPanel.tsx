@@ -24,20 +24,20 @@ function StatCard({
   hint?: string
 }) {
   const toneClasses: Record<string, string> = {
-    default: 'text-slate-900',
-    amber: 'text-amber-700',
-    emerald: 'text-emerald-700',
-    rose: 'text-rose-700',
-    slate: 'text-slate-600',
+    default: 'text-[var(--sea-ink)]/100',
+    amber: 'text-amber-700 dark:text-amber-300',
+    emerald: 'text-emerald-700 dark:text-emerald-300',
+    rose: 'text-rose-700 dark:text-rose-300',
+    slate: 'text-[var(--sea-ink)]/75',
   }
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white px-4 py-3.5 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+    <div className="rounded-xl border border-[var(--line)] bg-[var(--panel)] px-4 py-3.5 shadow-sm">
+      <p className="text-xs font-medium uppercase tracking-wide text-[var(--sea-ink)]/65">{label}</p>
       <p className={`mt-1 text-2xl font-semibold tabular-nums ${toneClasses[tone]}`}>
         {value ?? '—'}
       </p>
-      {hint ? <p className="mt-0.5 text-xs text-slate-500">{hint}</p> : null}
+      {hint ? <p className="mt-0.5 text-xs text-[var(--sea-ink)]/65">{hint}</p> : null}
     </div>
   )
 }
@@ -47,29 +47,29 @@ function BatchProgress({ batch }: { batch: Batch }) {
   const percent = batch.requested_size > 0 ? Math.round((done / batch.requested_size) * 100) : 0
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white px-4 py-4 shadow-sm">
+    <div className="rounded-xl border border-[var(--line)] bg-[var(--panel)] px-4 py-4 shadow-sm">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-slate-900">
+          <p className="text-sm font-semibold text-[var(--sea-ink)]/100">
             Batch <span className="font-mono text-xs">{batch.id.slice(0, 8)}</span>
           </p>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[var(--sea-ink)]/65">
             {batch.language_code} · {batch.speaker_id} · {batch.speed}
           </p>
         </div>
-        <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+        <span className="rounded-full bg-[var(--sand)] px-2.5 py-1 text-xs font-medium text-[var(--sea-ink)]/85">
           {batch.status}
         </span>
       </div>
 
-      <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-200">
+      <div className="mt-3 h-2 overflow-hidden rounded-full bg-[var(--sand)]">
         <div
-          className="h-full rounded-full bg-slate-900 transition-[width] duration-300"
+          className="h-full rounded-full bg-[var(--action)] transition-[width] duration-300"
           style={{ width: `${Math.min(100, percent)}%` }}
         />
       </div>
 
-      <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-slate-600 sm:grid-cols-3">
+      <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-[var(--sea-ink)]/75 sm:grid-cols-3">
         <div className="flex justify-between gap-2">
           <dt>selected</dt>
           <dd className="font-medium tabular-nums">{batch.total_selected}</dd>
@@ -97,18 +97,18 @@ function BatchProgress({ batch }: { batch: Batch }) {
       </dl>
 
       {batch.complete ? (
-        <p className="mt-3 rounded-lg bg-emerald-50 px-3 py-2 text-xs text-emerald-800">
+        <p className="mt-3 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 px-3 py-2 text-xs text-emerald-800 dark:text-emerald-300">
           This batch is fully reviewed. Generate the next batch when you are ready.
         </p>
       ) : batch.pending_review > 0 ? (
-        <p className="mt-3 text-xs text-slate-600">
+        <p className="mt-3 text-xs text-[var(--sea-ink)]/75">
           {batch.pending_review} recording{batch.pending_review === 1 ? '' : 's'} still
           waiting for review.
         </p>
       ) : null}
 
       {batch.error ? (
-        <p className="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-800">
+        <p className="mt-2 rounded-lg bg-rose-50 dark:bg-rose-500/10 px-3 py-2 text-xs text-rose-800 dark:text-rose-300">
           {batch.error}
         </p>
       ) : null}
@@ -143,7 +143,7 @@ export default function OverviewPanel({
         {Array.from({ length: 4 }).map((_, index) => (
           <div
             key={index}
-            className="h-24 animate-pulse rounded-xl border border-slate-200 bg-slate-100"
+            className="h-24 animate-pulse rounded-xl border border-[var(--line)] bg-[var(--sand)]"
           />
         ))}
       </div>
@@ -182,8 +182,8 @@ export default function OverviewPanel({
         <div className="space-y-2">
           <BatchProgress batch={activeBatch} />
           {activeBatch.status === 'running' ? (
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3">
-              <p className="text-xs text-slate-600">
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[var(--line)] bg-[var(--panel)] px-4 py-3">
+              <p className="text-xs text-[var(--sea-ink)]/75">
                 A batch is marked <span className="font-medium">running</span> until it
                 finishes. If it has not moved for a long time, the API was restarted —
                 cancel it to start a fresh one.
@@ -192,7 +192,7 @@ export default function OverviewPanel({
                 type="button"
                 disabled={isCancelling}
                 onClick={() => onCancelBatch(activeBatch.id)}
-                className="rounded-lg border border-rose-300 px-3 py-1.5 text-sm font-medium text-rose-700 transition-colors hover:bg-rose-50 disabled:opacity-50"
+                className="rounded-lg border border-rose-300 px-3 py-1.5 text-sm font-medium text-rose-700 dark:text-rose-300 transition-colors hover:bg-rose-50 disabled:opacity-50"
               >
                 {isCancelling ? 'Cancelling…' : 'Cancel this batch'}
               </button>
@@ -201,21 +201,21 @@ export default function OverviewPanel({
         </div>
       ) : null}
 
-      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3.5 shadow-sm">
+      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-[var(--line)] bg-[var(--panel)] px-4 py-3.5 shadow-sm">
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-slate-900">
+          <p className="text-sm font-medium text-[var(--sea-ink)]/100">
             {remaining > 0
               ? `${remaining} vocabulary entr${remaining === 1 ? 'y' : 'ies'} still need audio`
               : 'No eligible vocabulary remains'}
           </p>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[var(--sea-ink)]/65">
             A batch selects up to {batchSize} entries that have no recording for this
             language, voice and speed. Batches never start automatically.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <label className="flex items-center gap-1.5 text-xs text-slate-600">
+          <label className="flex items-center gap-1.5 text-xs text-[var(--sea-ink)]/75">
             batch size
             <input
               type="number"
@@ -227,12 +227,12 @@ export default function OverviewPanel({
                   Math.min(500, Math.max(1, Number(event.target.value) || 1)),
                 )
               }
-              className="w-20 rounded-lg border border-slate-300 px-2 py-1 text-sm tabular-nums"
+              className="w-20 rounded-lg border border-[var(--line)] px-2 py-1 text-sm tabular-nums"
             />
           </label>
 
           {remaining === 0 && !isRunning ? (
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-[var(--sea-ink)]/65">
               Everything in this language already has a recording.
             </p>
           ) : confirming ? (
@@ -244,7 +244,7 @@ export default function OverviewPanel({
                   setConfirming(false)
                   onStartBatch(batchSize)
                 }}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-slate-700 disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--action)] px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-[var(--action)]/85 disabled:opacity-50"
               >
                 {isStarting ? (
                   <Loader2 className="size-4 animate-spin" />
@@ -256,7 +256,7 @@ export default function OverviewPanel({
               <button
                 type="button"
                 onClick={() => setConfirming(false)}
-                className="px-2 py-1.5 text-sm text-slate-600 hover:underline"
+                className="px-2 py-1.5 text-sm text-[var(--sea-ink)]/75 hover:underline"
               >
                 Back
               </button>
@@ -271,7 +271,7 @@ export default function OverviewPanel({
                   ? 'A batch is already running — cancel it first to start another'
                   : undefined
               }
-              className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-3.5 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--action)] px-3.5 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--action)]/85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:cursor-not-allowed disabled:opacity-40"
             >
               {isRunning ? <RefreshCw className="size-4" /> : <Play className="size-4" />}
               {isRunning ? 'Batch running…' : 'Generate next batch'}

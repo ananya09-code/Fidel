@@ -65,7 +65,7 @@ export function LearningProgress({
           return (
             <Card
               key={stat.label}
-              className="rounded-2xl border border-[var(--sea-ink)]/10 bg-white/60 shadow-sm transition-colors hover:bg-[var(--sand)]/15"
+              className="rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 shadow-sm transition-colors hover:bg-[var(--sand)]/15"
             >
               <CardContent className="flex items-start gap-4 p-5 sm:p-6">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--sand)]">

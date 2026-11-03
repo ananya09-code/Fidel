@@ -28,6 +28,9 @@ import {
   useUpdatePreferences,
 } from "@/hooks/use-preferences";
 import type { UserPreferences } from "@/lib/api/preferences";
+import { AppearancePicker } from "@/components/theme/AppearancePicker";
+import { useThemePreview } from "@/components/theme/ThemeProvider";
+import type { Appearance } from "@/lib/theme";
 
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
@@ -50,6 +53,7 @@ type OnboardingData = {
   level: Level | null;
   motivations: Motivation[];
   dailyGoal: DailyGoal;
+  appearance: Appearance;
 };
 
 const steps = [
@@ -68,6 +72,10 @@ const steps = [
   {
     title: "Set your daily goal",
     description: "How many words would you like to learn each day?",
+  },
+  {
+    title: "Make yourself comfortable",
+    description: "Choose how Fidel looks. Try a theme to preview it now.",
   },
 ];
 
@@ -205,17 +213,17 @@ function OnboardingPage() {
   if (preferencesQuery.isError) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[var(--bg-base)] px-5">
-        <div className="max-w-md rounded-3xl border border-red-500/20 bg-white/80 p-7 text-center">
+        <div className="max-w-md rounded-3xl border border-red-500/20 bg-[var(--panel)]/80 p-7 text-center">
           <h1 className="text-xl font-bold text-[var(--sea-ink)]">
             We couldn't load your setup
           </h1>
-          <p role="alert" className="mt-2 text-sm text-red-700">
+          <p role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
             {preferencesQuery.error.message}
           </p>
           <Button
             type="button"
             onClick={() => void preferencesQuery.refetch()}
-            className="mt-5 bg-[var(--sea-ink)] text-white"
+            className="mt-5 bg-[var(--action)] text-white"
           >
             Try again
           </Button>
@@ -233,6 +241,7 @@ function OnboardingFlow({
   initialPreferences: UserPreferences;
 }) {
   const navigate = useNavigate();
+  const previewAppearance = useThemePreview();
   const updatePreferences = useUpdatePreferences();
   const [step, setStep] = useState(0);
   const [completed, setCompleted] = useState(
@@ -243,6 +252,7 @@ function OnboardingFlow({
     level: initialPreferences.proficiency_level,
     motivations: initialPreferences.motivations,
     dailyGoal: initialPreferences.daily_goal_words,
+    appearance: initialPreferences.appearance,
   });
 
   const progress = completed ? 100 : ((step + 1) / steps.length) * 100;
@@ -251,7 +261,7 @@ function OnboardingFlow({
     (step === 0 && data.language !== null) ||
     (step === 1 && data.level !== null) ||
     (step === 2 && data.motivations.length > 0) ||
-    step === 3;
+    step === 3 || step === 4;
 
   const selectedLanguage = languages.find(
     (language) => language.id === data.language,
@@ -284,6 +294,7 @@ function OnboardingFlow({
         proficiency_level: data.level,
         motivations: data.motivations,
         daily_goal_words: data.dailyGoal,
+        appearance: data.appearance,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
         onboarding_completed: true,
       });
@@ -339,7 +350,7 @@ function OnboardingFlow({
         </Link>
 
         {!completed && (
-          <span className="text-sm font-medium text-slate-500">
+          <span className="text-sm font-medium text-[var(--sea-ink)]/65">
             <span className="hidden sm:inline">Getting started · </span>
             {step + 1} of {steps.length}
           </span>
@@ -350,7 +361,7 @@ function OnboardingFlow({
       <div className="mx-auto w-full max-w-3xl px-5 sm:px-8">
         <Progress
           value={progress}
-          className="h-1.5 bg-slate-200/70 [&>div]:bg-orange-500"
+          className="h-1.5 bg-[var(--sand)]/70 [&>div]:bg-orange-500"
         />
       </div>
 
@@ -368,14 +379,15 @@ function OnboardingFlow({
           <>
             {/* Step heading */}
             <div className="mb-8 text-center sm:mb-10">
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200/70 bg-white/70 text-[var(--sea-ink)] shadow-sm backdrop-blur">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--line)]/70 bg-[var(--panel)]/70 text-[var(--sea-ink)] shadow-sm backdrop-blur">
                 {step === 0 && <Languages className="h-6 w-6" />}
                 {step === 1 && <GraduationCap className="h-6 w-6" />}
                 {step === 2 && <Heart className="h-6 w-6" />}
                 {step === 3 && <Target className="h-6 w-6" />}
+                {step === 4 && <Sparkles className="h-6 w-6" />}
               </div>
 
-              <p className="mb-2 text-sm font-semibold tracking-wide text-orange-600">
+              <p className="mb-2 text-sm font-semibold tracking-wide text-orange-600 dark:text-orange-300">
                 Let's personalize your journey
               </p>
 
@@ -383,7 +395,7 @@ function OnboardingFlow({
                 {steps[step].title}
               </h1>
 
-              <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-slate-500 sm:text-base">
+              <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-[var(--sea-ink)]/65 sm:text-base">
                 {steps[step].description}
               </p>
             </div>
@@ -406,12 +418,12 @@ function OnboardingFlow({
                         }))
                       }
                       className={`group relative flex min-h-56 flex-col rounded-3xl border-2 p-6 text-left transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2 ${selected
-                        ? "border-[var(--sea-ink)] bg-white shadow-md"
-                        : `border-white/80 ${language.colors} hover:border-slate-300`
+                        ? "border-[var(--sea-ink)] bg-[var(--panel)] shadow-md"
+                        : `border-[var(--line)] ${language.colors} hover:border-[var(--line)]`
                         }`}
                     >
                       {selected && (
-                        <span className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--sea-ink)] text-white">
+                        <span className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--action)] text-white">
                           <Check className="h-4 w-4" />
                         </span>
                       )}
@@ -420,7 +432,7 @@ function OnboardingFlow({
                       <span
                         className={`mb-5 flex h-16 w-16 items-center justify-center rounded-2xl text-3xl font-bold shadow-sm ${selected
                           ? "bg-orange-500 text-white"
-                          : "bg-orange-50 text-orange-600"
+                          : "bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-300"
                           }`}
                       >
                         {language.symbol}
@@ -430,15 +442,15 @@ function OnboardingFlow({
                         {language.name}
                       </span>
 
-                      <span className="mt-1 text-sm font-medium text-slate-500">
+                      <span className="mt-1 text-sm font-medium text-[var(--sea-ink)]/65">
                         {language.nativeName}
                       </span>
 
-                      <span className="mt-3 text-sm leading-6 text-slate-600">
+                      <span className="mt-3 text-sm leading-6 text-[var(--sea-ink)]/75">
                         {language.description}
                       </span>
 
-                      <span className="mt-auto flex items-center gap-2 pt-5 text-xs font-semibold text-slate-500">
+                      <span className="mt-auto flex items-center gap-2 pt-5 text-xs font-semibold text-[var(--sea-ink)]/65">
                         <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
                         Start your journey
                       </span>
@@ -477,7 +489,7 @@ function OnboardingFlow({
             {/* Step 3: Motivation */}
             {step === 2 && (
               <>
-                <p className="mb-4 text-center text-xs text-slate-400">
+                <p className="mb-4 text-center text-xs text-[var(--sea-ink)]/55">
                   Select all that apply.
                 </p>
 
@@ -520,14 +532,14 @@ function OnboardingFlow({
                         }))
                       }
                       className={`flex items-center gap-4 rounded-2xl border-2 p-5 text-left transition duration-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2 ${selected
-                        ? "border-[var(--sea-ink)] bg-white shadow-sm"
-                        : "border-white/80 bg-white/60 hover:border-slate-300"
+                        ? "border-[var(--sea-ink)] bg-[var(--panel)] shadow-sm"
+                        : "border-[var(--line)] bg-[var(--panel)]/60 hover:border-[var(--line)]"
                         }`}
                     >
                       <span
                         className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${selected
                           ? "bg-orange-500 text-white"
-                          : "bg-orange-50 text-orange-600"
+                          : "bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-300"
                           }`}
                       >
                         <Icon className="h-5 w-5" />
@@ -537,15 +549,15 @@ function OnboardingFlow({
                         <span className="block font-semibold text-[var(--sea-ink)]">
                           {goal.title}
                         </span>
-                        <span className="mt-1 block text-sm text-slate-500">
+                        <span className="mt-1 block text-sm text-[var(--sea-ink)]/65">
                           {goal.description}
                         </span>
                       </span>
 
                       <span
                         className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${selected
-                          ? "border-[var(--sea-ink)] bg-[var(--sea-ink)] text-white"
-                          : "border-slate-300"
+                          ? "border-[var(--sea-ink)] bg-[var(--action)] text-white"
+                          : "border-[var(--line)]"
                           }`}
                       >
                         {selected && <Check className="h-3 w-3" />}
@@ -554,25 +566,32 @@ function OnboardingFlow({
                   );
                 })}
 
-                <p className="mt-2 text-center text-xs leading-5 text-slate-400 sm:col-span-2">
+                <p className="mt-2 text-center text-xs leading-5 text-[var(--sea-ink)]/55 sm:col-span-2">
                   You can always change your daily goal later.
                 </p>
               </div>
             )}
 
+            {step === 4 && (
+              <AppearancePicker value={data.appearance} onChange={(appearance) => {
+                setData((current) => ({ ...current, appearance }));
+                previewAppearance(appearance);
+              }} />
+            )}
+
             {/* Navigation */}
             {updatePreferences.isError && (
-              <p role="alert" className="mt-5 text-center text-sm text-red-700">
+              <p role="alert" className="mt-5 text-center text-sm text-red-700 dark:text-red-300">
                 {updatePreferences.error.message}
               </p>
             )}
-            <div className="mt-8 flex items-center justify-between gap-4 border-t border-slate-200/60 pt-6 sm:mt-10">
+            <div className="mt-8 flex items-center justify-between gap-4 border-t border-[var(--line)]/60 pt-6 sm:mt-10">
               <Button
                 type="button"
                 variant="ghost"
                 onClick={handleBack}
                 disabled={step === 0}
-                className="gap-2 text-slate-600 hover:text-[var(--sea-ink)]"
+                className="gap-2 text-[var(--sea-ink)]/75 hover:text-[var(--sea-ink)]"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Back
@@ -582,7 +601,7 @@ function OnboardingFlow({
                 type="button"
                 onClick={() => void handleContinue()}
                 disabled={!canContinue || updatePreferences.isPending}
-                className="h-12 min-w-36 gap-2 rounded-xl bg-[var(--sea-ink)] px-6 text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+                className="h-12 min-w-36 gap-2 rounded-xl bg-[var(--action)] px-6 text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 {updatePreferences.isPending
                   ? "Saving..."
@@ -593,7 +612,7 @@ function OnboardingFlow({
               </Button>
             </div>
 
-            <p className="mt-5 text-center text-xs text-slate-400">
+            <p className="mt-5 text-center text-xs text-[var(--sea-ink)]/55">
               No pressure. You can change your preferences later.
             </p>
           </>
@@ -624,14 +643,14 @@ function SelectionCard({
       aria-pressed={selected}
       onClick={onClick}
       className={`group flex w-full items-center gap-4 rounded-2xl border-2 p-4 text-left transition duration-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2 sm:p-5 ${selected
-        ? "border-[var(--sea-ink)] bg-white shadow-sm"
-        : "border-white/80 bg-white/60 hover:border-slate-300"
+        ? "border-[var(--sea-ink)] bg-[var(--panel)] shadow-sm"
+        : "border-[var(--line)] bg-[var(--panel)]/60 hover:border-[var(--line)]"
         }`}
     >
       <span
         className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition ${selected
           ? "bg-orange-500 text-white"
-          : "bg-orange-50 text-orange-600 group-hover:bg-orange-100"
+          : "bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-300 group-hover:bg-orange-100"
           }`}
       >
         {icon}
@@ -641,15 +660,15 @@ function SelectionCard({
         <span className="block font-semibold text-[var(--sea-ink)]">
           {title}
         </span>
-        <span className="mt-1 block text-sm leading-5 text-slate-500">
+        <span className="mt-1 block text-sm leading-5 text-[var(--sea-ink)]/65">
           {description}
         </span>
       </span>
 
       <span
         className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition ${selected
-          ? "border-[var(--sea-ink)] bg-[var(--sea-ink)] text-white"
-          : "border-slate-300 bg-white"
+          ? "border-[var(--sea-ink)] bg-[var(--action)] text-white"
+          : "border-[var(--line)] bg-[var(--panel)]"
           }`}
       >
         {selected && <Check className="h-3 w-3" />}
@@ -676,16 +695,16 @@ function CompletionScreen({
   return (
     <div className="flex flex-1 flex-col items-center justify-center py-8 text-center">
       <div className="relative mb-8">
-        <div className="flex h-28 w-28 items-center justify-center rounded-[2rem] bg-[var(--sea-ink)] shadow-xl shadow-slate-900/10">
+        <div className="flex h-28 w-28 items-center justify-center rounded-[2rem] bg-[var(--action)] shadow-xl shadow-slate-900/10">
           <span className="text-5xl font-bold text-white">ፊ</span>
         </div>
 
-        <span className="absolute -right-3 -top-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-white bg-white text-orange-500 shadow-md">
+        <span className="absolute -right-3 -top-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-white bg-[var(--panel)] text-orange-500 dark:text-orange-300 shadow-md">
           <Sparkles className="h-6 w-6" />
         </span>
       </div>
 
-      <p className="mb-3 text-sm font-semibold tracking-wide text-orange-600">
+      <p className="mb-3 text-sm font-semibold tracking-wide text-orange-600 dark:text-orange-300">
         Your journey starts now
       </p>
 
@@ -693,14 +712,14 @@ function CompletionScreen({
         You're ready to learn!
       </h1>
 
-      <p className="mt-4 max-w-md text-sm leading-7 text-slate-500 sm:text-base">
+      <p className="mt-4 max-w-md text-sm leading-7 text-[var(--sea-ink)]/65 sm:text-base">
         Your first step toward a new language starts here. Let's learn something
         useful today.
       </p>
 
-      <Card className="mt-8 w-full max-w-md rounded-3xl border-white/80 bg-white/70 p-5 text-left shadow-sm backdrop-blur-md sm:p-6">
+      <Card className="mt-8 w-full max-w-md rounded-3xl border-[var(--line)] bg-[var(--panel)]/70 p-5 text-left shadow-sm backdrop-blur-md sm:p-6">
         <h2 className="mb-5 flex items-center gap-2 font-semibold text-[var(--sea-ink)]">
-          <Sparkles className="h-4 w-4 text-orange-500" />
+          <Sparkles className="h-4 w-4 text-orange-500 dark:text-orange-300" />
           Your learning plan
         </h2>
 
@@ -728,7 +747,7 @@ function CompletionScreen({
       <Button
         type="button"
         onClick={onStart}
-        className="mt-8 h-12 w-full max-w-md gap-2 rounded-xl bg-[var(--sea-ink)] text-white shadow-sm hover:opacity-90"
+        className="mt-8 h-12 w-full max-w-md gap-2 rounded-xl bg-[var(--action)] text-white shadow-sm hover:opacity-90"
       >
         Start my first lesson
         <ArrowRight className="h-4 w-4" />
@@ -738,7 +757,7 @@ function CompletionScreen({
         type="button"
         variant="ghost"
         onClick={onBack}
-        className="mt-3 gap-2 text-slate-500 hover:text-[var(--sea-ink)]"
+        className="mt-3 gap-2 text-[var(--sea-ink)]/65 hover:text-[var(--sea-ink)]"
       >
         <ArrowLeft className="h-4 w-4" />
         Change my answers
@@ -763,7 +782,7 @@ function SummaryRow({
       </span>
 
       <span className="min-w-0 flex-1">
-        <span className="block text-xs text-slate-500">{label}</span>
+        <span className="block text-xs text-[var(--sea-ink)]/65">{label}</span>
         <span className="mt-0.5 block truncate text-sm font-semibold text-[var(--sea-ink)]">
           {value}
         </span>

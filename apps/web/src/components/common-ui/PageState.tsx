@@ -34,10 +34,10 @@ export function PageState({
 
   return (
     <section
-      className={`mx-auto flex w-full max-w-xl flex-col items-center justify-center rounded-3xl border border-[var(--sea-ink)]/10 bg-white/55 px-6 text-center ${compact ? "min-h-44 py-8" : "min-h-72 py-12"}`}
+      className={`mx-auto flex w-full max-w-xl flex-col items-center justify-center rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/55 px-6 text-center ${compact ? "min-h-44 py-8" : "min-h-72 py-12"}`}
       role={kind === "error" ? "alert" : "status"}
     >
-      <div className={`flex size-12 items-center justify-center rounded-2xl ${kind === "error" ? "bg-rose-50 text-rose-700" : "bg-[var(--sand)]/40 text-[var(--sea-ink)]"}`}>
+      <div className={`flex size-12 items-center justify-center rounded-2xl ${kind === "error" ? "bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-300" : "bg-[var(--sand)]/40 text-[var(--sea-ink)]"}`}>
         <Icon className="size-6" />
       </div>
       <h2 className="mt-4 text-xl font-bold text-[var(--sea-ink)]">{title}</h2>
@@ -50,7 +50,7 @@ export function PageState({
         <button
           type="button"
           onClick={onAction}
-          className="mt-5 rounded-xl bg-[var(--sea-ink)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+          className="mt-5 rounded-xl bg-[var(--action)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
         >
           {actionLabel}
         </button>

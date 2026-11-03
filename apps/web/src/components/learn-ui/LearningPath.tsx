@@ -63,7 +63,7 @@ function LessonNode({
             type="button"
             disabled
             aria-label={`${lesson.title}, locked`}
-            className="relative z-10 flex h-[68px] w-[68px] cursor-not-allowed items-center justify-center rounded-full border-b-[6px] border-[var(--sea-ink)]/15 bg-white/55 text-[var(--sea-ink)]/35"
+            className="relative z-10 flex h-[68px] w-[68px] cursor-not-allowed items-center justify-center rounded-full border-b-[6px] border-[var(--sea-ink)]/15 bg-[var(--panel)]/55 text-[var(--sea-ink)]/35"
           >
             <LockKeyhole className="h-6 w-6" />
           </button>
@@ -217,7 +217,7 @@ export function LearningPath() {
             return (
               <section
                 key={unit.id}
-                className="overflow-hidden rounded-3xl border border-[var(--sea-ink)]/10 bg-white/60 p-5 sm:p-8"
+                className="overflow-hidden rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 p-5 sm:p-8"
               >
                 <div className="mb-10 flex items-center gap-4">
                   <div
@@ -254,7 +254,7 @@ export function LearningPath() {
                   </span>
                 </div>
 
-                <div className="mb-12 h-2 overflow-hidden rounded-full bg-black/5">
+                <div className="mb-12 h-2 overflow-hidden rounded-full bg-[var(--sea-ink)]/5">
                   <div
                     className="h-full rounded-full transition-all"
                     style={{

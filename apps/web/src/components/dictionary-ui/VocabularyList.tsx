@@ -67,8 +67,8 @@ export function VocabularyList({
           onClick={onToggleFavoritesOnly}
           aria-pressed={favoritesOnly}
           className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm transition ${favoritesOnly
-              ? "border-[var(--sea-ink)] bg-[var(--sea-ink)] text-white"
-              : "border-[var(--sea-ink)]/10 bg-white/50 text-[var(--sea-ink)]/70 hover:bg-[var(--sand)]/25"
+              ? "border-[var(--sea-ink)] bg-[var(--action)] text-white"
+              : "border-[var(--sea-ink)]/10 bg-[var(--panel)]/50 text-[var(--sea-ink)]/70 hover:bg-[var(--sand)]/25"
             }`}
         >
           <Heart size={15} fill={favoritesOnly ? "currentColor" : "none"} />
@@ -83,7 +83,7 @@ export function VocabularyList({
       </div>
 
       {words.length > 0 ? (
-        <div className="overflow-hidden rounded-2xl border border-[var(--sea-ink)]/10 bg-white/50">
+        <div className="overflow-hidden rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/50">
           {words.map((word, index) => {
             const expanded = expandedWord === word.id;
             const favorite = favorites.includes(word.id);
@@ -131,7 +131,7 @@ export function VocabularyList({
                           {word.category}
                         </span>
                         {learningState !== "learning" && (
-                          <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] text-emerald-700">
+                          <span className="rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-700 dark:text-emerald-300">
                             {learningState === "learned" ? "Learned" : "Needs review"}
                           </span>
                         )}
@@ -176,7 +176,7 @@ export function VocabularyList({
                       <Heart
                         size={17}
                         fill={favorite ? "currentColor" : "none"}
-                        className={favorite ? "text-rose-500" : ""}
+                        className={favorite ? "text-rose-500 dark:text-rose-300" : ""}
                       />
                     </button>
 
@@ -251,7 +251,7 @@ export function VocabularyList({
                         type="button"
                         onClick={() => onPracticeWord?.(word)}
                         disabled={isUpdating}
-                        className="inline-flex items-center gap-2 rounded-xl bg-[var(--sea-ink)] px-3 py-2 text-sm font-medium text-white transition hover:opacity-85"
+                        className="inline-flex items-center gap-2 rounded-xl bg-[var(--action)] px-3 py-2 text-sm font-medium text-white transition hover:opacity-85"
                       >
                         {isUpdating ? "Saving..." : "Practice this word"}
                         <ArrowRight size={15} />
@@ -262,7 +262,7 @@ export function VocabularyList({
                         type="button"
                         onClick={() => onSetLearningState(word.id, "learned")}
                         disabled={isUpdating || learningState === "learned"}
-                        className="rounded-lg border border-emerald-200 px-3 py-2 text-xs font-medium text-emerald-700 disabled:opacity-50"
+                        className="rounded-lg border border-emerald-200 px-3 py-2 text-xs font-medium text-emerald-700 dark:text-emerald-300 disabled:opacity-50"
                       >
                         {learningState === "learned" ? "Learned" : "Mark learned"}
                       </button>
@@ -270,7 +270,7 @@ export function VocabularyList({
                         type="button"
                         onClick={() => onSetLearningState(word.id, "needs_review")}
                         disabled={isUpdating || learningState === "needs_review"}
-                        className="rounded-lg border border-amber-200 px-3 py-2 text-xs font-medium text-amber-700 disabled:opacity-50"
+                        className="rounded-lg border border-amber-200 px-3 py-2 text-xs font-medium text-amber-700 dark:text-amber-300 disabled:opacity-50"
                       >
                         {learningState === "needs_review" ? "Added to review" : "Needs review"}
                       </button>
@@ -282,7 +282,7 @@ export function VocabularyList({
           })}
         </div>
       ) : (
-        <div className="flex flex-col items-center rounded-2xl border border-dashed border-[var(--sea-ink)]/15 bg-white/30 px-5 py-14 text-center">
+        <div className="flex flex-col items-center rounded-2xl border border-dashed border-[var(--sea-ink)]/15 bg-[var(--panel)]/30 px-5 py-14 text-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--sand)]/40 text-[var(--sea-ink)]/60">
             {favoritesOnly ? <Heart size={21} /> : <Search size={21} />}
           </div>
@@ -313,7 +313,7 @@ export function VocabularyList({
             type="button"
             onClick={onLoadMore}
             disabled={isLoadingMore}
-            className="rounded-xl border border-[var(--sea-ink)]/15 bg-white px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition hover:bg-[var(--sand)]/25 disabled:opacity-50"
+            className="rounded-xl border border-[var(--sea-ink)]/15 bg-[var(--panel)] px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition hover:bg-[var(--sand)]/25 disabled:opacity-50"
           >
             {isLoadingMore ? "Loading more..." : "Load more words"}
           </button>

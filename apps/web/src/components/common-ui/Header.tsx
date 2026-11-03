@@ -65,7 +65,7 @@ export function Header() {
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="h-10 gap-2 rounded-xl border border-white/70 bg-white/50 px-3 text-slate-700 shadow-sm backdrop-blur-xl transition hover:bg-white/80"
+              className="h-10 gap-2 rounded-xl border border-[var(--line)] bg-[var(--panel)]/50 px-3 text-[var(--sea-ink)]/85 shadow-sm backdrop-blur-xl transition hover:bg-[var(--panel)]/80"
             >
               <Globe2 className="h-4 w-4 text-[var(--sea-ink)]" />
 
@@ -81,7 +81,7 @@ export function Header() {
 
           <DropdownMenuContent
             align="end"
-            className="w-52 rounded-2xl border-white/60 bg-white/95 p-2 shadow-xl backdrop-blur-xl"
+            className="w-52 rounded-2xl border-[var(--line)] bg-[var(--panel)]/95 p-2 shadow-xl backdrop-blur-xl"
           >
             <DropdownMenuLabel>Learning language</DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -89,13 +89,13 @@ export function Header() {
             <DropdownMenuItem className="rounded-lg">
               <span className="mr-2">🇪🇹</span>
               Afaan Oromoo
-              <span className="ml-auto text-xs text-emerald-600">Active</span>
+              <span className="ml-auto text-xs text-emerald-600 dark:text-emerald-300">Active</span>
             </DropdownMenuItem>
 
             <DropdownMenuItem disabled className="rounded-lg">
               <span className="mr-2">🇪🇹</span>
               Amharic
-              <span className="ml-auto text-xs text-slate-400">Soon</span>
+              <span className="ml-auto text-xs text-[var(--sea-ink)]/55">Soon</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -105,7 +105,7 @@ export function Header() {
           variant="ghost"
           size="icon"
           aria-label="Notifications"
-          className="relative h-10 w-10 rounded-xl border border-white/70 bg-white/50 text-slate-600 shadow-sm backdrop-blur-xl transition hover:bg-white/80 hover:text-[var(--sea-ink)]"
+          className="relative h-10 w-10 rounded-xl border border-[var(--line)] bg-[var(--panel)]/50 text-[var(--sea-ink)]/75 shadow-sm backdrop-blur-xl transition hover:bg-[var(--panel)]/80 hover:text-[var(--sea-ink)]"
         >
           <Bell className="h-[18px] w-[18px]" />
           <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-[var(--hero-b)] ring-2 ring-white" />
@@ -117,32 +117,32 @@ export function Header() {
             <button
               type="button"
               aria-label="Open profile menu"
-              className="flex items-center gap-2 rounded-xl border border-white/70 bg-white/50 p-1.5 pr-2 shadow-sm backdrop-blur-xl transition hover:bg-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--hero-b)]"
+              className="flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--panel)]/50 p-1.5 pr-2 shadow-sm backdrop-blur-xl transition hover:bg-[var(--panel)]/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--hero-b)]"
             >
-              <span className="hidden max-w-36 truncate text-sm font-medium text-slate-700 lg:block">
+              <span className="hidden max-w-36 truncate text-sm font-medium text-[var(--sea-ink)]/85 lg:block">
                 {displayName}
               </span>
 
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user?.imageUrl} alt="" />
-                <AvatarFallback className="rounded-lg bg-[var(--sea-ink)] text-sm font-semibold text-[var(--foam)]">
+                <AvatarFallback className="rounded-lg bg-[var(--action)] text-sm font-semibold text-white">
                   {initials}
                 </AvatarFallback>
               </Avatar>
 
-              <ChevronDown className="hidden h-4 w-4 text-slate-500 sm:block" />
+              <ChevronDown className="hidden h-4 w-4 text-[var(--sea-ink)]/65 sm:block" />
             </button>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent
             align="end"
-            className="w-56 rounded-2xl border-white/60 bg-white/95 p-2 shadow-xl backdrop-blur-xl"
+            className="w-56 rounded-2xl border-[var(--line)] bg-[var(--panel)]/95 p-2 shadow-xl backdrop-blur-xl"
           >
             <DropdownMenuLabel className="px-3 py-2">
               <p className="truncate font-semibold text-[var(--sea-ink)]">
                 {displayName}
               </p>
-              <p className="mt-1 truncate text-xs font-normal text-slate-500">
+              <p className="mt-1 truncate text-xs font-normal text-[var(--sea-ink)]/65">
                 {email || "Your Fidel learning journey"}
               </p>
             </DropdownMenuLabel>
@@ -166,7 +166,7 @@ export function Header() {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem
-              className="rounded-lg text-rose-600 focus:text-rose-700"
+              className="rounded-lg text-rose-600 dark:text-rose-300 focus:text-rose-700"
               onSelect={() => {
                 void signOut({ redirectUrl: "/" });
               }}

@@ -72,7 +72,7 @@ export function LearnProgress({
           return (
             <article
               key={stat.label}
-              className="group relative overflow-hidden rounded-2xl border border-[var(--sea-ink)]/10 bg-white/50 p-4 transition-colors duration-200 hover:bg-white/80 sm:rounded-3xl sm:p-5"
+              className="group relative overflow-hidden rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/50 p-4 transition-colors duration-200 hover:bg-[var(--panel)]/80 sm:rounded-3xl sm:p-5"
             >
               <div className="flex items-start justify-between gap-2">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--sand)] text-[var(--sea-ink)] sm:h-11 sm:w-11">

@@ -231,7 +231,7 @@ export function Flashcard({
         </div>
 
         <div
-          className="h-2 overflow-hidden rounded-full bg-black/5"
+          className="h-2 overflow-hidden rounded-full bg-[var(--sea-ink)]/5"
           role="progressbar"
           aria-label="Flashcard progress"
           aria-valuemin={0}
@@ -261,7 +261,7 @@ export function Flashcard({
           className={[
             "relative flex min-h-[350px] select-none flex-col items-center justify-center",
             "overflow-hidden rounded-[2rem] border border-[var(--sea-ink)]/10",
-            "bg-white/60 px-6 py-10 text-center backdrop-blur sm:min-h-[410px] sm:px-12",
+            "bg-[var(--panel)]/60 px-6 py-10 text-center backdrop-blur sm:min-h-[410px] sm:px-12",
             "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#E9A23B]/30",
             isDragging ? "cursor-grabbing" : "cursor-grab",
           ].join(" ")}
@@ -285,7 +285,7 @@ export function Flashcard({
               transition: isDragging ? "none" : `transform 220ms ${MOTION_EASING}`,
             }}
           >
-            <span className="mb-8 rounded-full border border-[var(--sea-ink)]/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--sea-ink)]/55">
+            <span className="mb-8 rounded-full border border-[var(--sea-ink)]/10 bg-[var(--panel)]/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--sea-ink)]/55">
               Learn this word
             </span>
 
@@ -307,7 +307,7 @@ export function Flashcard({
                   event.stopPropagation();
                   playAudio();
                 }}
-                className="mt-6 inline-flex items-center gap-2 rounded-full border border-[var(--sea-ink)]/10 bg-white/70 px-4 py-2 text-sm font-medium text-[var(--sea-ink)] transition-colors hover:bg-white"
+                className="mt-6 inline-flex items-center gap-2 rounded-full border border-[var(--sea-ink)]/10 bg-[var(--panel)]/70 px-4 py-2 text-sm font-medium text-[var(--sea-ink)] transition-colors hover:bg-[var(--panel)]"
               >
                 <Volume2 className="h-4 w-4" />
                 Listen to pronunciation
@@ -315,7 +315,7 @@ export function Flashcard({
             )}
 
             {audioError === word.id && (
-              <p className="mt-3 text-sm text-red-600" role="alert">
+              <p className="mt-3 text-sm text-red-600 dark:text-red-300" role="alert">
                 Audio could not be played. Please try again.
               </p>
             )}
@@ -329,7 +329,7 @@ export function Flashcard({
 
             <div className="mt-8 grid w-full gap-3 text-left sm:grid-cols-2">
               <div className="rounded-2xl border border-[#E9A23B]/30 bg-[#E9A23B]/10 p-4">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#9A6515]">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#9A6515] dark:text-amber-300">
                   Amharic
                 </p>
                 <p className="mt-1 break-words text-lg font-semibold text-[var(--sea-ink)]">
@@ -338,7 +338,7 @@ export function Flashcard({
               </div>
 
               <div className="rounded-2xl border border-[#39C987]/30 bg-[#39C987]/10 p-4">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#239B65]">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#239B65] dark:text-emerald-300">
                   English
                 </p>
                 <p className="mt-1 break-words text-lg font-semibold text-[var(--sea-ink)]">
@@ -348,7 +348,7 @@ export function Flashcard({
             </div>
 
             {word.example && (
-              <div className="mt-4 w-full rounded-2xl border border-[var(--sea-ink)]/10 bg-white/70 p-4 text-left">
+              <div className="mt-4 w-full rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/70 p-4 text-left">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-[var(--sea-ink)]/50">
                   Example
                 </p>
@@ -367,7 +367,7 @@ export function Flashcard({
           type="button"
           onClick={() => navigate("previous")}
           disabled={isFirst}
-          className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--sea-ink)]/10 bg-white/60 px-4 py-2 text-sm font-medium text-[var(--sea-ink)] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+          className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 px-4 py-2 text-sm font-medium text-[var(--sea-ink)] transition-colors hover:bg-[var(--panel)] disabled:cursor-not-allowed disabled:opacity-40"
         >
           <ArrowLeft className="h-4 w-4" />
           Previous
@@ -375,7 +375,7 @@ export function Flashcard({
         <button
           type="button"
           onClick={() => navigate("next")}
-          className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[var(--sea-ink)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[var(--action)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
         >
           {isLast ? "Finish session" : "Next word"}
           <ArrowRight className="h-4 w-4" />

@@ -15,7 +15,7 @@ export function SocialLoginButton({
       type="button"
       variant="outline"
       onClick={onClick}
-      className="h-12 w-full rounded-xl border-slate-200 bg-white/60 font-medium text-slate-700 hover:bg-white"
+      className="h-12 w-full rounded-xl border-[var(--line)] bg-[var(--panel)]/60 font-medium text-[var(--sea-ink)]/85 hover:bg-[var(--panel)]"
     >
       <svg
         aria-hidden="true"
