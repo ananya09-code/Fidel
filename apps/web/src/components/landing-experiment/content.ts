@@ -1,0 +1,39 @@
+export type SampleLanguage = "om" | "am";
+
+export const greetings = {
+  om: { name: "Afaan Oromoo", word: "Akkam", translation: "Hello", amharic: "ሰላም", reply: "Nagaa", replyMeaning: "Peace / I’m well" },
+  am: { name: "Amharic", word: "ሰላም", translation: "Hello / Peace", amharic: "ሰላም", reply: "እንዴት ነህ?", replyMeaning: "How are you? (to a man)" },
+} as const;
+
+export const regions: { id: string; name: string; native: string; languages: string[]; description: string; sample: SampleLanguage }[] = [
+  { id: "ET01", name: "Tigray", native: "ትግራይ", languages: ["Tigrinya", "Saho", "Kunama"], description: "Tigrinya is widely spoken in this northern region. Saho and Kunama are also part of its linguistic landscape.", sample: "am" },
+  { id: "ET02", name: "Afar", native: "አፋር", languages: ["Afar", "Amharic"], description: "The Afar language connects communities across Ethiopia’s northeastern lowlands and beyond its borders.", sample: "am" },
+  { id: "ET03", name: "Amhara", native: "አማራ", languages: ["Amharic", "Awngi", "Xamtanga"], description: "Alongside Amharic, Agaw languages including Awngi and Xamtanga form part of the region’s living language heritage.", sample: "am" },
+  { id: "ET04", name: "Oromia", native: "ኦሮሚያ", languages: ["Afaan Oromoo", "Amharic"], description: "Afaan Oromoo is spoken across this wide region, from highland towns to southern lowlands, with many local varieties.", sample: "om" },
+  { id: "ET05", name: "Somali", native: "ሶማሌ", languages: ["Somali", "Afaan Oromoo", "Amharic"], description: "Somali connects communities across eastern Ethiopia and the wider Horn of Africa. Many people also use other languages in daily life.", sample: "om" },
+  { id: "ET06", name: "Benishangul-Gumuz", native: "ቤኒሻንጉል ጉሙዝ", languages: ["Berta", "Gumuz", "Shinasha", "Amharic"], description: "Berta, Gumuz and Shinasha are among the languages spoken in this western region, alongside Amharic and others.", sample: "am" },
+  { id: "ET07", name: "Central Ethiopia", native: "ማዕከላዊ ኢትዮጵያ", languages: ["Gurage languages", "Hadiyya", "Kambaata", "Silt’e", "Amharic"], description: "This region brings together Gurage, Hadiyya, Kambaata, Silt’e and other language communities. A single language never tells the whole story.", sample: "am" },
+  { id: "ET08", name: "South Ethiopia", native: "ደቡብ ኢትዮጵያ", languages: ["Wolaytta", "Gamo", "Gofa", "Gedeo", "Konso", "Amharic"], description: "A particularly diverse language landscape includes Wolaytta, Gamo, Gofa, Gedeo, Konso and many more languages.", sample: "am" },
+  { id: "ET11", name: "South West Ethiopia", native: "ደቡብ ምዕራብ ኢትዮጵያ", languages: ["Kafa", "Shekkacho", "Bench", "Dawro", "Amharic"], description: "Kafa, Shekkacho, Bench and Dawro are among the languages of the southwestern highlands and forested landscapes.", sample: "am" },
+  { id: "ET12", name: "Gambela", native: "ጋምቤላ", languages: ["Nuer", "Anywaa", "Majang", "Amharic"], description: "Nuer, Anywaa and Majang are part of this western region’s linguistic life, with connections reaching across national borders.", sample: "am" },
+  { id: "ET13", name: "Harari", native: "ሐረሪ", languages: ["Harari", "Afaan Oromoo", "Amharic"], description: "In and around Harar, Harari, Afaan Oromoo and Amharic share the streets. Languages meet through trade, neighbours and everyday conversation.", sample: "om" },
+  { id: "ET14", name: "Addis Ababa", native: "አዲስ አበባ", languages: ["Amharic", "Afaan Oromoo", "Many Ethiopian languages"], description: "Ethiopia’s capital is a meeting place for speakers from across the country. Amharic is widely used, alongside Afaan Oromoo and many other languages.", sample: "am" },
+  { id: "ET15", name: "Dire Dawa", native: "ድሬዳዋ", languages: ["Afaan Oromoo", "Somali", "Amharic"], description: "This eastern city administration has long brought Afaan Oromoo, Somali and Amharic into everyday contact.", sample: "om" },
+  { id: "ET16", name: "Sidama", native: "ሲዳማ", languages: ["Sidaamu Afoo", "Amharic"], description: "Sidaamu Afoo is central to the region’s language heritage. Amharic and other languages are also used in its towns and communities.", sample: "am" },
+];
+
+export const portraits = [
+  { src: "/landing-lab/traditional-habesha-clothes.jpg", alt: "An engraved portrait of a smiling woman in a white netela with colourful woven borders", caption: "Traditional Habesha clothes · HagosBeyene", crop: [170,0,440,520], outline: [[350,15],[410,24],[450,70],[475,115],[510,170],[539,300],[573,448],[606,580],[650,760],[100,760],[116,640],[160,521],[235,430],[247,335],[216,260],[216,180],[270,80]], word: "ሰላም", pronunciation: "Selam", meaning: "Hello / Peace", language: "Amharic", lang: "am" },
+  { src: "/landing-lab/oromo-woman-ethiopia-2.jpg", alt: "An engraved portrait of an Oromo woman wearing a patterned headscarf and colourful beads", caption: "Oromo Woman, Ethiopia · Rod Waddington", crop: [320,0,1370,1282], outline: [[1040,40],[1200,65],[1350,170],[1390,290],[1370,550],[1320,770],[1410,830],[1600,900],[1690,1282],[320,1282],[410,955],[640,850],[745,785],[690,640],[665,400],[735,190],[860,85]], word: "Akkam", pronunciation: "Ak-kam", meaning: "Hello · ሰላም", language: "Afaan Oromoo", lang: "om" },
+  { src: "/landing-lab/tigray-woman-ethiopia.jpg", alt: "An engraved portrait of a woman in Tigray wearing a bright woven headscarf", caption: "Tigray Woman, Ethiopia · Rod Waddington", crop: [220,100,1050,1225], outline: [[650,130],[800,160],[900,260],[940,420],[915,600],[1000,700],[1130,775],[1240,1000],[1270,1325],[220,1325],[295,970],[340,865],[480,815],[460,710],[420,575],[405,400],[460,240],[540,160]], word: "ሰላም", pronunciation: "Selam", meaning: "Hello / Peace", language: "Tigrinya", lang: "ti" },
+  { src: "/landing-lab/ethiopian-man-portrait.jpg", alt: "An engraved portrait of an Ethiopian man wrapped in a white shawl with red embroidery", caption: "Ethiopian man portrait · Steve Evans", crop: [0,100,1080,1260], outline: [[470,155],[600,150],[700,200],[730,330],[780,430],[810,560],[790,650],[910,655],[990,800],[1080,1030],[1080,1360],[0,1360],[0,1045],[95,920],[160,810],[305,775],[260,670],[205,570],[210,390],[285,255]], word: "አመሰግናለሁ", pronunciation: "Ameseginalehu", meaning: "Thank you", language: "Amharic", lang: "am" },
+  { src: "/landing-lab/tigray-woman-37677440942.jpg", alt: "An engraved portrait of a smiling woman in Tigray, wrapped in a patterned shawl", caption: "Tigray Woman · Rod Waddington", crop: [0,40,1170,1365], outline: [[580,85],[715,110],[800,210],[850,355],[880,530],[850,750],[935,915],[1050,1170],[1170,1260],[1170,1405],[0,1405],[0,880],[110,795],[250,725],[285,645],[240,520],[255,350],[320,220],[430,120]], word: "የቐንየለይ", pronunciation: "Yekenyeley", meaning: "Thank you · አመሰግናለሁ", language: "Tigrinya", lang: "ti" },
+];
+
+export const photoCredits = [
+  { title: "Traditional Habesha clothes", author: "HagosBeyene", url: "https://commons.wikimedia.org/wiki/File:Traditional_Habesha_clothes.jpg", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/" },
+  { title: "Oromo Woman, Ethiopia", author: "Rod Waddington", url: "https://commons.wikimedia.org/wiki/File:Oromo_Woman,_Ethiopia.jpg", license: "CC BY-SA 2.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/" },
+  { title: "Tigray Woman, Ethiopia", author: "Rod Waddington", url: "https://commons.wikimedia.org/wiki/File:Tigray_Woman,_Ethiopia.jpg", license: "CC BY-SA 2.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/" },
+  { title: "Ethiopian man portrait", author: "Steve Evans", url: "https://commons.wikimedia.org/wiki/File:Ethiopian_man_portrait.jpg", license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/" },
+  { title: "Tigray Woman", author: "Rod Waddington", url: "https://commons.wikimedia.org/wiki/File:Tigray_Woman_(37677440942).jpg", license: "CC BY-SA 2.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/" },
+];
