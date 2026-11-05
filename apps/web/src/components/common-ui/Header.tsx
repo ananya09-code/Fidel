@@ -11,7 +11,7 @@ import {
   UserRound,
 } from "lucide-react";
 
-import fidelLogo from "@/assets/fidallogo.png";
+import { FidelTeacherMark } from "./FidelTeacherMark";
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -48,11 +48,7 @@ export function Header() {
           className={`flex min-w-0 shrink-0 items-center gap-2.5 ${state === "expanded" ? "md:hidden" : ""}`}
           aria-label="Fidel home"
         >
-          <img
-            src={fidelLogo}
-            alt="Fidel"
-            className="h-9 w-9 shrink-0 object-contain"
-          />
+          <FidelTeacherMark className="h-10 w-9 shrink-0 text-[var(--sea-ink)]" />
 
           <span className="text-lg font-bold tracking-tight text-[var(--sea-ink)]">
             Fidel

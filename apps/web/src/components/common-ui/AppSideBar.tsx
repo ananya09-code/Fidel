@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { BookOpen, House, Library, Settings, Trophy } from "lucide-react";
 
-import fidelLogo from "@/assets/fidallogo.png";
+import { FidelTeacherMark } from "./FidelTeacherMark";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 import {
@@ -28,7 +28,7 @@ export function AppSidebar() {
   const isMobile = useIsMobile();
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
-  });
+  }).toLowerCase();
 
   // The authenticated mobile layout uses bottom tabs, never a modal drawer.
   if (isMobile) return null;
@@ -41,11 +41,7 @@ export function AppSidebar() {
           className="flex min-w-0 items-center gap-3"
           aria-label="Fidel home"
         >
-          <img
-            src={fidelLogo}
-            alt="Fidel"
-            className="h-10 w-10 shrink-0 object-contain"
-          />
+          <FidelTeacherMark className="h-11 w-10 shrink-0 text-[var(--sea-ink)]" />
 
           <div className="min-w-0 group-data-[collapsible=icon]:hidden">
             <span className="text-lg font-bold text-[var(--sea-ink)]">
@@ -81,7 +77,7 @@ export function AppSidebar() {
                       tooltip={item.title}
                       className="text-[var(--sea-ink)] data-[active=true]:bg-[var(--sand)] data-[active=true]:font-semibold"
                     >
-                      <Link to={item.url}>
+                      <Link to={item.url} aria-current={isActive ? "page" : undefined}>
                         <item.icon />
                         <span>{item.title}</span>
                       </Link>
