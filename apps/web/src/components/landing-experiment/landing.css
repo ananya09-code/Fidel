@@ -7,7 +7,8 @@
   --e-ground:#edf4ee; --e-ink:#183b31; --e-muted:#476157; --e-field:#dce9dc;
   --e-panel:#f7faf6; --e-accent:#24583d; --e-on-accent:#fff;
   --e-map:#aac2a7; --e-map-hover:#8ba887; --particle-ink:#14261c;
-  --e-orange:#f97316; --e-orange-ink:#a83a0a; --e-on-orange:#14261c; --particle-orange:#b84710;
+  --e-orange:#eda334; --e-orange-ink:#85520c; --e-on-orange:#14261c; --particle-orange:#eda334;
+  --fidel-mark-accent:var(--e-orange);
   --e-gutter:clamp(20px,3vw,48px);
   background:var(--e-ground); color:var(--e-ink); font:17px/1.7 Merriweather,'Noto Serif Ethiopic',Georgia,serif; isolation:isolate; padding-top:1px;
 }
@@ -15,7 +16,7 @@
   --e-ground:#101f19; --e-ink:#e2eee3; --e-muted:#b2c7b8; --e-field:#1b3024;
   --e-panel:#243b2d; --e-accent:#c5dfb4; --e-on-accent:#14261c;
   --e-map:#526d53; --e-map-hover:#73906b; --particle-ink:#e2eee3;
-  --e-orange-ink:#ff9b54; --particle-orange:#fb923c;
+  --e-orange-ink:#edb45d; --particle-orange:#eda334;
 }
 .fidel-editorial *, .fidel-editorial *::before, .fidel-editorial *::after { box-sizing:border-box; }
 .fidel-editorial :is(h1,h2,h3,p,figure) { margin:0; }
@@ -37,6 +38,7 @@
 .editorial-header-actions > a { background:var(--e-accent);color:var(--e-on-accent);padding:8px 22px;border-radius:999px; }
 .editorial-wordmark { display:inline-flex;font-size:28px;line-height:1; }
 .fidel-logo-lockup { display:inline-flex;align-items:center;gap:10px; }
+.landing-teacher-logo { width:38px;height:42px; }
 .fidel-logo-lockup > span { font-size:30px;font-weight:900;letter-spacing:-.06em; }
 .fidel-logo-period { color:var(--e-orange); }
 .editorial-theme-toggle { justify-content:center;width:44px; }

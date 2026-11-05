@@ -54,7 +54,10 @@ function RootComponent() {
 
       <body>
         {clerkKey ? (
-          <ClerkProvider publishableKey={clerkKey}>
+          <ClerkProvider publishableKey={clerkKey} localization={{
+            signIn: { start: { title: "Welcome back.", subtitle: "Sign in to continue learning." } },
+            signUp: { start: { title: "Begin with a hello.", subtitle: "Create your Fidel account." } },
+          }}>
             <QueryClientProvider client={queryClient}>
               <ThemeProvider>
                 <PreferenceThemeSync />
