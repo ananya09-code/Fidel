@@ -15,7 +15,7 @@ export function MobileBottomNavigation() {
   return (
     <nav
       aria-label="Mobile navigation"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--sea-ink)]/10 bg-[var(--bg-base)]/95 pb-[calc(0.25rem+env(safe-area-inset-bottom,0px))] pt-1 shadow-[0_-4px_24px_rgba(20,54,55,0.06)] backdrop-blur-xl md:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--ui-line)] bg-[var(--ui-frame)] pb-[calc(0.25rem+env(safe-area-inset-bottom,0px))] pt-1 md:hidden"
     >
       <ul className="mx-auto grid h-16 max-w-lg grid-cols-5 gap-1 px-2">
         {tabs.map(({ title, to, icon: Icon }) => {
@@ -31,7 +31,7 @@ export function MobileBottomNavigation() {
                 <span className={`flex h-7 w-11 items-center justify-center rounded-full transition-colors ${active ? "bg-[var(--sea-ink)]/10" : "bg-transparent"}`}>
                   <Icon className="size-5" strokeWidth={active ? 2.4 : 1.8} aria-hidden="true" />
                 </span>
-                <span className="max-w-full truncate text-[10px] leading-4">{title}</span>
+                <span className="max-w-full truncate text-[11px] leading-4">{title}</span>
               </Link>
             </li>
           );

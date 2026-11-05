@@ -1,7 +1,9 @@
 
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@clerk/tanstack-react-start";
-import fidelLogo from "@/assets/fidallogo.png";
+import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import { PageState } from "@/components/common-ui/PageState";
+import "@/components/common-ui/app-ui.css";
 
 import { useEffect, useState } from "react";
 import {
@@ -19,9 +21,9 @@ import {
   Zap,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+
+
+
 import { AuthLoading } from "@/components/auth/AuthLoading";
 import {
   usePreferences,
@@ -29,6 +31,7 @@ import {
 } from "@/hooks/use-preferences";
 import type { UserPreferences } from "@/lib/api/preferences";
 import { AppearancePicker } from "@/components/theme/AppearancePicker";
+import { LoaderCircle } from "lucide-react";
 import { useThemePreview } from "@/components/theme/ThemeProvider";
 import type { Appearance } from "@/lib/theme";
 
@@ -211,25 +214,7 @@ function OnboardingPage() {
   }
 
   if (preferencesQuery.isError) {
-    return (
-      <main className="flex min-h-screen items-center justify-center bg-[var(--bg-base)] px-5">
-        <div className="max-w-md rounded-3xl border border-red-500/20 bg-[var(--panel)]/80 p-7 text-center">
-          <h1 className="text-xl font-bold text-[var(--sea-ink)]">
-            We couldn't load your setup
-          </h1>
-          <p role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
-            {preferencesQuery.error.message}
-          </p>
-          <Button
-            type="button"
-            onClick={() => void preferencesQuery.refetch()}
-            className="mt-5 bg-[var(--action)] text-white"
-          >
-            Try again
-          </Button>
-        </div>
-      </main>
-    );
+    return <main className="app-standalone"><h1>Let’s get you started</h1><PageState kind="error" title="We couldn’t load your setup" description={preferencesQuery.error.message} actionLabel="Try again" onAction={() => void preferencesQuery.refetch()} /></main>;
   }
 
   return <OnboardingFlow initialPreferences={preferencesQuery.data} />;
@@ -255,7 +240,7 @@ function OnboardingFlow({
     appearance: initialPreferences.appearance,
   });
 
-  const progress = completed ? 100 : ((step + 1) / steps.length) * 100;
+
 
   const canContinue =
     (step === 0 && data.language !== null) ||
@@ -263,11 +248,6 @@ function OnboardingFlow({
     (step === 2 && data.motivations.length > 0) ||
     step === 3 || step === 4;
 
-  const selectedLanguage = languages.find(
-    (language) => language.id === data.language,
-  );
-
-  const selectedLevel = levels.find((level) => level.id === data.level);
 
   function toggleMotivation(id: Motivation) {
     setData((current) => ({
@@ -320,473 +300,41 @@ function OnboardingFlow({
     void navigate({ to: "/Learn" });
   }
 
-  return (
-    <main className="relative isolate flex min-h-screen flex-col overflow-hidden bg-[var(--bg-base)] text-[var(--sea-ink)]">
-      {/* Soft background */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-[var(--foam)]/70 blur-3xl" />
-        <div className="absolute -right-40 top-20 h-96 w-96 rounded-full bg-[var(--sand)]/50 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-orange-100/20 blur-3xl" />
-      </div>
 
-      {/* Header */}
-      <header className="flex h-16 shrink-0 items-center justify-between px-5 sm:px-8 lg:px-12">
-        <Link
-          to="/"
-          className="relative z-10 flex shrink-0 items-center gap-2.5"
-          aria-label="Fidel home"
-        >
-          <img
-            src={fidelLogo}
-            alt="Fidel"
-            className="h-10 w-10 object-contain drop-shadow-sm"
-          />
-          <span className="text-xl font-bold tracking-tight text-[var(--sea-ink)]">
-            Fidel
-          </span>
-        </Link>
-
-        {!completed && (
-          <span className="text-sm font-medium text-[var(--sea-ink)]/65">
-            <span className="hidden sm:inline">Getting started · </span>
-            {step + 1} of {steps.length}
-          </span>
-        )}
-      </header>
-
-      {/* Orange progress bar */}
-      <div className="mx-auto w-full max-w-3xl px-5 sm:px-8">
-        <Progress
-          value={progress}
-          className="h-1.5 bg-[var(--sand)]/70 [&>div]:bg-orange-500"
-        />
-      </div>
-
-      {/* Main */}
-      <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-5 pb-8 pt-8 sm:px-8 sm:pt-12">
-        {completed ? (
-          <CompletionScreen
-            language={selectedLanguage?.name ?? "your language"}
-            level={selectedLevel?.title ?? "your level"}
-            dailyGoal={data.dailyGoal}
-            onBack={handleBack}
-            onStart={handleStartLearning}
-          />
-        ) : (
-          <>
-            {/* Step heading */}
-            <div className="mb-8 text-center sm:mb-10">
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--line)]/70 bg-[var(--panel)]/70 text-[var(--sea-ink)] shadow-sm backdrop-blur">
-                {step === 0 && <Languages className="h-6 w-6" />}
-                {step === 1 && <GraduationCap className="h-6 w-6" />}
-                {step === 2 && <Heart className="h-6 w-6" />}
-                {step === 3 && <Target className="h-6 w-6" />}
-                {step === 4 && <Sparkles className="h-6 w-6" />}
-              </div>
-
-              <p className="mb-2 text-sm font-semibold tracking-wide text-orange-600 dark:text-orange-300">
-                Let's personalize your journey
-              </p>
-
-              <h1 className="text-3xl font-bold tracking-tight text-[var(--sea-ink)] sm:text-4xl">
-                {steps[step].title}
-              </h1>
-
-              <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-[var(--sea-ink)]/65 sm:text-base">
-                {steps[step].description}
-              </p>
-            </div>
-
-            {/* Step 1: Language selection */}
-            {step === 0 && (
-              <div className="grid gap-4 sm:grid-cols-2">
-                {languages.map((language) => {
-                  const selected = data.language === language.id;
-
-                  return (
-                    <button
-                      key={language.id}
-                      type="button"
-                      aria-pressed={selected}
-                      onClick={() =>
-                        setData((current) => ({
-                          ...current,
-                          language: language.id,
-                        }))
-                      }
-                      className={`group relative flex min-h-56 flex-col rounded-3xl border-2 p-6 text-left transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2 ${selected
-                        ? "border-[var(--sea-ink)] bg-[var(--panel)] shadow-md"
-                        : `border-[var(--line)] ${language.colors} hover:border-[var(--line)]`
-                        }`}
-                    >
-                      {selected && (
-                        <span className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--action)] text-white">
-                          <Check className="h-4 w-4" />
-                        </span>
-                      )}
-
-                      {/* Orange language icon */}
-                      <span
-                        className={`mb-5 flex h-16 w-16 items-center justify-center rounded-2xl text-3xl font-bold shadow-sm ${selected
-                          ? "bg-orange-500 text-white"
-                          : "bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-300"
-                          }`}
-                      >
-                        {language.symbol}
-                      </span>
-
-                      <span className="text-xl font-bold text-[var(--sea-ink)]">
-                        {language.name}
-                      </span>
-
-                      <span className="mt-1 text-sm font-medium text-[var(--sea-ink)]/65">
-                        {language.nativeName}
-                      </span>
-
-                      <span className="mt-3 text-sm leading-6 text-[var(--sea-ink)]/75">
-                        {language.description}
-                      </span>
-
-                      <span className="mt-auto flex items-center gap-2 pt-5 text-xs font-semibold text-[var(--sea-ink)]/65">
-                        <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                        Start your journey
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* Step 2: Current level */}
-            {step === 1 && (
-              <div className="grid gap-3">
-                {levels.map((level) => {
-                  const selected = data.level === level.id;
-                  const Icon = level.icon;
-
-                  return (
-                    <SelectionCard
-                      key={level.id}
-                      selected={selected}
-                      onClick={() =>
-                        setData((current) => ({
-                          ...current,
-                          level: level.id,
-                        }))
-                      }
-                      icon={<Icon className="h-5 w-5" />}
-                      title={level.title}
-                      description={level.description}
-                    />
-                  );
-                })}
-              </div>
-            )}
-
-            {/* Step 3: Motivation */}
-            {step === 2 && (
-              <>
-                <p className="mb-4 text-center text-xs text-[var(--sea-ink)]/55">
-                  Select all that apply.
-                </p>
-
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {motivations.map((motivation) => {
-                    const selected = data.motivations.includes(motivation.id);
-                    const Icon = motivation.icon;
-
-                    return (
-                      <SelectionCard
-                        key={motivation.id}
-                        selected={selected}
-                        onClick={() => toggleMotivation(motivation.id)}
-                        icon={<Icon className="h-5 w-5" />}
-                        title={motivation.title}
-                        description={motivation.description}
-                      />
-                    );
-                  })}
-                </div>
-              </>
-            )}
-
-            {/* Step 4: Daily goal */}
-            {step === 3 && (
-              <div className="grid gap-3 sm:grid-cols-2">
-                {dailyGoals.map((goal) => {
-                  const selected = data.dailyGoal === goal.id;
-                  const Icon = goal.icon;
-
-                  return (
-                    <button
-                      key={goal.id}
-                      type="button"
-                      aria-pressed={selected}
-                      onClick={() =>
-                        setData((current) => ({
-                          ...current,
-                          dailyGoal: goal.id,
-                        }))
-                      }
-                      className={`flex items-center gap-4 rounded-2xl border-2 p-5 text-left transition duration-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2 ${selected
-                        ? "border-[var(--sea-ink)] bg-[var(--panel)] shadow-sm"
-                        : "border-[var(--line)] bg-[var(--panel)]/60 hover:border-[var(--line)]"
-                        }`}
-                    >
-                      <span
-                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${selected
-                          ? "bg-orange-500 text-white"
-                          : "bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-300"
-                          }`}
-                      >
-                        <Icon className="h-5 w-5" />
-                      </span>
-
-                      <span className="min-w-0 flex-1">
-                        <span className="block font-semibold text-[var(--sea-ink)]">
-                          {goal.title}
-                        </span>
-                        <span className="mt-1 block text-sm text-[var(--sea-ink)]/65">
-                          {goal.description}
-                        </span>
-                      </span>
-
-                      <span
-                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${selected
-                          ? "border-[var(--sea-ink)] bg-[var(--action)] text-white"
-                          : "border-[var(--line)]"
-                          }`}
-                      >
-                        {selected && <Check className="h-3 w-3" />}
-                      </span>
-                    </button>
-                  );
-                })}
-
-                <p className="mt-2 text-center text-xs leading-5 text-[var(--sea-ink)]/55 sm:col-span-2">
-                  You can always change your daily goal later.
-                </p>
-              </div>
-            )}
-
-            {step === 4 && (
-              <AppearancePicker value={data.appearance} onChange={(appearance) => {
-                setData((current) => ({ ...current, appearance }));
-                previewAppearance(appearance);
-              }} />
-            )}
-
-            {/* Navigation */}
-            {updatePreferences.isError && (
-              <p role="alert" className="mt-5 text-center text-sm text-red-700 dark:text-red-300">
-                {updatePreferences.error.message}
-              </p>
-            )}
-            <div className="mt-8 flex items-center justify-between gap-4 border-t border-[var(--line)]/60 pt-6 sm:mt-10">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={handleBack}
-                disabled={step === 0}
-                className="gap-2 text-[var(--sea-ink)]/75 hover:text-[var(--sea-ink)]"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back
-              </Button>
-
-              <Button
-                type="button"
-                onClick={() => void handleContinue()}
-                disabled={!canContinue || updatePreferences.isPending}
-                className="h-12 min-w-36 gap-2 rounded-xl bg-[var(--action)] px-6 text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                {updatePreferences.isPending
-                  ? "Saving..."
-                  : step === steps.length - 1
-                    ? "Finish setup"
-                    : "Continue"}
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-
-            <p className="mt-5 text-center text-xs text-[var(--sea-ink)]/55">
-              No pressure. You can change your preferences later.
-            </p>
-          </>
-        )}
-      </div>
-    </main>
-  );
+  return <OnboardingView step={step} data={data} completed={completed} canContinue={Boolean(canContinue)} isSaving={updatePreferences.isPending} error={updatePreferences.error?.message} onBack={handleBack} onContinue={() => void handleContinue()} onStart={handleStartLearning} onLanguage={(language) => setData((current) => ({ ...current, language }))} onLevel={(level) => setData((current) => ({ ...current, level }))} onMotivation={toggleMotivation} onGoal={(dailyGoal) => setData((current) => ({ ...current, dailyGoal }))} onAppearance={(appearance) => { setData((current) => ({ ...current, appearance })); previewAppearance(appearance); }} />;
 }
 
-type SelectionCardProps = {
-  selected: boolean;
-  onClick: () => void;
-  icon: React.ReactNode;
-  title: string;
-  description: string;
+type OnboardingViewProps = {
+ step: number; data: OnboardingData; completed: boolean; canContinue: boolean; isSaving?: boolean; error?: string;
+ onBack: () => void; onContinue: () => void; onStart: () => void;
+ onLanguage: (value: Language) => void; onLevel: (value: Level) => void;
+ onMotivation: (value: Motivation) => void; onGoal: (value: DailyGoal) => void; onAppearance: (value: Appearance) => void;
 };
 
-function SelectionCard({
-  selected,
-  onClick,
-  icon,
-  title,
-  description,
-}: SelectionCardProps) {
-  return (
-    <button
-      type="button"
-      aria-pressed={selected}
-      onClick={onClick}
-      className={`group flex w-full items-center gap-4 rounded-2xl border-2 p-4 text-left transition duration-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sea-ink)] focus-visible:ring-offset-2 sm:p-5 ${selected
-        ? "border-[var(--sea-ink)] bg-[var(--panel)] shadow-sm"
-        : "border-[var(--line)] bg-[var(--panel)]/60 hover:border-[var(--line)]"
-        }`}
-    >
-      <span
-        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition ${selected
-          ? "bg-orange-500 text-white"
-          : "bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-300 group-hover:bg-orange-100"
-          }`}
-      >
-        {icon}
-      </span>
-
-      <span className="min-w-0 flex-1">
-        <span className="block font-semibold text-[var(--sea-ink)]">
-          {title}
-        </span>
-        <span className="mt-1 block text-sm leading-5 text-[var(--sea-ink)]/65">
-          {description}
-        </span>
-      </span>
-
-      <span
-        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition ${selected
-          ? "border-[var(--sea-ink)] bg-[var(--action)] text-white"
-          : "border-[var(--line)] bg-[var(--panel)]"
-          }`}
-      >
-        {selected && <Check className="h-3 w-3" />}
-      </span>
-    </button>
-  );
+export function OnboardingView({ step, data, completed, canContinue, isSaving, error, onBack, onContinue, onStart, onLanguage, onLevel, onMotivation, onGoal, onAppearance }: OnboardingViewProps) {
+ const language = languages.find((item) => item.id === data.language);
+ const level = levels.find((item) => item.id === data.level);
+ return <main className="fidel-onboarding">
+  <header className="onboarding-header"><Link to="/" className="app-wordmark" aria-label="Fidel home"><FidelTeacherMark className="app-header-mark" /><span>Fidel<span className="app-wordmark-dot">.</span></span></Link>{!completed && <span>{step + 1} of {steps.length}</span>}</header>
+  <div className="onboarding-content">
+   {completed ? <section className="onboarding-complete"><FidelTeacherMark className="onboarding-teacher" /><h1>A new conversation starts here.</h1><p>Your learning plan is ready.</p><dl><div><dt>Learning</dt><dd>{language?.name ?? "Your language"}</dd></div><div><dt>Your level</dt><dd>{level?.title ?? "Your level"}</dd></div><div><dt>Daily goal</dt><dd>{data.dailyGoal} words</dd></div></dl><button type="button" className="app-primary" onClick={onStart}>Start learning<ArrowRight size={18} aria-hidden="true" /></button><button type="button" className="app-secondary" onClick={onBack}>Change my answers</button></section> : <>
+    <progress className="onboarding-progress" value={step + 1} max={steps.length} aria-label="Setup progress" />
+    <header className="onboarding-title"><h1>{steps[step].title}</h1><p>{steps[step].description}</p></header>
+    <fieldset className="onboarding-options" disabled={isSaving}><legend className="sr-only">{steps[step].title}</legend>
+    {step === 0 && languages.map((item) => <Choice key={item.id} selected={data.language === item.id} title={item.name + (item.id === "am" ? " · " + item.nativeName : "")} description={item.description} onClick={() => onLanguage(item.id)} />)}
+    {step === 1 && levels.map((item) => <Choice key={item.id} selected={data.level === item.id} title={item.title} description={item.description} onClick={() => onLevel(item.id)} />)}
+    {step === 2 && <><p className="onboarding-select-note">Choose all that feel right.</p>{motivations.map((item) => <Choice key={item.id} selected={data.motivations.includes(item.id)} title={item.title} description={item.description} onClick={() => onMotivation(item.id)} />)}</>}
+    {step === 3 && dailyGoals.map((item) => <Choice key={item.id} selected={data.dailyGoal === item.id} title={item.title} description={item.description} onClick={() => onGoal(item.id)} />)}
+    {step === 4 && <AppearancePicker value={data.appearance} onChange={onAppearance} />}
+    </fieldset>
+    {error && <p className="app-error" role="alert">{error}</p>}
+    <div className="onboarding-actions"><button type="button" className="app-secondary" onClick={onBack} disabled={step === 0 || isSaving}><ArrowLeft size={17} aria-hidden="true" />Back</button><button type="button" className="app-primary" onClick={onContinue} disabled={!canContinue || isSaving}>{isSaving && <LoaderCircle size={17} className="app-spinner" aria-hidden="true" />}{step === steps.length - 1 ? "Finish setup" : "Continue"}<ArrowRight size={17} aria-hidden="true" /></button></div>
+    <p className="onboarding-note">You can change these choices in Settings.</p>
+   </>}
+  </div>
+ </main>;
 }
 
-type CompletionScreenProps = {
-  language: string;
-  level: string;
-  dailyGoal: DailyGoal;
-  onBack: () => void;
-  onStart: () => void;
-};
-
-function CompletionScreen({
-  language,
-  level,
-  dailyGoal,
-  onBack,
-  onStart,
-}: CompletionScreenProps) {
-  return (
-    <div className="flex flex-1 flex-col items-center justify-center py-8 text-center">
-      <div className="relative mb-8">
-        <div className="flex h-28 w-28 items-center justify-center rounded-[2rem] bg-[var(--action)] shadow-xl shadow-slate-900/10">
-          <span className="text-5xl font-bold text-white">ፊ</span>
-        </div>
-
-        <span className="absolute -right-3 -top-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-white bg-[var(--panel)] text-orange-500 dark:text-orange-300 shadow-md">
-          <Sparkles className="h-6 w-6" />
-        </span>
-      </div>
-
-      <p className="mb-3 text-sm font-semibold tracking-wide text-orange-600 dark:text-orange-300">
-        Your journey starts now
-      </p>
-
-      <h1 className="max-w-lg text-3xl font-bold tracking-tight text-[var(--sea-ink)] sm:text-5xl">
-        You're ready to learn!
-      </h1>
-
-      <p className="mt-4 max-w-md text-sm leading-7 text-[var(--sea-ink)]/65 sm:text-base">
-        Your first step toward a new language starts here. Let's learn something
-        useful today.
-      </p>
-
-      <Card className="mt-8 w-full max-w-md rounded-3xl border-[var(--line)] bg-[var(--panel)]/70 p-5 text-left shadow-sm backdrop-blur-md sm:p-6">
-        <h2 className="mb-5 flex items-center gap-2 font-semibold text-[var(--sea-ink)]">
-          <Sparkles className="h-4 w-4 text-orange-500 dark:text-orange-300" />
-          Your learning plan
-        </h2>
-
-        <div className="space-y-4">
-          <SummaryRow
-            icon={<Languages className="h-4 w-4" />}
-            label="Learning"
-            value={language}
-          />
-
-          <SummaryRow
-            icon={<GraduationCap className="h-4 w-4" />}
-            label="Your level"
-            value={level}
-          />
-
-          <SummaryRow
-            icon={<BookOpen className="h-4 w-4" />}
-            label="Daily goal"
-            value={`${dailyGoal} words a day`}
-          />
-        </div>
-      </Card>
-
-      <Button
-        type="button"
-        onClick={onStart}
-        className="mt-8 h-12 w-full max-w-md gap-2 rounded-xl bg-[var(--action)] text-white shadow-sm hover:opacity-90"
-      >
-        Start my first lesson
-        <ArrowRight className="h-4 w-4" />
-      </Button>
-
-      <Button
-        type="button"
-        variant="ghost"
-        onClick={onBack}
-        className="mt-3 gap-2 text-[var(--sea-ink)]/65 hover:text-[var(--sea-ink)]"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Change my answers
-      </Button>
-    </div>
-  );
-}
-
-function SummaryRow({
-  icon,
-  label,
-  value,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="flex items-center gap-3">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--foam)] text-[var(--sea-ink)]">
-        {icon}
-      </span>
-
-      <span className="min-w-0 flex-1">
-        <span className="block text-xs text-[var(--sea-ink)]/65">{label}</span>
-        <span className="mt-0.5 block truncate text-sm font-semibold text-[var(--sea-ink)]">
-          {value}
-        </span>
-      </span>
-    </div>
-  );
+function Choice({ selected, title, description, onClick }: { selected: boolean; title: string; description: string; onClick: () => void }) {
+ return <button type="button" className="app-choice" aria-pressed={selected} onClick={onClick}><span><strong>{title}</strong><span>{description}</span></span><span className="choice-check" aria-hidden="true">{selected && <Check size={16} />}</span></button>;
 }
