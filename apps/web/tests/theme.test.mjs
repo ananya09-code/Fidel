@@ -25,7 +25,8 @@ test("explicit themes override the device and System follows it", () => {
   assert.equal(resolveTheme("light", true), "light");
   assert.equal(resolveTheme("system", true), "dark");
   assert.equal(resolveTheme("system", false), "light");
-  for (const value of [null, "invalid", "SYSTEM", {}]) assert.equal(parseAppearance(value), "system");
+  assert.equal(parseAppearance("system"), "system");
+  for (const value of [null, "invalid", "SYSTEM", {}]) assert.equal(parseAppearance(value), "light");
 });
 
 test("pre-paint script applies the same theme with missing or blocked storage", () => {
