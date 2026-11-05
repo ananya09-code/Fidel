@@ -1,12 +1,9 @@
 import { useState } from "react";
-import {
-  ArrowLeft,
-  ArrowRight,
-  BookOpen,
-  CheckCircle2,
-  RotateCcw,
-  Sparkles,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, LoaderCircle, RotateCcw } from "lucide-react";
+import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import { PageState } from "@/components/common-ui/PageState";
+import { topicLabel } from "@/components/homepage-ui/labels";
+import "./lesson.css";
 
 import { Flashcard } from "@/components/learn-ui/lesson/Flashcard";
 import type { FlashcardWord } from "@/components/learn-ui/lesson/Flashcard";
@@ -90,7 +87,9 @@ export function FlashcardSession({
     setDirection("next");
     const nextIndex = Math.min(currentIndex + 1, sessionWords.length - 1);
     setCurrentIndex(nextIndex);
-    void onProgress?.(nextIndex);
+    void Promise.resolve(onProgress?.(nextIndex)).catch((error: unknown) => {
+      setSaveError(error instanceof Error ? error.message : "Unable to save your place.");
+    });
   }
 
   function handlePrevious() {
@@ -98,9 +97,18 @@ export function FlashcardSession({
     setCurrentIndex((index) => Math.max(index - 1, 0));
   }
 
-  function finishSession() {
-    setSessionCompleted(true);
-    void onProgress?.(sessionWords.length);
+  async function finishSession() {
+    if (isSaving) return;
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      await onProgress?.(sessionWords.length);
+      setSessionCompleted(true);
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : "Unable to save your place.");
+    } finally {
+      setIsSaving(false);
+    }
   }
 
   async function handlePractice() {
@@ -124,257 +132,52 @@ export function FlashcardSession({
     onBack?.();
   }
 
+
+  const errorNotice = saveError && <p className="study-error" role="alert">{saveError}</p>;
+  const busy = <LoaderCircle size={18} className="study-spinner" aria-hidden="true" />;
+
   if (availableWords.length === 0) {
-    return (
-      <section className="mx-auto w-full max-w-2xl px-4 py-10">
-        <div className="rounded-[2rem] border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 px-6 py-12 text-center backdrop-blur sm:px-10">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--sand)]/45">
-            <BookOpen className="h-7 w-7 text-[var(--sea-ink)]" />
-          </div>
-
-          <h2 className="mt-6 text-2xl font-bold tracking-tight text-[var(--sea-ink)]">
-            No words yet
-          </h2>
-
-          <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[var(--sea-ink)]/60">
-            There are no vocabulary words available for this lesson yet. Try
-            another lesson or come back later.
-          </p>
-
-          {onBack && (
-            <button
-              type="button"
-              onClick={onBack}
-              className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--sea-ink)]/12 bg-[var(--panel)]/50 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition-colors hover:bg-[var(--sand)]/30"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to lessons
-            </button>
-          )}
-        </div>
-      </section>
-    );
+    return <div className="fidel-study"><PageState kind="empty" title="No words yet" description="Try another lesson while vocabulary is being prepared." actionLabel="Back to lessons" onAction={onBack} /></div>;
   }
 
   if (sessionCompleted) {
-    return (
-      <section className="mx-auto w-full max-w-2xl px-4 py-8 sm:py-12">
-        <div className="overflow-hidden rounded-[2rem] border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 backdrop-blur">
-          <div className="px-6 py-12 text-center sm:px-12">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#39C987]/15">
-              <CheckCircle2 className="h-10 w-10 text-[#239B65] dark:text-emerald-300" />
-            </div>
-
-            <div className="mt-7 inline-flex items-center gap-2 rounded-full border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[var(--sea-ink)]/55">
-              <Sparkles className="h-4 w-4 text-[#E9A23B]" />
-              Session completed
-            </div>
-
-            <h2 className="mt-5 text-3xl font-bold tracking-tight text-[var(--sea-ink)] sm:text-4xl">
-              Great work!
-            </h2>
-
-            <p className="mx-auto mt-4 max-w-md text-base leading-7 text-[var(--sea-ink)]/60">
-              You explored{" "}
-              <span className="font-semibold text-[var(--sea-ink)]">
-                {sessionWords.length}{" "}
-                {sessionWords.length === 1 ? "word" : "words"}
-              </span>{" "}
-              in {category}. Keep going to make them part of your vocabulary.
-            </p>
-
-            <div className="mx-auto mt-8 grid max-w-sm grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/55 p-4">
-                <p className="text-2xl font-bold text-[var(--sea-ink)]">
-                  {sessionWords.length}
-                </p>
-                <p className="mt-1 text-xs text-[var(--sea-ink)]/55">
-                  Words explored
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/55 p-4">
-                <p className="text-2xl font-bold text-[var(--sea-ink)]">100%</p>
-                <p className="mt-1 text-xs text-[var(--sea-ink)]/55">
-                  Cards completed
-                </p>
-              </div>
-            </div>
-
-            <div className="mx-auto mt-8 flex max-w-sm flex-col gap-3">
-              <button
-                type="button"
-                onClick={() => void handlePractice()}
-                disabled={isSaving}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              >
-                {isSaving ? "Saving..." : "Continue to practice"}
-                <ArrowRight className="h-4 w-4" />
-              </button>
-
-              <button
-                type="button"
-                onClick={startSession}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[var(--sea-ink)]/12 bg-[var(--panel)]/50 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition-colors hover:bg-[var(--sand)]/30"
-              >
-                <RotateCcw className="h-4 w-4" />
-                Review these words again
-              </button>
-
-              {onBack && (
-                <button
-                  type="button"
-                  onClick={onBack}
-                  className="mt-1 min-h-11 rounded-xl px-5 py-3 text-sm font-medium text-[var(--sea-ink)]/55 transition-colors hover:text-[var(--sea-ink)]"
-                >
-                  Back to lessons
-                </button>
-              )}
-            </div>
-            {saveError && <p className="mt-4 text-sm text-red-600 dark:text-red-300" role="alert">{saveError}</p>}
-          </div>
+    return <div className="fidel-study">
+      <section className="study-milestone">
+        <FidelTeacherMark className="study-teacher" />
+        <h1>Words met. Time to practise.</h1>
+        <p>You explored {sessionWords.length} {sessionWords.length === 1 ? "word" : "words"} in {topicLabel(category)}. Now see what you remember.</p>
+        <div className="study-milestone-actions">
+          <button type="button" className="study-primary" disabled={isSaving} onClick={() => void handlePractice()}>{isSaving ? busy : <ArrowRight size={18} aria-hidden="true" />}Continue to practice</button>
+          <button type="button" className="study-secondary" disabled={isSaving} onClick={() => { setCurrentIndex(0); setSessionCompleted(false); }}><RotateCcw size={16} aria-hidden="true" />Look through the cards again</button>
+          <button type="button" className="study-text-button" disabled={isSaving} onClick={onBack}>Back to lessons</button>
         </div>
+        {errorNotice}
       </section>
-    );
+    </div>;
   }
 
   if (sessionStarted && currentWord) {
-    return (
-      <section className="mx-auto w-full max-w-3xl px-4 py-6 sm:py-8">
-        <div className="mb-7 flex items-center justify-between gap-4">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="inline-flex min-h-10 items-center gap-2 rounded-lg px-2 text-sm font-medium text-[var(--sea-ink)]/60 transition-colors hover:text-[var(--sea-ink)]"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Exit session
-          </button>
-
-          <span className="max-w-[55%] truncate rounded-full border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 px-3 py-1.5 text-xs font-medium text-[var(--sea-ink)]/60">
-            {category}
-          </span>
-        </div>
-
-        <Flashcard
-          word={currentWord}
-          currentIndex={currentIndex}
-          total={sessionWords.length}
-          direction={direction}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          onFinish={finishSession}
-        />
-      </section>
-    );
+    return <div className="fidel-study">
+      <header className="study-header"><button type="button" className="study-text-button" onClick={handleBack}><ArrowLeft size={18} aria-hidden="true" />Exit session</button><h1>{topicLabel(category)}</h1></header>
+      <Flashcard word={currentWord} currentIndex={currentIndex} total={sessionWords.length} direction={direction} onPrevious={handlePrevious} onNext={handleNext} onFinish={() => void finishSession()} />
+      {isSaving && <p role="status" className="study-saving">{busy}<span className="sr-only">Saving progress</span></p>}
+      {errorNotice}
+    </div>;
   }
 
-  return (
-    <section className="mx-auto w-full max-w-2xl px-4 py-6 sm:py-10">
-      <button
-        type="button"
-        onClick={onBack}
-        className="mb-8 inline-flex min-h-10 items-center gap-2 rounded-lg px-2 text-sm font-medium text-[var(--sea-ink)]/60 transition-colors hover:text-[var(--sea-ink)]"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back to lessons
-      </button>
-
-      <div className="relative overflow-hidden rounded-[2rem] border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 p-6 backdrop-blur sm:p-10">
-        <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#E9A23B]/10 blur-3xl" aria-hidden="true" />
-        <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-[#7C83FD]/10 blur-3xl" aria-hidden="true" />
-
-        <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--sand)]/45">
-          <BookOpen className="h-7 w-7 text-[var(--sea-ink)]" />
-        </div>
-
-        <p className="relative mt-6 text-sm font-semibold text-[#9A6515] dark:text-amber-300">
-          YOUR NEXT LEARNING SESSION
-        </p>
-
-        <h1 className="relative mt-3 text-3xl font-bold tracking-tight text-[var(--sea-ink)] sm:text-4xl">
-          {category}
-        </h1>
-
-        <p className="relative mt-4 max-w-lg text-sm leading-6 text-[var(--sea-ink)]/60 sm:text-base">
-          Learn each word, reveal its meaning, and listen to its pronunciation
-          when audio is available. Choose how many words you want to explore.
-        </p>
-
-        <div className="relative mt-8 rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/55 p-5">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <h2 className="font-semibold text-[var(--sea-ink)]">
-                Words in this session
-              </h2>
-
-              <p className="mt-1 text-sm text-[var(--sea-ink)]/55">
-                {availableWords.length}{" "}
-                {availableWords.length === 1 ? "word available" : "words available"}
-              </p>
-            </div>
-
-            <span className="rounded-xl bg-[#E9A23B]/15 px-3 py-2 text-sm font-bold text-[#9A6515] dark:text-amber-300">
-              {Math.min(wordLimit, availableWords.length)}
-            </span>
-          </div>
-
-          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {wordLimitOptions.map((limit) => {
-              const selected = wordLimit === limit;
-
-              return (
-                <button
-                  key={limit}
-                  type="button"
-                  onClick={() => setWordLimit(limit)}
-                  aria-pressed={selected}
-                  className={[
-                    "flex min-h-20 flex-col items-center justify-center rounded-2xl border px-3 py-3 transition-all",
-                    selected
-                      ? "border-[#E9A23B] bg-[#E9A23B]/15 text-[#7A4E0E] dark:text-amber-300 shadow-sm"
-                      : "border-[var(--sea-ink)]/10 bg-[var(--panel)]/65 text-[var(--sea-ink)] hover:border-[var(--sea-ink)]/20 hover:bg-[var(--sand)]/25",
-                  ].join(" ")}
-                >
-                  <span className="text-2xl font-bold tabular-nums">{limit}</span>
-                  <span className="mt-1 text-[11px] font-semibold uppercase tracking-wider opacity-65">
-                    {limit === 1 ? "word" : "words"}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {availableWords.length < 5 && (
-            <p className="mt-4 text-xs leading-5 text-[var(--sea-ink)]/55">
-              This lesson has fewer than five words, so you can learn all{" "}
-              {availableWords.length} available{" "}
-              {availableWords.length === 1 ? "word" : "words"}.
-            </p>
-          )}
-        </div>
-
-        <div className="relative mt-7 flex flex-col gap-3 sm:flex-row">
-          <button
-            type="button"
-            onClick={() => void startSession()}
-            disabled={sessionWords.length === 0 || isSaving}
-            className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {isSaving ? "Starting..." : "Start learning"}
-            <ArrowRight className="h-4 w-4" />
-          </button>
-
-          <button
-            type="button"
-            onClick={onBack}
-            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[var(--sea-ink)]/12 bg-[var(--panel)]/50 px-5 py-3 text-sm font-semibold text-[var(--sea-ink)] transition-colors hover:bg-[var(--sand)]/30"
-          >
-            Not now
-          </button>
-        </div>
-        {saveError && <p className="mt-4 text-sm text-red-600 dark:text-red-300" role="alert">{saveError}</p>}
-      </div>
+  return <div className="fidel-study">
+    <header className="study-header"><button type="button" className="study-text-button" onClick={onBack}><ArrowLeft size={18} aria-hidden="true" />Back to lessons</button><span>Vocabulary</span></header>
+    <section className="study-setup">
+      <FidelTeacherMark className="study-teacher" />
+      <h1>{topicLabel(category)}</h1>
+      <p>Meet the words, hear how they sound, then put your memory to work.</p>
+      <fieldset className="study-word-limit">
+        <legend>Words in this session</legend>
+        <p>{availableWords.length} {availableWords.length === 1 ? "word" : "words"} available</p>
+        <div className="study-limit-options">{wordLimitOptions.filter((limit) => limit > 0).map((limit) => <button type="button" key={limit} aria-pressed={wordLimit === limit} disabled={isSaving} onClick={() => setWordLimit(limit)}><span>{limit}</span> {limit === 1 ? "word" : "words"}</button>)}</div>
+      </fieldset>
+      <button type="button" className="study-primary" disabled={!sessionWords.length || isSaving} onClick={() => void startSession()}>{isSaving ? busy : <ArrowRight size={18} aria-hidden="true" />}Start learning</button>
+      {errorNotice}
     </section>
-  );
+  </div>;
 }

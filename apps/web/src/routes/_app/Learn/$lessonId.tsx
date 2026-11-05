@@ -173,7 +173,7 @@ function LessonPage() {
   }
 
   return (
-    <main className="mx-auto w-full min-w-0 max-w-5xl px-4 py-6 sm:px-6 sm:py-8">
+    <div className="w-full min-w-0">
       <FlashcardSession
         key={`${lessonId}-${language_code}-${attempt?.id ?? "new"}`}
         category={lesson.data.lesson.category}
@@ -186,6 +186,6 @@ function LessonPage() {
         onProgress={(index) => checkpoint("vocabulary", index)}
         onComplete={async () => checkpoint("practice", 0)}
       />
-    </main>
+    </div>
   );
 }
