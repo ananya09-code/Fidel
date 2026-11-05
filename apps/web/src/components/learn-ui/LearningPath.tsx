@@ -1,318 +1,50 @@
-import { LockKeyhole, Check, Star, Play, Trophy } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, LockKeyhole, Play } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useLearningPath } from "@/hooks/use-learning-path";
 import { useLearningProgress } from "@/hooks/use-learning-progress";
 import { usePreferences } from "@/hooks/use-preferences";
 import { PageState } from "@/components/common-ui/PageState";
+import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import type { LearningPathResponse, ProgressSummary } from "@/lib/api/learning";
+import "./learn-path.css";
 
-type LessonStatus = "completed" | "current" | "locked";
-type Lesson = {
-  id: string;
-  title: string;
-  subtitle: string;
-  status: LessonStatus;
-  wordCount: number;
-};
-
-type Unit = {
-  id: string;
-  title: string;
-  subtitle: string;
-  color: string;
-  totalWords: number;
-  lessons: Lesson[];
-};
-
-const LEVEL_COLORS = ["#E9A23B", "#7C83FD", "#39C987", "#E879A9"];
-
-function LessonNode({
-  lesson,
-  index,
-  color,
-  languageCode,
-}: {
-  lesson: Lesson;
-  index: number;
-  color: string;
-  languageCode: string;
-}) {
-  const isCompleted = lesson.status === "completed";
-  const isCurrent = lesson.status === "current";
-  const isLocked = lesson.status === "locked";
-
-  const horizontalPosition = [0, 1, 2, 1, 0][index % 5];
-  const horizontalOffset = [
-    "md:-translate-x-[66px]",
-    "md:translate-x-0",
-    "md:translate-x-[66px]",
-    "md:translate-x-0",
-    "md:-translate-x-[66px]",
-  ][horizontalPosition];
-
-  return (
-    <div className={`relative flex flex-col items-center ${horizontalOffset}`}>
-      <div className="relative">
-        {isCurrent && (
-          <div
-            className="absolute -inset-2 animate-pulse rounded-full opacity-30"
-            style={{ backgroundColor: color }}
-          />
-        )}
-        {isLocked ? (
-          <button
-            type="button"
-            disabled
-            aria-label={`${lesson.title}, locked`}
-            className="relative z-10 flex h-[68px] w-[68px] cursor-not-allowed items-center justify-center rounded-full border-b-[6px] border-[var(--sea-ink)]/15 bg-[var(--panel)]/55 text-[var(--sea-ink)]/35"
-          >
-            <LockKeyhole className="h-6 w-6" />
-          </button>
-        ) : (
-          <Link
-            to="/Learn/$lessonId"
-            params={{ lessonId: lesson.id }}
-            search={{ language_code: languageCode }}
-            className={[
-              "relative z-10 flex h-[68px] w-[68px] items-center justify-center rounded-full border-b-[6px] transition-transform duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2",
-              isCompleted
-                ? "border-[#239B65] bg-[#39C987] text-white hover:scale-105"
-                : "text-white hover:scale-105",
-            ].join(" ")}
-            style={
-              isCurrent
-                ? {
-                  backgroundColor: color,
-                  borderBottomColor: `${color}B0`,
-                }
-                : undefined
-            }
-            aria-label={lesson.title}
-          >
-            {isCompleted && <Check className="h-8 w-8 stroke-[3]" />}
-            {isCurrent && <Play className="ml-1 h-7 w-7 fill-current" />}
-          </Link>)}
-        {isCurrent && (
-          <span
-            className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-extrabold text-white shadow-sm"
-            style={{ backgroundColor: color }}
-          >
-            START HERE
-            <span
-              className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45"
-              style={{ backgroundColor: color }}
-            />
-          </span>
-        )}
-
-        {isCompleted && (
-          <Star className="absolute -right-1 -top-1 h-6 w-6 fill-[#FFD45C] text-[#E7AC20]" />
-        )}
-      </div>
-
-      <div className="mt-3 max-w-[160px] text-center">
-        <p
-          className={[
-            "text-sm font-bold",
-            isLocked
-              ? "text-[var(--sea-ink)]/40"
-              : "text-[var(--sea-ink)]",
-          ].join(" ")}
-        >
-          {lesson.title}
-        </p>
-
-        <p className="mt-1 text-xs leading-4 text-[var(--sea-ink)]/55">
-          {lesson.subtitle}
-        </p>
-
-        <p className="mt-1 text-xs font-medium text-[var(--sea-ink)]/50">
-          {lesson.wordCount} words
-        </p>
-      </div>
-    </div>
-  );
+export function LearningPathView({ path, progress }: { path: LearningPathResponse; progress: ProgressSummary }) {
+  const lessons = path.levels.flatMap((level) => level.lessons);
+  const ids = new Set(lessons.map((lesson) => lesson.id));
+  const completed = new Set(progress.completed_lesson_keys);
+  const finished = lessons.filter((lesson) => completed.has(lesson.id)).length;
+  const attempt = progress.in_progress.find((item) => ids.has(item.lesson_key) && !completed.has(item.lesson_key));
+  const next = lessons.find((lesson) => lesson.id === attempt?.lesson_key) ?? lessons.find((lesson) => !completed.has(lesson.id));
+  const language = path.language_code === "om" ? "Afaan Oromoo" : path.language_code === "am" ? "አማርኛ" : path.language_code;
+  return <>
+    <header className="learn-page-title"><div><h1>Your learning path</h1><p>{language} · One conversation at a time.</p></div><Link to="/dictionary" search={{ category: undefined }} className="learn-dictionary">Explore words <ArrowRight size={16} aria-hidden="true" /></Link></header>
+    {!lessons.length ? <PageState kind="empty" title="Lessons are on their way" description="No lessons are available for this language yet." compact /> : <>
+      <section className="learn-next" aria-labelledby="learn-next-title">
+        <FidelTeacherMark className="learn-teacher" />
+        <div className="learn-next-copy"><p>{next ? (attempt ? "Pick up where you left off" : "Your next lesson") : "Every lesson completed"}</p><h2 id="learn-next-title">{next?.title ?? "Look how far you’ve come."}</h2><p>{next ? `${next.word_count} words${attempt ? ` · ${attempt.question_index} of ${attempt.question_count} practice questions finished` : ""}` : "Keep familiar words fresh with a review."}</p></div>
+        {next ? <Link className="learn-start" to="/Learn/$lessonId" params={{ lessonId: next.id }} search={{ language_code: path.language_code }}>{attempt ? "Continue lesson" : "Start lesson"}<ArrowRight size={18} aria-hidden="true" /></Link> : <Link className="learn-start" to="/review" search={{ start: false }}>Review words<ArrowRight size={18} aria-hidden="true" /></Link>}
+      </section>
+      <div className="learn-overall"><p><strong>{finished}</strong> of {lessons.length} lessons completed</p><progress value={finished} max={lessons.length} aria-label="Learning path completion" /><span>{Math.round(finished / lessons.length * 100)}%</span></div>
+      <div className="learn-units">{path.levels.map((level) => {
+        const done = level.lessons.filter((lesson) => completed.has(lesson.id)).length;
+        const active = level.lessons.some((lesson) => lesson.id === next?.id);
+        return <details key={level.id} className="learn-unit" open={active || (!next && done > 0)}>
+          <summary><span className={`learn-unit-marker${done === level.lessons.length && done > 0 ? " is-done" : active ? " is-active" : ""}`} aria-hidden="true">{done === level.lessons.length && done > 0 ? <Check size={18} /> : <span />}</span><span className="learn-unit-title"><h2>{level.title}</h2><span>{level.subtitle} · {level.total_words} words</span></span><span className="learn-unit-count">{done}/{level.lessons.length}<span> completed</span></span><ChevronDown className="learn-chevron" size={18} aria-hidden="true" /></summary>
+          <ol className="learn-trail">{level.lessons.map((lesson, index) => {
+            const state = completed.has(lesson.id) ? "done" : lesson.id === next?.id ? "active" : "locked";
+            return <li key={lesson.id} className={`learn-stop is-${state}`}><div className="learn-stop-layout"><span className="learn-node" aria-hidden="true">{state === "done" ? <Check size={21} /> : state === "active" ? <Play size={20} fill="currentColor" /> : <LockKeyhole size={18} />}</span><div className="learn-stop-copy"><h3>{lesson.title}</h3><p>{lesson.subtitle}</p><span>{lesson.word_count} words · {state === "done" ? "Completed" : state === "active" ? "Up next" : "Finish previous lessons to unlock"}</span></div>{state !== "locked" && <Link className="learn-stop-link" to="/Learn/$lessonId" params={{ lessonId: lesson.id }} search={{ language_code: path.language_code }} aria-label={`${state === "done" ? "Practise" : "Start"} ${lesson.title}`}><ArrowRight size={20} aria-hidden="true" /></Link>}</div>{index < level.lessons.length - 1 && <svg className="learn-trail-line" viewBox="0 0 88 38" preserveAspectRatio="none" aria-hidden="true"><path d={index % 2 === 0 ? "M24 0 C24 20 64 18 64 38" : "M64 0 C64 20 24 18 24 38"} /></svg>}</li>;
+          })}</ol>
+        </details>;
+      })}</div>
+    </>}
+  </>;
 }
+
 export function LearningPath() {
   const preferences = usePreferences();
-  const progressQuery = useLearningProgress();
-  const languageCode = preferences.data?.learning_language ?? "om";
-  const {
-    data: learningPath,
-    isPending,
-    isError,
-    error,
-    refetch,
-    isFetching,
-  } = useLearningPath(languageCode);
-
-  if (isPending || preferences.isPending || progressQuery.isPending) {
-    return <PageState kind="loading" title="Loading your learning path" />;
-  }
-
-  if (isError || preferences.isError || progressQuery.isError || !learningPath) {
-    return <PageState kind="error" title="Couldn't load your learning path" description={error?.message ?? preferences.error?.message ?? progressQuery.error?.message ?? "No learning path data was returned."} actionLabel={isFetching ? "Retrying..." : "Try again"} onAction={() => void refetch()} />;
-  }
-
-  const completedLessons = new Set(progressQuery.data?.completed_lesson_keys ?? []);
-  const allLessonIds = learningPath.levels.flatMap((level) =>
-    level.lessons.map((lesson) => lesson.id),
-  );
-  const activeLesson = progressQuery.data?.in_progress[0]?.lesson_key;
-  const currentLesson =
-    activeLesson ?? allLessonIds.find((lessonId) => !completedLessons.has(lessonId));
-
-  const units: Unit[] = learningPath.levels.map(
-    (level, levelIndex) => ({
-      id: level.id,
-      title: level.title,
-      subtitle: level.subtitle,
-      color: LEVEL_COLORS[levelIndex % LEVEL_COLORS.length],
-      totalWords: level.total_words,
-      lessons: level.lessons.map((lesson) => ({
-        id: lesson.id,
-        title: lesson.title,
-        subtitle: lesson.subtitle,
-        wordCount: lesson.word_count,
-        status: completedLessons.has(lesson.id)
-          ? "completed"
-          : lesson.id === currentLesson
-            ? "current"
-            : "locked",
-      })),
-    }),
-  );
-
-  return (
-    <section className="mx-auto w-full max-w-3xl">
-      <div className="mb-8">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--sea-ink)]/50">
-          Your adventure
-        </p>
-
-        <h2 className="mt-2 text-2xl font-bold tracking-tight text-[var(--sea-ink)] sm:text-3xl">
-          Your learning path
-        </h2>
-
-        <p className="mt-2 text-sm text-[var(--sea-ink)]/55">
-          One little step at a time. You're doing great!
-        </p>
-      </div>
-
-      {units.length === 0 ? (
-        <PageState kind="empty" title="Your journey starts soon" description="No lessons are available for this language yet." compact />
-      ) : (
-        <div className="space-y-12">
-          {units.map((unit, unitIndex) => {
-            const completedCount = unit.lessons.filter(
-              (lesson) => lesson.status === "completed",
-            ).length;
-
-            const progress =
-              unit.lessons.length > 0
-                ? Math.round(
-                  (completedCount / unit.lessons.length) * 100,
-                )
-                : 0;
-
-            return (
-              <section
-                key={unit.id}
-                className="overflow-hidden rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--panel)]/60 p-5 sm:p-8"
-              >
-                <div className="mb-10 flex items-center gap-4">
-                  <div
-                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-white"
-                    style={{ backgroundColor: unit.color }}
-                  >
-                    {unitIndex === 0 ? (
-                      <Star className="h-7 w-7" />
-                    ) : (
-                      <Trophy className="h-7 w-7" />
-                    )}
-                  </div>
-
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--sea-ink)]/45">
-                      LEVEL {String(unitIndex + 1).padStart(2, "0")}
-                    </p>
-
-                    <h3 className="mt-1 text-lg font-bold text-[var(--sea-ink)]">
-                      {unit.title}
-                    </h3>
-
-                    <p className="mt-1 text-sm text-[var(--sea-ink)]/55">
-                      {unit.subtitle}
-                    </p>
-
-                    <p className="mt-1 text-xs text-[var(--sea-ink)]/50">
-                      {unit.totalWords} words in this level
-                    </p>
-                  </div>
-
-                  <span className="shrink-0 text-xs font-bold text-[var(--sea-ink)]/50">
-                    {progress}%
-                  </span>
-                </div>
-
-                <div className="mb-12 h-2 overflow-hidden rounded-full bg-[var(--sea-ink)]/5">
-                  <div
-                    className="h-full rounded-full transition-all"
-                    style={{
-                      width: `${progress}%`,
-                      backgroundColor: unit.color,
-                    }}
-                  />
-                </div>
-
-                <div className="relative mx-auto flex max-w-md flex-col items-center gap-9 pb-5 pt-2">
-                  {unit.lessons.map((lesson, index) => (
-                    <div
-                      key={lesson.id}
-                      className="relative flex w-full justify-center"
-                    >
-                      {index < unit.lessons.length - 1 && (
-                        <svg
-                          aria-hidden="true"
-                          className="pointer-events-none absolute left-1/2 top-[54px] z-0 h-[75px] w-[100px] -translate-x-1/2 overflow-visible"
-                          viewBox="0 0 100 75"
-                          fill="none"
-                        >
-                          <path
-                            d={
-                              index % 2 === 0
-                                ? "M50 0 C50 28 85 35 85 75"
-                                : "M85 0 C85 35 50 45 50 75"
-                            }
-                            stroke={
-                              lesson.status === "completed"
-                                ? "#39C987"
-                                : "#D8DCE3"
-                            }
-                            strokeWidth="5"
-                            strokeLinecap="round"
-                            strokeDasharray={
-                              lesson.status === "locked" ? "5 8" : "0"
-                            }
-                          />
-                        </svg>
-                      )}
-
-                      <div className="relative z-10">
-                        <LessonNode
-                          lesson={lesson}
-                          index={index}
-                          color={unit.color}
-                          languageCode={languageCode}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            );
-          })}
-        </div>
-      )}
-    </section>
-  );
+  const progress = useLearningProgress();
+  const path = useLearningPath(preferences.data?.learning_language ?? "om");
+  if (preferences.isPending || progress.isPending || path.isPending) return <PageState kind="loading" title="Loading your learning path" />;
+  if (preferences.isError || progress.isError || path.isError || !path.data || !progress.data) return <><h1>Your learning path</h1><PageState kind="error" title="Couldn't load your learning path" description={preferences.error?.message ?? progress.error?.message ?? path.error?.message} actionLabel="Try again" onAction={() => { void preferences.refetch(); void progress.refetch(); void path.refetch(); }} /></>;
+  return <LearningPathView path={path.data} progress={progress.data} />;
 }
