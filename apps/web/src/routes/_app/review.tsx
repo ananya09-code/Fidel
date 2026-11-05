@@ -6,7 +6,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type { FlashcardWord } from "@/components/learn-ui/lesson/Flashcard";
 import { PageState } from "@/components/common-ui/PageState";
 import { LessonQuiz } from "@/components/learn-ui/lesson/LessonQuiz";
-import { ReviewOverview } from "@/components/learn-ui/review/ReviewOverview";
+import { ReviewHeader, ReviewOverview } from "@/components/learn-ui/review/ReviewOverview";
 import {
   completeReview,
   getReviews,
@@ -75,10 +75,10 @@ function ReviewPage() {
   }, [begin, overview.data, overview.isPending, start]);
 
   if (overview.isPending) {
-    return <PageState kind="loading" title="Loading your review words" />;
+    return <div className="fidel-review"><ReviewHeader /><PageState kind="loading" title="Loading your review words" /></div>;
   }
   if (overview.isError || !overview.data) {
-    return <PageState kind="error" title="Couldn't load reviews" description={overview.error?.message ?? "No review data was returned."} actionLabel="Try again" onAction={() => void overview.refetch()} />;
+    return <div className="fidel-review"><ReviewHeader /><PageState kind="error" title="Couldn't load reviews" description={overview.error?.message ?? "No review data was returned."} actionLabel="Try again" onAction={() => void overview.refetch()} /></div>;
   }
 
   const active = session;
