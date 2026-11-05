@@ -1,7 +1,7 @@
 
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { ArrowDownRight } from "lucide-react";
+import "./dictionary.css";
 
 import { PageState } from "@/components/common-ui/PageState";
 import { useInfiniteWords, useWordCategories } from "@/hooks/use-words";
@@ -25,6 +25,8 @@ export function DictionaryOverview({
   onCategoryChange,
 }: DictionaryOverviewProps) {
   const [query, setQuery] = useState("");
+  const [audioNotice, setAudioNotice] = useState<string | null>(null);
+  const audioPlayer = useRef<HTMLAudioElement | null>(null);
   const activeCategory = initialCategory ?? "All words";
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const deferredQuery = useDeferredValue(query.trim());
@@ -33,6 +35,7 @@ export function DictionaryOverview({
   const vocabulary = useVocabularyState();
   const updateVocabulary = useUpdateVocabularyState();
   const languageCode = preferences.data?.learning_language ?? "om";
+  useEffect(() => () => { audioPlayer.current?.pause(); }, [languageCode]);
   const categories = useWordCategories(languageCode);
 
   const {
@@ -96,14 +99,14 @@ export function DictionaryOverview({
   }
 
   function playAudio(word: DictionaryWord) {
-    const audioUrl = word.audio?.url;
-
-    if (!word.audio?.available || !audioUrl) return;
-
-    const audio = new Audio(audioUrl);
-
-    void audio.play().catch(() => {
-      // The audio URL may be unavailable or playback may be blocked.
+    const url = word.audio?.url;
+    if (!word.audio?.available || !url) return;
+    audioPlayer.current?.pause();
+    const player = new Audio(url);
+    audioPlayer.current = player;
+    setAudioNotice(null);
+    void player.play().catch(() => {
+      if (audioPlayer.current === player) setAudioNotice("Couldn’t play " + word.text + ". Try listening again.");
     });
   }
 
@@ -117,79 +120,29 @@ export function DictionaryOverview({
     onCategoryChange?.(category);
   }
 
-  if (isPending || preferences.isPending || vocabulary.isPending || categories.isPending) {
-    return <PageState kind="loading" title="Loading your vocabulary" />;
-  }
 
-  if (isError || preferences.isError || vocabulary.isError || categories.isError) {
-    const loadError = error ?? preferences.error ?? vocabulary.error ?? categories.error;
-    return <PageState kind="error" title="Couldn't load your dictionary" description={loadError instanceof Error ? loadError.message : "Something went wrong while loading vocabulary."} actionLabel="Try again" onAction={() => void Promise.all([refetch(), categories.refetch(), vocabulary.refetch()])} />;
-  }
+  const loading = isPending || preferences.isPending || vocabulary.isPending || categories.isPending;
+  const failed = isError || preferences.isError || vocabulary.isError || categories.isError;
+  const loadError = error ?? preferences.error ?? vocabulary.error ?? categories.error;
+  const showFeatured = !loading && !failed && featuredWord && !query && !favoritesOnly && activeCategory === "All words";
 
-  return (
-    <main className="mx-auto w-full max-w-7xl space-y-8 px-4 py-6 sm:px-6 lg:px-8">
-      <DictionaryHeader />
-
-      <DictionaryFilters
-        query={query}
-        onQueryChange={setQuery}
-        activeCategory={activeCategory}
-        onCategoryChange={changeCategory}
-        categories={categories.data?.data ?? []}
-      />
-
-      {updateVocabulary.isError && (
-        <p className="rounded-xl border border-rose-200 bg-rose-50 dark:bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-300" role="alert">
-          {updateVocabulary.error.message}
-        </p>
-      )}
-
-      {featuredWord &&
-        !query &&
-        !favoritesOnly &&
-        activeCategory === "All words" && (
-          <FeaturedWord
-            word={featuredWord}
-            isFavorite={favorites.includes(featuredWord.id)}
-            onToggleFavorite={toggleFavorite}
-            onPlayAudio={playAudio}
-          />
-        )}
-
-      <VocabularyList
-        words={filteredWords}
-        favorites={favorites}
-        favoritesOnly={favoritesOnly}
-        states={states}
-        onToggleFavoritesOnly={() =>
-          setFavoritesOnly((current) => !current)
-        }
-        onToggleFavorite={toggleFavorite}
-        onSetLearningState={setLearningState}
-        onPlayAudio={playAudio}
-        onPracticeWord={(word) => void practiceWord(word)}
-        onClearFilters={clearFilters}
-        totalItems={favoritesOnly ? filteredWords.length : totalItems}
-        hasNextPage={Boolean(hasNextPage)}
-        isLoadingMore={isFetchingNextPage}
+  return <div className="fidel-dictionary">
+    <DictionaryHeader languageCode={languageCode} />
+    <DictionaryFilters query={query} onQueryChange={setQuery} activeCategory={activeCategory} onCategoryChange={changeCategory} categories={categories.data?.data ?? []} />
+    {updateVocabulary.isError && <p className="dict-error" role="alert">{updateVocabulary.error.message}</p>}
+    {audioNotice && <p className="dict-error" role="alert">{audioNotice}</p>}
+    <div className={"dict-layout" + (showFeatured ? " has-feature" : "")}>
+      {loading ? <PageState kind="loading" title="Loading your vocabulary" /> : failed ? <PageState kind="error" title="Couldn't load your dictionary" description={loadError instanceof Error ? loadError.message : "Something went wrong while loading vocabulary."} actionLabel="Try again" onAction={() => void Promise.all([refetch(), preferences.refetch(), categories.refetch(), vocabulary.refetch()])} /> : <VocabularyList
+        words={filteredWords} favorites={favorites} favoritesOnly={favoritesOnly} states={states}
+        onToggleFavoritesOnly={() => setFavoritesOnly((current) => !current)}
+        onToggleFavorite={toggleFavorite} onSetLearningState={setLearningState} onPlayAudio={playAudio}
+        onPracticeWord={(word) => void practiceWord(word)} onClearFilters={clearFilters}
+        totalItems={totalItems} hasNextPage={Boolean(hasNextPage)} isLoadingMore={isFetchingNextPage}
         onLoadMore={() => void fetchNextPage()}
         updatingWordId={updateVocabulary.isPending ? updateVocabulary.variables?.wordId : undefined}
-      />
-
-      <footer className="flex items-start gap-3 rounded-2xl border border-[var(--sea-ink)]/8 bg-[var(--panel)]/30 p-4">
-        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--sand)]/40 text-[var(--sea-ink)]">
-          <ArrowDownRight size={17} />
-        </div>
-
-        <div>
-          <p className="text-sm font-medium text-[var(--sea-ink)]">
-            Your vocabulary
-          </p>
-          <p className="mt-1 text-xs leading-5 text-[var(--sea-ink)]/55">
-            Favorites and learning status are saved to your account.
-          </p>
-        </div>
-      </footer>
-    </main>
-  );
+      />}
+      {showFeatured && <FeaturedWord word={featuredWord} isFavorite={favorites.includes(featuredWord.id)} onToggleFavorite={toggleFavorite} onPlayAudio={playAudio} isUpdating={updateVocabulary.isPending} />}
+    </div>
+    <p className="dict-save-note">Favorites and word progress are saved to your account.</p>
+  </div>;
 }
