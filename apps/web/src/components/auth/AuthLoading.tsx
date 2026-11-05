@@ -1,18 +1,7 @@
-import fidelLogo from "@/assets/fidallogo.png";
 import { LoaderCircle } from "lucide-react";
+import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import "@/components/common-ui/app-ui.css";
 
 export function AuthLoading() {
-  return (
-    <div
-      role="status"
-      aria-live="polite"
-      className="flex min-h-svh items-center justify-center bg-[var(--bg-base)] px-6"
-    >
-      <div className="relative flex size-20 items-center justify-center rounded-3xl bg-[var(--panel)]/55 shadow-sm">
-        <img src={fidelLogo} alt="" className="h-10 w-10 object-contain" />
-        <LoaderCircle className="absolute size-20 animate-spin text-[#E9A23B]" strokeWidth={1.5} />
-        <span className="sr-only">Checking your session</span>
-      </div>
-    </div>
-  );
+  return <div className="auth-wait" role="status" aria-live="polite"><FidelTeacherMark className="auth-wait-teacher" /><LoaderCircle size={24} className="app-spinner" aria-hidden="true" /><span className="sr-only">Checking your session</span></div>;
 }

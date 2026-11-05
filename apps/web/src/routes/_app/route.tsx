@@ -36,11 +36,11 @@ function AppLayout() {
   }
 
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={true} className="fidel-app">
       <AppSidebar />
 
       <SidebarInset className="min-h-svh min-w-0">
-        <header className="sticky top-0 z-40 flex h-[calc(4rem+env(safe-area-inset-top,0px))] items-center gap-3 border-b border-[var(--line)] bg-[var(--panel)]/60 px-3 pt-[env(safe-area-inset-top,0px)] backdrop-blur-2xl sm:px-5 md:h-16 md:pt-0">
+        <header className="app-topbar">
           <SidebarTrigger className="hidden shrink-0 rounded-xl text-[var(--sea-ink)]/65 hover:bg-[var(--sand)]/30 md:inline-flex" />
 
           <div className="min-w-0 flex-1">

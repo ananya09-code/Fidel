@@ -1,178 +1,48 @@
-import { useSidebar } from "@/components/ui/sidebar";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useClerk, useUser } from "@clerk/tanstack-react-start";
-
-import {
-  Bell,
-  ChevronDown,
-  Globe2,
-  LogOut,
-  Settings,
-  UserRound,
-} from "lucide-react";
-
+import { ChevronDown, LogOut, Settings, UserRound } from "lucide-react";
+import { useSidebar } from "@/components/ui/sidebar";
+import { usePreferences } from "@/hooks/use-preferences";
 import { FidelTeacherMark } from "./FidelTeacherMark";
-
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import "./app-ui.css";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+type HeaderViewProps = {
+  displayName: string;
+  email?: string;
+  imageUrl?: string;
+  language?: string;
+  area: string;
+  sidebarOpen?: boolean;
+  onSignOut: () => void;
+};
+
+export function HeaderView({ displayName, email, imageUrl, language, area, sidebarOpen, onSignOut }: HeaderViewProps) {
+  const initials = displayName.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("") || "F";
+  return <div className="app-header-content">
+    <Link to="/Home" className={"app-wordmark" + (sidebarOpen ? " is-sidebar-open" : "")} aria-label="Fidel home"><FidelTeacherMark className="app-header-mark" /><span>Fidel<span className="app-wordmark-dot">.</span></span></Link>
+    <span className="app-context">{area}</span>
+    <div className="app-header-actions">
+      {language && <Link to="/settings" className="app-header-language" aria-label={"Learning " + language + ". Change in Settings."}>{language}</Link>}
+      <DropdownMenu><DropdownMenuTrigger asChild><button type="button" className="app-account-trigger" aria-label="Open profile menu"><Avatar className="app-avatar"><AvatarImage src={imageUrl} alt="" /><AvatarFallback>{initials}</AvatarFallback></Avatar><span>{displayName}</span><ChevronDown size={15} aria-hidden="true" /></button></DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="fidel-account-menu">
+          <DropdownMenuLabel><p>{displayName}</p>{email && <span>{email}</span>}</DropdownMenuLabel><DropdownMenuSeparator />
+          <DropdownMenuItem asChild><Link to="/profile"><UserRound size={16} />My profile</Link></DropdownMenuItem>
+          <DropdownMenuItem asChild><Link to="/settings"><Settings size={16} />Settings</Link></DropdownMenuItem>
+          <DropdownMenuSeparator /><DropdownMenuItem onSelect={onSignOut}><LogOut size={16} />Sign out</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  </div>;
+}
 
 export function Header() {
   const { state } = useSidebar();
   const { user } = useUser();
   const { signOut } = useClerk();
-
-  const displayName =
-    user?.fullName || user?.username || "Fidel learner";
-  const email = user?.primaryEmailAddress?.emailAddress ?? "";
-  const initials =
-    displayName
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]?.toUpperCase())
-      .join("") || "F";
-
-  return (
-    <div className="flex w-full min-w-0 items-center justify-between gap-3">
-        <Link
-          to="/"
-          className={`flex min-w-0 shrink-0 items-center gap-2.5 ${state === "expanded" ? "md:hidden" : ""}`}
-          aria-label="Fidel home"
-        >
-          <FidelTeacherMark className="h-10 w-9 shrink-0 text-[var(--sea-ink)]" />
-
-          <span className="text-lg font-bold tracking-tight text-[var(--sea-ink)]">
-            Fidel
-          </span>
-        </Link>
-
-      <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
-        {/* Language selector */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="h-10 gap-2 rounded-xl border border-[var(--line)] bg-[var(--panel)]/50 px-3 text-[var(--sea-ink)]/85 shadow-sm backdrop-blur-xl transition hover:bg-[var(--panel)]/80"
-            >
-              <Globe2 className="h-4 w-4 text-[var(--sea-ink)]" />
-
-              <span className="hidden text-sm font-medium sm:inline">
-                Afaan Oromoo
-              </span>
-
-              <span className="text-sm font-medium sm:hidden">OM</span>
-
-              <ChevronDown className="hidden h-3.5 w-3.5 sm:block" />
-            </Button>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent
-            align="end"
-            className="w-52 rounded-2xl border-[var(--line)] bg-[var(--panel)]/95 p-2 shadow-xl backdrop-blur-xl"
-          >
-            <DropdownMenuLabel>Learning language</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem className="rounded-lg">
-              <span className="mr-2">🇪🇹</span>
-              Afaan Oromoo
-              <span className="ml-auto text-xs text-emerald-600 dark:text-emerald-300">Active</span>
-            </DropdownMenuItem>
-
-            <DropdownMenuItem disabled className="rounded-lg">
-              <span className="mr-2">🇪🇹</span>
-              Amharic
-              <span className="ml-auto text-xs text-[var(--sea-ink)]/55">Soon</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        {/* Notifications */}
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Notifications"
-          className="relative h-10 w-10 rounded-xl border border-[var(--line)] bg-[var(--panel)]/50 text-[var(--sea-ink)]/75 shadow-sm backdrop-blur-xl transition hover:bg-[var(--panel)]/80 hover:text-[var(--sea-ink)]"
-        >
-          <Bell className="h-[18px] w-[18px]" />
-          <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-[var(--hero-b)] ring-2 ring-white" />
-        </Button>
-
-        {/* Profile menu */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button
-              type="button"
-              aria-label="Open profile menu"
-              className="flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--panel)]/50 p-1.5 pr-2 shadow-sm backdrop-blur-xl transition hover:bg-[var(--panel)]/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--hero-b)]"
-            >
-              <span className="hidden max-w-36 truncate text-sm font-medium text-[var(--sea-ink)]/85 lg:block">
-                {displayName}
-              </span>
-
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user?.imageUrl} alt="" />
-                <AvatarFallback className="rounded-lg bg-[var(--action)] text-sm font-semibold text-white">
-                  {initials}
-                </AvatarFallback>
-              </Avatar>
-
-              <ChevronDown className="hidden h-4 w-4 text-[var(--sea-ink)]/65 sm:block" />
-            </button>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent
-            align="end"
-            className="w-56 rounded-2xl border-[var(--line)] bg-[var(--panel)]/95 p-2 shadow-xl backdrop-blur-xl"
-          >
-            <DropdownMenuLabel className="px-3 py-2">
-              <p className="truncate font-semibold text-[var(--sea-ink)]">
-                {displayName}
-              </p>
-              <p className="mt-1 truncate text-xs font-normal text-[var(--sea-ink)]/65">
-                {email || "Your Fidel learning journey"}
-              </p>
-            </DropdownMenuLabel>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem asChild className="rounded-lg">
-              <Link to="/profile">
-                <UserRound className="mr-2 h-4 w-4" />
-                My profile
-              </Link>
-            </DropdownMenuItem>
-
-            <DropdownMenuItem asChild className="rounded-lg">
-              <Link to="/settings">
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-              </Link>
-            </DropdownMenuItem>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem
-              className="rounded-lg text-rose-600 dark:text-rose-300 focus:text-rose-700"
-              onSelect={() => {
-                void signOut({ redirectUrl: "/" });
-              }}
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              Sign out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </div>
-  );
+  const preferences = usePreferences();
+  const pathname = useRouterState({ select: (router) => router.location.pathname }).toLowerCase();
+  const area = pathname.startsWith("/learn/") ? "Lesson" : pathname.startsWith("/learn") ? "Learn" : pathname.startsWith("/dictionary") ? "Dictionary" : pathname.startsWith("/review") ? "Review" : pathname.startsWith("/settings") ? "Settings" : pathname.startsWith("/profile") ? "Profile" : "Home";
+  return <HeaderView displayName={user?.fullName || user?.username || "Fidel learner"} email={user?.primaryEmailAddress?.emailAddress} imageUrl={user?.imageUrl} language={preferences.data ? preferences.data.learning_language === "am" ? "አማርኛ" : "Afaan Oromoo" : undefined} area={area} sidebarOpen={state === "expanded"} onSignOut={() => { void signOut({ redirectUrl: "/" }); }} />;
 }
