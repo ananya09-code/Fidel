@@ -8,6 +8,7 @@ import "./lesson.css";
 
 type LessonQuizProps = {
   words: FlashcardWord[];
+  choiceWords?: FlashcardWord[];
   category?: string;
   initialQuestionIndex?: number;
   initialAnswers?: Record<string, boolean>;
@@ -48,6 +49,7 @@ function shuffle<T>(items: T[], seed: string): T[] {
 
 export function LessonQuiz({
   words,
+  choiceWords,
   category = "Practice",
   initialQuestionIndex = 0,
   initialAnswers = {},
@@ -65,7 +67,7 @@ export function LessonQuiz({
 
     return usableWords.map((word) => {
       const distractors = shuffle(
-        usableWords.filter((candidate) => candidate.id !== word.id), word.id,
+        (choiceWords?.length ? choiceWords : usableWords).filter((candidate) => candidate.id !== word.id && candidate.meaning.trim() && candidate.meaning !== word.meaning), word.id,
       ).slice(0, 3);
 
       return {
@@ -73,7 +75,7 @@ export function LessonQuiz({
         options: shuffle([word, ...distractors], word.id + "-options"),
       };
     });
-  }, [words]);
+  }, [words, choiceWords]);
 
   const [currentIndex, setCurrentIndex] = useState(() =>
     Math.min(initialQuestionIndex, Math.max(questions.length - 1, 0)),

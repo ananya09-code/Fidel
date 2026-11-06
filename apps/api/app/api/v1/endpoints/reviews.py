@@ -2,7 +2,8 @@
 
 import json
 from datetime import datetime, timezone
-from typing import Annotated, Generator
+from random import SystemRandom
+from typing import Annotated, Generator, Literal
 from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -19,7 +20,9 @@ from app.schemas.reviews import (
     ReviewOverview,
     ReviewSession,
     ReviewWord,
+    SpacedReviewOverview,
 )
+from app.services.spaced_repetition import INTERVAL_DAYS, schedule
 
 router = APIRouter(prefix="/reviews", tags=["reviews"])
 
@@ -105,6 +108,15 @@ def _session(db: Session, row, user_id: UUID) -> ReviewSession:
         {"session_id": row["id"], "user_id": user_id},
     ).mappings().all()
     ids = _word_ids(row["word_ids"])
+    choice_ids = db.execute(text("""
+        SELECT uw.word_id FROM user_words uw JOIN words w ON w.id = uw.word_id
+        WHERE uw.user_id = :user_id AND w.status = 'approved'
+          AND uw.learning_state IN ('learned', 'needs_review')
+          AND w.language_code = (SELECT language_code FROM words WHERE id = :first_word)
+        ORDER BY uw.word_id LIMIT 40
+    """), {"user_id": user_id, "first_word": ids[0]}).scalars().all() if ids else []
+    words = _load_words(db, [UUID(value) for value in dict.fromkeys(str(item) for item in [*ids, *choice_ids])], user_id)
+    by_id = {str(word.id): word for word in words}
     return ReviewSession(
         id=row["id"],
         status=row["status"],
@@ -112,7 +124,8 @@ def _session(db: Session, row, user_id: UUID) -> ReviewSession:
         correct_count=row["correct_count"],
         started_at=row["started_at"],
         completed_at=row["completed_at"],
-        words=_load_words(db, ids, user_id),
+        words=[by_id[str(word_id)] for word_id in ids if str(word_id) in by_id],
+        choice_words=words,
         answers=[ReviewAnswer(word_id=item["word_id"], is_correct=bool(item["is_correct"])) for item in answers],
     )
 
@@ -131,14 +144,17 @@ def _active_row(db: Session, user_id: UUID):
     ).mappings().first()
 
 
-def _owned_row(db: Session, session_id: UUID, user_id: UUID):
+def _owned_row(db: Session, session_id: UUID, user_id: UUID, *, lock: bool = False):
+    # Serialize answer/complete requests for the same session on PostgreSQL.
+    # SQLite's isolated test database does not support FOR UPDATE.
+    lock_clause = " FOR UPDATE" if lock and db.get_bind().dialect.name == "postgresql" else ""
     row = db.execute(
         text(
             """
             SELECT id, word_ids, status, total_count, correct_count,
                    started_at, completed_at, updated_at
             FROM review_sessions WHERE id = :id AND user_id = :user_id
-            """
+            """ + lock_clause
         ),
         {"id": session_id, "user_id": user_id},
     ).mappings().first()
@@ -184,9 +200,30 @@ def get_review_overview(
     )
 
 
+@router.get("/spaced", response_model=SpacedReviewOverview)
+def get_spaced_reviews(
+    current_user: Annotated[ClerkUser, Depends(get_current_user)],
+    language_code: Literal["om", "am"] = "om",
+    db: Session = Depends(get_db),
+) -> SpacedReviewOverview:
+    user_id = _user_id(db, current_user.user_id)
+    now = datetime.now(timezone.utc)
+    planned = schedule(db, user_id, language_code) if user_id else []
+    due = [item for item in planned if item[1] <= now]
+    active = _active_row(db, user_id) if user_id else None
+    return SpacedReviewOverview(
+        due_count=len(due), scheduled_count=len(planned),
+        next_review_at=min((item[1] for item in planned if item[1] > now), default=None),
+        active_session=_session(db, active, user_id) if active else None,
+        interval_days=list(INTERVAL_DAYS),
+    )
+
+
 @router.post("/start", response_model=ReviewSession)
 def start_review(
     current_user: Annotated[ClerkUser, Depends(get_current_user)],
+    mode: Literal["manual", "spaced"] = "manual",
+    language_code: Literal["om", "am"] = "om",
     db: Session = Depends(get_db),
 ) -> ReviewSession:
     user_id = _user_id(db, current_user.user_id)
@@ -195,18 +232,26 @@ def start_review(
     active = _active_row(db, user_id)
     if active:
         return _session(db, active, user_id)
-    ids = list(db.execute(
-        text(
-            """
-            SELECT word_id FROM user_words
-            WHERE user_id = :user_id AND learning_state = 'needs_review'
-            ORDER BY last_seen_at ASC LIMIT 20
-            """
-        ),
-        {"user_id": user_id},
-    ).scalars().all())
+    if mode == "spaced":
+        now = datetime.now(timezone.utc)
+        planned = schedule(db, user_id, language_code)
+        if len(planned) < 2:
+            raise HTTPException(status_code=409, detail="Learn at least two words before starting a memory check.")
+        ids = [word_id for word_id, due in planned if due <= now]
+        ids = SystemRandom().sample(ids, min(10, len(ids)))
+    else:
+        ids = list(db.execute(
+            text(
+                """
+                SELECT word_id FROM user_words
+                WHERE user_id = :user_id AND learning_state = 'needs_review'
+                ORDER BY last_seen_at ASC LIMIT 20
+                """
+            ),
+            {"user_id": user_id},
+        ).scalars().all())
     if not ids:
-        raise HTTPException(status_code=409, detail="No words need review.")
+        raise HTTPException(status_code=409, detail="No words are due yet." if mode == "spaced" else "No words need review.")
     now = datetime.now(timezone.utc)
     session_id = uuid4()
     statement = text(
@@ -233,16 +278,20 @@ def save_review_answer(
     user_id = _user_id(db, current_user.user_id)
     if user_id is None:
         raise HTTPException(status_code=404, detail="Review session not found.")
-    row = _owned_row(db, session_id, user_id)
+    row = _owned_row(db, session_id, user_id, lock=True)
     if row["status"] != "in_progress":
         raise HTTPException(status_code=409, detail="Review session is completed.")
     ids = _word_ids(row["word_ids"])
-    if payload.word_id not in ids or payload.selected_word_id not in ids:
+    choices = {word.id for word in _session(db, row, user_id).choice_words}
+    if payload.word_id not in ids or payload.selected_word_id not in choices:
         raise HTTPException(status_code=422, detail="Answer word is not in this review session.")
     previous = db.execute(
         text("SELECT is_correct FROM review_answers WHERE session_id = :id AND user_id = :user_id AND word_id = :word_id"),
         {"id": session_id, "user_id": user_id, "word_id": payload.word_id},
     ).scalar_one_or_none()
+    if previous is not None:
+        # A network retry must not change the first answer, score or due date.
+        return _session(db, row, user_id)
     correct = payload.word_id == payload.selected_word_id
     now = datetime.now(timezone.utc)
     db.execute(
@@ -250,26 +299,22 @@ def save_review_answer(
             """
             INSERT INTO review_answers (session_id, user_id, word_id, selected_word_id, is_correct, answered_at)
             VALUES (:id, :user_id, :word_id, :selected, :correct, :now)
-            ON CONFLICT (session_id, word_id) DO UPDATE SET
-              selected_word_id = excluded.selected_word_id,
-              is_correct = excluded.is_correct, answered_at = excluded.answered_at
+            ON CONFLICT (session_id, word_id) DO NOTHING
             """
         ),
         {"id": session_id, "user_id": user_id, "word_id": payload.word_id, "selected": payload.selected_word_id, "correct": correct, "now": now},
     )
-    seen_increment = 1 if previous is None else 0
-    correct_delta = int(correct) - (int(previous) if previous is not None else 0)
     db.execute(
         text(
             """
             UPDATE user_words SET
-              times_seen = times_seen + :seen_increment,
+              times_seen = times_seen + 1,
               times_correct = times_correct + :correct_delta,
               learning_state = :state, last_seen_at = :now
             WHERE user_id = :user_id AND word_id = :word_id
             """
         ),
-        {"seen_increment": seen_increment, "correct_delta": correct_delta, "state": "learned" if correct else "needs_review", "now": now, "user_id": user_id, "word_id": payload.word_id},
+        {"correct_delta": int(correct), "state": "learned" if correct else "needs_review", "now": now, "user_id": user_id, "word_id": payload.word_id},
     )
     correct_count = db.execute(
         text("SELECT COUNT(*) FROM review_answers WHERE session_id = :id AND user_id = :user_id AND is_correct = true"),
@@ -292,7 +337,7 @@ def complete_review(
     user_id = _user_id(db, current_user.user_id)
     if user_id is None:
         raise HTTPException(status_code=404, detail="Review session not found.")
-    row = _owned_row(db, session_id, user_id)
+    row = _owned_row(db, session_id, user_id, lock=True)
     if row["status"] == "completed":
         return _session(db, row, user_id)
     answered = db.execute(

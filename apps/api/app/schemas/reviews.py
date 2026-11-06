@@ -29,6 +29,7 @@ class ReviewSession(BaseModel):
     completed_at: datetime | None
     words: list[ReviewWord]
     answers: list[ReviewAnswer] = Field(default_factory=list)
+    choice_words: list[ReviewWord] = Field(default_factory=list)
 
 
 class ReviewAnswerRequest(BaseModel):
@@ -47,4 +48,12 @@ class ReviewOverview(BaseModel):
     queue: list[ReviewWord]
     active_session: ReviewSession | None
     history: list[ReviewHistoryItem]
+
+
+class SpacedReviewOverview(BaseModel):
+    due_count: int
+    scheduled_count: int
+    next_review_at: datetime | None
+    active_session: ReviewSession | None
+    interval_days: list[int]
 

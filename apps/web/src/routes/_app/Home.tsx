@@ -7,6 +7,7 @@ import { WordOfTheDay } from "@/components/homepage-ui/WordOfTheDay";
 import { useDashboard } from "@/hooks/use-dashboard";
 import { usePreferences } from "@/hooks/use-preferences";
 import { useDailyWord } from "@/hooks/use-words";
+import { MemoryCheck } from "@/components/learn-ui/review/MemoryCheck";
 
 export const Route = createFileRoute("/_app/Home")({ component: HomePage });
 
@@ -25,7 +26,7 @@ function HomePage() {
   }
 
   return (
-    <HomeDashboard data={dashboard.data} languageCode={languageCode} topics={<ExploreTopics />} dailyWord={
+    <HomeDashboard data={dashboard.data} languageCode={languageCode} memoryCheck={<MemoryCheck />} topics={<ExploreTopics />} dailyWord={
       dailyWord.isPending ? (
         <PageState kind="loading" title="Loading the word of the day" compact />
       ) : dailyWord.isError ? (

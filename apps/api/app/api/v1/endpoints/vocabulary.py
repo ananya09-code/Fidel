@@ -122,7 +122,9 @@ def update_vocabulary_state(
                 learning_state = COALESCE(:learning_state, user_words.learning_state),
                 text = COALESCE(user_words.text, excluded.text),
                 meaning = COALESCE(user_words.meaning, excluded.meaning),
-                last_seen_at = :now
+                last_seen_at = CASE WHEN :learning_state IS NOT NULL
+                  AND :learning_state <> user_words.learning_state
+                  THEN :now ELSE user_words.last_seen_at END
             """
         ),
         {

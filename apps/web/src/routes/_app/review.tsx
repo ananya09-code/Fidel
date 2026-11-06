@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@clerk/tanstack-react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import type { FlashcardWord } from "@/components/learn-ui/lesson/Flashcard";
 import { PageState } from "@/components/common-ui/PageState";
 import { LessonQuiz } from "@/components/learn-ui/lesson/LessonQuiz";
 import { ReviewHeader, ReviewOverview } from "@/components/learn-ui/review/ReviewOverview";
+import { MemoryCheck } from "@/components/learn-ui/review/MemoryCheck";
+import { usePreferences } from "@/hooks/use-preferences";
 import {
   completeReview,
   getReviews,
@@ -16,8 +18,9 @@ import {
 } from "@/lib/api/reviews";
 
 export const Route = createFileRoute("/_app/review")({
-  validateSearch: (search: Record<string, unknown>) => ({
+  validateSearch: (search: Record<string, unknown>): { start: boolean; mode?: "spaced" } => ({
     start: search.start === true || search.start === "true",
+    mode: search.mode === "spaced" ? "spaced" : undefined,
   }),
   component: ReviewPage,
 });
@@ -25,7 +28,9 @@ export const Route = createFileRoute("/_app/review")({
 function ReviewPage() {
   const { getToken, userId } = useAuth();
   const queryClient = useQueryClient();
-  const { start } = Route.useSearch();
+  const { start, mode } = Route.useSearch();
+  const preferences = usePreferences();
+  const navigate = useNavigate();
   const [session, setSession] = useState<ReviewSession | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
   const [isStarting, setIsStarting] = useState(false);
@@ -46,33 +51,32 @@ function ReviewPage() {
     return value;
   }, [getToken]);
 
-  const begin = useCallback(async () => {
+  const begin = useCallback(async (selectedMode: "manual" | "spaced" = "manual") => {
     setActionError(null);
-    if (overview.data?.active_session) {
-      setSession(overview.data.active_session);
-      return;
-    }
     setIsStarting(true);
     try {
-      setSession(await startReview(await token()));
+      setSession(await startReview(await token(), selectedMode, preferences.data?.learning_language ?? "om"));
+      void queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
     } catch (error) {
       setActionError(error instanceof Error ? error.message : "Unable to start review.");
     } finally {
       setIsStarting(false);
     }
-  }, [overview.data, token]);
+  }, [token, preferences.data, queryClient, userId]);
 
   useEffect(() => {
+    if (!start) autoStartAttempted.current = false;
     if (
       start &&
+      preferences.isSuccess &&
       !autoStartAttempted.current &&
       !overview.isPending &&
       overview.data
     ) {
       autoStartAttempted.current = true;
-      void begin();
+      void begin(mode ?? "manual");
     }
-  }, [begin, overview.data, overview.isPending, start]);
+  }, [begin, overview.data, overview.isPending, start, preferences.isSuccess, mode]);
 
   if (overview.isPending) {
     return <div className="fidel-review"><ReviewHeader /><PageState kind="loading" title="Loading your review words" /></div>;
@@ -83,7 +87,7 @@ function ReviewPage() {
 
   const active = session;
   if (!active) {
-    return <ReviewOverview data={overview.data} onStart={() => void begin()} isStarting={isStarting} error={actionError} />;
+    return <ReviewOverview data={overview.data} memoryCheck={<MemoryCheck />} onStart={() => void begin()} isStarting={isStarting} error={actionError} />;
   }
 
   const words: FlashcardWord[] = active.words.map((word) => ({
@@ -97,20 +101,24 @@ function ReviewPage() {
   return (
     <LessonQuiz
       words={words}
-      category="Vocabulary review"
+      choiceWords={active.choice_words.map((word) => ({ id: word.id, word: word.text, meaning: word.meaning, amharic: word.amharic, audioUrl: word.audio_url }))}
+      category={mode === "spaced" ? "Memory check" : "Vocabulary review"}
       initialQuestionIndex={firstUnanswered}
       initialAnswers={answers}
-      onBack={() => setSession(null)}
+      onBack={() => { setSession(null); void overview.refetch(); void navigate({ to: "/review", search: { start: false } }); }}
       onAnswer={async ({ wordId, selectedWordId }) => {
         const saved = await saveReviewAnswer(await token(), active.id, wordId, selectedWordId);
         setSession(saved);
         void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
+        void queryClient.invalidateQueries({ queryKey: ["auth", "vocabulary-state", userId] });
       }}
       onFinish={async () => {
         const completed = await completeReview(await token(), active.id);
         setSession(completed);
         void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
         await overview.refetch();
+        void queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
+        void queryClient.invalidateQueries({ queryKey: ["auth", "vocabulary-state", userId] });
       }}
     />
   );
