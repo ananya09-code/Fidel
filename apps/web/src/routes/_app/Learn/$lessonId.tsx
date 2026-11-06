@@ -85,6 +85,7 @@ function LessonPage() {
     wordId: string;
     selectedWordId: string;
     questionIndex: number;
+    questionType?: "multiple_choice" | "matching";
   }) {
     if (!attempt) throw new Error("Start the lesson before answering questions.");
     const value = await saveLessonAnswer(await token(), attempt.id, {
@@ -92,6 +93,7 @@ function LessonPage() {
       word_id: answer.wordId,
       selected_word_id: answer.selectedWordId,
       question_index: answer.questionIndex,
+      question_type: answer.questionType ?? "multiple_choice",
     });
     cacheAttempt(value);
     void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });

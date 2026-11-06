@@ -97,8 +97,9 @@ def _serialize(db: Session, row: Mapping[str, Any], user_id: UUID) -> LessonAtte
 
 
 def _attempt_row(
-    db: Session, attempt_id: UUID, user_id: UUID
+    db: Session, attempt_id: UUID, user_id: UUID, *, lock: bool = False
 ) -> Mapping[str, Any] | None:
+    lock_clause = " FOR UPDATE" if lock and db.get_bind().dialect.name == "postgresql" else ""
     return db.execute(
         text(
             """
@@ -108,16 +109,16 @@ def _attempt_row(
                    updated_at
             FROM lesson_attempts
             WHERE id = :attempt_id AND user_id = :user_id
-            """
+            """ + lock_clause
         ),
         {"attempt_id": attempt_id, "user_id": user_id},
     ).mappings().first()
 
 
 def _require_attempt(
-    db: Session, attempt_id: UUID, user_id: UUID
+    db: Session, attempt_id: UUID, user_id: UUID, *, lock: bool = False
 ) -> Mapping[str, Any]:
-    row = _attempt_row(db, attempt_id, user_id)
+    row = _attempt_row(db, attempt_id, user_id, lock=lock)
     if row is None:
         raise HTTPException(status_code=404, detail="Lesson attempt not found.")
     return row
@@ -315,7 +316,7 @@ def save_answer(
     user_id = _user_id(db, current_user.user_id)
     if user_id is None:
         raise HTTPException(status_code=404, detail="Lesson attempt not found.")
-    row = _require_attempt(db, attempt_id, user_id)
+    row = _require_attempt(db, attempt_id, user_id, lock=True)
     if row["status"] != "in_progress":
         raise HTTPException(status_code=409, detail="Lesson is already completed.")
     if payload.question_index >= row["question_count"]:
@@ -326,10 +327,10 @@ def save_answer(
 
     now = datetime.now(timezone.utc)
     word_ids = [str(payload.word_id), str(payload.selected_word_id)]
-    previous_correct = db.execute(
+    previous = db.execute(
         text(
             """
-            SELECT is_correct FROM answer_attempts
+            SELECT is_correct, question_type FROM answer_attempts
             WHERE attempt_id = :attempt_id AND question_id = :question_id
               AND user_id = :user_id
             """
@@ -339,7 +340,10 @@ def save_answer(
             "question_id": payload.question_id,
             "user_id": user_id,
         },
-    ).scalar_one_or_none()
+    ).mappings().first()
+    previous_correct = previous["is_correct"] if previous else None
+    if previous and previous["question_type"] == "matching":
+        return _serialize(db, row, user_id)
     statement = text(
         """
         INSERT INTO answer_attempts (
@@ -445,7 +449,7 @@ def complete_lesson(
     user_id = _user_id(db, current_user.user_id)
     if user_id is None:
         raise HTTPException(status_code=404, detail="Lesson attempt not found.")
-    row = _require_attempt(db, attempt_id, user_id)
+    row = _require_attempt(db, attempt_id, user_id, lock=True)
     if row["status"] == "completed":
         return _serialize(db, row, user_id)
     answered = db.execute(

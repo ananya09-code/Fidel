@@ -117,7 +117,7 @@ export function checkpointLesson(
 }
 export function saveLessonAnswer(
   token: string, attemptId: string,
-  input: { question_id: string; word_id: string; selected_word_id: string; question_index: number },
+  input: { question_id: string; word_id: string; selected_word_id: string; question_index: number; question_type?: "multiple_choice" | "matching" },
 ) {
   return apiFetch(`/api/v1/progress/attempts/${attemptId}/answers`, lessonAttemptSchema, {
     method: "PUT", headers: authHeaders(token), body: JSON.stringify(input),
