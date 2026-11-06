@@ -3,6 +3,7 @@ import { useAuth } from "@clerk/tanstack-react-start";
 import { ArrowDown, ArrowUpRight, Moon, Sun } from "lucide-react";
 import { useAppearanceChoice } from "@/components/theme/ThemeProvider";
 import { PortraitStage } from "./PortraitStage";
+import { WovenGrid } from "./WovenGrid";
 import { FidelWordmark } from "./FidelWordmark";
 import { LanguageAtlas } from "./LanguageAtlas";
 import { LanguageDeck } from "./LanguageDeck";
@@ -22,6 +23,7 @@ export function EditorialLanding() {
 
   return (
     <div className="fidel-editorial">
+      <WovenGrid />
       <a className="editorial-skip" href="#landing-main">Skip to content</a>
       <header className="editorial-header">
         <Link to="/" aria-label="Fidel home" className="editorial-wordmark"><FidelWordmark /></Link>

@@ -45,6 +45,27 @@
 .editorial-dark-icon,.dark .editorial-light-icon { display:none; }
 .dark .editorial-dark-icon { display:block; }
 .editorial-hero { display:grid;grid-template-columns:minmax(0,.49fr) minmax(0,.51fr);max-width:1280px;min-height:calc(100svh - 100px);margin-inline:auto;padding:38px var(--e-gutter) 36px;gap:16px; }
+.editorial-hero { position:relative; }
+.editorial-woven-grid { position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;color:var(--e-ink); }
+.editorial-woven-grid pattern path { fill:none;stroke:currentColor;stroke-width:.7; }
+.editorial-woven-grid .woven-grid-knot { fill:var(--e-orange);stroke:var(--e-orange); }
+.woven-grid-base { opacity:.065; }
+.dark .woven-grid-base { opacity:.06; }
+.woven-grid-flowers { color:var(--e-orange);opacity:.2; }
+.woven-grid-flowers { transition:transform 850ms cubic-bezier(.22,1,.36,1); }
+.woven-grid-thread { opacity:0;transition:opacity 650ms ease; }
+.is-weaving .woven-grid-thread { opacity:.75; }
+.woven-grid-current { fill:var(--e-orange);opacity:.3; }
+.woven-current-across { animation:weave-current-across 16s linear infinite; }
+.woven-current-down { animation:weave-current-down 21s linear -9s infinite; }
+.is-paused .woven-grid-current rect { animation-play-state:paused; }
+.editorial-weave-motion { position:fixed;right:16px;bottom:12px;z-index:5;display:flex;align-items:center;gap:7px;min-height:36px;padding:6px 10px!important;border-radius:20px;background:var(--e-ground)!important;color:var(--e-muted)!important;font-size:12px!important; }
+@keyframes weave-current-across { from {transform:translateX(-200px);} to {transform:translateX(calc(100vw + 200px));} }
+@keyframes weave-current-down { from {transform:translateY(-140px);} to {transform:translateY(calc(100vh + 140px));} }
+.woven-grid-needle { opacity:0;fill:none;stroke:var(--e-orange);stroke-width:.8;transition:opacity 450ms ease; }
+.is-weaving .woven-grid-needle { opacity:.55; }
+.woven-grid-bloom { opacity:0;fill:none;stroke:var(--e-orange);stroke-width:1;transform-box:fill-box;transform-origin:center; }
+@media (prefers-reduced-motion:reduce) { .woven-grid-thread,.woven-grid-needle,.woven-grid-current,.editorial-weave-motion { display:none;transition:none; } .woven-grid-flowers { transition:none; } }
 .editorial-hero-copy { display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-right:16px; }
 .editorial-hero h1 { font-size:clamp(54px,5.6vw,82px);line-height:1.12;margin-bottom:30px; }
 .editorial-hero-copy > p { max-width:37ch;font-size:18px;line-height:1.8; }
