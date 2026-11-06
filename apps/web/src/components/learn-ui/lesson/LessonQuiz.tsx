@@ -6,6 +6,8 @@ import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
 import { topicLabel } from "@/components/homepage-ui/labels";
 import { MatchingRound } from "./MatchingRound";
 import { matchingIndices, shuffleExercise as shuffle } from "./exercise-plan";
+import { TeacherFeedback } from "./TeacherFeedback";
+import { correctRun, type EncouragementEvent } from "./encouragement";
 import "./lesson.css";
 
 type LessonQuizProps = {
@@ -87,6 +89,7 @@ export function LessonQuiz({
   const [finished, setFinished] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [reaction, setReaction] = useState<EncouragementEvent | null>(null);
 
   const currentQuestion = questions[currentIndex];
   const selectedId = currentQuestion
@@ -117,10 +120,14 @@ export function LessonQuiz({
         selectedWordId: wordId,
         questionIndex: currentIndex,
       });
-      setAnswers((previous) => ({
-        ...previous,
-        [currentQuestion.word.id]: wordId,
-      }));
+      const savedAnswers = { ...answers, [currentQuestion.word.id]: wordId };
+      setAnswers(savedAnswers);
+      setReaction({
+        id: currentQuestion.word.id,
+        outcome: wordId === currentQuestion.word.id ? "correct" : "incorrect",
+        turn: Object.keys(savedAnswers).length,
+        streak: correctRun(savedAnswers),
+      });
     } catch (error) {
       setSaveError(error instanceof Error ? error.message : "Unable to save your answer.");
     } finally {
@@ -159,6 +166,7 @@ export function LessonQuiz({
       return;
     }
 
+    setReaction(null);
     setCurrentIndex(nextIndex);
   }
 
@@ -166,6 +174,7 @@ export function LessonQuiz({
     setCurrentIndex(0);
     setAnswers({});
     setFinished(false);
+    setReaction(null);
   }
 
 
@@ -216,6 +225,12 @@ export function LessonQuiz({
     <header className="study-header"><button type="button" className="study-text-button" onClick={onBack}><ArrowLeft size={18} aria-hidden="true" />{variant === "quiz" ? "Save & exit quiz" : "Exit practice"}</button><span>{topicLabel(category)}</span></header>
     <div className="study-progress-label"><h1>{variant === "quiz" ? "Choose the right word" : "Find the matching word"}</h1><span>{variant === "quiz" ? "Question " : ""}{currentIndex + 1} of {questions.length}</span></div>
     <progress className="study-progress" value={variant === "quiz" ? Object.keys(answers).length : currentIndex + 1} max={questions.length} aria-label={variant === "quiz" ? "Quiz progress" : "Practice progress"} />
+    <div className="study-feedback-space" aria-live="polite" aria-atomic="true">
+      {answered && <TeacherFeedback event={reaction ?? { id: currentQuestion.word.id, outcome: correct ? "correct" : "incorrect", turn: 0 }} animate={reaction !== null}>
+        <p>{currentQuestion.word.meaning} — <strong>{currentQuestion.word.word}</strong></p>
+        <p lang="am">{currentQuestion.word.amharic ?? "Amharic translation unavailable"}</p>
+      </TeacherFeedback>}
+    </div>
     <section className="study-question" aria-label="Word to translate">
       <dl className="study-translations"><div><dt>English</dt><dd>{currentQuestion.word.meaning}</dd></div><div><dt>Amharic</dt><dd lang="am">{currentQuestion.word.amharic ?? "Translation unavailable"}</dd></div></dl>
     </section>
@@ -234,12 +249,6 @@ export function LessonQuiz({
     <div className="study-practice-actions">
       <span className="study-save-status" role="status">{isSaving ? <><LoaderCircle size={18} className="study-spinner" aria-hidden="true" /><span className="sr-only">Saving your answer</span></> : variant === "quiz" && answered ? "Answer saved" : null}</span>
       <button type="button" className="study-primary" disabled={!answered || isSaving} onClick={() => void nextQuestion()}>{currentIndex === questions.length - 1 ? variant === "quiz" ? "Finish quiz" : "See my results" : variant === "quiz" ? "Next question" : "Continue"}<ArrowRight size={18} aria-hidden="true" /></button>
-    </div>
-    <div className="study-feedback-space" aria-live="polite" aria-atomic="true">
-      {answered && <div className={"study-feedback " + (correct ? "is-correct" : "is-incorrect")}>
-        {correct ? <Check size={20} aria-hidden="true" /> : <X size={20} aria-hidden="true" />}
-        <div><strong>{correct ? "That’s the one." : "A word for next time."}</strong><p>{currentQuestion.word.meaning} — <strong>{currentQuestion.word.word}</strong></p><p lang="am">{currentQuestion.word.amharic ?? "Amharic translation unavailable"}</p></div>
-      </div>}
     </div>
     {saveError && <p className="study-error" role="alert">{saveError}</p>}
 

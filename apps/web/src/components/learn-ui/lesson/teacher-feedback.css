@@ -1,0 +1,38 @@
+.teacher-feedback { display:grid;grid-template-columns:76px minmax(0,1fr);align-items:center;gap:16px;max-width:640px;width:100%;padding:8px 0;color:var(--study-ink,#193b31); }
+.teacher-feedback-figure { width:76px;height:88px;align-self:center;transform-origin:50% 92%; }
+.teacher-feedback-mascot { display:block;width:100%;height:100%;overflow:visible;--fidel-mark-accent:var(--study-gold,#eda334); }
+.teacher-feedback-bubble { position:relative;min-width:0;background:var(--feedback-bg,var(--study-paper,#fff));border:1px solid var(--feedback-color,var(--study-line,#dce3dc));border-radius:14px;padding:16px 18px;transform-origin:0 65%; }
+.teacher-feedback-bubble::before { content:"";position:absolute;left:-7px;top:calc(50% - 7px);width:12px;height:12px;transform:rotate(45deg);background:var(--feedback-bg,var(--study-paper,#fff));border-left:1px solid var(--feedback-color,var(--study-line,#dce3dc));border-bottom:1px solid var(--feedback-color,var(--study-line,#dce3dc)); }
+.teacher-feedback:is(.reaction-correct,.reaction-streak,.reaction-complete,.reaction-recovered) { --feedback-bg:var(--study-success-bg,#edf5ee);--feedback-color:var(--study-success,#275f43); }
+.teacher-feedback.reaction-encourage { --feedback-bg:var(--study-error-bg,#fbefeb);--feedback-color:var(--study-error,#9b3d32); }
+.teacher-feedback-result { display:flex;align-items:center;gap:6px;color:var(--feedback-color);font-size:12px;font-weight:700;line-height:1.4;margin-bottom:7px; }
+.teacher-feedback-result svg { flex:none; }
+.teacher-feedback:is(.reaction-encourage,.reaction-recovered) .teacher-feedback-title { color:var(--feedback-color); }
+.teacher-feedback-detail strong { color:var(--feedback-color,var(--study-ink)); }
+.teacher-feedback-title { display:block;font-size:16px;font-weight:650;line-height:1.4;letter-spacing:-.02em; }
+.teacher-feedback .teacher-feedback-message { font-size:13px;line-height:1.6;color:var(--study-muted,#53645c);margin:4px 0 0; }
+.teacher-feedback-detail { margin-top:10px;overflow-wrap:anywhere; }
+.teacher-feedback-detail p { margin:3px 0 0;font-size:14px;line-height:1.5; }
+.teacher-feedback-detail [lang=am] { font-size:14px;color:var(--study-muted,#53645c); }
+.reaction-correct .teacher-feedback-title,.reaction-streak .teacher-feedback-title,.reaction-complete .teacher-feedback-title { color:var(--study-success,#275f43); }
+.teacher-feedback.is-animated .teacher-feedback-bubble { animation:teacher-bubble-arrive 330ms cubic-bezier(.22,1,.36,1) both; }
+.teacher-feedback.reaction-encourage.is-animated .teacher-feedback-bubble { animation:teacher-gentle-shake 420ms ease-out both; }
+.teacher-feedback:is(.reaction-correct,.reaction-streak,.reaction-complete,.reaction-recovered).is-animated .teacher-feedback-result svg { animation:teacher-check-pop 480ms cubic-bezier(.22,1,.36,1) both; }
+.teacher-feedback:is(.reaction-correct,.reaction-recovered,.reaction-complete).is-animated .teacher-feedback-figure { animation:teacher-happy 650ms cubic-bezier(.22,1,.36,1) both; }
+.teacher-feedback.reaction-streak.is-animated .teacher-feedback-figure { animation:teacher-celebrate 850ms cubic-bezier(.22,1,.36,1) both; }
+.teacher-feedback .fidel-teacher-head { transform-box:view-box;transform-origin:65% 43%; }
+.teacher-feedback .fidel-teacher-whisk { transform-box:view-box;transform-origin:19% 58%; }
+.teacher-feedback .fidel-teacher-book { transform-box:view-box;transform-origin:71% 71%; }
+.teacher-feedback.reaction-encourage.is-animated .fidel-teacher-head { animation:teacher-nod 680ms ease-in-out both; }
+.teacher-feedback:is(.reaction-correct,.reaction-streak,.reaction-complete).is-animated .fidel-teacher-whisk { animation:teacher-whisk-wave 720ms ease-in-out both; }
+.teacher-feedback:is(.reaction-correct,.reaction-recovered,.reaction-streak,.reaction-complete).is-animated .fidel-teacher-book { animation:teacher-book-open 620ms ease-in-out both; }
+@keyframes teacher-bubble-arrive { from { opacity:0;transform:translateX(-6px) scale(.98); } to { opacity:1;transform:none; } }
+@keyframes teacher-gentle-shake { 0%,100% {transform:translateX(0);} 20% {transform:translateX(-4px);} 45% {transform:translateX(3px);} 70% {transform:translateX(-2px);} }
+@keyframes teacher-check-pop { 0% {opacity:0;transform:scale(.5) rotate(-15deg);} 65% {opacity:1;transform:scale(1.18) rotate(3deg);} 100% {opacity:1;transform:none;} }
+@keyframes teacher-happy { 0%,100% {transform:none;} 35% {transform:translateY(-7px) rotate(-4deg);} 65% {transform:translateY(-2px) rotate(2deg);} }
+@keyframes teacher-celebrate { 0%,100% {transform:none;} 28% {transform:translateY(-10px) rotate(-7deg);} 52% {transform:translateY(-3px) rotate(5deg);} 74% {transform:translateY(-5px) rotate(-2deg);} }
+@keyframes teacher-nod { 0%,100% {transform:none;} 35% {transform:rotate(5deg) translateY(2px);} 70% {transform:rotate(-2deg);} }
+@keyframes teacher-whisk-wave { 0%,100% {transform:none;} 30% {transform:rotate(-9deg);} 65% {transform:rotate(6deg);} }
+@keyframes teacher-book-open { 0%,100% {transform:none;} 40% {transform:scaleX(1.06) rotate(-2deg);} 70% {transform:scaleX(.98) rotate(1deg);} }
+@media(max-width:640px) { .teacher-feedback {grid-template-columns:58px minmax(0,1fr);gap:12px;} .teacher-feedback-figure {width:58px;height:70px;} .teacher-feedback-bubble {padding:13px 14px;} .teacher-feedback-title {font-size:15px;} .teacher-feedback .teacher-feedback-message {font-size:13px;} }
+@media(prefers-reduced-motion:reduce) { .teacher-feedback *, .teacher-feedback *::before {animation:none!important;transition:none!important;transform:none!important;} .teacher-feedback-bubble::before {transform:rotate(45deg)!important;} }
