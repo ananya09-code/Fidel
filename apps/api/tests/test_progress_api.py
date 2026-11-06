@@ -150,6 +150,39 @@ def seed_lesson_words(session_factory, word_ids):
         session.commit()
 
 
+def test_matching_pairs_persist_first_attempt_and_resume_out_of_order(auth_client, mock_clerk, session_factory):
+    words = [uuid4() for _ in range(5)]
+    seed_lesson_words(session_factory, words)
+    attempt = start(auth_client, count=5).json()
+    url = f"{BASE}/attempts/{attempt['id']}/answers"
+    payload = {"question_id": str(words[4]), "word_id": str(words[4]), "selected_word_id": str(words[3]), "question_index": 4, "question_type": "matching"}
+    wrong = auth_client.put(url, headers=AUTH_HEADERS, json=payload)
+    assert wrong.status_code == 200
+    assert wrong.json()["correct_count"] == 0
+    repaired = auth_client.put(url, headers=AUTH_HEADERS, json={**payload, "selected_word_id": str(words[4])})
+    assert repaired.status_code == 200
+    assert repaired.json()["correct_count"] == 0
+    assert repaired.json()["answers"] == [{"question_id": str(words[4]), "is_correct": False}]
+    resumed = auth_client.get(f"{BASE}/lessons/om-beginner-greetings", headers=AUTH_HEADERS).json()
+    assert resumed["id"] == attempt["id"]
+    assert resumed["question_index"] == 5
+    assert len(resumed["answers"]) == 1  # Client must find holes, not trust the highest index.
+    assert auth_client.post(f"{BASE}/attempts/{attempt['id']}/complete", headers=AUTH_HEADERS).status_code == 409
+    for index, word in enumerate(words[:4]):
+        response = auth_client.put(url, headers=AUTH_HEADERS, json={"question_id": str(word), "word_id": str(word), "selected_word_id": str(word), "question_index": index, "question_type": "multiple_choice" if index < 2 else "matching"})
+        assert response.status_code == 200
+    completed = auth_client.post(f"{BASE}/attempts/{attempt['id']}/complete", headers=AUTH_HEADERS)
+    assert completed.status_code == 200
+    assert completed.json()["correct_count"] == 4
+    with session_factory() as db:
+        states = db.execute(text("SELECT word_id, learning_state, times_seen FROM user_words")).mappings().all()
+        assert len(states) == 5
+        assert all(row["times_seen"] == 1 for row in states)
+        assert next(row["learning_state"] for row in states if str(row["word_id"]) == str(words[4])) == "needs_review"
+    mock_clerk(user_id="other_matching_user")
+    assert auth_client.put(url, headers=AUTH_HEADERS, json=payload).status_code == 404
+
+
 def finish_session(auth_client, word_ids, *, selected_word_id=None):
     attempt = start(auth_client, count=len(word_ids)).json()
     for index, word_id in enumerate(word_ids):
