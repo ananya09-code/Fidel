@@ -9,6 +9,7 @@ import "./lesson.css";
 type LessonQuizProps = {
   words: FlashcardWord[];
   choiceWords?: FlashcardWord[];
+  variant?: "practice" | "quiz";
   category?: string;
   initialQuestionIndex?: number;
   initialAnswers?: Record<string, boolean>;
@@ -50,6 +51,7 @@ function shuffle<T>(items: T[], seed: string): T[] {
 export function LessonQuiz({
   words,
   choiceWords,
+  variant = "practice",
   category = "Practice",
   initialQuestionIndex = 0,
   initialAnswers = {},
@@ -178,27 +180,27 @@ export function LessonQuiz({
   }
 
   if (finished) {
-    return <div className="fidel-study"><section className="study-milestone">
+    return <div className={"fidel-study" + (variant === "quiz" ? " is-quiz" : "")}><section className="study-milestone">
       <FidelTeacherMark className="study-teacher" />
-      <h1>{score === questions.length ? "Every word remembered." : "A little more familiar."}</h1>
-      <p>{score === questions.length ? "You recalled every word in this practice." : "Keep coming back. Familiarity grows with practice."}</p>
+      <h1>{variant === "quiz" ? "Quiz complete." : score === questions.length ? "Every word remembered." : "A little more familiar."}</h1>
+      <p>{variant === "quiz" ? score === questions.length ? "A perfect score. You remembered every word." : "Your score is saved. Words you missed will return for another quiz." : score === questions.length ? "You recalled every word in this practice." : "Keep coming back. Familiarity grows with practice."}</p>
       <dl className="study-results"><div><dt>Correct</dt><dd>{score}/{questions.length}</dd></div><div><dt>Accuracy</dt><dd>{accuracy}%</dd></div><div><dt>To revisit</dt><dd>{missedWords.length}</dd></div></dl>
       {missedWords.length > 0 && <section className="study-missed"><h2>Words to revisit</h2><ul>{missedWords.map((word) => <li key={word.id}><strong>{word.word}</strong><span>{word.meaning}<span lang="am">{word.amharic ?? "Amharic translation unavailable"}</span></span></li>)}</ul></section>}
       <div className="study-milestone-actions">
         {remainingWordCount > 0 && onContinue && <button type="button" className="study-primary" onClick={onContinue}>Continue lesson ({remainingWordCount} left)<ArrowRight size={18} aria-hidden="true" /></button>}
         {missedWords.length > 0 && onRetryMissed && <button type="button" className="study-secondary" onClick={() => onRetryMissed(missedWords)}><RotateCcw size={16} aria-hidden="true" />Practise missed words</button>}
         {!onAnswer && <button type="button" className="study-secondary" onClick={restartQuiz}>Try again</button>}
-        <button type="button" className="study-secondary" onClick={onBack}>Back to learning</button>
+        <button type="button" className="study-secondary" onClick={onBack}>{variant === "quiz" ? "Back to review" : "Back to learning"}</button>
       </div>
     </section></div>;
   }
 
   if (!currentQuestion) return null;
 
-  return <div className="fidel-study">
-    <header className="study-header"><button type="button" className="study-text-button" onClick={onBack}><ArrowLeft size={18} aria-hidden="true" />Exit practice</button><span>{topicLabel(category)}</span></header>
-    <div className="study-progress-label"><h1>Find the matching word</h1><span>{currentIndex + 1} of {questions.length}</span></div>
-    <progress className="study-progress" value={currentIndex + 1} max={questions.length} aria-label="Practice progress" />
+  return <div className={"fidel-study" + (variant === "quiz" ? " is-quiz" : "")}>
+    <header className="study-header"><button type="button" className="study-text-button" onClick={onBack}><ArrowLeft size={18} aria-hidden="true" />{variant === "quiz" ? "Save & exit quiz" : "Exit practice"}</button><span>{topicLabel(category)}</span></header>
+    <div className="study-progress-label"><h1>{variant === "quiz" ? "Choose the right word" : "Find the matching word"}</h1><span>{variant === "quiz" ? "Question " : ""}{currentIndex + 1} of {questions.length}</span></div>
+    <progress className="study-progress" value={variant === "quiz" ? Object.keys(answers).length : currentIndex + 1} max={questions.length} aria-label={variant === "quiz" ? "Quiz progress" : "Practice progress"} />
     <section className="study-question" aria-label="Word to translate">
       <dl className="study-translations"><div><dt>English</dt><dd>{currentQuestion.word.meaning}</dd></div><div><dt>Amharic</dt><dd lang="am">{currentQuestion.word.amharic ?? "Translation unavailable"}</dd></div></dl>
     </section>
@@ -215,8 +217,8 @@ export function LessonQuiz({
       })}
     </div>
     <div className="study-practice-actions">
-      <span className="study-save-status" role="status">{isSaving && <><LoaderCircle size={18} className="study-spinner" aria-hidden="true" /><span className="sr-only">Saving your answer</span></>}</span>
-      <button type="button" className="study-primary" disabled={!answered || isSaving} onClick={() => void nextQuestion()}>{currentIndex === questions.length - 1 ? "See my results" : "Continue"}<ArrowRight size={18} aria-hidden="true" /></button>
+      <span className="study-save-status" role="status">{isSaving ? <><LoaderCircle size={18} className="study-spinner" aria-hidden="true" /><span className="sr-only">Saving your answer</span></> : variant === "quiz" && answered ? "Answer saved" : null}</span>
+      <button type="button" className="study-primary" disabled={!answered || isSaving} onClick={() => void nextQuestion()}>{currentIndex === questions.length - 1 ? variant === "quiz" ? "Finish quiz" : "See my results" : variant === "quiz" ? "Next question" : "Continue"}<ArrowRight size={18} aria-hidden="true" /></button>
     </div>
     <div className="study-feedback-space" aria-live="polite" aria-atomic="true">
       {answered && <div className={"study-feedback " + (correct ? "is-correct" : "is-incorrect")}>
