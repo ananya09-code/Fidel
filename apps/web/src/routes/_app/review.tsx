@@ -101,8 +101,9 @@ function ReviewPage() {
   return (
     <LessonQuiz
       words={words}
+      variant="quiz"
       choiceWords={active.choice_words.map((word) => ({ id: word.id, word: word.text, meaning: word.meaning, amharic: word.amharic, audioUrl: word.audio_url }))}
-      category={mode === "spaced" ? "Memory check" : "Vocabulary review"}
+      category="Vocabulary quiz"
       initialQuestionIndex={firstUnanswered}
       initialAnswers={answers}
       onBack={() => { setSession(null); void overview.refetch(); void navigate({ to: "/review", search: { start: false } }); }}

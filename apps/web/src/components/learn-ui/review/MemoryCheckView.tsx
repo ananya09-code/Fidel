@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, LoaderCircle } from "lucide-react";
+import { ArrowRight, LoaderCircle } from "lucide-react";
 import type { SpacedReviewOverview } from "@/lib/api/reviews";
 import "./memory-check.css";
 
@@ -7,17 +7,21 @@ type Props = { data?: SpacedReviewOverview; loading?: boolean; error?: string; o
 
 export function MemoryCheckView({ data, loading, error, onRetry }: Props) {
   const enoughWords = (data?.scheduled_count ?? 0) >= 2;
-  const canStart = Boolean(data?.active_session || (data?.due_count && enoughWords));
+  const active = data?.active_session;
+  const canStart = Boolean(active || (data?.due_count && enoughWords));
   const next = data?.next_review_at ? new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(new Date(data.next_review_at)) : null;
-  return <section className="memory-check" aria-label="Spaced repetition memory check">
+  const questionCount = active ? Math.max(0, active.total_count - active.answers.length) : Math.min(10, data?.due_count ?? 0);
+  return <section className="memory-check" aria-label="Vocabulary quiz">
     <div className="memory-check-copy">
-      <h2>See what stays with you.</h2>
-      <p>{loading ? <><LoaderCircle size={17} className="memory-spinner" aria-hidden="true" /><span role="status">Checking your next quiz</span></> : error ? <span role="alert">{error}</span> : data?.active_session ? "You have a saved review. Finish it before starting a new memory check." : !enoughWords ? "Learn at least two words. Your first memory check opens 3 days after learning." : data?.due_count ? `${data.due_count} ${data.due_count === 1 ? "word is" : "words are"} ready. Try a random mix of up to 10 words you’ve learned.` : next ? `All caught up. Your next words return ${next}.` : "Keep learning. Your words will return when it’s time."}</p>
-      <ol className="memory-intervals" aria-label="Intervals after successful recall">
-        {["3 days", "2 weeks", "1 month", "3 months", "6 months", "1 year"].map((label, i) => <li key={label}><span aria-hidden="true">{i === 0 ? "◈" : "·"}</span>{label}</li>)}
-      </ol>
-      <p className="memory-note">Correct recalls space words further apart. Missed words return after 1 day.</p>
+      <h2>Quiz yourself.</h2>
+      <p>{loading ? <><LoaderCircle size={17} className="memory-spinner" aria-hidden="true" /><span role="status">Preparing your quiz</span></> : error ? <span role="alert">{error}</span> : active ? `${active.answers.length} of ${active.total_count} answered. Pick up your saved quiz.` : !enoughWords ? "Learn at least two words. Your first quiz opens 3 days after learning." : data?.due_count ? "How much do you remember? Test yourself with a random mix of words you’ve learned." : next ? `You’re all caught up. Your next quiz opens ${next}.` : "Keep learning. A new quiz will appear when your words are ready."}</p>
+      <p className="memory-format">Multiple choice <span aria-hidden="true">·</span> Saved as you go</p>
+      <details className="memory-schedule"><summary>When do I get a quiz?</summary><p>Words return after 3 days, then 2 weeks, 1 month, 3 months, 6 months and 1 year as you remember them. Missed words return after 1 day.</p></details>
     </div>
-    {error ? <button type="button" className="memory-action" onClick={onRetry}>Try again</button> : canStart ? <Link to="/review" search={{ start: true, mode: "spaced" }} className="memory-action">{data?.active_session ? "Continue saved review" : "Start memory check"}<ArrowUpRight size={18} aria-hidden="true" /></Link> : !loading && <Link to="/Learn" className="memory-action memory-action-secondary">Keep learning<ArrowUpRight size={18} aria-hidden="true" /></Link>}
+    <div className="memory-quiz-action">
+      {!loading && !error && <p className="memory-question-count"><strong>{questionCount}</strong><span>{questionCount === 1 ? "question" : "questions"} {active ? "left" : "ready"}</span></p>}
+      {active && <progress className="memory-saved-progress" value={active.answers.length} max={active.total_count} aria-label="Saved quiz progress" />}
+      {error ? <button type="button" className="memory-action" onClick={onRetry}>Try again</button> : canStart ? <Link to="/review" search={{ start: true, mode: "spaced" }} className="memory-action">{active ? "Continue quiz" : "Start quiz"}<ArrowRight size={18} aria-hidden="true" /></Link> : !loading && <Link to="/Learn" className="memory-action memory-action-secondary">Learn more words<ArrowRight size={18} aria-hidden="true" /></Link>}
+    </div>
   </section>;
 }

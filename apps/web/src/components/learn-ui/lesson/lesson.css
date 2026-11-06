@@ -140,3 +140,6 @@ body:has(.fidel-study) nav[aria-label="Mobile navigation"] li > a > span:last-ch
 }
 
 .study-feedback-space:empty { padding-top:0; }
+.is-quiz .study-progress-label h1,.is-quiz .study-milestone h1 {font-weight:650;}
+.is-quiz .study-results dd {font-size:36px;font-weight:600;letter-spacing:-.04em;}
+.is-quiz .study-save-status {font-size:12px;color:var(--study-muted);}
