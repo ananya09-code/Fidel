@@ -15,6 +15,7 @@
 .matching-tile.is-matched { border-color:var(--study-line);background:var(--study-surface);color:var(--study-muted);border-bottom-width:1px;cursor:default; }
 .matching-tile svg { flex:none; }
 .matching-feedback { min-height:48px;display:flex;align-items:center;gap:8px;font-size:14px;color:var(--study-ink);margin:18px 0 0; }
+.matching-coach { margin:16px 0 20px;min-height:160px; }
 .matching-footer { display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:12px; }
 .matching-footer p { margin:0;font-size:13px;color:var(--study-muted);max-width:30ch; }
 @media(max-width:640px) { .matching-board {gap:10px;} .matching-tile {padding:12px 10px;min-height:82px;gap:4px;} .matching-tile strong {font-size:15px;} .matching-tile [lang=am] {font-size:14px;} .matching-instructions {align-items:flex-start;margin-bottom:20px;} .matching-footer {flex-direction:column;align-items:stretch;gap:14px;} .matching-footer p {max-width:none;} .matching-footer .study-primary {justify-content:center;} }

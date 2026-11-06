@@ -2,6 +2,8 @@ import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, Check, LoaderCircle, X } from "lucide-react";
 import type { FlashcardWord } from "./Flashcard";
 import { shuffleExercise } from "./exercise-plan";
+import { TeacherFeedback } from "./TeacherFeedback";
+import type { EncouragementEvent } from "./encouragement";
 import "./matching.css";
 
 type Props = {
@@ -28,7 +30,10 @@ export function MatchingRound({ words, initialAnswers = {}, onAnswer, onComplete
   const [wrong, setWrong] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState("Choose a word and its meaning. You can start on either side.");
+  const [reaction, setReaction] = useState<EncouragementEvent | null>(null);
+  const [lastWord, setLastWord] = useState<FlashcardWord | null>(null);
+  const reactionCount = useRef(0);
+  const run = useRef(0);
   const busy = useRef(false);
   const selection = useRef<{ word: string | null; meaning: string | null }>({ word: null, meaning: null });
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -63,7 +68,11 @@ export function MatchingRound({ words, initialAnswers = {}, onAnswer, onComplete
         setSelectedLeft(null); setSelectedRight(null);
         selection.current = { word: null, meaning: null };
         const word = words.find(item => item.id === a)!;
-        setFeedback(`${word.word} — ${word.meaning}. ${results[a] === false ? "Matched. This word stays in your review list." : "Matched."}`);
+        const recovered = results[a] === false;
+        run.current = recovered ? 0 : run.current + 1;
+        reactionCount.current++;
+        setLastWord(word);
+        setReaction({ id: `${a}-${reactionCount.current}`, outcome: matched.size + 1 === words.length ? "complete" : recovered ? "recovered" : "correct", turn: reactionCount.current, streak: run.current });
         busy.current = false;
         const next = left.find(word => word.id !== a && !matched.has(word.id));
         focusFrame.current = requestAnimationFrame(() => {
@@ -72,7 +81,10 @@ export function MatchingRound({ words, initialAnswers = {}, onAnswer, onComplete
         });
       } else {
         setWrong(true);
-        setFeedback("Those don’t match. Try another pair. Your first answer has been saved.");
+        run.current = 0;
+        reactionCount.current++;
+        setLastWord(null);
+        setReaction({ id: `${a}-${reactionCount.current}`, outcome: "retry", turn: reactionCount.current });
         timer.current = setTimeout(() => {
           setWrong(false); setSelectedLeft(null); setSelectedRight(null); busy.current = false;
           selection.current = { word: null, meaning: null };
@@ -101,12 +113,16 @@ export function MatchingRound({ words, initialAnswers = {}, onAnswer, onComplete
   }
 
   return <section className="matching-round" aria-label="Match words with their meanings">
+    <div className="matching-coach" role="status" aria-live="polite" aria-atomic="true">
+      {saving ? <p className="matching-feedback"><LoaderCircle size={17} className="study-spinner" aria-hidden="true" />Saving your answer…</p> : !error && <TeacherFeedback event={reaction ?? { id: "matching-ready", outcome: complete ? "complete" : "ready", turn: 0 }} animate={reaction !== null}>
+        {lastWord && <><p>{lastWord.word} — {lastWord.meaning}</p><p lang="am">{lastWord.amharic ?? "Translation unavailable"}</p></>}
+      </TeacherFeedback>}
+    </div>
     <div className="matching-instructions"><p>Tap one on each side to make a pair.</p><span>{matched.size} / {words.length} pairs</span></div>
     <div className="matching-board" role="group" aria-label="Word and meaning pairs">
       <span className="matching-column-label">Words</span><span className="matching-column-label">English · Amharic</span>
       {left.map((word, index) => <Fragment key={word.id}>{tile(word, "word")}{tile(right[index], "meaning")}</Fragment>)}
     </div>
-    <p className="matching-feedback" role="status" aria-live="polite">{saving && <LoaderCircle size={17} className="study-spinner" aria-hidden="true" />}{complete ? "Round complete. Your answers are saved." : feedback}</p>
     {error && <p className="study-error" role="alert">{error}</p>}
     <div className="matching-footer"><p>First answers count. Missed words stay in review.</p><button ref={continueButton} type="button" className="study-primary" disabled={!complete || saving || isCompleting} onClick={() => void onComplete()}>{isCompleting ? <LoaderCircle size={18} className="study-spinner" aria-label="Saving practice" /> : <>{continueLabel}<ArrowRight size={18} aria-hidden="true" /></>}</button></div>
   </section>;
