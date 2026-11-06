@@ -95,6 +95,8 @@ function LessonPage() {
     });
     cacheAttempt(value);
     void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
+    void queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
+    void queryClient.invalidateQueries({ queryKey: ["auth", "vocabulary-state", userId] });
   }
 
   async function finish() {
@@ -106,6 +108,7 @@ function LessonPage() {
       queryKey: learningProgressKeys.all(userId),
     });
     await queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
+    await queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
   }
 
   function goBack() {

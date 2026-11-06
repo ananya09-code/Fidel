@@ -10,10 +10,11 @@ type Props = {
   languageCode: "om" | "am";
   topics: ReactNode;
   dailyWord: ReactNode;
+  memoryCheck?: ReactNode;
 };
 
 /** Presentation only: all learner figures come from the authenticated dashboard. */
-export function HomeDashboard({ data, languageCode, topics, dailyWord }: Props) {
+export function HomeDashboard({ data, languageCode, topics, dailyWord, memoryCheck }: Props) {
   const language = languageCode === "am" ? "Amharic" : "Afaan Oromoo";
   const remaining = Math.max(0, data.daily_word_goal - data.words_learned_today);
   const current = data.current_lesson;
@@ -71,6 +72,7 @@ export function HomeDashboard({ data, languageCode, topics, dailyWord }: Props) 
         <div className="home-word-panel home-panel">{dailyWord}</div>
       </div>
 
+      {memoryCheck}
       <div className="home-bottom-grid">
         <div className="home-panel">{topics}</div>
         <section className="home-panel home-history">

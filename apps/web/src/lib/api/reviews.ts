@@ -12,6 +12,7 @@ export const reviewSessionSchema = z.object({
   total_count: z.number().int().positive(), correct_count: z.number().int().nonnegative(),
   started_at: z.string(), completed_at: z.string().nullable(),
   words: z.array(reviewWordSchema), answers: z.array(reviewAnswerSchema),
+  choice_words: z.array(reviewWordSchema).default([]),
 });
 export const reviewOverviewSchema = z.object({
   queue: z.array(reviewWordSchema),
@@ -24,14 +25,24 @@ export const reviewOverviewSchema = z.object({
 export type ReviewSession = z.infer<typeof reviewSessionSchema>;
 export type ReviewOverview = z.infer<typeof reviewOverviewSchema>;
 
+export const spacedReviewSchema = z.object({
+  due_count: z.number().int().nonnegative(), scheduled_count: z.number().int().nonnegative(),
+  next_review_at: z.string().nullable(), active_session: reviewSessionSchema.nullable(),
+  interval_days: z.array(z.number().int().positive()),
+});
+export type SpacedReviewOverview = z.infer<typeof spacedReviewSchema>;
+export function getSpacedReviews(token: string, languageCode: "om" | "am", signal?: AbortSignal) {
+  return apiFetch(`/api/v1/reviews/spaced?language_code=${languageCode}`, spacedReviewSchema, { headers: headers(token), signal });
+}
+
 function headers(token: string) {
   return { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
 }
 export function getReviews(token: string, signal?: AbortSignal) {
   return apiFetch("/api/v1/reviews", reviewOverviewSchema, { headers: headers(token), signal });
 }
-export function startReview(token: string) {
-  return apiFetch("/api/v1/reviews/start", reviewSessionSchema, {
+export function startReview(token: string, mode: "manual" | "spaced" = "manual", languageCode: "om" | "am" = "om") {
+  return apiFetch(`/api/v1/reviews/start?mode=${mode}&language_code=${languageCode}`, reviewSessionSchema, {
     method: "POST", headers: headers(token),
   });
 }
