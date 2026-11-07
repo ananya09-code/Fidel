@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { apiFetch, apiFetchVoid } from "@/lib/api";
+import { authenticatedRequest, type ApiToken, apiFetch, apiFetchVoid } from "@/lib/api";
 
 export const userProfileSchema = z.object({
   id: z.string(),
@@ -17,26 +17,22 @@ export const userProfileSchema = z.object({
 
 export type UserProfile = z.infer<typeof userProfileSchema>;
 
-function authorization(token: string): Record<string, string> {
-  return { Authorization: `Bearer ${token}` };
-}
-
-export function syncProfile(token: string): Promise<UserProfile> {
+export function syncProfile(token: ApiToken): Promise<UserProfile> {
   return apiFetch("/api/v1/auth/profile", userProfileSchema, {
     method: "POST",
-    headers: authorization(token),
+    ...authenticatedRequest(token),
   });
 }
 
-export function getProfile(token: string): Promise<UserProfile> {
+export function getProfile(token: ApiToken): Promise<UserProfile> {
   return apiFetch("/api/v1/auth/profile", userProfileSchema, {
-    headers: authorization(token),
+    ...authenticatedRequest(token),
   });
 }
 
-export function deleteProfile(token: string): Promise<void> {
+export function deleteProfile(token: ApiToken): Promise<void> {
   return apiFetchVoid("/api/v1/auth/profile", {
     method: "DELETE",
-    headers: authorization(token),
+    ...authenticatedRequest(token),
   });
 }

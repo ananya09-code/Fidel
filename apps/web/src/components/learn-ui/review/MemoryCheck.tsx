@@ -11,9 +11,7 @@ export function MemoryCheck() {
   const query = useQuery({
     queryKey: ["auth", "spaced-reviews", userId, language],
     queryFn: async ({ signal }) => {
-      const token = await getToken();
-      if (!token) throw new Error("Please sign in again to load your quiz.");
-      return getSpacedReviews(token, language, signal);
+      return getSpacedReviews(getToken, language, signal);
     },
     enabled: isLoaded && Boolean(isSignedIn && userId) && preferences.isSuccess,
     staleTime: 30_000, refetchInterval: 60_000, retry: false,

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { apiFetch } from "@/lib/api";
+import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
 
 export const learningLanguageSchema = z.enum(["om", "am"]);
 export const proficiencyLevelSchema = z.enum([
@@ -48,30 +48,23 @@ export type UserPreferencesUpdate = Partial<
   Omit<UserPreferences, "created_at" | "updated_at">
 >;
 
-function headers(token: string): Record<string, string> {
-  return {
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
-  };
-}
-
 export function getPreferences(
-  token: string,
+  token: ApiToken,
   signal?: AbortSignal,
 ): Promise<UserPreferences> {
   return apiFetch("/api/v1/preferences", userPreferencesSchema, {
-    headers: headers(token),
+    ...authenticatedRequest(token),
     signal,
   });
 }
 
 export function updatePreferences(
-  token: string,
+  token: ApiToken,
   update: UserPreferencesUpdate,
 ): Promise<UserPreferences> {
   return apiFetch("/api/v1/preferences", userPreferencesSchema, {
     method: "PATCH",
-    headers: headers(token),
+    ...authenticatedRequest(token),
     body: JSON.stringify(update),
   });
 }

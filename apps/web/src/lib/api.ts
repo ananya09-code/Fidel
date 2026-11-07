@@ -31,6 +31,18 @@ export class ApiError extends Error {
   }
 }
 
+export const SESSION_EXPIRED_MESSAGE = 'Your session has expired. Please sign in again.'
+export type SessionTokenProvider = (options?: { skipCache?: boolean }) => Promise<string | null>
+export type ApiToken = string | SessionTokenProvider
+export type ApiRequestInit = RequestInit & { getToken?: SessionTokenProvider }
+
+/** Keep the Clerk getter with the request so a rejected token can be refreshed. */
+export function authenticatedRequest(token: ApiToken): ApiRequestInit {
+  return typeof token === 'function'
+    ? { getToken: token, headers: { 'Content-Type': 'application/json' } }
+    : { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } }
+}
+
 const DEFAULT_API_URL = 'http://127.0.0.1:8000'
 
 function trimTrailingSlash(value: string): string {
@@ -56,25 +68,49 @@ export function getApiBaseUrl(): string {
 
 async function request(
   path: string,
-  init?: RequestInit,
+  init?: ApiRequestInit,
 ): Promise<{ response: Response; url: string }> {
   const url = `${getApiBaseUrl()}${path.startsWith('/') ? path : `/${path}`}`
 
-  let response: Response
-  try {
-    response = await fetch(url, {
-      ...init,
-      headers: {
-        Accept: 'application/json',
-        ...init?.headers,
-      },
-    })
-  } catch {
-    throw new ApiError(
-      `Unable to reach the Fidel API at ${url}. Is the backend running?`,
-      0,
-      url,
-    )
+  const { getToken, ...options } = init ?? {}
+  const headers = new Headers(options.headers)
+  if (!headers.has('Accept')) headers.set('Accept', 'application/json')
+  async function authorize(refresh: boolean) {
+    options.signal?.throwIfAborted()
+    let token: string | null
+    try {
+      token = await getToken!(refresh ? { skipCache: true } : undefined)
+    } catch {
+      options.signal?.throwIfAborted()
+      throw new ApiError(SESSION_EXPIRED_MESSAGE, 401, url)
+    }
+    options.signal?.throwIfAborted()
+    if (!token) throw new ApiError(SESSION_EXPIRED_MESSAGE, 401, url)
+    headers.set('Authorization', `Bearer ${token}`)
+  }
+  async function send() {
+    options.signal?.throwIfAborted()
+    try {
+      return await fetch(url, { ...options, headers: new Headers(headers) })
+    } catch (error) {
+      options.signal?.throwIfAborted()
+      if (error instanceof Error && error.name === 'AbortError') throw error
+      throw new ApiError(
+        `Unable to reach the Fidel API at ${url}. Is the backend running?`, 0, url,
+      )
+    }
+  }
+
+  if (getToken) await authorize(false)
+  let response = await send()
+  // A 401 is rejected by the auth dependency before endpoint writes run.
+  // Never replay a network failure, a 5xx, or an already consumed stream body.
+  if (response.status === 401 && getToken && !(options.body instanceof ReadableStream)) {
+    await authorize(true)
+    response = await send()
+  }
+  if (response.status === 401 && getToken) {
+    throw new ApiError(SESSION_EXPIRED_MESSAGE, 401, url)
   }
 
   return { response, url }
@@ -120,7 +156,7 @@ async function errorMessage(response: Response, url: string): Promise<string> {
 export async function apiFetch<T>(
   path: string,
   schema: z.ZodType<T>,
-  init?: RequestInit,
+  init?: ApiRequestInit,
 ): Promise<T> {
   const { response, url } = await request(path, init)
 
@@ -154,7 +190,7 @@ export async function apiFetch<T>(
  */
 export async function apiFetchVoid(
   path: string,
-  init?: RequestInit,
+  init?: ApiRequestInit,
 ): Promise<void> {
   const { response, url } = await request(path, init)
 

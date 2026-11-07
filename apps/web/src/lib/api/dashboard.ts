@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { apiFetch } from "@/lib/api";
+import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
 
 const currentLessonSchema = z.object({
   lesson_key: z.string(), title: z.string(), stage: z.string(),
@@ -38,14 +38,14 @@ export const studyActivitySchema = z.object({
 export type StudyActivity = z.infer<typeof studyActivitySchema>;
 export type StudyActivityDay = StudyActivity["days"][number];
 
-export function getStudyActivity(token: string, signal?: AbortSignal) {
+export function getStudyActivity(token: ApiToken, signal?: AbortSignal) {
   return apiFetch("/api/v1/dashboard/activity", studyActivitySchema, {
-    headers: { Authorization: `Bearer ${token}` }, signal,
+    ...authenticatedRequest(token), signal,
   });
 }
 
-export function getDashboard(token: string, signal?: AbortSignal) {
+export function getDashboard(token: ApiToken, signal?: AbortSignal) {
   return apiFetch("/api/v1/dashboard", dashboardSchema, {
-    headers: { Authorization: `Bearer ${token}` }, signal,
+    ...authenticatedRequest(token), signal,
   });
 }

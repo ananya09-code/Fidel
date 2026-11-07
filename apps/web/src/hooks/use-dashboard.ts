@@ -8,9 +8,7 @@ export function useStudyActivity() {
   return useQuery({
     queryKey: ["auth", "dashboard", userId ?? "signed-out", "activity"],
     queryFn: async ({ signal }) => {
-      const token = await getToken();
-      if (!token) throw new Error("Your session expired. Please sign in again.");
-      return getStudyActivity(token, signal);
+      return getStudyActivity(getToken, signal);
     },
     enabled: isLoaded && Boolean(isSignedIn && userId),
     staleTime: 30_000,
@@ -23,9 +21,7 @@ export function useDashboard() {
   return useQuery({
     queryKey: ["auth", "dashboard", userId ?? "signed-out"],
     queryFn: async ({ signal }) => {
-      const token = await getToken();
-      if (!token) throw new Error("Your session expired. Please sign in again.");
-      return getDashboard(token, signal);
+      return getDashboard(getToken, signal);
     },
     enabled: isLoaded && Boolean(isSignedIn && userId),
     staleTime: 30_000,

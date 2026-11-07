@@ -38,31 +38,23 @@ function ReviewPage() {
   const overview = useQuery({
     queryKey: ["auth", "reviews", userId ?? "signed-out"],
     queryFn: async ({ signal }) => {
-      const token = await getToken();
-      if (!token) throw new Error("Your session expired. Please sign in again.");
-      return getReviews(token, signal);
+      return getReviews(getToken, signal);
     },
     enabled: Boolean(userId), staleTime: 30_000, retry: false,
   });
-
-  const token = useCallback(async () => {
-    const value = await getToken();
-    if (!value) throw new Error("Your session expired. Please sign in again.");
-    return value;
-  }, [getToken]);
 
   const begin = useCallback(async (selectedMode: "manual" | "spaced" = "manual") => {
     setActionError(null);
     setIsStarting(true);
     try {
-      setSession(await startReview(await token(), selectedMode, preferences.data?.learning_language ?? "om"));
+      setSession(await startReview(getToken, selectedMode, preferences.data?.learning_language ?? "om"));
       void queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
     } catch (error) {
       setActionError(error instanceof Error ? error.message : "Unable to start review.");
     } finally {
       setIsStarting(false);
     }
-  }, [token, preferences.data, queryClient, userId]);
+  }, [getToken, preferences.data, queryClient, userId]);
 
   useEffect(() => {
     if (!start) autoStartAttempted.current = false;
@@ -108,13 +100,13 @@ function ReviewPage() {
       initialAnswers={answers}
       onBack={() => { setSession(null); void overview.refetch(); void navigate({ to: "/review", search: { start: false } }); }}
       onAnswer={async ({ wordId, selectedWordId }) => {
-        const saved = await saveReviewAnswer(await token(), active.id, wordId, selectedWordId);
+        const saved = await saveReviewAnswer(getToken, active.id, wordId, selectedWordId);
         setSession(saved);
         void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
         void queryClient.invalidateQueries({ queryKey: ["auth", "vocabulary-state", userId] });
       }}
       onFinish={async () => {
-        const completed = await completeReview(await token(), active.id);
+        const completed = await completeReview(getToken, active.id);
         setSession(completed);
         void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
         await overview.refetch();

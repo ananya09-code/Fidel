@@ -1,4 +1,5 @@
 import { AlertTriangle, ArrowRight, LoaderCircle } from "lucide-react";
+import { SESSION_EXPIRED_MESSAGE } from "@/lib/api";
 import "./app-ui.css";
 
 type PageStateProps = {
@@ -15,7 +16,9 @@ export function PageState({ kind, title, description, actionLabel, onAction, com
     {kind === "loading" ? <><LoaderCircle className="app-spinner" size={28} aria-hidden="true" /><span className="sr-only">{title}</span></> : <>
       {kind === "error" && <AlertTriangle size={20} aria-hidden="true" />}
       <div><h2>{title}</h2>{description && <p>{description}</p>}
-        {actionLabel && onAction && <button type="button" className="app-secondary" onClick={onAction}>{actionLabel}<ArrowRight size={16} aria-hidden="true" /></button>}
+        {kind === "error" && description === SESSION_EXPIRED_MESSAGE
+          ? <a className="app-secondary" href="/sign-in">Sign in again<ArrowRight size={16} aria-hidden="true" /></a>
+          : actionLabel && onAction && <button type="button" className="app-secondary" onClick={onAction}>{actionLabel}<ArrowRight size={16} aria-hidden="true" /></button>}
       </div>
     </>}
   </section>;

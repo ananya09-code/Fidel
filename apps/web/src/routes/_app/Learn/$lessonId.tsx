@@ -47,12 +47,6 @@ function LessonPage() {
   });
   const attempt = localAttempt ?? savedProgress.data ?? null;
 
-  async function token(): Promise<string> {
-    const value = await getToken();
-    if (!value) throw new Error("Your session expired. Please sign in again.");
-    return value;
-  }
-
   function cacheAttempt(value: LessonAttempt) {
     setLocalAttempt(value);
     queryClient.setQueryData(
@@ -63,7 +57,7 @@ function LessonPage() {
 
   async function start(questionCount: number) {
     if (!lesson.data) return;
-    const value = await startLesson(await token(), lessonId, {
+    const value = await startLesson(getToken, lessonId, {
       difficulty: lesson.data.lesson.difficulty ?? "beginner",
       category_key: lesson.data.lesson.category,
       category_label: lesson.data.lesson.category,
@@ -76,7 +70,7 @@ function LessonPage() {
 
   async function checkpoint(stage: "vocabulary" | "practice", index: number) {
     if (!attempt) throw new Error("Start the lesson before saving progress.");
-    const value = await checkpointLesson(await token(), attempt.id, stage, index);
+    const value = await checkpointLesson(getToken, attempt.id, stage, index);
     cacheAttempt(value);
   }
 
@@ -88,7 +82,7 @@ function LessonPage() {
     questionType?: "multiple_choice" | "matching";
   }) {
     if (!attempt) throw new Error("Start the lesson before answering questions.");
-    const value = await saveLessonAnswer(await token(), attempt.id, {
+    const value = await saveLessonAnswer(getToken, attempt.id, {
       question_id: answer.questionId,
       word_id: answer.wordId,
       selected_word_id: answer.selectedWordId,
@@ -104,7 +98,7 @@ function LessonPage() {
   async function finish() {
     if (!attempt) throw new Error("No lesson attempt is active.");
     setSessionWordIds(sessionWords.map((word) => word.id));
-    const value = await completeLesson(await token(), attempt.id);
+    const value = await completeLesson(getToken, attempt.id);
     cacheAttempt(value);
     await queryClient.invalidateQueries({
       queryKey: learningProgressKeys.all(userId),
