@@ -1,35 +1,35 @@
 import { useEffect } from "react";
 import { SignIn, SignUp, useAuth } from "@clerk/tanstack-react-start";
+import { LoaderCircle } from "lucide-react";
 
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { getSafeAuthRedirect } from "@/lib/auth-redirect";
 
 const appearance = {
   variables: {
-    colorPrimary: "var(--lagoon-deep)",
-    colorText: "var(--sea-ink)",
-    colorTextSecondary: "var(--sea-ink-soft)",
-    colorBackground: "var(--panel)",
-    colorInputBackground: "var(--panel)",
-    colorInputText: "var(--sea-ink)",
-    borderRadius: "0.75rem",
-    fontFamily: "inherit",
+    colorPrimary: "var(--auth-action)",
+    colorText: "var(--auth-ink)",
+    colorTextSecondary: "var(--auth-muted)",
+    colorBackground: "var(--auth-paper)",
+    colorInputBackground: "var(--auth-paper)",
+    colorInputText: "var(--auth-ink)",
+    borderRadius: "0.5rem",
+    fontFamily: "Manrope, sans-serif",
+    fontSize: "0.875rem",
   },
   elements: {
-    rootBox: "w-full",
-    cardBox: "w-full shadow-none",
-    card: "border-0 bg-transparent p-0 shadow-none",
-    headerTitle: "text-2xl font-bold tracking-tight text-[var(--sea-ink)]/100",
-    headerSubtitle: "text-sm leading-6 text-[var(--sea-ink)]/65",
-    formButtonPrimary:
-      "bg-teal-700 text-white shadow-lg shadow-teal-900/10 hover:bg-teal-800",
-    socialButtonsBlockButton:
-      "border-[var(--line)] bg-[var(--panel)]/70 text-[var(--sea-ink)]/85 hover:bg-[var(--panel)]",
-    formFieldInput:
-      "border-[var(--line)] bg-[var(--panel)]/70 focus:border-teal-600 focus:ring-teal-600/20",
-    footerActionLink: "text-teal-800 dark:text-teal-300 hover:text-teal-900",
-    dividerLine: "bg-[var(--sand)]",
-    dividerText: "text-[var(--sea-ink)]/55",
+    rootBox: "auth-clerk-root",
+    cardBox: "auth-clerk-box",
+    card: "auth-clerk-card",
+    headerTitle: "auth-clerk-title",
+    headerSubtitle: "auth-clerk-subtitle",
+    formButtonPrimary: "auth-clerk-primary",
+    socialButtonsBlockButton: "auth-clerk-social",
+    formFieldInput: "auth-clerk-input",
+    footerActionLink: "auth-clerk-link",
+    footer: "auth-clerk-footer",
+    dividerLine: "auth-clerk-divider",
+    dividerText: "auth-clerk-muted",
   },
 } as const;
 
@@ -63,9 +63,12 @@ export function ClerkAuthPage({ mode, redirect }: ClerkAuthPageProps) {
       ? alternatePath
       : `${alternatePath}?redirect=${encodeURIComponent(target)}`;
 
+  const loading = <div className="auth-form-loading"><h1>{isSignIn ? "Welcome back." : "Begin with a hello."}</h1><div role="status"><LoaderCircle size={24} aria-hidden="true" /><span className="sr-only">Opening secure authentication</span></div></div>;
+
   return (
-    <AuthLayout variant={mode} contained={false}>
-      <div className="rounded-[2rem] border border-[var(--line)] bg-[var(--panel)]/75 p-6 shadow-2xl shadow-slate-900/[0.07] backdrop-blur-2xl sm:p-9">
+    <AuthLayout variant={mode}>
+      <div className="auth-clerk-host">
+        {!isLoaded && loading}
         {isSignIn ? (
           <SignIn
             routing="path"

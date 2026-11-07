@@ -1,0 +1,32 @@
+TASTESKILL · INSPECT   http://127.0.0.1:4173/sign-in
+
+MEASURED (first viewport listed)
+  hero headline   "Some words feel like home."  5 words · 2 line(s) · 32px (2.2vw) · Fidel Auth Serif 700 · tracking -0.04em · leading 1.2
+  @768px          1 line(s) · 28px
+  @390px          1 line(s) · 26px
+  typefaces       Manrope 87%, Fidel Auth Serif 11%
+  sizes in use    11 / 12 / 13 / 28 / 30 / 32 px
+  colour          page #ffffff · sections #131a15 #1a231d #25372a
+  page            1 screens · 36 words · 0 images · hero media 21% canvas
+  headings        3 · longest 2 line(s) · median 1 words
+
+FAIL — fix every one of these
+  [no-title] @1440px  The screen has no h1.
+      → Name the screen in an h1 at the top of the canvas (18–28px): "Overview", "Payouts", the project's name.
+  [button-fx] @768px  Buttons with shadow/glow.
+      → Flat fill, one colour.
+
+WARN — fix, or be able to defend
+  [hero-void] @1440px  33% of the first screen is one empty block (720×600px at 720,120).
+      → Place the void on purpose or fill it: move the picture, the film or one fact into it, grow the headline to meet it, or shrink the screen to its content. A void reads as placed only when something closes it on the far side and it is the screen's one rest.
+
+LOOK AT THE RENDER — open these with your image viewer / Read tool before saying anything about quality:
+  desktop 1440px  .taste-skill/auth/final-in/desktop-fold.jpg
+                  .taste-skill/auth/final-in/desktop-page-01.jpg
+  tablet 768px    .taste-skill/auth/final-in/tablet-fold.jpg
+                  .taste-skill/auth/final-in/tablet-page-01.jpg
+  mobile 390px    .taste-skill/auth/final-in/mobile-fold.jpg
+                  .taste-skill/auth/final-in/mobile-page-01.jpg
+
+report: .taste-skill/auth/final-in/report.json
+RESULT: 2 FAIL, 1 WARN — not done.

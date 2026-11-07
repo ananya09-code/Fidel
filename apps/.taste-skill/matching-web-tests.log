@@ -1,0 +1,26 @@
+✔ mixes two recognition questions with up to five pairs (4.4908ms)
+✔ keeps short sessions and assessment quizzes as multiple choice (0.5373ms)
+✔ rejects ambiguous pair labels and meanings after normalization (0.6062ms)
+✔ shuffle is stable across a resumed session and never mutates input (1.2382ms)
+✔ loads every word beyond the first 50 and forwards cancellation (407.872ms)
+✔ does not silently start an incomplete lesson when a later page fails (63.6ms)
+✔ rejects pagination that makes no progress instead of looping forever (49.7615ms)
+✔ mobile navigation includes five named destinations and safe-area padding (262.8671ms)
+✔ nested lessons highlight Learn and matching is case-insensitive (22.8431ms)
+✔ route prefixes do not falsely select a tab (18.3585ms)
+✔ every day occupies the correct Sunday-first row without inventing future days (93.3208ms)
+✔ intensities change only at the documented answer thresholds (0.6185ms)
+✔ date labels retain the server's calendar day, including leap day (1.9117ms)
+✔ keyboard navigation moves by day/week and clamps at the visible range (0.9849ms)
+✔ explicit themes override the device and System follows it (3.2251ms)
+✔ pre-paint script applies the same theme with missing or blocked storage (18.6908ms)
+✔ appearance choices are a labelled native radio group with one selected value (37.0909ms)
+✔ device changes update System mode, respect explicit choices and clean up listeners (18.7474ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2870.2917

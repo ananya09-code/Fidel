@@ -1,0 +1,1278 @@
+{
+ "url": "http://127.0.0.1:4184/?screen=states&theme=dark",
+ "at": "2026-11-05T14:14:28.723Z",
+ "allow": [
+  "covered-text"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.81
+   ],
+   "motion": {
+    "elements": 1,
+    "css": 1,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 900,
+     "screens": 1,
+     "words": 55,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 19,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Page states",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 124,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Page states",
+     "words": 2,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      18,
+      26
+     ],
+     "sizeCount": 5,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 26,
+      "vw": 1.8,
+      "font": "Manrope",
+      "text": "Page states"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.13,
+     "smallText": 2
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#1c231e",
+     "bodyBgHsl": {
+      "h": 137,
+      "s": 0.11,
+      "l": 0.12
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#e7ede6",
+       "share": 0.49
+      },
+      {
+       "color": "#b0bcb2",
+       "share": 0.42
+      },
+      {
+       "color": "#e8ede6",
+       "share": 0.09
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Try again",
+      "Explore lessons"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "div.fixed.inset-y-0 256px",
+      "div.flex.flex-col 255px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 2,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": true,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 900,
+    "margins": {
+     "left": 280,
+     "right": 39
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Page states",
+      "size": 26,
+      "top": 124,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 291,
+      "n": 1
+     },
+     {
+      "x": 509,
+      "n": 1
+     },
+     {
+      "x": 545,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 3,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.4,
+    "voidBox": {
+     "x": 780,
+     "y": 120,
+     "w": 660,
+     "h": 780
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#1c231e",
+    "sidebar": {
+     "w": 256,
+     "tag": "div",
+     "links": 7,
+     "share": 0.18
+    },
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 24,
+     "right": 39
+    },
+    "hero": {
+     "text": "Page states",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 124,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 4,
+     "radii": [
+      [
+       0,
+       2
+      ],
+      [
+       8,
+       2
+      ]
+     ],
+     "heavyBorders": 1,
+     "borderSamples": [
+      "#ebebe2 on #1c231e (13.38:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.29,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      18,
+      20,
+      26
+     ]
+    },
+    "title": {
+     "text": "Page states",
+     "size": 26,
+     "top": 124
+    },
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.9
+   ],
+   "motion": {
+    "elements": 1,
+    "css": 1,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1024,
+     "screens": 1,
+     "words": 47,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 19,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Page states",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 120,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Page states",
+     "words": 2,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Page states",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.17,
+      "top": 120,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      18,
+      20,
+      26
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "text": "Page states"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.16,
+     "smallText": 1
+    },
+    "eyebrows": [
+     {
+      "text": "Local design preview · sample account",
+      "above": "Page states",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12,
+      "top": 64
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#1c231e",
+     "bodyBgHsl": {
+      "h": 137,
+      "s": 0.11,
+      "l": 0.12
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b0bcb2",
+       "share": 0.57
+      },
+      {
+       "color": "#e7ede6",
+       "share": 0.43
+      },
+      {
+       "color": "#eda334",
+       "share": 0
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Try again",
+      "Explore lessons"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "nav.fixed.inset-x-0 753px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 2,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1024,
+    "margins": {
+     "left": 24,
+     "right": 39
+    },
+    "sections": [
+     {
+      "sel": "section.app-page-state.is-compact",
+      "tag": "section",
+      "top": 181,
+      "height": 120,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.app-page-state.is-error",
+      "tag": "section",
+      "top": 325,
+      "height": 178,
+      "words": 12,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "We couldn’t load this part",
+       "size": 18,
+       "tag": "h2"
+      },
+      "left": 88,
+      "right": 467,
+      "textLeft": 88,
+      "textRight": 467,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.app-page-state.is-empty",
+      "tag": "section",
+      "top": 526,
+      "height": 178,
+      "words": 13,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Your first words go here",
+       "size": 18,
+       "tag": "h2"
+      },
+      "left": 52,
+      "right": 518,
+      "textLeft": 52,
+      "textRight": 518,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Page states",
+      "size": 26,
+      "top": 120,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 24,
+      "n": 1
+     },
+     {
+      "x": 52,
+      "n": 1
+     },
+     {
+      "x": 88,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 3,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#1c231e",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 24,
+     "right": 39
+    },
+    "hero": {
+     "text": "Page states",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 120,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 2,
+     "radii": [
+      [
+       8,
+       2
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.29,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      18,
+      20,
+      26
+     ]
+    },
+    "title": {
+     "text": "Page states",
+     "size": 26,
+     "top": 120
+    },
+    "colourShare": 0.001
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.93
+   ],
+   "motion": {
+    "elements": 1,
+    "css": 1,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 844,
+     "screens": 1,
+     "words": 43,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 12,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Page states",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 116,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Page states",
+     "words": 2,
+     "lines": 1,
+     "size": 24,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Page states",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.32,
+      "top": 116,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      14,
+      18,
+      20,
+      24
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "text": "Page states"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.12,
+     "smallText": 1
+    },
+    "eyebrows": [
+     {
+      "text": "Local design preview · sample account",
+      "above": "Page states",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12,
+      "top": 64
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#1c231e",
+     "bodyBgHsl": {
+      "h": 137,
+      "s": 0.11,
+      "l": 0.12
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b0bcb2",
+       "share": 0.58
+      },
+      {
+       "color": "#e7ede6",
+       "share": 0.42
+      },
+      {
+       "color": "#eda334",
+       "share": 0
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Try again",
+      "Explore lessons"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "nav.fixed.inset-x-0 390px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 2,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": true,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 844,
+    "margins": {
+     "left": 18,
+     "right": 18
+    },
+    "sections": [
+     {
+      "sel": "section.app-page-state.is-compact",
+      "tag": "section",
+      "top": 170,
+      "height": 120,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.app-page-state.is-error",
+      "tag": "section",
+      "top": 314,
+      "height": 162,
+      "words": 12,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "We couldn’t load this part",
+       "size": 18,
+       "tag": "h2"
+      },
+      "left": 74,
+      "right": 103,
+      "textLeft": 74,
+      "textRight": 103,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.app-page-state.is-empty",
+      "tag": "section",
+      "top": 500,
+      "height": 162,
+      "words": 13,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Your first words go here",
+       "size": 18,
+       "tag": "h2"
+      },
+      "left": 38,
+      "right": 154,
+      "textLeft": 38,
+      "textRight": 154,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Page states",
+      "size": 24,
+      "top": 116,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 18,
+      "n": 1
+     },
+     {
+      "x": 38,
+      "n": 1
+     },
+     {
+      "x": 74,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 3,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#1c231e",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 18,
+     "right": 18
+    },
+    "hero": {
+     "text": "Page states",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 116,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 2,
+     "radii": [
+      [
+       8,
+       2
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.28,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      14,
+      18,
+      20,
+      24
+     ]
+    },
+    "title": {
+     "text": "Page states",
+     "size": 24,
+     "top": 116
+    },
+    "colourShare": 0.001
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "hero-void",
+   "width": 1440,
+   "message": "40% of the first screen is one empty block (660×780px at 780,120).",
+   "fix": "Place the void on purpose or fill it: move the picture, the film or one fact into it, grow the headline to meet it, or shrink the screen to its content. A void reads as placed only when something closes it on the far side and it is the screen's one rest."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\states-dark\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\states-dark\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\states-dark\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\states-dark\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\states-dark\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\states-dark\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

@@ -1,17 +1,17 @@
 
 import { useMemo, useState } from "react";
 import type { FlashcardWord } from "./Flashcard";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle2,
-  RotateCcw,
-  Trophy,
-  XCircle,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, LoaderCircle, RotateCcw, X } from "lucide-react";
+import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import { topicLabel } from "@/components/homepage-ui/labels";
+import { MatchingRound } from "./MatchingRound";
+import { matchingIndices, shuffleExercise as shuffle } from "./exercise-plan";
+import "./lesson.css";
 
 type LessonQuizProps = {
   words: FlashcardWord[];
+  choiceWords?: FlashcardWord[];
+  variant?: "practice" | "quiz";
   category?: string;
   initialQuestionIndex?: number;
   initialAnswers?: Record<string, boolean>;
@@ -24,6 +24,7 @@ type LessonQuizProps = {
     wordId: string;
     selectedWordId: string;
     questionIndex: number;
+    questionType?: "multiple_choice" | "matching";
   }) => Promise<void> | void;
   onFinish?: (result: {
     score: number;
@@ -37,19 +38,10 @@ type QuizQuestion = {
   options: FlashcardWord[];
 };
 
-function shuffle<T>(items: T[]): T[] {
-  const result = [...items];
-
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-
-  return result;
-}
-
 export function LessonQuiz({
   words,
+  choiceWords,
+  variant = "practice",
   category = "Practice",
   initialQuestionIndex = 0,
   initialAnswers = {},
@@ -67,19 +59,23 @@ export function LessonQuiz({
 
     return usableWords.map((word) => {
       const distractors = shuffle(
-        usableWords.filter((candidate) => candidate.id !== word.id),
+        (choiceWords?.length ? choiceWords : usableWords).filter((candidate) => candidate.id !== word.id && candidate.meaning.trim() && candidate.meaning !== word.meaning), word.id,
       ).slice(0, 3);
 
       return {
         word,
-        options: shuffle([word, ...distractors]),
+        options: shuffle([word, ...distractors], word.id + "-options"),
       };
     });
-  }, [words]);
+  }, [words, choiceWords]);
 
-  const [currentIndex, setCurrentIndex] = useState(() =>
-    Math.min(initialQuestionIndex, Math.max(questions.length - 1, 0)),
-  );
+  const [currentIndex, setCurrentIndex] = useState(() => {
+    // Matching can be answered out of order; never skip an unanswered word.
+    const firstUnanswered = questions.findIndex(question => !(question.word.id in initialAnswers));
+    return Object.keys(initialAnswers).length && firstUnanswered >= 0
+      ? firstUnanswered
+      : Math.min(initialQuestionIndex, Math.max(questions.length - 1, 0));
+  });
   const [answers, setAnswers] = useState<Record<string, string>>(() =>
     Object.fromEntries(
       Object.entries(initialAnswers).map(([questionId, isCorrect]) => [
@@ -132,8 +128,9 @@ export function LessonQuiz({
     }
   }
 
-  async function nextQuestion() {
-    if (currentIndex === questions.length - 1) {
+  async function nextQuestion(nextIndex = currentIndex + 1) {
+    if (!answered || isSaving) return;
+    if (nextIndex >= questions.length) {
       const nextAnswers = answers;
       const finalMissedWords = questions
         .filter(
@@ -162,7 +159,7 @@ export function LessonQuiz({
       return;
     }
 
-    setCurrentIndex((index) => index + 1);
+    setCurrentIndex(nextIndex);
   }
 
   function restartQuiz() {
@@ -171,341 +168,80 @@ export function LessonQuiz({
     setFinished(false);
   }
 
-  if (questions.length === 0) {
-    return (
-      <main className="mx-auto flex min-h-[60vh] max-w-xl flex-col items-center justify-center px-5 text-center">
-        <div className="mb-5 flex size-16 items-center justify-center rounded-2xl bg-[var(--sand)]">
-          <Trophy className="size-7 text-[var(--sea-ink)]" />
-        </div>
 
-        <h1 className="text-2xl font-bold tracking-tight text-[var(--sea-ink)]">
-          Nothing to practise yet
-        </h1>
-
-        <p className="mt-3 max-w-sm text-sm leading-6 text-[var(--sea-ink)]/65">
-          Finish a flashcard session with words and meanings before starting
-          your practice quiz.
-        </p>
-
-        <button
-          type="button"
-          onClick={onBack}
-          className="mt-6 rounded-xl bg-[var(--action)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-        >
-          Back to learning
-        </button>
-      </main>
-    );
+  if (!questions.length) {
+    return <div className="fidel-study"><section className="study-milestone"><h1>Nothing to practise yet</h1><p>Explore some words before starting your practice.</p><button type="button" className="study-primary" onClick={onBack}>Back to learning</button></section></div>;
   }
 
   if (finished) {
-    const perfect = score === questions.length;
-    const needsPractice = accuracy < 70;
-
-    return (
-      <main className="mx-auto min-h-[80vh] max-w-2xl px-4 py-8 sm:px-6">
-        <section className="overflow-hidden rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--panel)] shadow-sm">
-          <div className="flex flex-col items-center px-6 pb-8 pt-10 text-center sm:px-10">
-            <div className="mb-5 flex size-20 items-center justify-center rounded-3xl bg-[var(--sand)]">
-              <Trophy className="size-9 text-[var(--sea-ink)]" />
-            </div>
-
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--sea-ink)]/55">
-              Practice complete
-            </p>
-
-            <h1 className="mt-3 text-3xl font-bold tracking-tight text-[var(--sea-ink)] sm:text-4xl">
-              {perfect
-                ? "Perfect work!"
-                : needsPractice
-                  ? "Keep building!"
-                  : "Nicely done!"}
-            </h1>
-
-            <p className="mt-3 max-w-sm text-sm leading-6 text-[var(--sea-ink)]/65">
-              {perfect
-                ? "You remembered every word. You're making real progress."
-                : needsPractice
-                  ? "A little more practice will help these words stick."
-                  : "You're getting there. Keep practising to remember even more."}
-            </p>
-
-            <div className="mt-8 grid w-full grid-cols-3 gap-3">
-              <div className="rounded-2xl bg-[var(--bg-base)] p-4">
-                <p className="text-2xl font-bold text-[var(--sea-ink)]">
-                  {score}/{questions.length}
-                </p>
-                <p className="mt-1 text-xs text-[var(--sea-ink)]/60">
-                  Correct
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-[var(--bg-base)] p-4">
-                <p className="text-2xl font-bold text-[var(--sea-ink)]">
-                  {accuracy}%
-                </p>
-                <p className="mt-1 text-xs text-[var(--sea-ink)]/60">
-                  Accuracy
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-[var(--bg-base)] p-4">
-                <p className="text-2xl font-bold text-[var(--sea-ink)]">
-                  {missedWords.length}
-                </p>
-                <p className="mt-1 text-xs text-[var(--sea-ink)]/60">
-                  To review
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {missedWords.length > 0 && (
-            <div className="border-t border-[var(--sea-ink)]/10 px-6 py-6 sm:px-10">
-              <h2 className="font-bold text-[var(--sea-ink)]">
-                Words to revisit
-              </h2>
-
-              <p className="mt-1 text-sm text-[var(--sea-ink)]/60">
-                These are the words you missed this time.
-              </p>
-
-              <div className="mt-4 space-y-2">
-                {missedWords.map((word) => (
-                  <div
-                    key={word.id}
-                    className="flex items-center justify-between gap-4 rounded-xl border border-[var(--sea-ink)]/10 px-4 py-3"
-                  >
-                    <span className="font-semibold text-[var(--sea-ink)]">
-                      {word.word}
-                    </span>
-
-                    <span className="text-right text-sm text-[var(--sea-ink)]/65">
-                      <span className="block">English: {word.meaning}</span>
-                      <span className="mt-1 block">
-                        Amharic: {word.amharic ?? "Translation unavailable"}
-                      </span>
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="flex flex-col gap-3 border-t border-[var(--sea-ink)]/10 p-6 sm:flex-row sm:px-10">
-            {remainingWordCount > 0 && onContinue && (
-              <button
-                type="button"
-                onClick={onContinue}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-5 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
-              >
-                Continue lesson ({remainingWordCount} left)
-                <ArrowRight className="size-4" />
-              </button>
-            )}
-            {missedWords.length > 0 && (
-              <button
-                type="button"
-                onClick={() => onRetryMissed?.(missedWords)}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-5 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
-              >
-                <RotateCcw className="size-4" />
-                Practise missed words
-              </button>
-            )}
-
-            <button
-              type="button"
-              onClick={restartQuiz}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[var(--sea-ink)]/15 px-5 py-3.5 text-sm font-semibold text-[var(--sea-ink)] transition hover:bg-[var(--bg-base)]"
-            >
-              Try again
-            </button>
-
-            <button
-              type="button"
-              onClick={onBack}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[var(--sea-ink)]/15 px-5 py-3.5 text-sm font-semibold text-[var(--sea-ink)] transition hover:bg-[var(--bg-base)]"
-            >
-              Learning path
-            </button>
-          </div>
-        </section>
-      </main>
-    );
+    return <div className={"fidel-study" + (variant === "quiz" ? " is-quiz" : "")}><section className="study-milestone">
+      <FidelTeacherMark className="study-teacher" />
+      <h1>{variant === "quiz" ? "Quiz complete." : score === questions.length ? "Every word remembered." : "A little more familiar."}</h1>
+      <p>{variant === "quiz" ? score === questions.length ? "A perfect score. You remembered every word." : "Your score is saved. Words you missed will return for another quiz." : score === questions.length ? "You recalled every word in this practice." : "Keep coming back. Familiarity grows with practice."}</p>
+      <dl className="study-results"><div><dt>Correct</dt><dd>{score}/{questions.length}</dd></div><div><dt>Accuracy</dt><dd>{accuracy}%</dd></div><div><dt>To revisit</dt><dd>{missedWords.length}</dd></div></dl>
+      {missedWords.length > 0 && <section className="study-missed"><h2>Words to revisit</h2><ul>{missedWords.map((word) => <li key={word.id}><strong>{word.word}</strong><span>{word.meaning}<span lang="am">{word.amharic ?? "Amharic translation unavailable"}</span></span></li>)}</ul></section>}
+      <div className="study-milestone-actions">
+        {remainingWordCount > 0 && onContinue && <button type="button" className="study-primary" onClick={onContinue}>Continue lesson ({remainingWordCount} left)<ArrowRight size={18} aria-hidden="true" /></button>}
+        {missedWords.length > 0 && onRetryMissed && <button type="button" className="study-secondary" onClick={() => onRetryMissed(missedWords)}><RotateCcw size={16} aria-hidden="true" />Practise missed words</button>}
+        {!onAnswer && <button type="button" className="study-secondary" onClick={restartQuiz}>Try again</button>}
+        <button type="button" className="study-secondary" onClick={onBack}>{variant === "quiz" ? "Back to review" : "Back to learning"}</button>
+      </div>
+    </section></div>;
   }
 
   if (!currentQuestion) return null;
 
-  const progress = ((currentIndex + 1) / questions.length) * 100;
+  const matching = matchingIndices(questions.map(question => question.word), variant);
+  if (matching.includes(currentIndex)) {
+    const roundWords = matching.map(index => questions[index].word);
+    const nextIndex = matching[matching.length - 1] + 1;
+    return <div className="fidel-study">
+      <header className="study-header"><button type="button" className="study-text-button" onClick={onBack}><ArrowLeft size={18} aria-hidden="true" />Exit practice</button><span>{topicLabel(category)}</span></header>
+      <div className="study-progress-label"><h1>Match the pairs</h1><span>{Object.keys(answers).length} / {questions.length} answered</span></div>
+      <progress className="study-progress" value={Object.keys(answers).length} max={questions.length} aria-label="Saved practice answers" />
+      <MatchingRound words={roundWords} initialAnswers={Object.fromEntries(roundWords.filter(word => word.id in answers).map(word => [word.id, answers[word.id] === word.id]))}
+        isCompleting={isSaving} continueLabel={nextIndex >= questions.length ? "See my results" : "Continue practice"}
+        onAnswer={async (wordId, selectedWordId) => {
+          const questionIndex = questions.findIndex(question => question.word.id === wordId);
+          if (questionIndex < 0) throw new Error("This word is no longer in the practice session.");
+          await onAnswer?.({ questionId: wordId, wordId, selectedWordId, questionIndex, questionType: "matching" });
+          setAnswers(previous => ({ ...previous, [wordId]: selectedWordId }));
+        }}
+        onComplete={() => nextQuestion(nextIndex)} />
+      {saveError && <p className="study-error" role="alert">{saveError}</p>}
+    </div>;
+  }
 
-  return (
-    <main className="mx-auto min-h-[80vh] max-w-2xl px-4 py-6 sm:px-6 sm:py-10">
-      <header className="mb-8">
-        <div className="flex items-center justify-between gap-4">
-          <button
-            type="button"
-            onClick={onBack}
-            aria-label="Exit practice"
-            className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-[var(--sea-ink)]/10 text-[var(--sea-ink)] transition hover:bg-[var(--bg-base)]"
-          >
-            <ArrowLeft className="size-5" />
-          </button>
+  return <div className={"fidel-study" + (variant === "quiz" ? " is-quiz" : "")}>
+    <header className="study-header"><button type="button" className="study-text-button" onClick={onBack}><ArrowLeft size={18} aria-hidden="true" />{variant === "quiz" ? "Save & exit quiz" : "Exit practice"}</button><span>{topicLabel(category)}</span></header>
+    <div className="study-progress-label"><h1>{variant === "quiz" ? "Choose the right word" : "Find the matching word"}</h1><span>{variant === "quiz" ? "Question " : ""}{currentIndex + 1} of {questions.length}</span></div>
+    <progress className="study-progress" value={variant === "quiz" ? Object.keys(answers).length : currentIndex + 1} max={questions.length} aria-label={variant === "quiz" ? "Quiz progress" : "Practice progress"} />
+    <section className="study-question" aria-label="Word to translate">
+      <dl className="study-translations"><div><dt>English</dt><dd>{currentQuestion.word.meaning}</dd></div><div><dt>Amharic</dt><dd lang="am">{currentQuestion.word.amharic ?? "Translation unavailable"}</dd></div></dl>
+    </section>
+    <div className="study-options" role="group" aria-label="Choose the matching word">
+      {currentQuestion.options.map((option, index) => {
+        const isCorrect = option.id === currentQuestion.word.id;
+        const isSelected = selectedId === option.id;
+        const status = answered && isCorrect ? " is-correct" : answered && isSelected ? " is-incorrect" : "";
+        return <button type="button" key={option.id} disabled={answered || isSaving} onClick={() => void selectAnswer(option.id)} className={"study-option" + status}>
+          <span className="study-option-letter">{String.fromCharCode(65 + index)}</span><span>{option.word}</span>
+          {answered && isCorrect && <Check size={20} aria-label="Correct answer" />}
+          {answered && isSelected && !isCorrect && <X size={20} aria-label="Incorrect answer" />}
+        </button>;
+      })}
+    </div>
+    <div className="study-practice-actions">
+      <span className="study-save-status" role="status">{isSaving ? <><LoaderCircle size={18} className="study-spinner" aria-hidden="true" /><span className="sr-only">Saving your answer</span></> : variant === "quiz" && answered ? "Answer saved" : null}</span>
+      <button type="button" className="study-primary" disabled={!answered || isSaving} onClick={() => void nextQuestion()}>{currentIndex === questions.length - 1 ? variant === "quiz" ? "Finish quiz" : "See my results" : variant === "quiz" ? "Next question" : "Continue"}<ArrowRight size={18} aria-hidden="true" /></button>
+    </div>
+    <div className="study-feedback-space" aria-live="polite" aria-atomic="true">
+      {answered && <div className={"study-feedback " + (correct ? "is-correct" : "is-incorrect")}>
+        {correct ? <Check size={20} aria-hidden="true" /> : <X size={20} aria-hidden="true" />}
+        <div><strong>{correct ? "That’s the one." : "A word for next time."}</strong><p>{currentQuestion.word.meaning} — <strong>{currentQuestion.word.word}</strong></p><p lang="am">{currentQuestion.word.amharic ?? "Amharic translation unavailable"}</p></div>
+      </div>}
+    </div>
+    {saveError && <p className="study-error" role="alert">{saveError}</p>}
 
-          <div className="flex-1">
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-sm font-semibold text-[var(--sea-ink)]">
-                {category}
-              </span>
-
-              <span className="text-sm tabular-nums text-[var(--sea-ink)]/60">
-                {currentIndex + 1} of {questions.length}
-              </span>
-            </div>
-
-            <div
-              className="mt-3 h-2 overflow-hidden rounded-full bg-[var(--sea-ink)]/10"
-              role="progressbar"
-              aria-label="Quiz progress"
-              aria-valuemin={0}
-              aria-valuemax={questions.length}
-              aria-valuenow={currentIndex + 1}
-            >
-              <div
-                className="h-full rounded-full bg-[var(--action)] transition-all duration-300"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <section>
-        <p className="text-center text-sm font-semibold uppercase tracking-[0.16em] text-[var(--sea-ink)]/50">
-          Choose the correct word
-        </p>
-
-        <h1 className="mt-4 text-center text-3xl font-bold tracking-tight text-[var(--sea-ink)] sm:text-4xl">
-          What is this in Afaan Oromoo?
-        </h1>
-
-        <div className="mt-8 rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--panel)] px-5 py-8 text-center shadow-sm sm:px-8 sm:py-10">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl bg-[#39C987]/10 p-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#239B65] dark:text-emerald-300">
-                English
-              </p>
-              <p className="mt-2 text-xl font-bold text-[var(--sea-ink)] sm:text-2xl">
-                {currentQuestion.word.meaning}
-              </p>
-            </div>
-            <div className="rounded-2xl bg-[#E9A23B]/10 p-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#9A6515] dark:text-amber-300">
-                Amharic
-              </p>
-              <p className="mt-2 text-xl font-bold text-[var(--sea-ink)] sm:text-2xl">
-                {currentQuestion.word.amharic ?? "Translation unavailable"}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {currentQuestion.options.map((option, index) => {
-            const isSelected = selectedId === option.id;
-            const isCorrect = option.id === currentQuestion.word.id;
-
-            let optionStyle =
-              "border-[var(--sea-ink)]/15 bg-[var(--panel)] hover:border-[var(--sea-ink)]/40 hover:bg-[var(--bg-base)]";
-
-            if (answered && isCorrect) {
-              optionStyle =
-                "border-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-950 dark:text-emerald-300";
-            } else if (answered && isSelected && !isCorrect) {
-              optionStyle = "border-rose-400 bg-rose-50 dark:bg-rose-500/10 text-rose-950 dark:text-rose-300";
-            }
-
-            return (
-              <button
-                key={option.id}
-                type="button"
-                disabled={answered || isSaving}
-                onClick={() => void selectAnswer(option.id)}
-                className={`flex min-h-[76px] items-center gap-4 rounded-2xl border-2 p-4 text-left transition duration-200 disabled:cursor-default ${optionStyle}`}
-              >
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-current/15 text-sm font-semibold opacity-70">
-                  {String.fromCharCode(65 + index)}
-                </span>
-
-                <span className="flex-1 text-base font-semibold">
-                  {option.word}
-                </span>
-
-                {answered && isCorrect && (
-                  <CheckCircle2 className="size-5 shrink-0 text-emerald-600 dark:text-emerald-300" />
-                )}
-
-                {answered && isSelected && !isCorrect && (
-                  <XCircle className="size-5 shrink-0 text-rose-600 dark:text-rose-300" />
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {answered && (
-          <div
-            aria-live="polite"
-            className={`mt-5 rounded-2xl border p-4 ${correct
-                ? "border-emerald-200 bg-emerald-50 dark:bg-emerald-500/10"
-                : "border-rose-200 bg-rose-50 dark:bg-rose-500/10"
-              }`}
-          >
-            <div className="flex items-start gap-3">
-              {correct ? (
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600 dark:text-emerald-300" />
-              ) : (
-                <XCircle className="mt-0.5 size-5 shrink-0 text-rose-600 dark:text-rose-300" />
-              )}
-
-              <div>
-                <p
-                  className={`font-bold ${correct ? "text-emerald-900 dark:text-emerald-300" : "text-rose-900 dark:text-rose-300"
-                    }`}
-                >
-                  {correct ? "That's right!" : "Not quite!"}
-                </p>
-
-                <p className="mt-1 text-sm leading-6 text-[var(--sea-ink)]/75">
-                  {currentQuestion.word.meaning} means{" "}
-                  <strong>{currentQuestion.word.word}</strong> in Afaan
-                  Oromoo.
-                </p>
-                <p className="mt-1 text-sm leading-6 text-[var(--sea-ink)]/75">
-                  Amharic: {currentQuestion.word.amharic ?? "Translation unavailable"}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="mt-6 flex justify-end">
-          <button
-            type="button"
-            disabled={!answered || isSaving}
-            onClick={() => void nextQuestion()}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--action)] px-6 py-4 font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
-          >
-            {isSaving
-              ? "Saving..."
-              : currentIndex === questions.length - 1
-              ? "See my results"
-              : "Continue"}
-            <ArrowRight className="size-4" />
-          </button>
-        </div>
-        {saveError && <p className="mt-4 text-sm text-rose-700 dark:text-rose-300" role="alert">{saveError}</p>}
-      </section>
-    </main>
-  );
+  </div>;
 }

@@ -1,0 +1,1816 @@
+{
+ "url": "http://127.0.0.1:4184/?screen=profile&theme=dark",
+ "at": "2026-11-05T14:03:45.991Z",
+ "allow": [
+  "covered-text"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.93,
+    0.7
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1418,
+     "screens": 1.6,
+     "words": 126,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 18,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Your profile",
+     "words": 2,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 124,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Your profile",
+     "words": 2,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "3",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.01,
+      "top": 458,
+      "tag": "strong",
+      "kind": "statement"
+     },
+     {
+      "text": "24",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.15,
+      "top": 499,
+      "tag": "dd",
+      "kind": "statement"
+     },
+     {
+      "text": "4",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.15,
+      "top": 499,
+      "tag": "dd",
+      "kind": "statement"
+     },
+     {
+      "text": "2 days",
+      "words": 2,
+      "chars": 6,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.15,
+      "top": 499,
+      "tag": "dd",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 4,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      22,
+      24,
+      26,
+      28
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Manrope",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 14.5
+     },
+     "measureChars": 175,
+     "max": {
+      "size": 28,
+      "vw": 1.9,
+      "font": "Manrope",
+      "text": "24"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.04,
+     "smallText": 5
+    },
+    "eyebrows": [
+     {
+      "text": "Words learned",
+      "above": "24",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 467
+     },
+     {
+      "text": "Lessons completed",
+      "above": "4",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 467
+     },
+     {
+      "text": "Current streak",
+      "above": "2 days",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 467
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#1c231e",
+     "bodyBgHsl": {
+      "h": 137,
+      "s": 0.11,
+      "l": 0.12
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#e7ede6",
+       "share": 0.61
+      },
+      {
+       "color": "#b0bcb2",
+       "share": 0.39
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 2,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 4,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": true,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1418,
+    "margins": {
+     "left": 0,
+     "right": 67
+    },
+    "sections": [
+     {
+      "sel": "div.relative.flex",
+      "tag": "div",
+      "top": 0,
+      "height": 1193,
+      "words": 119,
+      "media": 0,
+      "middle": 120,
+      "heading": {
+       "text": "24",
+       "size": 28,
+       "tag": "dd"
+      },
+      "left": 24,
+      "right": 39,
+      "textLeft": 24,
+      "textRight": 67,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "nav.fixed.inset-x-0",
+      "tag": "nav",
+      "top": 1193,
+      "height": 225,
+      "words": 5,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 0,
+      "right": 1374,
+      "textLeft": 0,
+      "textRight": 1374,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Your profile",
+      "size": 26,
+      "top": 124,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [
+     {
+      "text": "Home",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Learn",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Review",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Dictionary",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Profile",
+      "side": "left",
+      "px": 0
+     }
+    ],
+    "edges": [
+     {
+      "x": 188,
+      "n": 2
+     },
+     {
+      "x": 163,
+      "n": 1
+     },
+     {
+      "x": 279,
+      "n": 1
+     },
+     {
+      "x": 928,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 5,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.22,
+    "voidBox": {
+     "x": 480,
+     "y": 600,
+     "w": 960,
+     "h": 300
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#1c231e",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 0,
+     "right": 43
+    },
+    "hero": {
+     "text": "Your profile",
+     "words": 2,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 124,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 4,
+     "firstScreen": 4,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 73,
+       "at": 539,
+       "panel": "Your progress"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 4,
+     "radii": [
+      [
+       8,
+       4
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [
+     "example.com"
+    ],
+    "type": {
+     "under13": 0.37,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      20,
+      22,
+      24,
+      26,
+      28
+     ]
+    },
+    "title": {
+     "text": "Your profile",
+     "size": 26,
+     "top": 124
+    },
+    "colourShare": 0.001
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.95,
+    0.78
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1498,
+     "screens": 1.5,
+     "words": 124,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 18,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Your profile",
+     "words": 2,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 120,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Your profile",
+     "words": 2,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Your profile",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.34,
+      "top": 120,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "3",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.02,
+      "top": 454,
+      "tag": "strong",
+      "kind": "statement"
+     },
+     {
+      "text": "24",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.14,
+      "top": 495,
+      "tag": "dd",
+      "kind": "statement"
+     },
+     {
+      "text": "2 days",
+      "words": 2,
+      "chars": 6,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.14,
+      "top": 495,
+      "tag": "dd",
+      "kind": "heading"
+     },
+     {
+      "text": "4",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.14,
+      "top": 514,
+      "tag": "dd",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      20,
+      22,
+      24,
+      26,
+      28
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "Manrope",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 14.5
+     },
+     "measureChars": 109,
+     "max": {
+      "size": 28,
+      "vw": 3.6,
+      "font": "Manrope",
+      "text": "24"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.02,
+     "smallText": 5
+    },
+    "eyebrows": [
+     {
+      "text": "Local design preview · sample account",
+      "above": "Your profile",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12,
+      "top": 64
+     },
+     {
+      "text": "Words learned",
+      "above": "24",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 463
+     },
+     {
+      "text": "Current streak",
+      "above": "2 days",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 463
+     },
+     {
+      "text": "Lessons completed",
+      "above": "4",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 463
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#1c231e",
+     "bodyBgHsl": {
+      "h": 137,
+      "s": 0.11,
+      "l": 0.12
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#e7ede6",
+       "share": 0.61
+      },
+      {
+       "color": "#b0bcb2",
+       "share": 0.39
+      },
+      {
+       "color": "#eda334",
+       "share": 0
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 2,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 4,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1498,
+    "margins": {
+     "left": 0,
+     "right": 63
+    },
+    "sections": [
+     {
+      "sel": "div.relative.flex",
+      "tag": "div",
+      "top": 0,
+      "height": 1273,
+      "words": 117,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "24",
+       "size": 28,
+       "tag": "dd"
+      },
+      "left": 24,
+      "right": 39,
+      "textLeft": 24,
+      "textRight": 63,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "nav.fixed.inset-x-0",
+      "tag": "nav",
+      "top": 1273,
+      "height": 225,
+      "words": 5,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 0,
+      "right": 702,
+      "textLeft": 0,
+      "textRight": 702,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Your profile",
+      "size": 26,
+      "top": 120,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [
+     {
+      "text": "Home",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Learn",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Review",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Dictionary",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Profile",
+      "side": "left",
+      "px": 0
+     }
+    ],
+    "edges": [
+     {
+      "x": 49,
+      "n": 2
+     },
+     {
+      "x": 24,
+      "n": 1
+     },
+     {
+      "x": 140,
+      "n": 1
+     },
+     {
+      "x": 493,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 5,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#1c231e",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 0,
+     "right": 39
+    },
+    "hero": {
+     "text": "Your profile",
+     "words": 2,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 120,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 4,
+     "firstScreen": 4,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 54,
+       "at": 554,
+       "panel": "Your progress"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 4,
+     "radii": [
+      [
+       8,
+       4
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [
+     "example.com"
+    ],
+    "type": {
+     "under13": 0.37,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      20,
+      22,
+      24,
+      26,
+      28
+     ]
+    },
+    "title": {
+     "text": "Your profile",
+     "size": 26,
+     "top": 120
+    },
+    "colourShare": 0.002
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.93,
+    0.89,
+    0.72
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 1860,
+     "screens": 2.2,
+     "words": 120,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 11,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Your profile",
+     "words": 2,
+     "chars": 12,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 116,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Your profile",
+     "words": 2,
+     "lines": 1,
+     "size": 24,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Your profile",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.61,
+      "top": 116,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Aster Tesfaye",
+      "words": 2,
+      "chars": 13,
+      "lines": 4,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.03,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.12,
+      "top": 218,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "AT",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.14,
+      "top": 332,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "24",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.25,
+      "top": 643,
+      "tag": "dd",
+      "kind": "statement"
+     },
+     {
+      "text": "2 days",
+      "words": 2,
+      "chars": 6,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.25,
+      "top": 643,
+      "tag": "dd",
+      "kind": "statement"
+     },
+     {
+      "text": "4",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.25,
+      "top": 661,
+      "tag": "dd",
+      "kind": "statement"
+     },
+     {
+      "text": "3",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.04,
+      "top": 801,
+      "tag": "strong",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 7,
+     "maxLines": 4,
+     "over2Lines": 1,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      20,
+      22,
+      24,
+      28
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Manrope",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 14.5
+     },
+     "measureChars": 52,
+     "max": {
+      "size": 28,
+      "vw": 7.2,
+      "font": "Manrope",
+      "text": "3"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 9
+    },
+    "eyebrows": [
+     {
+      "text": "Local design preview · sample account",
+      "above": "Your profile",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12,
+      "top": 64
+     },
+     {
+      "text": "Words learned",
+      "above": "24",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12,
+      "top": 613
+     },
+     {
+      "text": "Current streak",
+      "above": "2 days",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12,
+      "top": 613
+     },
+     {
+      "text": "Lessons completed",
+      "above": "4",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12,
+      "top": 613
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#1c231e",
+     "bodyBgHsl": {
+      "h": 137,
+      "s": 0.11,
+      "l": 0.12
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      },
+      {
+       "color": "#222924",
+       "top": 198,
+       "hsl": {
+        "h": 137,
+        "s": 0.09,
+        "l": 0.15
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#e7ede6",
+       "share": 0.61
+      },
+      {
+       "color": "#b0bcb2",
+       "share": 0.39
+      },
+      {
+       "color": "#eda334",
+       "share": 0
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 2,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 4,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": true,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 1860,
+    "margins": {
+     "left": 0,
+     "right": 31
+    },
+    "sections": [
+     {
+      "sel": "div.relative.flex",
+      "tag": "div",
+      "top": 0,
+      "height": 1635,
+      "words": 113,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Your profile",
+       "size": 24,
+       "tag": "h1"
+      },
+      "left": 18,
+      "right": 18,
+      "textLeft": 18,
+      "textRight": 31,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "nav.fixed.inset-x-0",
+      "tag": "nav",
+      "top": 1635,
+      "height": 225,
+      "words": 5,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 0,
+      "right": 324,
+      "textLeft": 0,
+      "textRight": 324,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Your profile",
+      "size": 24,
+      "top": 116,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [
+     {
+      "text": "Home",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Learn",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Review",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Dictionary",
+      "side": "left",
+      "px": 0
+     },
+     {
+      "text": "Profile",
+      "side": "left",
+      "px": 0
+     }
+    ],
+    "edges": [
+     {
+      "x": 38,
+      "n": 3
+     },
+     {
+      "x": 18,
+      "n": 1
+     },
+     {
+      "x": 110,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 5,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#1c231e",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 0,
+     "right": 18
+    },
+    "hero": {
+     "text": "Your profile",
+     "words": 2,
+     "chars": 12,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 116,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 4,
+     "firstScreen": 3,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 4,
+     "radii": [
+      [
+       8,
+       4
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [
+     "example.com"
+    ],
+    "type": {
+     "under13": 0.47,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      20,
+      22,
+      24
+     ]
+    },
+    "title": {
+     "text": "Your profile",
+     "size": 24,
+     "top": 116
+    },
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "edge-text",
+   "width": 1440,
+   "message": "5 text block(s) sit within 16px of the screen edge: \"Home\" (0px from the left); \"Learn\" (0px from the left); \"Review\" (0px from the left); \"Dictionary\" (0px from the left)",
+   "fix": "Keep text inside the page margin (16–32px or more). Only display type deliberately bled past the edge may touch it.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "placeholder-data",
+   "width": 1440,
+   "message": "Placeholder data on screen: example.com.",
+   "fix": "Use believable data for this product: real-looking names, amounts that add up, dates in order, units on every figure.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "panel-void",
+   "width": 1440,
+   "message": "1 card(s) hold a blank band inside: 73px in \"Your progress\".",
+   "fix": "A card stretches to its neighbour only when it has content to fill. Keep a legend or a note directly under its chart (only an action or a total may sit at a stretched card's foot), let a short card keep its own height (align-items: start), and let a filtered block shrink to its rows."
+  },
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 390,
+   "message": "1 headline(s) wrap past two lines at 390px: \"Aster Tesfaye\" → 4 lines (2 words, 22px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 24px or less."
+  },
+  {
+   "level": "WARN",
+   "id": "tiny-text",
+   "width": 390,
+   "message": "47% of the text is under 13px.",
+   "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\profile-dark\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\profile-dark\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\profile-dark\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\profile-dark\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\profile-dark\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\finish\\profile-dark\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

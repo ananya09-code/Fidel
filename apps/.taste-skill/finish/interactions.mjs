@@ -1,0 +1,40 @@
+import {Browser,sleep} from 'file:///C:/Users/ananya/.codex/skills/design-taste-frontend/scripts/lib/cdp.mjs';
+import {strict as assert} from 'node:assert';import {writeFileSync} from 'node:fs';
+const b=await Browser.launch(),p=await b.newPage({width:390,height:844}),results=[];
+async function click(text){assert(await p.eval(t=>{const el=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()===t||x.getAttribute('aria-label')===t);if(!el||el.disabled)return false;el.click();return true;},text),'Button unavailable: '+text);await sleep(120);}
+try{
+ await p.goto('http://127.0.0.1:4184/');
+ await p.eval(()=>[...document.querySelectorAll('.settings-goals button')].find(x=>x.textContent.includes('15')).click());await sleep(60);
+ assert(await p.eval(()=>document.querySelector('.settings-goal-caption').textContent.includes('15')));
+ await p.eval(()=>document.querySelector('input[role=switch]').click());await sleep(60);
+ assert.equal(await p.eval(()=>document.querySelector('input[type=time]')),null);
+ await p.eval(()=>document.querySelector('input[role=switch]').click());await sleep(60);
+ assert(await p.eval(()=>!!document.querySelector('input[type=time]')));
+ await p.eval(()=>document.querySelector('input[value=dark]').click());await sleep(80);
+ assert(await p.eval(()=>document.documentElement.classList.contains('dark')));
+ await p.eval(()=>document.querySelector('input[value=light]').click());
+ await click('Save changes');assert(await p.eval(()=>document.body.textContent.includes('Your preferences are saved.')));results.push('Goal, reminder/time, live appearance and save callback');
+ const menuPoint=await p.eval(()=>{const el=document.querySelector('[aria-label="Open profile menu"]');el.scrollIntoView({block:'center'});const r=el.getBoundingClientRect();return{x:r.x+r.width/2,y:r.y+r.height/2};});
+ await p.send('Input.dispatchMouseEvent',{type:'mousePressed',...menuPoint,button:'left',clickCount:1});
+ await p.send('Input.dispatchMouseEvent',{type:'mouseReleased',...menuPoint,button:'left',clickCount:1});
+ await sleep(180);assert(await p.eval(()=>!![...document.querySelectorAll('[role=menuitem]')].find(x=>x.textContent.includes('My profile'))));
+ await p.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await sleep(60);results.push('Account menu opens, links present and Escape closes');
+ await p.goto('http://127.0.0.1:4184/?screen=profile');
+ assert.equal(await p.eval(()=>document.querySelector('progress').value),3);
+ const cell=await p.eval(()=>{const el=document.querySelector('button[aria-label*="practice answer"][tabindex="0"]');if(!el)return null;el.focus();return el.getAttribute('aria-label');});assert(cell);
+ await p.send('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowLeft',code:'ArrowLeft',windowsVirtualKeyCode:37});await sleep(60);
+ assert.notEqual(await p.eval(()=>document.activeElement.getAttribute('aria-label')),cell);results.push('Real-ratio goal and calendar keyboard navigation');
+ await p.goto('http://127.0.0.1:4184/?screen=onboarding');
+ await p.eval(()=>document.querySelector('.app-choice').click());await click('Continue');
+ await p.eval(()=>document.querySelector('.app-choice').click());await click('Continue');
+ await p.eval(()=>document.querySelector('.app-choice').click());await click('Continue');
+ await p.eval(()=>[...document.querySelectorAll('.app-choice')].find(x=>x.textContent.includes('10 words')).click());await click('Continue');
+ await p.eval(()=>document.querySelector('input[value=dark]').click());await click('Finish setup');
+ assert(await p.eval(()=>document.body.textContent.includes('A new conversation starts here.')));
+ assert(await p.eval(()=>document.body.textContent.includes('10 words')));
+ await click('Change my answers');assert(await p.eval(()=>!!document.querySelector('.app-appearance')));results.push('All five onboarding steps, theme, completion summary and back');
+ await p.goto('http://127.0.0.1:4184/?screen=states');await click('Try again');assert(await p.eval(()=>document.body.textContent.includes('Retry requested')));
+ assert(await p.eval(()=>document.querySelector('.is-loading [class=sr-only]').textContent.includes('Loading')));
+ assert.equal(await p.eval(()=>document.documentElement.scrollWidth>innerWidth),false);results.push('Accessible spinner, error retry, empty action and mobile overflow');
+ assert.deepEqual(p.consoleErrors,[]);console.log(results.join('\n'));writeFileSync('.taste-skill/finish/interactions.json',JSON.stringify(results,null,2));
+}finally{await b.close();}

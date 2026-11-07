@@ -1,0 +1,1353 @@
+{
+ "url": "http://127.0.0.1:4180/?theme=dark",
+ "at": "2026-11-05T12:15:13.835Z",
+ "allow": [
+  "covered-text",
+  "icon-chips"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.41,
+    0.34
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1078,
+     "screens": 1.2,
+     "words": 117,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 27,
+     "sections": 1,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Your learning path",
+     "words": 3,
+     "chars": 18,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 96,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Your learning path",
+     "words": 3,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      26
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 26,
+      "vw": 1.8,
+      "font": "Manrope",
+      "text": "Your learning path"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 7
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171c19",
+     "bodyBgHsl": {
+      "h": 144,
+      "s": 0.1,
+      "l": 0.1
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b0bcb2",
+       "share": 0.67
+      },
+      {
+       "color": "#e7ede6",
+       "share": 0.18
+      },
+      {
+       "color": "#d7ece8",
+       "share": 0.09
+      },
+      {
+       "color": "#d7ede8",
+       "share": 0.04
+      },
+      {
+       "color": "#25372c",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#eda334",
+      "hsl": {
+       "h": 36,
+       "s": 0.84,
+       "l": 0.57
+      },
+      "fg": "#25372c"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start lesson"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "div.fixed.inset-y-0 256px",
+      "div.flex.flex-col 255px"
+     ],
+     "outlinedBoxes": 2,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 3,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1078,
+    "margins": {
+     "left": 291,
+     "right": 61
+    },
+    "sections": [
+     {
+      "sel": "section.learn-next",
+      "tag": "section",
+      "top": 182,
+      "height": 132,
+      "words": 8,
+      "media": 0,
+      "middle": 721,
+      "heading": {
+       "text": "Family",
+       "size": 24,
+       "tag": "h2"
+      },
+      "left": 315,
+      "right": 126,
+      "textLeft": 415,
+      "textRight": 126,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.learn-units",
+      "tag": "div",
+      "top": 381,
+      "height": 665,
+      "words": 68,
+      "media": 0,
+      "middle": 602,
+      "heading": {
+       "text": "First conversations",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 316,
+      "right": 109,
+      "textLeft": 354,
+      "textRight": 109,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Your learning path",
+      "size": 26,
+      "top": 96,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 354,
+      "n": 2
+     },
+     {
+      "x": 291,
+      "n": 1
+     },
+     {
+      "x": 415,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.3,
+    "voidBox": {
+     "x": 660,
+     "y": 120,
+     "w": 540,
+     "h": 720
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#171c19",
+    "sidebar": {
+     "w": 256,
+     "tag": "div",
+     "links": 6,
+     "share": 0.18
+    },
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 30,
+     "right": 50
+    },
+    "hero": {
+     "text": "Your learning path",
+     "words": 3,
+     "chars": 18,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 96,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 4,
+     "firstScreen": 3,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 4,
+    "panels": {
+     "count": 4,
+     "radii": [
+      [
+       8,
+       3
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 36,
+       "size": 48,
+       "radius": "50%"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 1,
+     "tabularShare": 1,
+     "kpiMax": 13
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.33,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      26
+     ]
+    },
+    "title": {
+     "text": "Your learning path",
+     "size": 26,
+     "top": 96
+    },
+    "colourShare": 0.009
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.37,
+    0.34
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1158,
+     "screens": 1.1,
+     "words": 110,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 27,
+     "sections": 1,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Your learning path",
+     "words": 3,
+     "chars": 18,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 92,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Your learning path",
+     "words": 3,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Your learning path",
+      "words": 3,
+      "chars": 18,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 92,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      24,
+      26
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "text": "Your learning path"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 6
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171c19",
+     "bodyBgHsl": {
+      "h": 144,
+      "s": 0.1,
+      "l": 0.1
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b0bcb2",
+       "share": 0.7
+      },
+      {
+       "color": "#e7ede6",
+       "share": 0.19
+      },
+      {
+       "color": "#d7ece8",
+       "share": 0.05
+      },
+      {
+       "color": "#d7ede7",
+       "share": 0.04
+      },
+      {
+       "color": "#25372c",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#eda334",
+      "hsl": {
+       "h": 36,
+       "s": 0.84,
+       "l": 0.57
+      },
+      "fg": "#25372c"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start lesson"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "nav.fixed.inset-x-0 753px"
+     ],
+     "outlinedBoxes": 2,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 3,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1158,
+    "margins": {
+     "left": 24,
+     "right": 51
+    },
+    "sections": [
+     {
+      "sel": "section.learn-next",
+      "tag": "section",
+      "top": 178,
+      "height": 132,
+      "words": 8,
+      "media": 0,
+      "middle": 326,
+      "heading": {
+       "text": "Family",
+       "size": 24,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 115,
+      "textLeft": 148,
+      "textRight": 115,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.learn-units",
+      "tag": "div",
+      "top": 377,
+      "height": 665,
+      "words": 68,
+      "media": 0,
+      "middle": 207,
+      "heading": {
+       "text": "First conversations",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 49,
+      "right": 98,
+      "textLeft": 87,
+      "textRight": 98,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Your learning path",
+      "size": 26,
+      "top": 92,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 87,
+      "n": 2
+     },
+     {
+      "x": 24,
+      "n": 1
+     },
+     {
+      "x": 148,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#171c19",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 24,
+     "right": 39
+    },
+    "hero": {
+     "text": "Your learning path",
+     "words": 3,
+     "chars": 18,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 92,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 3,
+     "firstScreen": 3,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 4,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       8,
+       3
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 36,
+       "size": 48,
+       "radius": "50%"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 1,
+     "tabularShare": 1,
+     "kpiMax": 13
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.33,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      26
+     ]
+    },
+    "title": {
+     "text": "Your learning path",
+     "size": 26,
+     "top": 92
+    },
+    "colourShare": 0.013
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.54,
+    0.35
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 1254,
+     "screens": 1.5,
+     "words": 106,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 21,
+     "sections": 1,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Your learning path",
+     "words": 3,
+     "chars": 18,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 88,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Your learning path",
+     "words": 3,
+     "lines": 1,
+     "size": 24,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Your learning path",
+      "words": 3,
+      "chars": 18,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.71,
+      "top": 88,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      21,
+      24
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "text": "Your learning path"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 8
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171c19",
+     "bodyBgHsl": {
+      "h": 144,
+      "s": 0.1,
+      "l": 0.1
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b0bcb2",
+       "share": 0.71
+      },
+      {
+       "color": "#e7ede6",
+       "share": 0.18
+      },
+      {
+       "color": "#d7ece8",
+       "share": 0.05
+      },
+      {
+       "color": "#d7ede7",
+       "share": 0.05
+      },
+      {
+       "color": "#25372c",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#eda334",
+      "hsl": {
+       "h": 36,
+       "s": 0.84,
+       "l": 0.57
+      },
+      "fg": "#25372c"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start lesson"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "nav.fixed.inset-x-0 390px"
+     ],
+     "outlinedBoxes": 2,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 3,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 1254,
+    "margins": {
+     "left": 18,
+     "right": 30
+    },
+    "sections": [
+     {
+      "sel": "section.learn-next",
+      "tag": "section",
+      "top": 171,
+      "height": 178,
+      "words": 8,
+      "media": 0,
+      "middle": 16,
+      "heading": {
+       "text": "Family",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 38,
+      "right": 171,
+      "textLeft": 108,
+      "textRight": 171,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.learn-units",
+      "tag": "div",
+      "top": 444,
+      "height": 698,
+      "words": 66,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "First conversations",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 35,
+      "right": 54,
+      "textLeft": 69,
+      "textRight": 54,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Your learning path",
+      "size": 24,
+      "top": 88,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 69,
+      "n": 2
+     },
+     {
+      "x": 18,
+      "n": 1
+     },
+     {
+      "x": 108,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#171c19",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 18,
+     "right": 28
+    },
+    "hero": {
+     "text": "Your learning path",
+     "words": 3,
+     "chars": 18,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 88,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 3,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 4,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       8,
+       3
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 36,
+       "size": 48,
+       "radius": "50%"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 1,
+     "tabularShare": 1,
+     "kpiMax": 13
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.43,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      21,
+      24
+     ]
+    },
+    "title": {
+     "text": "Your learning path",
+     "size": 24,
+     "top": 88
+    },
+    "colourShare": 0.051
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "hero-void",
+   "width": 1440,
+   "message": "30% of the first screen is one empty block (540×720px at 660,120).",
+   "fix": "Place the void on purpose or fill it: move the picture, the film or one fact into it, grow the headline to meet it, or shrink the screen to its content. A void reads as placed only when something closes it on the far side and it is the screen's one rest."
+  },
+  {
+   "level": "WARN",
+   "id": "icon-tiles",
+   "width": 1440,
+   "message": "4 icons sit in neutral boxes repeated down the screen.",
+   "fix": "A boxed icon on every row or card is still the template habit, tinted or not. Keep one plain 16px icon where it helps the eye, or none.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\learn\\dark\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\learn\\dark\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\learn\\dark\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\learn\\dark\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\learn\\dark\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\learn\\dark\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

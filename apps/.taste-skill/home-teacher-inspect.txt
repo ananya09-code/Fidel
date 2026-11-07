@@ -1,0 +1,26 @@
+TASTESKILL · INSPECT   http://127.0.0.1:4178/Home
+
+MEASURED (first viewport listed)
+  hero headline   "Akkam. A little more, every day."  6 words · 1 line(s) · 26px (1.8vw) · Manrope 500 · tracking -0.04em · leading 1.25
+  @768px          1 line(s) · 26px
+  @390px          1 line(s) · 24px
+  typefaces       Manrope 100%
+  sizes in use    12 / 13 / 14 / 18 / 24 / 26 / 32 / 34 px
+  colour          page #edf2ec · sections #f8faf7 · button #e7f0e8
+  page            1.2 screens · 158 words · 0 images · hero media none
+  headings        2 · longest 1 line(s) · median 1 words
+
+WARN — fix, or be able to defend
+  [font-fallback] @1440px (+768, 390)  Typeface(s) declared but not loaded, so a fallback is rendering: Manrope
+      → Fix the font URL / family name, or the screenshots you are judging are not the design.
+
+LOOK AT THE RENDER — open these with your image viewer / Read tool before saying anything about quality:
+  desktop 1440px  .taste-skill/home-teacher/desktop-fold.jpg
+                  .taste-skill/home-teacher/desktop-page-01.jpg
+  tablet 768px    .taste-skill/home-teacher/tablet-fold.jpg
+                  .taste-skill/home-teacher/tablet-page-01.jpg
+  mobile 390px    .taste-skill/home-teacher/mobile-fold.jpg
+                  .taste-skill/home-teacher/mobile-page-01.jpg
+
+report: .taste-skill/home-teacher/report.json
+RESULT: 0 FAIL, 1 WARN — measurements pass. Passing the meter is the floor, not the grade: score the screenshots with references/critique.md.

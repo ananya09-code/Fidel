@@ -1,0 +1,1295 @@
+{
+ "url": "http://127.0.0.1:4173/sign-up",
+ "at": "2026-11-05T09:06:31.634Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    1
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 900,
+     "screens": 1,
+     "words": 37,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 4,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Some words feel like home.",
+     "words": 5,
+     "chars": 26,
+     "lines": 2,
+     "size": 32,
+     "vw": 2.2,
+     "font": "Fidel Auth Serif",
+     "weight": 700,
+     "tracking": -0.04,
+     "leading": 1.2,
+     "top": 154,
+     "tag": "p",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": null,
+    "headings": [
+     {
+      "text": "fidel.",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Fidel Auth Serif",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.07,
+      "top": 86,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Some words feel like home.",
+      "words": 5,
+      "chars": 26,
+      "lines": 2,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Fidel Auth Serif",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 154,
+      "tag": "p",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Fidel Auth Ethiopic",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.4,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.08,
+      "top": 690,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 0.87,
+       "mono": false
+      },
+      {
+       "family": "Fidel Auth Serif",
+       "share": 0.11,
+       "mono": false
+      },
+      {
+       "family": "Fidel Auth Ethiopic",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      11,
+      12,
+      13,
+      28,
+      30,
+      32
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 32,
+      "vw": 2.2,
+      "font": "Fidel Auth Serif",
+      "text": "Some wordsfeel like home."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.04,
+     "centerShare": 0.22,
+     "smallText": 9
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#131a15",
+       "top": 0,
+       "hsl": {
+        "h": 137,
+        "s": 0.16,
+        "l": 0.09
+       }
+      },
+      {
+       "color": "#1a231d",
+       "top": 50,
+       "hsl": {
+        "h": 140,
+        "s": 0.15,
+        "l": 0.12
+       }
+      },
+      {
+       "color": "#25372a",
+       "top": 58,
+       "hsl": {
+        "h": 137,
+        "s": 0.2,
+        "l": 0.18
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b4c2b5",
+       "share": 0.75
+      },
+      {
+       "color": "#eef2e8",
+       "share": 0.25
+      },
+      {
+       "color": "#f8a46b",
+       "share": 0
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 2,
+     "boxRadius": 24,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.29
+     }
+    ],
+    "nav": {
+     "links": 1,
+     "fixed": false,
+     "height": 32,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope",
+     "fidel auth serif",
+     "fidel auth ethiopic"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 900,
+    "margins": {
+     "left": 121,
+     "right": 177
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [],
+    "edgeText": [],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.33,
+    "voidBox": {
+     "x": 720,
+     "y": 120,
+     "w": 720,
+     "h": 600
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#ffffff",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 121,
+     "right": 156
+    },
+    "hero": {
+     "text": "Some words feel like home.",
+     "words": 5,
+     "chars": 26,
+     "lines": 2,
+     "size": 32,
+     "vw": 2.2,
+     "font": "Fidel Auth Serif",
+     "weight": 700,
+     "tracking": -0.04,
+     "leading": 1.2,
+     "top": 154,
+     "tag": "p",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 2,
+     "radii": [
+      [
+       24,
+       1
+      ],
+      [
+       18,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.43,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      16,
+      28,
+      30,
+      32
+     ]
+    },
+    "title": null,
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    1
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1024,
+     "screens": 1,
+     "words": 32,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 4,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Akkam",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 30,
+     "vw": 3.9,
+     "font": "Fidel Auth Ethiopic",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.4,
+     "top": 842,
+     "tag": "p",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": null,
+    "headings": [
+     {
+      "text": "fidel.",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Fidel Auth Serif",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.14,
+      "top": 48,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Some words feel like home.",
+      "words": 5,
+      "chars": 26,
+      "lines": 2,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Fidel Auth Serif",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.37,
+      "top": 116,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "Fidel Auth Ethiopic",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.4,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.16,
+      "top": 842,
+      "tag": "p",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 5,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 0.86,
+       "mono": false
+      },
+      {
+       "family": "Fidel Auth Serif",
+       "share": 0.12,
+       "mono": false
+      },
+      {
+       "family": "Fidel Auth Ethiopic",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      11,
+      12,
+      13,
+      28,
+      30
+     ],
+     "sizeCount": 5,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 30,
+      "vw": 3.9,
+      "font": "Fidel Auth Ethiopic",
+      "text": "Akkam"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.05,
+     "centerShare": 0.24,
+     "smallText": 8
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#131a15",
+       "top": 0,
+       "hsl": {
+        "h": 137,
+        "s": 0.16,
+        "l": 0.09
+       }
+      },
+      {
+       "color": "#1a231d",
+       "top": 16,
+       "hsl": {
+        "h": 140,
+        "s": 0.15,
+        "l": 0.12
+       }
+      },
+      {
+       "color": "#25372a",
+       "top": 24,
+       "hsl": {
+        "h": 137,
+        "s": 0.2,
+        "l": 0.18
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b4c2b5",
+       "share": 0.72
+      },
+      {
+       "color": "#eef2e8",
+       "share": 0.27
+      },
+      {
+       "color": "#f8a46b",
+       "share": 0
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 2,
+     "boxRadius": 24,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.27
+     }
+    ],
+    "nav": {
+     "links": 1,
+     "fixed": false,
+     "height": 32,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope",
+     "fidel auth serif",
+     "fidel auth ethiopic"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1024,
+    "margins": {
+     "left": 36,
+     "right": 84
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [],
+    "edgeText": [],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": false,
+    "ground": "#ffffff",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 36,
+     "right": 63
+    },
+    "hero": {
+     "text": "Akkam",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 30,
+     "vw": 3.9,
+     "font": "Fidel Auth Ethiopic",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.4,
+     "top": 842,
+     "tag": "p",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 2,
+     "radii": [
+      [
+       24,
+       1
+      ],
+      [
+       18,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.4,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      16,
+      28,
+      30
+     ]
+    },
+    "title": null,
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    1
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 844,
+     "screens": 1,
+     "words": 27,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 4,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "fidel.",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 25,
+     "vw": 6.4,
+     "font": "Fidel Auth Serif",
+     "weight": 700,
+     "tracking": -0.06,
+     "leading": 1,
+     "top": 23,
+     "tag": "span",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": null,
+    "headings": [
+     {
+      "text": "fidel.",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 25,
+      "vw": 6.4,
+      "font": "Fidel Auth Serif",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.24,
+      "top": 20,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Some words feel like home.",
+      "words": 5,
+      "chars": 26,
+      "lines": 2,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Fidel Auth Serif",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.48,
+      "top": 70,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 5,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 0.77,
+       "mono": false
+      },
+      {
+       "family": "Fidel Auth Serif",
+       "share": 0.23,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      11,
+      12,
+      24,
+      25
+     ],
+     "sizeCount": 4,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 25,
+      "vw": 6.4,
+      "font": "Fidel Auth Serif",
+      "text": "fidel"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.09,
+     "centerShare": 0.46,
+     "smallText": 5
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#1a231d",
+       "top": 0,
+       "hsl": {
+        "h": 140,
+        "s": 0.15,
+        "l": 0.12
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b4c2b5",
+       "share": 0.67
+      },
+      {
+       "color": "#eef2e8",
+       "share": 0.33
+      },
+      {
+       "color": "#f8a46b",
+       "share": 0.01
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 1,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.15
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 32,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope",
+     "fidel auth serif"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 844,
+    "margins": {
+     "left": 24,
+     "right": 10
+    },
+    "sections": [
+     {
+      "sel": "section.auth-art",
+      "tag": "section",
+      "top": 0,
+      "height": 218,
+      "words": 11,
+      "media": 0,
+      "middle": 114,
+      "heading": {
+       "text": "fidel",
+       "size": 25,
+       "tag": "span"
+      },
+      "left": 24,
+      "right": 16,
+      "textLeft": 24,
+      "textRight": 208,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.auth-form-side",
+      "tag": "section",
+      "top": 218,
+      "height": 626,
+      "words": 15,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 111,
+      "right": 45,
+      "textLeft": 111,
+      "textRight": 45,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [
+     {
+      "top": 260,
+      "height": 516
+     }
+    ],
+    "h1s": [],
+    "edgeText": [],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": false,
+    "ground": "#ffffff",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 24,
+     "right": 10
+    },
+    "hero": {
+     "text": "fidel.",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 25,
+     "vw": 6.4,
+     "font": "Fidel Auth Serif",
+     "weight": 700,
+     "tracking": -0.06,
+     "leading": 1,
+     "top": 23,
+     "tag": "span",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 0,
+     "firstScreen": 0,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 0,
+     "radii": [],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 2,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 137,
+       "size": 36,
+       "radius": "50%"
+      },
+      {
+       "hue": 137,
+       "size": 36,
+       "radius": "50%"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.46,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      16,
+      24,
+      25,
+      30
+     ]
+    },
+    "title": null,
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "font-count",
+   "width": 1440,
+   "message": "3 typefaces in use (Manrope, Fidel Auth Serif, Fidel Auth Ethiopic).",
+   "fix": "Two at most.",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "hero-void",
+   "width": 1440,
+   "message": "33% of the first screen is one empty block (720×600px at 720,120).",
+   "fix": "Place the void on purpose or fill it: move the picture, the film or one fact into it, grow the headline to meet it, or shrink the screen to its content. A void reads as placed only when something closes it on the far side and it is the screen's one rest."
+  },
+  {
+   "level": "FAIL",
+   "id": "no-title",
+   "width": 1440,
+   "message": "The screen has no h1.",
+   "fix": "Name the screen in an h1 at the top of the canvas (18–28px): \"Overview\", \"Payouts\", the project's name.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "blank-gap",
+   "width": 390,
+   "message": "1 stretch(es) of the page hold nothing at all: 516px at 260px (the screen is 844px tall).",
+   "fix": "Close the gap: a section gap is 120–240px on desktop and 72–112px on a phone. Look for a min-height: 100vh on a short section, an empty grid row, a hidden element still holding its space, or a reveal that never fired. A deliberate rest is a placed picture or colour field, not nothing."
+  },
+  {
+   "level": "WARN",
+   "id": "tiny-text",
+   "width": 390,
+   "message": "46% of the text is under 13px.",
+   "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\auth\\sign-up\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\auth\\sign-up\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\auth\\sign-up\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\auth\\sign-up\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\auth\\sign-up\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\auth\\sign-up\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

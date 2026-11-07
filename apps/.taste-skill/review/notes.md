@@ -1,0 +1,12 @@
+# Review local redesign
+Continues Home/Learn Editorial greeting direction, seed1038279508. Brand palette/type kept; no redraw.
+Question: which words should I revisit, and can I resume my review?
+Face: seated teacher mark, neutral green surfaces, logo gold on primary action and actual progress.
+Inventory: up to20 queued words from existing endpoint; real English/Amharic text and categories; optional native audio URL; active answers/total; up to10 completed sessions with dates/correct totals. Removed incorrect all-time sessions-completed statistic based on limited history.
+Signature interaction: Hide/Show meanings for self-recall, temporary only. Capped queue6/history4 with expand/collapse. Resume stays connected to existing authenticated API and shared redesigned LessonQuiz; no API/schema/dependency changes.
+Three files: ReviewOverview.tsx, new review.css, review route loading/error wrappers. Existing start/save/complete contracts unchanged. Audio pauses on replay/unmount, errors visible, missing URLs disable controls. UTC date formatting deterministic.
+Checks: TypeScript noEmit, full frontend ESLint and production build passed via installed local binaries. Isolated sample fixture browser tests passed: queue/history expansion+collapse, recall toggle preserving both translations, start/resume callbacks,2/5saved progress, empty/history/navigation, disabled spinner/error. No runtime errors/overflow. Live account persistence and real audio playback not re-tested.
+Production fixture inspected1440/768/390 light/dark:0FAIL. Fixed-bottom-nav covered-text allowance retained; scroll padding clears final content. All12screenshots opened. Tiny-text warning defended:11px translation labels and12px category/history sublines only; primary data13px+, words18px. Initial light Manrope load warning from inherited external font, loaded dark capture. Original source reviewed; no signed-in baseline screenshot comparison claimed.
+Critique: next action dominates; consistent frame/grid; golden cue sparse; queue/history counts reflect capped backend data; empty/history honest; score/accuracy derived from same response; mobile stacks with44px controls and bottom tabs. Self-review clarity8.5 identity8 density8 responsive8/10.
+No added imagery/assets or invented app statistics. Sample data only in .taste-skill/review-fixture. Local only, no push/deploy.
+Main app localhost:3000/review; isolated preview127.0.0.1:4183.

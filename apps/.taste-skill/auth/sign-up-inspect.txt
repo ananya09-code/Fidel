@@ -1,0 +1,36 @@
+TASTESKILL · INSPECT   http://127.0.0.1:4173/sign-up
+
+MEASURED (first viewport listed)
+  hero headline   "Some words feel like home."  5 words · 2 line(s) · 32px (2.2vw) · Fidel Auth Serif 700 · tracking -0.04em · leading 1.2
+  @768px          1 line(s) · 30px
+  @390px          1 line(s) · 25px
+  typefaces       Manrope 87%, Fidel Auth Serif 11%, Fidel Auth Ethiopic 2%
+  sizes in use    11 / 12 / 13 / 28 / 30 / 32 px
+  colour          page #ffffff · sections #131a15 #1a231d #25372a
+  page            1 screens · 37 words · 0 images · hero media 29% canvas
+  headings        3 · longest 2 line(s) · median 1 words
+
+FAIL — fix every one of these
+  [no-title] @1440px (+768, 390)  The screen has no h1.
+      → Name the screen in an h1 at the top of the canvas (18–28px): "Overview", "Payouts", the project's name.
+  [blank-gap] @390px  1 stretch(es) of the page hold nothing at all: 516px at 260px (the screen is 844px tall).
+      → Close the gap: a section gap is 120–240px on desktop and 72–112px on a phone. Look for a min-height: 100vh on a short section, an empty grid row, a hidden element still holding its space, or a reveal that never fired. A deliberate rest is a placed picture or colour field, not nothing.
+
+WARN — fix, or be able to defend
+  [font-count] @1440px (+768)  3 typefaces in use (Manrope, Fidel Auth Serif, Fidel Auth Ethiopic).
+      → Two at most.
+  [hero-void] @1440px  33% of the first screen is one empty block (720×600px at 720,120).
+      → Place the void on purpose or fill it: move the picture, the film or one fact into it, grow the headline to meet it, or shrink the screen to its content. A void reads as placed only when something closes it on the far side and it is the screen's one rest.
+  [tiny-text] @390px  46% of the text is under 13px.
+      → Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks.
+
+LOOK AT THE RENDER — open these with your image viewer / Read tool before saying anything about quality:
+  desktop 1440px  .taste-skill/auth/sign-up/desktop-fold.jpg
+                  .taste-skill/auth/sign-up/desktop-page-01.jpg
+  tablet 768px    .taste-skill/auth/sign-up/tablet-fold.jpg
+                  .taste-skill/auth/sign-up/tablet-page-01.jpg
+  mobile 390px    .taste-skill/auth/sign-up/mobile-fold.jpg
+                  .taste-skill/auth/sign-up/mobile-page-01.jpg
+
+report: .taste-skill/auth/sign-up/report.json
+RESULT: 2 FAIL, 3 WARN — not done.

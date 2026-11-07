@@ -1,0 +1,1383 @@
+{
+ "url": "http://127.0.0.1:4183/?theme=dark",
+ "at": "2026-11-05T13:44:59.674Z",
+ "allow": [
+  "covered-text"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.5,
+    0.44
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1072,
+     "screens": 1.2,
+     "words": 145,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 20,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Review",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 96,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Review",
+     "words": 1,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      26
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 26,
+      "vw": 1.8,
+      "font": "Manrope",
+      "text": "Review"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.08,
+     "smallText": 11
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171c19",
+     "bodyBgHsl": {
+      "h": 144,
+      "s": 0.1,
+      "l": 0.1
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b0bcb2",
+       "share": 0.52
+      },
+      {
+       "color": "#e7ede6",
+       "share": 0.33
+      },
+      {
+       "color": "#d7ece8",
+       "share": 0.09
+      },
+      {
+       "color": "#d7ede8",
+       "share": 0.04
+      },
+      {
+       "color": "#25372c",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#eda334",
+      "hsl": {
+       "h": 36,
+       "s": 0.84,
+       "l": 0.57
+      },
+      "fg": "#25372c"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start review"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 12,
+     "hairlineSamples": [
+      "div.fixed.inset-y-0 256px",
+      "div.flex.flex-col 255px",
+      "ul.review-words 717px",
+      "li 717px",
+      "li 717px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 2,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1072,
+    "margins": {
+     "left": 291,
+     "right": 74
+    },
+    "sections": [
+     {
+      "sel": "section.review-start-panel",
+      "tag": "section",
+      "top": 186,
+      "height": 128,
+      "words": 16,
+      "media": 0,
+      "middle": 504,
+      "heading": {
+       "text": "7 words to reconnect with",
+       "size": 24,
+       "tag": "h2"
+      },
+      "left": 315,
+      "right": 74,
+      "textLeft": 411,
+      "textRight": 92,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.review-columns",
+      "tag": "div",
+      "top": 342,
+      "height": 699,
+      "words": 100,
+      "media": 0,
+      "middle": 237,
+      "heading": {
+       "text": "Akkam",
+       "size": 18,
+       "tag": "h3"
+      },
+      "left": 291,
+      "right": 74,
+      "textLeft": 291,
+      "textRight": 74,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Review",
+      "size": 26,
+      "top": 96,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 291,
+      "n": 2
+     },
+     {
+      "x": 411,
+      "n": 1
+     },
+     {
+      "x": 1056,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.11,
+    "voidBox": {
+     "x": 720,
+     "y": 120,
+     "w": 180,
+     "h": 780
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#171c19",
+    "sidebar": {
+     "w": 256,
+     "tag": "div",
+     "links": 6,
+     "share": 0.18
+    },
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 30,
+     "right": 74
+    },
+    "hero": {
+     "text": "Review",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 96,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 4,
+     "firstScreen": 4,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 4,
+     "radii": [
+      [
+       0,
+       2
+      ],
+      [
+       8,
+       2
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.5,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      26
+     ]
+    },
+    "title": {
+     "text": "Review",
+     "size": 26,
+     "top": 96
+    },
+    "colourShare": 0.006
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.5,
+    0.29
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1416,
+     "screens": 1.4,
+     "words": 138,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 20,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Review",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 92,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Review",
+     "words": 1,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Review",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 92,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      26
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "text": "Review"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.09,
+     "smallText": 10
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171c19",
+     "bodyBgHsl": {
+      "h": 144,
+      "s": 0.1,
+      "l": 0.1
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b0bcb2",
+       "share": 0.55
+      },
+      {
+       "color": "#e7ede6",
+       "share": 0.35
+      },
+      {
+       "color": "#d7ece8",
+       "share": 0.05
+      },
+      {
+       "color": "#d7ede7",
+       "share": 0.04
+      },
+      {
+       "color": "#25372c",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#eda334",
+      "hsl": {
+       "h": 36,
+       "s": 0.84,
+       "l": 0.57
+      },
+      "fg": "#25372c"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start review"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 8,
+     "hairlineSamples": [
+      "ul.review-words 413px",
+      "li 413px",
+      "li 413px",
+      "li 413px",
+      "li 413px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 2,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1416,
+    "margins": {
+     "left": 24,
+     "right": 63
+    },
+    "sections": [
+     {
+      "sel": "section.review-start-panel",
+      "tag": "section",
+      "top": 182,
+      "height": 128,
+      "words": 16,
+      "media": 0,
+      "middle": 109,
+      "heading": {
+       "text": "7 words to reconnect with",
+       "size": 24,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 63,
+      "textLeft": 144,
+      "textRight": 81,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.review-columns",
+      "tag": "div",
+      "top": 338,
+      "height": 963,
+      "words": 100,
+      "media": 0,
+      "middle": 166,
+      "heading": {
+       "text": "Akkam",
+       "size": 18,
+       "tag": "h3"
+      },
+      "left": 24,
+      "right": 63,
+      "textLeft": 24,
+      "textRight": 63,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Review",
+      "size": 26,
+      "top": 92,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 24,
+      "n": 2
+     },
+     {
+      "x": 144,
+      "n": 1
+     },
+     {
+      "x": 485,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#171c19",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 24,
+     "right": 63
+    },
+    "hero": {
+     "text": "Review",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 92,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 3,
+     "firstScreen": 3,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       8,
+       2
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.5,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      26
+     ]
+    },
+    "title": {
+     "text": "Review",
+     "size": 26,
+     "top": 92
+    },
+    "colourShare": 0.01
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.45,
+    0.45,
+    0.61
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 1944,
+     "screens": 2.3,
+     "words": 138,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 14,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Review",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 88,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Review",
+     "words": 1,
+     "lines": 1,
+     "size": 24,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Review",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.91,
+      "top": 88,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      21,
+      24
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "text": "Review"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.09,
+     "smallText": 10
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171c19",
+     "bodyBgHsl": {
+      "h": 144,
+      "s": 0.1,
+      "l": 0.1
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#171c19",
+       "top": 0,
+       "hsl": {
+        "h": 144,
+        "s": 0.1,
+        "l": 0.1
+       }
+      },
+      {
+       "color": "#222924",
+       "top": 1356,
+       "hsl": {
+        "h": 137,
+        "s": 0.09,
+        "l": 0.15
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b0bcb2",
+       "share": 0.55
+      },
+      {
+       "color": "#e7ede6",
+       "share": 0.35
+      },
+      {
+       "color": "#d7ece8",
+       "share": 0.05
+      },
+      {
+       "color": "#d7ede7",
+       "share": 0.04
+      },
+      {
+       "color": "#25372c",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#eda334",
+      "hsl": {
+       "h": 36,
+       "s": 0.84,
+       "l": 0.57
+      },
+      "fg": "#25372c"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start review"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 11,
+     "hairlineSamples": [
+      "ul.review-words 354px",
+      "li 354px",
+      "li 354px",
+      "li 354px",
+      "li 354px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 2,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 1944,
+    "margins": {
+     "left": 18,
+     "right": 18
+    },
+    "sections": [
+     {
+      "sel": "section.review-start-panel",
+      "tag": "section",
+      "top": 171,
+      "height": 174,
+      "words": 16,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "7 words to reconnect with",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 38,
+      "right": 38,
+      "textLeft": 106,
+      "textRight": 44,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.review-queue",
+      "tag": "section",
+      "top": 369,
+      "height": 963,
+      "words": 58,
+      "media": 0,
+      "middle": 107,
+      "heading": {
+       "text": "Akkam",
+       "size": 18,
+       "tag": "h3"
+      },
+      "left": 18,
+      "right": 18,
+      "textLeft": 18,
+      "textRight": 18,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.review-history",
+      "tag": "section",
+      "top": 1356,
+      "height": 477,
+      "words": 42,
+      "media": 0,
+      "middle": 66,
+      "heading": {
+       "text": "Recent practice",
+       "size": 15,
+       "tag": "h2"
+      },
+      "left": 38,
+      "right": 38,
+      "textLeft": 38,
+      "textRight": 38,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Review",
+      "size": 24,
+      "top": 88,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 18,
+      "n": 2
+     },
+     {
+      "x": 38,
+      "n": 1
+     },
+     {
+      "x": 106,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#171c19",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 18,
+     "right": 18
+    },
+    "hero": {
+     "text": "Review",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 88,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 3,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       8,
+       2
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.51,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      21,
+      24
+     ]
+    },
+    "title": {
+     "text": "Review",
+     "size": 24,
+     "top": 88
+    },
+    "colourShare": 0.043
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "tiny-text",
+   "width": 1440,
+   "message": "50% of the text is under 13px.",
+   "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\review\\dark\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\review\\dark\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\review\\dark\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\review\\dark\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\review\\dark\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\review\\dark\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

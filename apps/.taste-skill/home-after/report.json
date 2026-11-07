@@ -1,0 +1,1805 @@
+{
+ "url": "http://127.0.0.1:4178/Home",
+ "at": "2026-11-05T08:34:50.347Z",
+ "allow": [
+  "covered-text"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.81,
+    0.85
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1018,
+     "screens": 1.1,
+     "words": 155,
+     "img": 1,
+     "video": 0,
+     "canvas": 0,
+     "svg": 22,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 96,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "0 / 5 words",
+      "words": 4,
+      "chars": 11,
+      "lines": 1,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.17,
+      "top": 234,
+      "tag": "p",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.03,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.21,
+      "top": 404,
+      "tag": "h3",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      18,
+      24,
+      26,
+      32,
+      34
+     ],
+     "sizeCount": 8,
+     "notLoaded": [
+      "Manrope"
+     ],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 34,
+      "vw": 2.4,
+      "font": "Manrope",
+      "text": "0"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 6
+    },
+    "eyebrows": [
+     {
+      "text": "Today’s word goal",
+      "above": "0 / 5 words",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 207
+     },
+     {
+      "text": "Word of the day",
+      "above": "Akkam",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 365
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#edf2ec",
+     "bodyBgHsl": {
+      "h": 110,
+      "s": 0.19,
+      "l": 0.94
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f8faf7",
+       "top": 0,
+       "hsl": {
+        "h": 100,
+        "s": 0.23,
+        "l": 0.97
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#53645c",
+       "share": 0.47
+      },
+      {
+       "color": "#193b31",
+       "share": 0.38
+      },
+      {
+       "color": "#173a40",
+       "share": 0.08
+      },
+      {
+       "color": "#173a3f",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#203e33",
+      "hsl": {
+       "h": 158,
+       "s": 0.32,
+       "l": 0.18
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Continue lesson",
+      "Listen"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 7,
+     "hairlineSamples": [
+      "div.fixed.inset-y-0 256px",
+      "div.flex.flex-col 255px",
+      "section.home-summary 1100px",
+      "a 494px",
+      "a 494px"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 4,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1018,
+    "margins": {
+     "left": 291,
+     "right": 72
+    },
+    "sections": [
+     {
+      "sel": "section.home-summary",
+      "tag": "section",
+      "top": 186,
+      "height": 130,
+      "words": 21,
+      "media": 0,
+      "middle": 186,
+      "heading": {
+       "text": "12",
+       "size": 26,
+       "tag": "p"
+      },
+      "left": 291,
+      "right": 207,
+      "textLeft": 291,
+      "textRight": 207,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.home-main-grid",
+      "tag": "div",
+      "top": 340,
+      "height": 279,
+      "words": 45,
+      "media": 0,
+      "middle": 310,
+      "heading": {
+       "text": "Akkam",
+       "size": 32,
+       "tag": "h3"
+      },
+      "left": 315,
+      "right": 75,
+      "textLeft": 315,
+      "textRight": 75,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.home-bottom-grid",
+      "tag": "div",
+      "top": 634,
+      "height": 336,
+      "words": 38,
+      "media": 0,
+      "middle": 278,
+      "heading": {
+       "text": "Learn by topic",
+       "size": 14,
+       "tag": "h2"
+      },
+      "left": 315,
+      "right": 74,
+      "textLeft": 315,
+      "textRight": 74,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Akkam. A little more, every day.",
+      "size": 26,
+      "top": 96,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 315,
+      "n": 3
+     },
+     {
+      "x": 291,
+      "n": 2
+     },
+     {
+      "x": 866,
+      "n": 2
+     },
+     {
+      "x": 1060,
+      "n": 2
+     },
+     {
+      "x": 367,
+      "n": 1
+     },
+     {
+      "x": 591,
+      "n": 1
+     },
+     {
+      "x": 1141,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 12,
+    "bodySize": 14,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.13,
+    "voidBox": {
+     "x": 0,
+     "y": 300,
+     "w": 300,
+     "h": 540
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#edf2ec",
+    "sidebar": {
+     "w": 256,
+     "tag": "div",
+     "links": 6,
+     "share": 0.18
+    },
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 30,
+     "right": 50
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 96,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 6,
+     "radii": [
+      [
+       8,
+       4
+      ],
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 1,
+     "tabularShare": 1,
+     "kpiMax": 26
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.24,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      18,
+      24,
+      26,
+      32
+     ]
+    },
+    "title": {
+     "text": "Akkam. A little more, every day.",
+     "size": 26,
+     "top": 96
+    },
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.89,
+    0.94
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1157,
+     "screens": 1.1,
+     "words": 145,
+     "img": 1,
+     "video": 0,
+     "canvas": 0,
+     "svg": 22,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 92,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Akkam. A little more, every day.",
+      "words": 6,
+      "chars": 32,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.44,
+      "top": 92,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "0 / 5 words",
+      "words": 4,
+      "chars": 11,
+      "lines": 1,
+      "size": 34,
+      "vw": 4.4,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.21,
+      "top": 230,
+      "tag": "p",
+      "kind": "heading"
+     },
+     {
+      "text": "12",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.19,
+      "top": 234,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "1",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.19,
+      "top": 234,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.21,
+      "top": 234,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.03,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.38,
+      "top": 400,
+      "tag": "h3",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 6,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      24,
+      26,
+      32,
+      34
+     ],
+     "sizeCount": 8,
+     "notLoaded": [
+      "Manrope"
+     ],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 34,
+      "vw": 4.4,
+      "font": "Manrope",
+      "text": "0"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 5
+    },
+    "eyebrows": [
+     {
+      "text": "Today’s word goal",
+      "above": "0 / 5 words",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 203
+     },
+     {
+      "text": "Word of the day",
+      "above": "Akkam",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 361
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#edf2ec",
+     "bodyBgHsl": {
+      "h": 110,
+      "s": 0.19,
+      "l": 0.94
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f8faf7",
+       "top": 0,
+       "hsl": {
+        "h": 100,
+        "s": 0.23,
+        "l": 0.97
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#53645c",
+       "share": 0.51
+      },
+      {
+       "color": "#193b31",
+       "share": 0.39
+      },
+      {
+       "color": "#173a40",
+       "share": 0.04
+      },
+      {
+       "color": "#183a40",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#203e33",
+      "hsl": {
+       "h": 158,
+       "s": 0.32,
+       "l": 0.18
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Continue lesson",
+      "Listen"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 6,
+     "hairlineSamples": [
+      "section.home-summary 705px",
+      "a 297px",
+      "a 297px",
+      "a 297px",
+      "li 297px"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 4,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1157,
+    "margins": {
+     "left": 24,
+     "right": 63
+    },
+    "sections": [
+     {
+      "sel": "section.home-summary",
+      "tag": "section",
+      "top": 182,
+      "height": 130,
+      "words": 21,
+      "media": 0,
+      "middle": 79,
+      "heading": {
+       "text": "12",
+       "size": 26,
+       "tag": "p"
+      },
+      "left": 24,
+      "right": 105,
+      "textLeft": 24,
+      "textRight": 105,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.home-main-grid",
+      "tag": "div",
+      "top": 336,
+      "height": 337,
+      "words": 45,
+      "media": 0,
+      "middle": 65,
+      "heading": {
+       "text": "Akkam",
+       "size": 32,
+       "tag": "h3"
+      },
+      "left": 48,
+      "right": 64,
+      "textLeft": 48,
+      "textRight": 64,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.home-bottom-grid",
+      "tag": "div",
+      "top": 689,
+      "height": 336,
+      "words": 38,
+      "media": 0,
+      "middle": 86,
+      "heading": {
+       "text": "Learn by topic",
+       "size": 14,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 63,
+      "textLeft": 48,
+      "textRight": 63,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Akkam. A little more, every day.",
+      "size": 26,
+      "top": 92,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 48,
+      "n": 3
+     },
+     {
+      "x": 409,
+      "n": 3
+     },
+     {
+      "x": 24,
+      "n": 2
+     },
+     {
+      "x": 100,
+      "n": 1
+     },
+     {
+      "x": 217,
+      "n": 1
+     },
+     {
+      "x": 394,
+      "n": 1
+     },
+     {
+      "x": 570,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 12,
+    "bodySize": 14,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": false,
+    "ground": "#edf2ec",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 24,
+     "right": 63
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 92,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 5,
+     "firstScreen": 5,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 124,
+       "at": 877,
+       "panel": "Recent learning"
+      },
+      {
+       "gap": 59,
+       "at": 588,
+       "panel": "Word of the day"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 5,
+     "radii": [
+      [
+       8,
+       4
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 1,
+     "tabularShare": 1,
+     "kpiMax": 26
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.25,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      18,
+      24,
+      26,
+      32
+     ]
+    },
+    "title": {
+     "text": "Akkam. A little more, every day.",
+     "size": 26,
+     "top": 92
+    },
+    "colourShare": 0.001
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.95,
+    0.98,
+    0.98
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 1710,
+     "screens": 2,
+     "words": 146,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 17,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 88,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "lines": 1,
+     "size": 24,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Akkam. A little more, every day.",
+      "words": 6,
+      "chars": 32,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.81,
+      "top": 88,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "0 / 5 words",
+      "words": 4,
+      "chars": 11,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.42,
+      "top": 216,
+      "tag": "p",
+      "kind": "heading"
+     },
+     {
+      "text": "12",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.42,
+      "top": 220,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "1",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.42,
+      "top": 324,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.42,
+      "top": 324,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Body",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.03,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.81,
+      "top": 504,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.03,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.8,
+      "top": 776,
+      "tag": "h3",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 7,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      16,
+      22,
+      24,
+      32
+     ],
+     "sizeCount": 8,
+     "notLoaded": [
+      "Manrope"
+     ],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 32,
+      "vw": 8.2,
+      "font": "Manrope",
+      "text": "0"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 5
+    },
+    "eyebrows": [
+     {
+      "text": "Today’s word goal",
+      "above": "0 / 5 words",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 191
+     },
+     {
+      "text": "Word of the day",
+      "above": "Akkam",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 737
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#edf2ec",
+     "bodyBgHsl": {
+      "h": 110,
+      "s": 0.19,
+      "l": 0.94
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f8faf7",
+       "top": 0,
+       "hsl": {
+        "h": 100,
+        "s": 0.23,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#eff3ed",
+       "top": 420,
+       "hsl": {
+        "h": 100,
+        "s": 0.2,
+        "l": 0.94
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#53645c",
+       "share": 0.51
+      },
+      {
+       "color": "#193b31",
+       "share": 0.38
+      },
+      {
+       "color": "#173a40",
+       "share": 0.05
+      },
+      {
+       "color": "#183a40",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#203e33",
+      "hsl": {
+       "h": 158,
+       "s": 0.32,
+       "l": 0.18
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 1,
+     "radius": 6,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Continue lesson"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 6,
+     "hairlineSamples": [
+      "section.home-summary 354px",
+      "a 314px",
+      "a 314px",
+      "a 314px",
+      "li 314px"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 4,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 1710,
+    "margins": {
+     "left": 18,
+     "right": 38
+    },
+    "sections": [
+     {
+      "sel": "section.home-summary",
+      "tag": "section",
+      "top": 170,
+      "height": 231,
+      "words": 21,
+      "media": 0,
+      "middle": 53,
+      "heading": {
+       "text": "12",
+       "size": 24,
+       "tag": "p"
+      },
+      "left": 18,
+      "right": 74,
+      "textLeft": 18,
+      "textRight": 74,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.home-main-grid",
+      "tag": "div",
+      "top": 420,
+      "height": 570,
+      "words": 45,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Akkam",
+       "size": 32,
+       "tag": "h3"
+      },
+      "left": 38,
+      "right": 38,
+      "textLeft": 38,
+      "textRight": 38,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.home-bottom-grid",
+      "tag": "div",
+      "top": 1006,
+      "height": 576,
+      "words": 38,
+      "media": 0,
+      "middle": 87,
+      "heading": {
+       "text": "Learn by topic",
+       "size": 14,
+       "tag": "h2"
+      },
+      "left": 38,
+      "right": 38,
+      "textLeft": 38,
+      "textRight": 38,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Akkam. A little more, every day.",
+      "size": 24,
+      "top": 88,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 38,
+      "n": 6
+     },
+     {
+      "x": 18,
+      "n": 1
+     },
+     {
+      "x": 88,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 14,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": false,
+    "ground": "#edf2ec",
+    "sidebar": null,
+    "topbar": {
+     "h": 64
+    },
+    "canvas": {
+     "left": 18,
+     "right": 28
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 88,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 5,
+     "firstScreen": 3,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 5,
+     "radii": [
+      [
+       8,
+       4
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 1,
+     "tabularShare": 1,
+     "kpiMax": 24
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.23,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      16,
+      22,
+      24,
+      32
+     ]
+    },
+    "title": {
+     "text": "Akkam. A little more, every day.",
+     "size": 24,
+     "top": 88
+    },
+    "colourShare": 0.001
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "font-fallback",
+   "width": 1440,
+   "message": "Typeface(s) declared but not loaded, so a fallback is rendering: Manrope",
+   "fix": "Fix the font URL / family name, or the screenshots you are judging are not the design.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-after\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-after\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-after\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-after\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-after\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-after\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

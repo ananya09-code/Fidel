@@ -1,189 +1,52 @@
+import { Link } from "@tanstack/react-router";
 import { useUser } from "@clerk/tanstack-react-start";
-import {
-  BookOpen,
-  CalendarDays,
-  Flame,
-  Globe2,
-  Mail,
-  Target,
-  Trophy,
-} from "lucide-react";
-
+import { ArrowRight } from "lucide-react";
 import { useProfile } from "@/hooks/use-profile";
 import { useDashboard } from "@/hooks/use-dashboard";
 import { usePreferences } from "@/hooks/use-preferences";
 import { PageState } from "@/components/common-ui/PageState";
-import { StudyActivitySection } from "@/components/profile-ui/StudyActivitySection";
+import { StudyActivitySection } from "./StudyActivitySection";
+import type { DashboardSummary } from "@/lib/api/dashboard";
+import "@/components/common-ui/app-ui.css";
+
+type ProfileViewProps = {
+  name: string; username?: string; email?: string; imageUrl?: string | null;
+  joinedLabel: string; language: string; dashboard: DashboardSummary; activity: React.ReactNode;
+};
+
+export function ProfileView({ name, username, email, imageUrl, joinedLabel, language, dashboard, activity }: ProfileViewProps) {
+  const initials = name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toUpperCase() || "F";
+  const stats = [
+    { label: "Words learned", value: dashboard.learned_words },
+    { label: "Lessons completed", value: dashboard.lessons_completed },
+    { label: "Current streak", value: dashboard.streak_days, unit: dashboard.streak_days === 1 ? " day" : " days" },
+    { label: "Reviews completed", value: dashboard.reviews_completed },
+    { label: "Correct answers", value: dashboard.correct_answers },
+    { label: "Words to review", value: dashboard.needs_review_words },
+  ];
+  return <div className="fidel-profile">
+    <header className="app-page-title"><div><h1>Your profile</h1><p>Look how far your words have taken you.</p></div><Link to="/settings" className="app-text-link">Your settings<ArrowRight size={16} aria-hidden="true" /></Link></header>
+    <section className="profile-identity" aria-label="Your account">
+      <div className="profile-avatar">{imageUrl ? <img src={imageUrl} alt="" /> : <span>{initials}</span>}</div>
+      <div><h2>{name}</h2>{username && <p>@{username}</p>}{email && <p className="profile-email">{email}</p>}<p className="profile-member">{joinedLabel}</p></div>
+      <div className="profile-language"><span>Learning</span><strong>{language}</strong></div>
+    </section>
+    <div className="profile-progress-layout">
+      <section className="profile-progress" aria-labelledby="profile-progress-title"><h2 id="profile-progress-title">Your progress</h2><dl>{stats.map((stat) => <div key={stat.label}><dt>{stat.label}</dt><dd>{stat.value}<span>{stat.unit}</span></dd></div>)}</dl></section>
+      <section className="profile-goal" aria-labelledby="profile-goal-title"><h2 id="profile-goal-title">Today’s word goal</h2><p><strong>{dashboard.words_learned_today}</strong><span> / {dashboard.daily_word_goal} words</span></p><progress value={Math.min(dashboard.words_learned_today, dashboard.daily_word_goal)} max={dashboard.daily_word_goal} aria-label="Today's learned words toward daily goal" /><span>{dashboard.words_learned_today >= dashboard.daily_word_goal ? "Today’s goal reached. Nicely done." : (dashboard.daily_word_goal - dashboard.words_learned_today) + " more words to reach your goal."}</span><Link to="/Learn" className="app-text-link">Keep learning<ArrowRight size={16} aria-hidden="true" /></Link></section>
+    </div>
+    {activity}
+  </div>;
+}
 
 export default function ProfileOverview() {
   const { user } = useUser();
-  const profile = useProfile();
-  const localProfile = profile.data;
-  const dashboard = useDashboard();
-  const preferences = usePreferences();
-
-  if (profile.isPending || dashboard.isPending || preferences.isPending) {
-    return <PageState kind="loading" title="Loading your profile" />;
-  }
-
-  if (profile.isError || dashboard.isError || preferences.isError) {
-    const error = profile.error ?? dashboard.error ?? preferences.error;
-    return <PageState kind="error" title="Couldn't load your profile" description={error?.message ?? "Your profile data is unavailable."} actionLabel="Try again" onAction={() => { void profile.refetch(); void dashboard.refetch(); void preferences.refetch(); }} />;
-  }
-
-  const stats = [
-    { label: "Words learned", value: dashboard.data?.learned_words ?? 0, icon: BookOpen },
-    { label: "Day streak", value: dashboard.data?.streak_days ?? 0, icon: Flame },
-    { label: "Lessons completed", value: dashboard.data?.lessons_completed ?? 0, icon: Trophy },
-    { label: "Daily goal", value: `${dashboard.data?.daily_word_goal ?? 5} words`, icon: Target },
-  ];
-  const language = preferences.data?.learning_language === "am" ? "Amharic" : "Afaan Oromoo";
-
-  const name =
-    user?.fullName ||
-    localProfile?.display_name ||
-    user?.username ||
-    "Fidel learner";
-  const username = user?.username ?? localProfile?.username ?? "";
-  const email =
-    user?.primaryEmailAddress?.emailAddress ?? localProfile?.email ?? "";
-  const imageUrl = user?.imageUrl ?? localProfile?.image_url ?? null;
-  const initials =
-    name
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0])
-      .join("")
-      .toUpperCase() || "F";
-  const joinedLabel = localProfile?.created_at
-    ? `Joined ${new Date(localProfile.created_at).toLocaleDateString(undefined, {
-        month: "long",
-        year: "numeric",
-      })}`
-    : "Recently joined";
-
-  return (
-    <div className="mx-auto w-full max-w-5xl space-y-7 pb-10">
-      <div>
-        <p className="mb-2 text-sm font-medium text-[var(--sea-ink)]/55">
-          YOUR JOURNEY
-        </p>
-        <h1 className="text-3xl font-bold tracking-tight text-[var(--sea-ink)] sm:text-4xl">
-          Your profile
-        </h1>
-        <p className="mt-2 text-sm text-[var(--sea-ink)]/65 sm:text-base">
-          A little progress every day adds up to something big.
-        </p>
-      </div>
-
-      {/* Profile card */}
-      <section className="overflow-hidden rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--bg-base)]">
-        <div className="h-28 bg-gradient-to-r from-[var(--hero-a)] to-[var(--hero-b)] sm:h-36" />
-
-        <div className="px-5 pb-6 sm:px-8">
-          <div className="-mt-11 flex flex-wrap items-end justify-between gap-4 sm:-mt-12">
-            <div className="flex size-24 items-center justify-center overflow-hidden rounded-3xl border-4 border-[var(--bg-base)] bg-[var(--sand)] text-3xl font-bold text-[var(--sea-ink)]">
-              {imageUrl ? (
-                <img
-                  src={imageUrl}
-                  alt=""
-                  className="size-full object-cover"
-                />
-              ) : (
-                initials
-              )}
-            </div>
-          </div>
-
-          <div className="mt-4">
-            <h2 className="text-2xl font-bold text-[var(--sea-ink)]">
-              {name}
-            </h2>
-
-            {username && (
-              <p className="mt-1 text-sm text-[var(--sea-ink)]/55">
-                @{username}
-              </p>
-            )}
-
-            <p className="mt-3 max-w-xl text-sm leading-relaxed text-[var(--sea-ink)]/75">
-              Learning Ethiopian languages, one word at a time.
-            </p>
-
-            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[var(--sea-ink)]/60">
-              {email && (
-                <span className="inline-flex items-center gap-2">
-                  <Mail size={16} />
-                  {email}
-                </span>
-              )}
-              <span className="inline-flex items-center gap-2">
-                <Globe2 size={16} />
-                Learning {language}
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <CalendarDays size={16} />
-                {joinedLabel}
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Learning statistics */}
-      <section>
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold text-[var(--sea-ink)]">
-            Learning at a glance
-          </h2>
-          <p className="mt-1 text-sm text-[var(--sea-ink)]/60">
-            Your progress so far.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {stats.map(({ label, value, icon: Icon }) => (
-            <div
-              key={label}
-              className="rounded-2xl border border-[var(--sea-ink)]/10 bg-[var(--bg-base)] p-4 sm:p-5"
-            >
-              <div className="mb-4 flex size-9 items-center justify-center rounded-xl bg-[var(--sand)]/60 text-[var(--sea-ink)]">
-                <Icon size={18} />
-              </div>
-              <p className="text-2xl font-bold tracking-tight text-[var(--sea-ink)]">
-                {value}
-              </p>
-              <p className="mt-1 text-xs leading-relaxed text-[var(--sea-ink)]/60 sm:text-sm">
-                {label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <StudyActivitySection />
-
-      {/* Learning language */}
-      <section className="flex flex-col gap-4 rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--bg-base)] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
-        <div className="flex items-start gap-3">
-          <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[var(--sand)]/60 text-[var(--sea-ink)]">
-            <Globe2 size={20} />
-          </div>
-          <div>
-            <h2 className="font-semibold text-[var(--sea-ink)]">
-              Your learning language
-            </h2>
-            <p className="mt-1 text-sm text-[var(--sea-ink)]/60">
-              The language you're currently focusing on.
-            </p>
-          </div>
-        </div>
-        <span className="inline-flex w-fit items-center gap-2 rounded-xl border border-[var(--sea-ink)]/10 px-4 py-3 text-sm font-medium text-[var(--sea-ink)]">
-          <span className="size-2 rounded-full bg-[var(--sea-ink)]/60" />
-          {language}
-        </span>
-      </section>
-    </div>
-  );
+  const profile = useProfile(), dashboard = useDashboard(), preferences = usePreferences();
+  if (profile.isPending || dashboard.isPending || preferences.isPending) return <div className="fidel-profile"><header className="app-page-title"><h1>Your profile</h1></header><PageState kind="loading" title="Loading your profile" /></div>;
+  if (profile.isError || dashboard.isError || preferences.isError || !dashboard.data) return <div className="fidel-profile"><header className="app-page-title"><h1>Your profile</h1></header><PageState kind="error" title="Couldn't load your profile" description={(profile.error ?? dashboard.error ?? preferences.error)?.message} actionLabel="Try again" onAction={() => { void profile.refetch(); void dashboard.refetch(); void preferences.refetch(); }} /></div>;
+  const local = profile.data;
+  const name = user?.fullName || local?.display_name || user?.username || "Fidel learner";
+  const created = local?.created_at ? new Date(local.created_at) : null;
+  const joinedLabel = created && !Number.isNaN(created.getTime()) ? "Joined " + new Intl.DateTimeFormat("en", { month: "long", year: "numeric", timeZone: "UTC" }).format(created) : "Fidel learner";
+  return <ProfileView name={name} username={user?.username ?? local?.username ?? ""} email={user?.primaryEmailAddress?.emailAddress ?? local?.email ?? ""} imageUrl={user?.imageUrl ?? local?.image_url} joinedLabel={joinedLabel} language={preferences.data?.learning_language === "am" ? "አማርኛ" : "Afaan Oromoo"} dashboard={dashboard.data} activity={<StudyActivitySection />} />;
 }

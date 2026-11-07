@@ -1,0 +1,18 @@
+vite v8.3.4 building client environment for production...
+transforming...
+[plugin rolldown:vite-resolve] Module "node:async_hooks" has been externalized for browser compatibility, imported by "C:/Users/ananya/Desktop/Fidel/node_modules/.pnpm/@tanstack+start-storage-context@1.167.37/node_modules/@tanstack/start-storage-context/dist/esm/async-local-storage.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+✓ 2353 modules transformed.
+rendering chunks...
+computing gzip size...
+.taste-skill/home-preview-build/index.html                       0.33 kB │ gzip:   0.24 kB
+.taste-skill/home-preview-build/assets/fidallogo-CVjVHce8.png  246.57 kB
+.taste-skill/home-preview-build/assets/index-0rM7LEt8.css      155.64 kB │ gzip:  24.56 kB
+.taste-skill/home-preview-build/assets/index-DKtF4uSL.js       637.85 kB │ gzip: 197.52 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 2.07s
+  ➜  Local:   http://127.0.0.1:4178/

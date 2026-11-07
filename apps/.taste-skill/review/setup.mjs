@@ -1,0 +1,16 @@
+import {readFileSync,writeFileSync,mkdirSync,copyFileSync} from 'node:fs';
+mkdirSync('.taste-skill/review-fixture',{recursive:true});
+copyFileSync('.taste-skill/home-fixture/index.html','.taste-skill/review-fixture/index.html');
+copyFileSync('.taste-skill/home-fixture/fixture.css','.taste-skill/review-fixture/fixture.css');
+let s=readFileSync('.taste-skill/home-fixture/main.jsx','utf8').replace("import React from 'react';","import React, {useState} from 'react';").replace("import {HomeDashboard} from '../../web/src/components/homepage-ui/HomeDashboard';","import {ReviewOverview} from '../../web/src/components/learn-ui/review/ReviewOverview';");
+const a=s.indexOf('function Screen()'),b=s.indexOf('const root=',a);
+s=s.slice(0,a)+`
+const queue=[['Akkam','Hello','ሰላም','greetings'],['Galatoomi','Thank you','አመሰግናለሁ','greetings'],['Buna','Coffee','ቡና','food_and_drinks'],['Mana','House','ቤት','everyday'],['Nagaa','Peace','ሰላም','greetings'],['Bishaan','Water','ውሃ','food_and_drinks'],['Haadha','Mother','እናት','family']].map(([text,meaning,amharic,category],i)=>({id:String(i),text,meaning,amharic,category,audio_url:null}));
+const history=Array.from({length:6},(_,i)=>({id:String(i),total_count:5,correct_count:Math.max(1,5-i),completed_at:'2026-11-0'+(6-i)+'T12:00:00Z'}));
+function Screen(){const [started,setStarted]=useState(false);const active=params.has('active')?{id:'active',total_count:5,correct_count:1,answers:[{word_id:'0',is_correct:true},{word_id:'1',is_correct:false}],words:queue.slice(0,5),status:'in_progress'}:null;
+const data={queue:params.has('empty')?[]:queue,history:params.has('empty')?[]:history,active_session:active};
+return <SidebarProvider defaultOpen><AppSidebar/><SidebarInset><header className="flex h-16 items-center gap-3 px-6"><SidebarTrigger/><strong>Fidel</strong><span className="ml-auto text-xs">Design preview · sample words</span></header><main><ReviewOverview data={data} onStart={()=>setStarted(true)} isStarting={params.has('busy')} error={params.has('error')?'Unable to start this test session. Try again.':null}/>{started&&<p id="test-started" className="sr-only">Review requested</p>}</main></SidebarInset><MobileBottomNavigation/></SidebarProvider>;
+}
+`+s.slice(b);
+writeFileSync('.taste-skill/review-fixture/main.jsx',s);
+writeFileSync('.taste-skill/review-preview.mjs',readFileSync('.taste-skill/learn-preview.mjs','utf8').replaceAll('learn-fixture','review-fixture').replaceAll('learn-preview-build','review-preview-build').replace('port:4180','port:4183'));

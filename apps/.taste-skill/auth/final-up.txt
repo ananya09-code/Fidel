@@ -1,0 +1,26 @@
+TASTESKILL · INSPECT   http://127.0.0.1:4173/sign-up
+
+MEASURED (first viewport listed)
+  hero headline   "Begin with a hello."  4 words · 1 line(s) · 28px (1.9vw) · Fidel Auth Serif 700 · tracking -0.04em · leading 1.25
+  @768px          1 line(s) · 28px
+  @390px          1 line(s) · 26px
+  typefaces       Manrope 87%, Fidel Auth Serif 12%
+  sizes in use    11 / 12 / 13 / 14 / 28 / 30 / 32 px
+  colour          page #ffffff · sections #131a15 #1a231d #25372a · button #1a231d
+  page            1 screens · 63 words · 0 images · hero media 22% canvas
+  headings        4 · longest 2 line(s) · median 1 words
+
+FAIL — fix every one of these
+  [button-fx] @1440px (+768, 390)  Buttons with shadow/glow.
+      → Flat fill, one colour.
+
+LOOK AT THE RENDER — open these with your image viewer / Read tool before saying anything about quality:
+  desktop 1440px  .taste-skill/auth/final-up/desktop-fold.jpg
+                  .taste-skill/auth/final-up/desktop-page-01.jpg
+  tablet 768px    .taste-skill/auth/final-up/tablet-fold.jpg
+                  .taste-skill/auth/final-up/tablet-page-01.jpg
+  mobile 390px    .taste-skill/auth/final-up/mobile-fold.jpg
+                  .taste-skill/auth/final-up/mobile-page-01.jpg
+
+report: .taste-skill/auth/final-up/report.json
+RESULT: 1 FAIL, 0 WARN — not done.

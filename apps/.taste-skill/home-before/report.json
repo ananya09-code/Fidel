@@ -1,0 +1,1387 @@
+{
+ "url": "http://localhost:3000/Home",
+ "at": "2026-11-05T08:15:25.791Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.99
+   ],
+   "motion": {
+    "elements": 2,
+    "css": 2,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 900,
+     "screens": 1,
+     "words": 67,
+     "img": 1,
+     "video": 0,
+     "canvas": 0,
+     "svg": 3,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [
+      "🦌"
+     ],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Every language brings us closer.",
+     "words": 5,
+     "chars": 32,
+     "lines": 3,
+     "size": 60,
+     "vw": 4.2,
+     "font": "Manrope",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.12,
+     "top": 264,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Every language brings us closer.",
+     "words": 5,
+     "lines": 3,
+     "size": 60,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Every language brings us closer.",
+      "words": 5,
+      "chars": 32,
+      "lines": 3,
+      "size": 60,
+      "vw": 4.2,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.31,
+      "top": 264,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "🦌",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 60,
+      "vw": 4.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.09,
+      "top": 610,
+      "tag": "div",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 3,
+     "over2Lines": 1,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      18,
+      20,
+      60
+     ],
+     "sizeCount": 7,
+     "notLoaded": [
+      "Manrope"
+     ],
+     "body": {
+      "font": "Manrope",
+      "size": 18,
+      "leading": 1.78,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 43,
+     "max": {
+      "size": 60,
+      "vw": 4.2,
+      "font": "Manrope",
+      "text": "Every languagebrings us"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.28,
+     "smallText": 1
+    },
+    "eyebrows": [
+     {
+      "text": "Your language journey starts here",
+      "above": "Every language brings us closer.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 14,
+      "top": 211
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#ffffff",
+       "share": 0.34
+      },
+      {
+       "color": "#d7ece8",
+       "share": 0.32
+      },
+      {
+       "color": "#d7ede8",
+       "share": 0.09
+      },
+      {
+       "color": "#d7ece7",
+       "share": 0.06
+      },
+      {
+       "color": "#f36b16",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#8de5db",
+      "hsl": {
+       "h": 173,
+       "s": 0.63,
+       "l": 0.73
+      },
+      "fg": "#000000"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 12,
+     "height": 32,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Continue"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 11,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div.inline-flex.rounded-full → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "div.relative.flex → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "div.absolute.right-0 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "div.absolute.bottom-1 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
+     "gradients": 2,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.relative.isolate → linear-gradient(to right bottom, oklch(0.977 0.013 236.62) 0%, rgb(255, 255, 255) 50%, oklch(0.987 0.022 95.27",
+      "div.cl-footer.🔒️ → linear-gradient(color(srgb 1 1 1 / 0.03), color(srgb 1 1 1 / 0.03)), linear-gradient(color(srgb 0.0862745 0.16"
+     ],
+     "gradientText": 1,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "div.cl-footerItem.🔒️ 400px",
+      "div.cl-internal-1e9vb3w 400px rule"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 5,
+     "roundedBoxes": 6,
+     "boxRadius": 99,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": false,
+     "height": 88,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 900,
+    "margins": {
+     "left": 106,
+     "right": 71
+    },
+    "sections": [
+     {
+      "sel": "div.pointer-events-none.absolute",
+      "tag": "div",
+      "top": 0,
+      "height": 900,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "main.relative.z-10",
+      "tag": "main",
+      "top": 88,
+      "height": 812,
+      "words": 59,
+      "media": 0,
+      "middle": 225,
+      "heading": {
+       "text": "Every language",
+       "size": 60,
+       "tag": "h1"
+      },
+      "left": 201,
+      "right": 282,
+      "textLeft": 201,
+      "textRight": 324,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Every language brings us closer.",
+      "size": 60,
+      "top": 264,
+      "firstScreen": true
+     },
+     {
+      "text": "Sign in to fidal",
+      "size": 17,
+      "top": 265,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 201,
+      "n": 4
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.16,
+    "voidBox": {
+     "x": 300,
+     "y": 720,
+     "w": 1140,
+     "h": 180
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#ffffff",
+    "sidebar": null,
+    "topbar": {
+     "h": 88
+    },
+    "canvas": {
+     "left": 56,
+     "right": 71
+    },
+    "hero": {
+     "text": "Every language brings us closer.",
+     "words": 5,
+     "chars": 32,
+     "lines": 3,
+     "size": 60,
+     "vw": 4.2,
+     "font": "Manrope",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.12,
+     "top": 264,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 4,
+     "radii": [
+      [
+       32,
+       1
+      ],
+      [
+       24,
+       1
+      ],
+      [
+       16,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 1,
+     "borderSamples": [
+      "#8be3de on #ffffff (1.49:1)"
+     ],
+     "heavyShadows": 3,
+     "softShadows": 0,
+     "shadowSamples": [
+      "oklab(0.208 -0.00310889 -0.0418848 / 0.07) 0px 25px 50px -12px",
+      "color(srgb 1 1 1 / 0.07) 0px 0px 0px 1px",
+      "color(srgb 1 1 1 / 0.03) 0px 0px 0px 1px"
+     ],
+     "glass": 1
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.07,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      18,
+      20,
+      60
+     ]
+    },
+    "title": {
+     "text": "Every language\nbrings us\ncloser.",
+     "size": 60,
+     "top": 264
+    },
+    "colourShare": 0.011
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.98
+   ],
+   "motion": {
+    "elements": 2,
+    "css": 2,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1024,
+     "screens": 1,
+     "words": 35,
+     "img": 1,
+     "video": 0,
+     "canvas": 0,
+     "svg": 3,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Fidel",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 20,
+     "vw": 2.6,
+     "font": "Manrope",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.4,
+     "top": 30,
+     "tag": "span",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": null,
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      20
+     ],
+     "sizeCount": 5,
+     "notLoaded": [
+      "Manrope"
+     ],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 20,
+      "vw": 2.6,
+      "font": "Manrope",
+      "text": "Fidel"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.53,
+     "smallText": 1
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#ffffff",
+       "share": 0.65
+      },
+      {
+       "color": "#d7ede8",
+       "share": 0.17
+      },
+      {
+       "color": "#f36b16",
+       "share": 0.08
+      },
+      {
+       "color": "#000000",
+       "share": 0.04
+      },
+      {
+       "color": "#8de5db",
+       "share": 0.03
+      }
+     ],
+     "button": {
+      "bg": "#8de5db",
+      "hsl": {
+       "h": 173,
+       "s": 0.63,
+       "l": 0.73
+      },
+      "fg": "#000000"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 12,
+     "height": 32,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Continue"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 7,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div.rounded-[2rem].border → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "div.cl-cardBox.w-full → color(srgb 0 0 0 / 0.08) 0px 5px 15px 0px, color(srgb 0 0 0 / 0.2) 0px 15px 35px",
+      "div.cl-card.border-0 → color(srgb 0 0 0 / 0.08) 0px 0px 2px 0px, color(srgb 0 0 0 / 0.06) 0px 1px 2px 0",
+      "button.cl-socialButtonsBlockButton.cl-button → color(srgb 1 1 1 / 0.07) 0px 0px 0px 1px, rgba(0, 0, 0, 0.08) 0px 2px 3px -1px, "
+     ],
+     "gradients": 2,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.relative.isolate → linear-gradient(to right bottom, oklch(0.977 0.013 236.62) 0%, rgb(255, 255, 255) 50%, oklch(0.987 0.022 95.27",
+      "div.cl-footer.🔒️ → linear-gradient(color(srgb 1 1 1 / 0.03), color(srgb 1 1 1 / 0.03)), linear-gradient(color(srgb 0.0862745 0.16"
+     ],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "div.cl-footerItem.🔒️ 400px",
+      "div.cl-internal-1e9vb3w 400px rule"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 5,
+     "boxRadius": 99,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": false,
+     "height": 88,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1024,
+    "margins": {
+     "left": 90,
+     "right": 55
+    },
+    "sections": [
+     {
+      "sel": "div.pointer-events-none.absolute",
+      "tag": "div",
+      "top": 0,
+      "height": 1024,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "main.relative.z-10",
+      "tag": "main",
+      "top": 88,
+      "height": 936,
+      "words": 28,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Sign in to fidal",
+       "size": 17,
+       "tag": "h1"
+      },
+      "left": 229,
+      "right": 218,
+      "textLeft": 229,
+      "textRight": 260,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Sign in to fidal",
+      "size": 17,
+      "top": 327,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": false,
+    "ground": "#ffffff",
+    "sidebar": null,
+    "topbar": {
+     "h": 88
+    },
+    "canvas": {
+     "left": 40,
+     "right": 55
+    },
+    "hero": {
+     "text": "Fidel",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 20,
+     "vw": 2.6,
+     "font": "Manrope",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.4,
+     "top": 30,
+     "tag": "span",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 4,
+     "radii": [
+      [
+       32,
+       1
+      ],
+      [
+       24,
+       1
+      ],
+      [
+       16,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 1,
+     "borderSamples": [
+      "#8be3de on #ffffff (1.49:1)"
+     ],
+     "heavyShadows": 3,
+     "softShadows": 0,
+     "shadowSamples": [
+      "oklab(0.208 -0.00310889 -0.0418848 / 0.07) 0px 25px 50px -12px",
+      "color(srgb 1 1 1 / 0.07) 0px 0px 0px 1px",
+      "color(srgb 1 1 1 / 0.03) 0px 0px 0px 1px"
+     ],
+     "glass": 1
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.07,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      18,
+      20,
+      48,
+      60
+     ]
+    },
+    "title": null,
+    "colourShare": 0.013
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    1
+   ],
+   "motion": {
+    "elements": 2,
+    "css": 2,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 844,
+     "screens": 1,
+     "words": 29,
+     "img": 1,
+     "video": 0,
+     "canvas": 0,
+     "svg": 3,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Sign in to fidal",
+     "words": 4,
+     "chars": 16,
+     "lines": 1,
+     "size": 17,
+     "vw": 4.4,
+     "font": "Manrope",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.41,
+     "top": 197,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": null,
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      17
+     ],
+     "sizeCount": 3,
+     "notLoaded": [
+      "Manrope"
+     ],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 17,
+      "vw": 4.4,
+      "font": "Manrope",
+      "text": "Sign in to fidal"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.66,
+     "smallText": 1
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#162b30",
+       "top": 165,
+       "hsl": {
+        "h": 192,
+        "s": 0.37,
+        "l": 0.14
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#ffffff",
+       "share": 0.81
+      },
+      {
+       "color": "#f36b16",
+       "share": 0.1
+      },
+      {
+       "color": "#000000",
+       "share": 0.05
+      },
+      {
+       "color": "#8de5db",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#8de5db",
+      "hsl": {
+       "h": 173,
+       "s": 0.63,
+       "l": 0.73
+      },
+      "fg": "#000000"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 12,
+     "height": 32,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Continue"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 7,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div.rounded-[2rem].border → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "div.cl-cardBox.w-full → color(srgb 0 0 0 / 0.08) 0px 5px 15px 0px, color(srgb 0 0 0 / 0.2) 0px 15px 35px",
+      "div.cl-card.border-0 → color(srgb 0 0 0 / 0.08) 0px 0px 2px 0px, color(srgb 0 0 0 / 0.06) 0px 1px 2px 0",
+      "button.cl-socialButtonsBlockButton.cl-button → color(srgb 1 1 1 / 0.07) 0px 0px 0px 1px, rgba(0, 0, 0, 0.08) 0px 2px 3px -1px, "
+     ],
+     "gradients": 2,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.relative.isolate → linear-gradient(to right bottom, oklch(0.977 0.013 236.62) 0%, rgb(255, 255, 255) 50%, oklch(0.987 0.022 95.27",
+      "div.cl-footer.🔒️ → linear-gradient(color(srgb 1 1 1 / 0.03), color(srgb 1 1 1 / 0.03)), linear-gradient(color(srgb 0.0862745 0.16"
+     ],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "div.cl-footerItem.🔒️ 350px",
+      "div.cl-internal-1e9vb3w 350px rule"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 5,
+     "boxRadius": 99,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 48,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 844,
+    "margins": {
+     "left": 84,
+     "right": 34
+    },
+    "sections": [
+     {
+      "sel": "div.pointer-events-none.absolute",
+      "tag": "div",
+      "top": 0,
+      "height": 844,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "main.relative.z-10",
+      "tag": "main",
+      "top": 48,
+      "height": 756,
+      "words": 28,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Sign in to fidal",
+       "size": 17,
+       "tag": "h1"
+      },
+      "left": 84,
+      "right": 34,
+      "textLeft": 84,
+      "textRight": 51,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Sign in to fidal",
+      "size": 17,
+      "top": 197,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": false,
+    "ground": "#ffffff",
+    "sidebar": null,
+    "topbar": {
+     "h": 48
+    },
+    "canvas": {
+     "left": 84,
+     "right": 34
+    },
+    "hero": {
+     "text": "Sign in to fidal",
+     "words": 4,
+     "chars": 16,
+     "lines": 1,
+     "size": 17,
+     "vw": 4.4,
+     "font": "Manrope",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.41,
+     "top": 197,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       24,
+       1
+      ],
+      [
+       16,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 2,
+     "softShadows": 0,
+     "shadowSamples": [
+      "color(srgb 1 1 1 / 0.07) 0px 0px 0px 1px",
+      "color(srgb 1 1 1 / 0.03) 0px 0px 0px 1px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.07,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      18,
+      20,
+      48,
+      60
+     ]
+    },
+    "title": null,
+    "colourShare": 0.029
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 1440,
+   "message": "1 headline(s) wrap past two lines at 1440px: \"Every language brings us closer.\" → 3 lines (5 words, 60px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 36px or less."
+  },
+  {
+   "level": "FAIL",
+   "id": "emoji",
+   "width": 1440,
+   "message": "Emoji in the page: 🦌",
+   "fix": "Remove. Use words or real imagery."
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "2 gradient fill(s): div.relative.isolate → linear-gradient(to right bottom, oklch(0.977 0.013 236.62) 0%, rgb(255, 255, 255) 50%, oklch(0.987 0.022 95.27 | div.cl-footer.🔒️ → linear-gradient(color(srgb 1 1 1 / 0.03), color(srgb 1 1 1 / 0.03)), linear-gradient(color(srgb 0.0862745 0.16",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient-text",
+   "width": 1440,
+   "message": "1 gradient-filled text element(s).",
+   "fix": "Solid colour text."
+  },
+  {
+   "level": "FAIL",
+   "id": "button-fx",
+   "width": 1440,
+   "message": "Buttons with shadow/glow.",
+   "fix": "Flat fill, one colour.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "font-fallback",
+   "width": 1440,
+   "message": "Typeface(s) declared but not loaded, so a fallback is rendering: Manrope",
+   "fix": "Fix the font URL / family name, or the screenshots you are judging are not the design.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "many-h1",
+   "width": 1440,
+   "message": "2 h1 elements.",
+   "fix": "One h1 per page; section titles are h2."
+  },
+  {
+   "level": "FAIL",
+   "id": "heavy-shadow",
+   "width": 1440,
+   "message": "3 panel shadow(s) heavy enough to read as floating: oklab(0.208 -0.00310889 -0.0418848 / 0.07) 0px 25px 50px -12px | color(srgb 1 1 1 / 0.07) 0px 0px 0px 1px | color(srgb 1 1 1 / 0.03) 0px 0px 0px 1px",
+   "fix": "Panels sit on the ground: separate them with a fill one step from the ground or a quiet 1px border. A shadow, if any, is under 8% black with a small blur. Real overlays (menus, dialogs, popovers) may float.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "app-title-size",
+   "width": 1440,
+   "message": "The h1 is 60px (\"Every language\nbrings us\ncloser.\").",
+   "fix": "An app screen is not a landing page: the title is 18-32px (20-24px on a phone)."
+  },
+  {
+   "level": "FAIL",
+   "id": "no-title",
+   "width": 768,
+   "message": "The screen has no h1.",
+   "fix": "Name the screen in an h1 at the top of the canvas (18–28px): \"Overview\", \"Payouts\", the project's name.",
+   "alsoAt": [
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-before\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-before\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-before\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-before\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-before\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\home-before\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

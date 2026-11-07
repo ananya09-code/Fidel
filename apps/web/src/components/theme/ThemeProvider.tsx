@@ -16,7 +16,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const previewAppearance = useCallback((value: Appearance | null) => setPreview(value), []);
 
   useEffect(() => {
-    let cached: Appearance = "system";
+    let cached: Appearance = "light";
     try { cached = parseAppearance(localStorage.getItem(THEME_STORAGE_KEY)); } catch { /* Optional device cache. */ }
     const appearance = preview ?? saved ?? cached;
     const stopWatching = watchTheme(appearance);
@@ -45,7 +45,7 @@ export function PreferenceThemeSync() {
     // Retain the pre-paint device cache on initial load; clear it on account changes.
     if (previousUser.current !== undefined && previousUser.current !== (userId ?? null)) {
       preview?.(null);
-      setSaved?.("system");
+      setSaved?.("light");
     }
     previousUser.current = userId ?? null;
   }, [userId, isLoaded, setSaved, preview]);
@@ -62,4 +62,11 @@ export function useThemePreview() {
   const { previewAppearance } = theme;
   useEffect(() => () => previewAppearance(null), [previewAppearance]);
   return previewAppearance;
+}
+
+/** A device choice survives navigation; settings previews remain temporary. */
+export function useAppearanceChoice() {
+  const theme = useContext(ThemeContext);
+  if (!theme) throw new Error("ThemeProvider is missing.");
+  return theme.setSavedAppearance;
 }

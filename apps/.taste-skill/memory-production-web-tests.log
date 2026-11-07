@@ -1,0 +1,23 @@
+✔ the atlas covers all twelve regions and both city administrations (4.1012ms)
+✔ loads every word beyond the first 50 and forwards cancellation (295.061ms)
+✔ does not silently start an incomplete lesson when a later page fails (62.4284ms)
+✔ rejects pagination that makes no progress instead of looping forever (47.3174ms)
+✔ mobile navigation includes five named destinations and safe-area padding (216.9738ms)
+✔ nested lessons highlight Learn and matching is case-insensitive (21.0031ms)
+✔ route prefixes do not falsely select a tab (19.0357ms)
+✔ every day occupies the correct Sunday-first row without inventing future days (67.0062ms)
+✔ intensities change only at the documented answer thresholds (0.4363ms)
+✔ date labels retain the server's calendar day, including leap day (1.1823ms)
+✔ keyboard navigation moves by day/week and clamps at the visible range (0.6054ms)
+✔ explicit themes override the device and System follows it (3.3291ms)
+✔ pre-paint script applies the same theme with missing or blocked storage (21.425ms)
+✔ appearance choices are a labelled native radio group with one selected value (37.7531ms)
+✔ device changes update System mode, respect explicit choices and clean up listeners (26.1912ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1839.5656

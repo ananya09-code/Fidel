@@ -1,0 +1,16 @@
+@import "../../web/src/styles.css";
+@source "../../web/src";
+@source "./main.jsx";
+body {background:#f8faf7;color:#193b31;margin:0;}
+.dark body {background:#171c19;color:#e7ede6;}
+.matching-demo-header,.matching-demo-notice {max-width:1040px;margin:auto;padding:16px 24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;font-size:12px;}
+.matching-demo-header > span {display:flex;align-items:center;gap:8px;font-size:22px;font-weight:600;}
+.matching-demo-header nav {display:flex;gap:16px;flex:1;flex-wrap:wrap;}
+.matching-demo-header a {color:inherit;text-decoration:underline;text-underline-offset:4px;min-height:40px;align-content:center;}
+.matching-demo-header button {min-height:40px;border:1px solid #8b998e;padding:6px 12px;border-radius:6px;cursor:pointer;}
+.matching-demo-notice {border-block:1px solid #8b998e;justify-content:space-between;}
+.matching-demo-notice label {display:flex;gap:8px;align-items:center;min-height:32px;}
+.study-setup h1 {font-size:28px;line-height:1.2;font-weight:600;}
+.study-setup > p {margin:16px 0 24px;}
+.study-setup button {margin-top:8px;}
+@media(max-width:600px){.matching-demo-header,.matching-demo-notice{padding:12px 20px;gap:12px;}.matching-demo-header nav{order:3;flex-basis:100%;}.matching-demo-header button{margin-left:auto;}}

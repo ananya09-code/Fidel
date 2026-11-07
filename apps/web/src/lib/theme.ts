@@ -2,7 +2,7 @@ export type Appearance = "light" | "dark" | "system";
 export const THEME_STORAGE_KEY = "fidel.appearance";
 
 export function parseAppearance(value: unknown): Appearance {
-  return value === "light" || value === "dark" ? value : "system";
+  return value === "dark" || value === "system" ? value : "light";
 }
 
 export function resolveTheme(appearance: Appearance, systemDark: boolean) {
@@ -23,9 +23,9 @@ export function watchTheme(appearance: Appearance) {
 
 // Runs before paint. Storage can be blocked in private/restricted browsers.
 export const themeInitScript = `(() => {
-  let appearance = "system";
-  try { appearance = localStorage.getItem("${THEME_STORAGE_KEY}") || "system"; } catch {}
-  const dark = appearance === "dark" || (appearance !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+  let appearance = "light";
+  try { appearance = localStorage.getItem("${THEME_STORAGE_KEY}") || "light"; } catch {}
+  const dark = appearance === "dark" || (appearance === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
   document.documentElement.classList.toggle("dark", dark);
   document.documentElement.style.colorScheme = dark ? "dark" : "light";
 })();`;

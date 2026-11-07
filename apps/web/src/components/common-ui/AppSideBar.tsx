@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { BookOpen, House, Library, Settings, Trophy } from "lucide-react";
+import { BookOpen, House, Library, Search, Settings, UserRound } from "lucide-react";
 
-import fidelLogo from "@/assets/fidallogo.png";
+import { FidelTeacherMark } from "./FidelTeacherMark";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 import {
@@ -18,17 +18,17 @@ import {
 } from "@/components/ui/sidebar";
 
 const mainLinks = [
-  { title: "Home", url: "/home", icon: House },
-  { title: "Learn", url: "/learn", icon: BookOpen },
+  { title: "Home", url: "/Home", icon: House },
+  { title: "Learn", url: "/Learn", icon: BookOpen },
   { title: "Review", url: "/review", icon: Library },
-  { title: "Dictionary", url: "/dictionary", icon: Trophy },
-];
+  { title: "Dictionary", url: "/dictionary", icon: Search },
+] as const;
 
 export function AppSidebar() {
   const isMobile = useIsMobile();
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
-  });
+  }).toLowerCase();
 
   // The authenticated mobile layout uses bottom tabs, never a modal drawer.
   if (isMobile) return null;
@@ -37,15 +37,11 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" variant="sidebar">
       <SidebarHeader className="border-b border-[var(--sea-ink)]/10 bg-[var(--sand)] p-4">
         <Link
-          to="/"
+          to="/Home"
           className="flex min-w-0 items-center gap-3"
           aria-label="Fidel home"
         >
-          <img
-            src={fidelLogo}
-            alt="Fidel"
-            className="h-10 w-10 shrink-0 object-contain"
-          />
+          <FidelTeacherMark className="h-11 w-10 shrink-0 text-[var(--sea-ink)]" />
 
           <div className="min-w-0 group-data-[collapsible=icon]:hidden">
             <span className="text-lg font-bold text-[var(--sea-ink)]">
@@ -67,11 +63,8 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="gap-2">
               {mainLinks.map((item) => {
-                const isActive =
-                  item.url === "/"
-                    ? pathname === "/"
-                    : pathname === item.url ||
-                    pathname.startsWith(`${item.url}/`);
+                const isActive = pathname === item.url.toLowerCase() ||
+                  pathname.startsWith(item.url.toLowerCase() + "/");
 
                 return (
                   <SidebarMenuItem key={item.title}>
@@ -81,7 +74,7 @@ export function AppSidebar() {
                       tooltip={item.title}
                       className="text-[var(--sea-ink)] data-[active=true]:bg-[var(--sand)] data-[active=true]:font-semibold"
                     >
-                      <Link to={item.url}>
+                      <Link to={item.url} aria-current={isActive ? "page" : undefined}>
                         <item.icon />
                         <span>{item.title}</span>
                       </Link>
@@ -96,13 +89,15 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t border-[var(--sea-ink)]/10 p-3">
         <SidebarMenu>
+          <SidebarMenuItem><SidebarMenuButton asChild tooltip="Profile" isActive={pathname === "/profile"}><Link to="/profile" aria-current={pathname === "/profile" ? "page" : undefined}><UserRound /><span>Profile</span></Link></SidebarMenuButton></SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
               tooltip="Settings"
+              isActive={pathname === "/settings"}
               className="text-[var(--sea-ink)]"
             >
-              <Link to="/settings">
+              <Link to="/settings" aria-current={pathname === "/settings" ? "page" : undefined}>
                 <Settings />
                 <span>Settings</span>
               </Link>

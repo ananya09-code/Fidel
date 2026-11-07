@@ -1,0 +1,18 @@
+........................................................................ [ 37%]
+........................................................................ [ 74%]
+.................................................                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\ananya\Desktop\Fidel\apps\api\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_migrations.py::test_revision_graph_matches_deployed_head
+tests/test_migrations.py::test_fresh_postgresql_upgrade_sql_contains_complete_schema
+  C:\Users\ananya\Desktop\Fidel\apps\api\.venv\Lib\site-packages\alembic\config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+    util.warn_deprecated(
+
+tests/test_recordings_api.py::test_start_batch_rejects_invalid_size
+  C:\Users\ananya\Desktop\Fidel\apps\api\.venv\Lib\site-packages\fastapi\telemetry\_api.py:244: StarletteDeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+    return function(**arguments)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html

@@ -1,0 +1,13 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const file='web/src/components/learn-ui/lesson/LessonQuiz.tsx';
+let s=readFileSync(file,'utf8');
+const start=s.indexOf('    <div className="study-feedback-space"');
+const actions=s.indexOf('    <div className="study-practice-actions">',start);
+const end=s.indexOf('    </div>',actions)+'    </div>'.length;
+const feedback=s.slice(start,actions);
+const action=s.slice(actions,end);
+s=s.slice(0,start)+action+'\n'+feedback+s.slice(end);
+writeFileSync(file,s);
+let css=readFileSync('web/src/components/learn-ui/lesson/lesson.css','utf8').replace('min-height:126px; padding-top:16px;','padding-top:16px;').replace(' .study-feedback-space { min-height:120px; }',' .study-feedback-space:empty { padding-top:0; }');
+css+='\n.study-feedback-space:empty { padding-top:0; }\n';
+writeFileSync('web/src/components/learn-ui/lesson/lesson.css',css);

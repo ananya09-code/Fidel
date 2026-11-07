@@ -1,6 +1,7 @@
 
 import {
   HeadContent,
+  Link,
   Scripts,
   Outlet,
   createRootRoute,
@@ -9,7 +10,9 @@ import { ClerkProvider } from "@clerk/tanstack-react-start";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 
-import fidelLogo from "@/assets/fidallogo.png";
+import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import { PageState } from "@/components/common-ui/PageState";
+import { AuthLoading } from "@/components/auth/AuthLoading";
 import { PreferenceThemeSync, ThemeProvider } from "@/components/theme/ThemeProvider";
 import { themeInitScript } from "@/lib/theme";
 
@@ -24,6 +27,9 @@ export const Route = createRootRoute({
     ],
   }),
   component: RootComponent,
+  pendingComponent: AuthLoading,
+  notFoundComponent: () => <main className="app-standalone"><FidelTeacherMark className="auth-wait-teacher" /><h1>That page wandered off.</h1><p>Let’s find your way back.</p><Link to="/" className="app-primary">Back to Fidel</Link></main>,
+  errorComponent: ({ reset }) => <main className="app-standalone"><h1>A small pause.</h1><PageState kind="error" title="We couldn’t open this page" description="Please try again." actionLabel="Try again" onAction={reset} /><Link to="/" className="app-text-link">Back to Fidel</Link></main>,
 });
 
 function RootComponent() {
@@ -54,7 +60,10 @@ function RootComponent() {
 
       <body>
         {clerkKey ? (
-          <ClerkProvider publishableKey={clerkKey}>
+          <ClerkProvider publishableKey={clerkKey} localization={{
+            signIn: { start: { title: "Welcome back.", subtitle: "Sign in to continue learning." } },
+            signUp: { start: { title: "Begin with a hello.", subtitle: "Create your Fidel account." } },
+          }}>
             <QueryClientProvider client={queryClient}>
               <ThemeProvider>
                 <PreferenceThemeSync />
@@ -73,30 +82,5 @@ function RootComponent() {
 }
 
 function MissingClerkConfig() {
-  return (
-    <main className="flex min-h-svh items-center justify-center bg-[var(--bg-base)] px-6 py-12">
-      <div className="w-full max-w-lg rounded-3xl border border-[var(--line)] bg-[var(--panel)]/80 p-8 shadow-xl shadow-slate-900/5 backdrop-blur-xl">
-        <img
-          src={fidelLogo}
-          alt="Fidel"
-          className="h-12 w-12 object-contain"
-        />
-        <h1 className="mt-6 text-2xl font-bold tracking-tight text-[var(--sea-ink)]/100">
-          Clerk is not configured
-        </h1>
-        <p className="mt-3 text-sm leading-6 text-[var(--sea-ink)]/75">
-          Add your Clerk publishable key to the web app environment and restart
-          the dev server.
-        </p>
-        <pre className="mt-5 overflow-x-auto rounded-xl bg-slate-900 px-4 py-3 text-xs text-slate-100">
-          VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
-        </pre>
-        <p className="mt-4 text-xs leading-5 text-[var(--sea-ink)]/65">
-          Only the publishable key belongs in the browser. Keep the Clerk secret
-          key in the API environment.
-        </p>
-      </div>
-    </main>
-  );
+  return <main className="app-standalone"><FidelTeacherMark className="auth-wait-teacher" /><h1>Fidel needs a moment of setup.</h1><PageState kind="error" title="Sign-in is not configured" description="Add the Clerk publishable key to the web environment, then restart the app." /></main>;
 }
-

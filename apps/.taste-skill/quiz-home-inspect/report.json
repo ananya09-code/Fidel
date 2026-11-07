@@ -1,0 +1,1833 @@
+{
+ "url": "http://127.0.0.1:4185/Home",
+ "at": "2026-11-06T18:33:06.759Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.43,
+    0.55
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1115,
+     "screens": 1.2,
+     "words": 169,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 7,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 174,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "4 / 5 words",
+      "words": 4,
+      "chars": 11,
+      "lines": 1,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.17,
+      "top": 312,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Quiz yourself.",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.045,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.56,
+      "top": 690,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 44,
+      "vw": 3.1,
+      "font": "Manrope",
+      "weight": 650,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.02,
+      "top": 721,
+      "tag": "strong",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 4,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      24,
+      26,
+      28,
+      34,
+      44
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Manrope",
+      "size": 14,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.6
+     },
+     "measureChars": 67,
+     "max": {
+      "size": 44,
+      "vw": 3.1,
+      "font": "Manrope",
+      "text": "1"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 3
+    },
+    "eyebrows": [
+     {
+      "text": "Today’s word goal",
+      "above": "4 / 5 words",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 285
+     },
+     {
+      "text": "Start learning",
+      "above": "Quiz yourself.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 577
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#edf2ec",
+     "bodyBgHsl": {
+      "h": 110,
+      "s": 0.19,
+      "l": 0.94
+     },
+     "dark": false,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#53645c",
+       "share": 0.55
+      },
+      {
+       "color": "#193b31",
+       "share": 0.43
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#203e33",
+      "hsl": {
+       "h": 158,
+       "s": 0.32,
+       "l": 0.18
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 4,
+     "inHero": 4,
+     "radius": 6,
+     "height": 38,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Light / dark",
+      "Jump ahead 3 days",
+      "Start learning",
+      "Start quiz"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "aside.demo-notice 1164px",
+      "section.home-summary 1100px"
+     ],
+     "outlinedBoxes": 2,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 5,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 3,
+     "fixed": false,
+     "height": 70,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1115,
+    "margins": {
+     "left": 163,
+     "right": 178
+    },
+    "sections": [
+     {
+      "sel": "section.home-summary",
+      "tag": "section",
+      "top": 264,
+      "height": 131,
+      "words": 20,
+      "media": 0,
+      "middle": 173,
+      "heading": {
+       "text": "Today’s word goal",
+       "size": 14,
+       "tag": "h2"
+      },
+      "left": 175,
+      "right": 332,
+      "textLeft": 175,
+      "textRight": 332,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.home-main-grid",
+      "tag": "div",
+      "top": 418,
+      "height": 227,
+      "words": 30,
+      "media": 0,
+      "middle": 264,
+      "heading": {
+       "text": "Start with a few words",
+       "size": 24,
+       "tag": "h3"
+      },
+      "left": 187,
+      "right": 437,
+      "textLeft": 187,
+      "textRight": 437,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.memory-check",
+      "tag": "section",
+      "top": 661,
+      "height": 224,
+      "words": 33,
+      "media": 0,
+      "middle": 398,
+      "heading": {
+       "text": "Quiz yourself.",
+       "size": 28,
+       "tag": "h2"
+      },
+      "left": 192,
+      "right": 294,
+      "textLeft": 192,
+      "textRight": 294,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.home-bottom-grid",
+      "tag": "div",
+      "top": 913,
+      "height": 154,
+      "words": 30,
+      "media": 0,
+      "middle": 158,
+      "heading": {
+       "text": "Recent learning",
+       "size": 14,
+       "tag": "h2"
+      },
+      "left": 187,
+      "right": 211,
+      "textLeft": 187,
+      "textRight": 211,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Akkam. A little more, every day.",
+      "size": 26,
+      "top": 174,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 187,
+      "n": 4
+     },
+     {
+      "x": 738,
+      "n": 3
+     },
+     {
+      "x": 163,
+      "n": 1
+     },
+     {
+      "x": 175,
+      "n": 1
+     },
+     {
+      "x": 238,
+      "n": 1
+     },
+     {
+      "x": 463,
+      "n": 1
+     },
+     {
+      "x": 932,
+      "n": 1
+     },
+     {
+      "x": 1013,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 14,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.12,
+    "voidBox": {
+     "x": 1200,
+     "y": 240,
+     "w": 240,
+     "h": 660
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#edf2ec",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 163,
+     "right": 178
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 174,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 4,
+     "firstScreen": 4,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 136,
+       "at": 484,
+       "panel": "Akkam"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 4,
+     "radii": [
+      [
+       0,
+       2
+      ],
+      [
+       8,
+       2
+      ]
+     ],
+     "heavyBorders": 1,
+     "borderSamples": [
+      "#8b998e on #edf2ec (2.63:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.19,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      24,
+      26,
+      28
+     ]
+    },
+    "title": {
+     "text": "Akkam. A little more, every day.",
+     "size": 26,
+     "top": 174
+    },
+    "colourShare": 0.009
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.72,
+    0.74
+   ],
+   "motion": {
+    "elements": 1,
+    "css": 1,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1238,
+     "screens": 1.2,
+     "words": 166,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 7,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 200,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "lines": 1,
+     "size": 26,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Akkam. A little more, every day.",
+      "words": 6,
+      "chars": 32,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.44,
+      "top": 200,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "4 / 5 words",
+      "words": 4,
+      "chars": 11,
+      "lines": 1,
+      "size": 34,
+      "vw": 4.4,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.21,
+      "top": 337,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "8",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.19,
+      "top": 341,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.19,
+      "top": 341,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "1",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.21,
+      "top": 341,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Quiz yourself.",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.045,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.53,
+      "top": 796,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 44,
+      "vw": 5.7,
+      "font": "Manrope",
+      "weight": 650,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.03,
+      "top": 827,
+      "tag": "strong",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 7,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 4,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      24,
+      26,
+      28,
+      34,
+      44
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Manrope",
+      "size": 14,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.6
+     },
+     "measureChars": 67,
+     "max": {
+      "size": 44,
+      "vw": 5.7,
+      "font": "Manrope",
+      "text": "1"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 3
+    },
+    "eyebrows": [
+     {
+      "text": "Today’s word goal",
+      "above": "4 / 5 words",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 310
+     },
+     {
+      "text": "1 to review",
+      "above": "Quiz yourself.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 707
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#edf2ec",
+     "bodyBgHsl": {
+      "h": 110,
+      "s": 0.19,
+      "l": 0.94
+     },
+     "dark": false,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#53645c",
+       "share": 0.57
+      },
+      {
+       "color": "#193b31",
+       "share": 0.42
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#203e33",
+      "hsl": {
+       "h": 158,
+       "s": 0.32,
+       "l": 0.18
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 4,
+     "inHero": 4,
+     "radius": 6,
+     "height": 38,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Light / dark",
+      "Jump ahead 3 days",
+      "Start learning",
+      "Start quiz"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "aside.demo-notice 753px",
+      "section.home-summary 705px"
+     ],
+     "outlinedBoxes": 2,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 5,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 3,
+     "fixed": false,
+     "height": 70,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1238,
+    "margins": {
+     "left": 24,
+     "right": 60
+    },
+    "sections": [
+     {
+      "sel": "section.home-summary",
+      "tag": "section",
+      "top": 289,
+      "height": 131,
+      "words": 20,
+      "media": 0,
+      "middle": 68,
+      "heading": {
+       "text": "Today’s word goal",
+       "size": 14,
+       "tag": "h2"
+      },
+      "left": 36,
+      "right": 103,
+      "textLeft": 36,
+      "textRight": 103,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.home-main-grid",
+      "tag": "div",
+      "top": 444,
+      "height": 307,
+      "words": 30,
+      "media": 0,
+      "middle": 87,
+      "heading": {
+       "text": "Start with a few words",
+       "size": 24,
+       "tag": "h3"
+      },
+      "left": 48,
+      "right": 287,
+      "textLeft": 48,
+      "textRight": 287,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.memory-check",
+      "tag": "section",
+      "top": 767,
+      "height": 224,
+      "words": 33,
+      "media": 0,
+      "middle": 61,
+      "heading": {
+       "text": "Quiz yourself.",
+       "size": 28,
+       "tag": "h2"
+      },
+      "left": 53,
+      "right": 155,
+      "textLeft": 53,
+      "textRight": 155,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.home-bottom-grid",
+      "tag": "div",
+      "top": 1019,
+      "height": 175,
+      "words": 30,
+      "media": 0,
+      "middle": 73,
+      "heading": {
+       "text": "Recent learning",
+       "size": 14,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 73,
+      "textLeft": 48,
+      "textRight": 73,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Akkam. A little more, every day.",
+      "size": 26,
+      "top": 200,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 48,
+      "n": 4
+     },
+     {
+      "x": 409,
+      "n": 3
+     },
+     {
+      "x": 24,
+      "n": 1
+     },
+     {
+      "x": 36,
+      "n": 1
+     },
+     {
+      "x": 99,
+      "n": 1
+     },
+     {
+      "x": 217,
+      "n": 1
+     },
+     {
+      "x": 394,
+      "n": 1
+     },
+     {
+      "x": 570,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 14,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": false,
+    "ground": "#edf2ec",
+    "sidebar": null,
+    "topbar": {
+     "h": 70
+    },
+    "canvas": {
+     "left": 24,
+     "right": 47
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 200,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 3,
+     "firstScreen": 3,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 216,
+       "at": 510,
+       "panel": "Akkam"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       8,
+       2
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.19,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      24,
+      26,
+      28
+     ]
+    },
+    "title": {
+     "text": "Akkam. A little more, every day.",
+     "size": 26,
+     "top": 200
+    },
+    "colourShare": 0.015
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.5,
+    0.73
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 1492,
+     "screens": 1.8,
+     "words": 166,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 7,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 213,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "lines": 1,
+     "size": 24,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Akkam. A little more, every day.",
+      "words": 6,
+      "chars": 32,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.04,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.8,
+      "top": 213,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "4 / 5 words",
+      "words": 4,
+      "chars": 11,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.42,
+      "top": 341,
+      "tag": "p",
+      "kind": "heading"
+     },
+     {
+      "text": "8",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.42,
+      "top": 345,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.42,
+      "top": 450,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "1",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.42,
+      "top": 450,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Start with a few words",
+      "words": 5,
+      "chars": 22,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Manrope",
+      "weight": 500,
+      "tracking": -0.03,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.81,
+      "top": 630,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Quiz yourself.",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 26,
+      "vw": 6.7,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.045,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.8,
+      "top": 914,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Manrope",
+      "weight": 650,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.05,
+      "top": 1104,
+      "tag": "strong",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 8,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 4,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      22,
+      24,
+      26,
+      32,
+      36
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Manrope",
+      "size": 14,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.6
+     },
+     "measureChars": 52,
+     "max": {
+      "size": 36,
+      "vw": 9.2,
+      "font": "Manrope",
+      "text": "1"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 3
+    },
+    "eyebrows": [
+     {
+      "text": "Today’s word goal",
+      "above": "4 / 5 words",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 316
+     },
+     {
+      "text": "When do I get a quiz?",
+      "above": "1",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12,
+      "top": 1041
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#edf2ec",
+     "bodyBgHsl": {
+      "h": 110,
+      "s": 0.19,
+      "l": 0.94
+     },
+     "dark": false,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#53645c",
+       "share": 0.57
+      },
+      {
+       "color": "#193b31",
+       "share": 0.42
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#203e33",
+      "hsl": {
+       "h": 158,
+       "s": 0.32,
+       "l": 0.18
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 4,
+     "inHero": 3,
+     "radius": 6,
+     "height": 38,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Light / dark",
+      "Jump ahead 3 days",
+      "Start learning"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "aside.demo-notice 390px",
+      "section.home-summary 354px"
+     ],
+     "outlinedBoxes": 2,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 5,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 3,
+     "fixed": false,
+     "height": 62,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 1492,
+    "margins": {
+     "left": 18,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "aside.demo-notice",
+      "tag": "aside",
+      "top": 62,
+      "height": 127,
+      "words": 21,
+      "media": 0,
+      "middle": 8,
+      "heading": null,
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.fidel-home",
+      "tag": "div",
+      "top": 189,
+      "height": 1303,
+      "words": 154,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Akkam",
+       "size": 24,
+       "tag": "h1"
+      },
+      "left": 18,
+      "right": 38,
+      "textLeft": 18,
+      "textRight": 38,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Akkam. A little more, every day.",
+      "size": 24,
+      "top": 213,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 38,
+      "n": 7
+     },
+     {
+      "x": 18,
+      "n": 1
+     },
+     {
+      "x": 87,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 9,
+    "bodySize": 14,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": false,
+    "ground": "#edf2ec",
+    "sidebar": null,
+    "topbar": {
+     "h": 62
+    },
+    "canvas": {
+     "left": 18,
+     "right": 20
+    },
+    "hero": {
+     "text": "Akkam. A little more, every day.",
+     "words": 6,
+     "chars": 32,
+     "lines": 1,
+     "size": 24,
+     "vw": 6.2,
+     "font": "Manrope",
+     "weight": 500,
+     "tracking": -0.04,
+     "leading": 1.25,
+     "top": 213,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 3,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       8,
+       2
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.19,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      22,
+      24,
+      26
+     ]
+    },
+    "title": {
+     "text": "Akkam. A little more, every day.",
+     "size": 24,
+     "top": 213
+    },
+    "colourShare": 0.002
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "panel-void",
+   "width": 1440,
+   "message": "1 card(s) hold a blank band inside: 136px in \"Akkam\".",
+   "fix": "A card stretches to its neighbour only when it has content to fill. Keep a legend or a note directly under its chart (only an action or a total may sit at a stretched card's foot), let a short card keep its own height (align-items: start), and let a filtered block shrink to its rows."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\quiz-home-inspect\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\quiz-home-inspect\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\quiz-home-inspect\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\quiz-home-inspect\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\quiz-home-inspect\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\quiz-home-inspect\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

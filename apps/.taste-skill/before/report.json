@@ -1,0 +1,2525 @@
+{
+ "url": "http://localhost:3000/",
+ "at": "2026-11-04T12:27:38.935Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "timeout",
+   "screens": 4,
+   "filled": [
+    0.95,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 3,
+    "css": 0,
+    "transitions": 3,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 3096,
+     "screens": 3.4,
+     "words": 275,
+     "img": 1,
+     "video": 0,
+     "canvas": 0,
+     "svg": 17,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Discover a language. Connect with a culture.",
+     "words": 7,
+     "chars": 44,
+     "lines": 4,
+     "size": 84,
+     "vw": 5.8,
+     "font": "Manrope",
+     "weight": 700,
+     "tracking": -0.055,
+     "leading": 1.08,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.47,
+     "top": 266,
+     "gradientText": true,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Discover a language. Connect with a culture.",
+     "words": 7,
+     "lines": 4,
+     "size": 84,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Discover a language. Connect with a culture.",
+      "words": 7,
+      "chars": 44,
+      "lines": 4,
+      "size": 84,
+      "vw": 5.8,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.055,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 266,
+      "gradientText": true,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Meaning",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.13,
+      "top": 466,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "ሰላም",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 72,
+      "vw": 5,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.12,
+      "top": 482,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 60,
+      "vw": 4.2,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.13,
+      "top": 486,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "A simple rhythm that keeps you learning",
+      "words": 7,
+      "chars": 39,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 1135,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Start with the language that connects you",
+      "words": 7,
+      "chars": 41,
+      "lines": 3,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.32,
+      "top": 1870,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.16,
+      "top": 2072,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "ሰላም",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.16,
+      "top": 2072,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Build a connection, one word at a time.",
+      "words": 8,
+      "chars": 39,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 2555,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 9,
+     "maxLines": 4,
+     "over2Lines": 2,
+     "statements": 2,
+     "centered": 5,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      14,
+      16,
+      18,
+      20,
+      24,
+      30,
+      48,
+      60,
+      72,
+      84
+     ],
+     "sizeCount": 11,
+     "notLoaded": [],
+     "body": {
+      "font": "Manrope",
+      "size": 16,
+      "leading": 2,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.2
+     },
+     "measureChars": 57,
+     "max": {
+      "size": 84,
+      "vw": 5.8,
+      "font": "Manrope",
+      "text": "Discover a language."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 2,
+     "microLabelShare": 0.03,
+     "microSamples": [
+      "Made for steady progress",
+      "Your first word is waiting"
+     ],
+     "upperShare": 0.03,
+     "centerShare": 0.35,
+     "smallText": 6
+    },
+    "eyebrows": [
+     {
+      "text": "Learn at your own pace",
+      "above": "Discover a language. Connect with a cult",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 14,
+      "top": 196
+     },
+     {
+      "text": "Clear translations",
+      "above": "Meaning",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 438
+     },
+     {
+      "text": "Amharic",
+      "above": "ሰላም",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 12,
+      "top": 412
+     },
+     {
+      "text": "Afaan Oromoo",
+      "above": "Akkam",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 12,
+      "top": 414
+     },
+     {
+      "text": "Made for steady progress",
+      "above": "A simple rhythm that keeps you learning",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": true,
+      "size": 12,
+      "top": 1087
+     },
+     {
+      "text": "Ethiopian languages, thoughtfully taught",
+      "above": "Start with the language that connects yo",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 1830
+     },
+     {
+      "text": "Your first word is waiting",
+      "above": "Build a connection, one word at a time.",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 2519
+     }
+    ],
+    "numbered": [
+     {
+      "text": "01 / 03",
+      "size": 12,
+      "top": 388
+     },
+     {
+      "text": "02 / 03",
+      "size": 12,
+      "top": 368
+     },
+     {
+      "text": "03 / 03",
+      "size": 12,
+      "top": 353
+     },
+     {
+      "text": "01",
+      "size": 14,
+      "top": 1396
+     },
+     {
+      "text": "02",
+      "size": 14,
+      "top": 1396
+     },
+     {
+      "text": "03",
+      "size": 14,
+      "top": 1396
+     }
+    ],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#0a1418",
+       "top": 0,
+       "hsl": {
+        "h": 197,
+        "s": 0.41,
+        "l": 0.07
+       }
+      },
+      {
+       "color": "#245f59",
+       "top": 2439,
+       "hsl": {
+        "h": 174,
+        "s": 0.45,
+        "l": 0.26
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#d7ede8",
+       "share": 0.39
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.25
+      },
+      {
+       "color": "#d7ece8",
+       "share": 0.21
+      },
+      {
+       "color": "#d7ebe7",
+       "share": 0.07
+      },
+      {
+       "color": "#6ec89a",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#245f59",
+      "hsl": {
+       "h": 174,
+       "s": 0.45,
+       "l": 0.26
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 3,
+     "radius": 16,
+     "height": 54,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start learning",
+      "Start learning",
+      "Explore words"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 22,
+     "shadowOverlay": 2,
+     "shadowSamples": [
+      "div.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.group.inline-flex → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "article.group.absolute → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
+     "gradients": 7,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.pointer-events-none.absolute → linear-gradient(oklab(0.273776 -0.0233665 -0.0161674 / 0.65) 0%, oklab(0.999994 0.0000455678 0.0000200868 / 0.",
+      "article.group.absolute → linear-gradient(to right bottom in oklab, rgb(25, 72, 60) 0%, rgb(16, 55, 46) 50%, rgb(9, 37, 31) 100%)",
+      "div.pointer-events-none.absolute → linear-gradient(to right bottom, oklab(0.999994 0.0000455678 0.0000200868 / 0.17) 0%, rgba(0, 0, 0, 0) 50%, rg",
+      "article.group.absolute → linear-gradient(to right bottom in oklab, rgb(25, 72, 60) 0%, rgb(16, 55, 46) 50%, rgb(9, 37, 31) 100%)"
+     ],
+     "gradientText": 1,
+     "hairlines": 3,
+     "hairlineSamples": [
+      "section#languages.border-y.border-[var(--sea-ink)]/8 1425px",
+      "footer.border-t.border-[var(--sea-ink)]/8 1425px",
+      "div.pointer-events-none.absolute 190px rule"
+     ],
+     "outlinedBoxes": 8,
+     "dashed": 0,
+     "blurred": 16,
+     "roundedBoxes": 27,
+     "boxRadius": 99,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": true,
+       "rounded": true,
+       "top": 1363
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": true,
+     "height": 84,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 3096,
+    "margins": {
+     "left": 48,
+     "right": 68
+    },
+    "sections": [
+     {
+      "sel": "div.pointer-events-none.absolute",
+      "tag": "div",
+      "top": 0,
+      "height": 3096,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.relative.isolate",
+      "tag": "section",
+      "top": 84,
+      "height": 891,
+      "words": 94,
+      "media": 0,
+      "middle": 257,
+      "heading": {
+       "text": "Discover a language.",
+       "size": 84,
+       "tag": "h1"
+      },
+      "left": 48,
+      "right": 58,
+      "textLeft": 48,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#how-it-works.mx-auto.max-w-7xl",
+      "tag": "section",
+      "top": 975,
+      "height": 742,
+      "words": 81,
+      "media": 0,
+      "middle": 28,
+      "heading": {
+       "text": "A simple rhythm that keeps you learning",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 154,
+      "right": 169,
+      "textLeft": 154,
+      "textRight": 169,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#languages.border-y.border-[var(--sea-ink)]/8",
+      "tag": "section",
+      "top": 1717,
+      "height": 610,
+      "words": 59,
+      "media": 0,
+      "middle": 109,
+      "heading": {
+       "text": "Start with the language that connects you",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 121,
+      "right": 181,
+      "textLeft": 121,
+      "textRight": 181,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.mx-auto.max-w-7xl",
+      "tag": "section",
+      "top": 2327,
+      "height": 684,
+      "words": 32,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Build a connection, one word at a time.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 402,
+      "right": 417,
+      "textLeft": 402,
+      "textRight": 417,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Discover a language. Connect with a culture.",
+      "size": 84,
+      "top": 266,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 48,
+      "n": 3
+     },
+     {
+      "x": 121,
+      "n": 2
+     },
+     {
+      "x": 154,
+      "n": 2
+     },
+     {
+      "x": 554,
+      "n": 2
+     },
+     {
+      "x": 954,
+      "n": 2
+     },
+     {
+      "x": 656,
+      "n": 1
+     },
+     {
+      "x": 1005,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 14,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.14,
+    "voidBox": {
+     "x": 600,
+     "y": 120,
+     "w": 240,
+     "h": 780
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.98,
+    1,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 3,
+    "css": 0,
+    "transitions": 3,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 4141,
+     "screens": 4,
+     "words": 275,
+     "img": 1,
+     "video": 0,
+     "canvas": 0,
+     "svg": 17,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "ሰላም",
+     "words": 1,
+     "chars": 3,
+     "lines": 1,
+     "size": 72,
+     "vw": 9.4,
+     "font": "Manrope",
+     "weight": 700,
+     "tracking": -0.06,
+     "leading": 1,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "right",
+     "widthRatio": 0.22,
+     "top": 865,
+     "tag": "h2",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Discover a language. Connect with a culture.",
+     "words": 7,
+     "lines": 2,
+     "size": 60,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Discover a language. Connect with a culture.",
+      "words": 7,
+      "chars": 44,
+      "lines": 2,
+      "size": 60,
+      "vw": 7.8,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.055,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 250,
+      "gradientText": true,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Meaning",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.23,
+      "top": 849,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "ሰላም",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 72,
+      "vw": 9.4,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.22,
+      "top": 865,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 60,
+      "vw": 7.8,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.24,
+      "top": 868,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "A simple rhythm that keeps you learning",
+      "words": 7,
+      "chars": 39,
+      "lines": 2,
+      "size": 48,
+      "vw": 6.3,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 1418,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Start with the language that connects you",
+      "words": 7,
+      "chars": 41,
+      "lines": 2,
+      "size": 48,
+      "vw": 6.3,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 2613,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.3,
+      "top": 3142,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "ሰላም",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.3,
+      "top": 3142,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Build a connection, one word at a time.",
+      "words": 8,
+      "chars": 39,
+      "lines": 2,
+      "size": 48,
+      "vw": 6.3,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 3600,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 9,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 2,
+     "centered": 5,
+     "medianWords": 7,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      14,
+      16,
+      18,
+      20,
+      24,
+      30,
+      48,
+      60,
+      72
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "Manrope",
+      "size": 16,
+      "leading": 2,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.2
+     },
+     "measureChars": 72,
+     "max": {
+      "size": 72,
+      "vw": 9.4,
+      "font": "Manrope",
+      "text": "ሰላም"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 2,
+     "microLabelShare": 0.03,
+     "microSamples": [
+      "Made for steady progress",
+      "Your first word is waiting"
+     ],
+     "upperShare": 0.03,
+     "centerShare": 0.35,
+     "smallText": 6
+    },
+    "eyebrows": [
+     {
+      "text": "Learn at your own pace",
+      "above": "Discover a language. Connect with a cult",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 14,
+      "top": 180
+     },
+     {
+      "text": "Clear translations",
+      "above": "Meaning",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 821
+     },
+     {
+      "text": "Amharic",
+      "above": "ሰላም",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 12,
+      "top": 794
+     },
+     {
+      "text": "Afaan Oromoo",
+      "above": "Akkam",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 12,
+      "top": 797
+     },
+     {
+      "text": "Made for steady progress",
+      "above": "A simple rhythm that keeps you learning",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": true,
+      "size": 12,
+      "top": 1370
+     },
+     {
+      "text": "Ethiopian languages, thoughtfully taught",
+      "above": "Start with the language that connects yo",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 2573
+     },
+     {
+      "text": "Your first word is waiting",
+      "above": "Build a connection, one word at a time.",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 3564
+     }
+    ],
+    "numbered": [
+     {
+      "text": "01 / 03",
+      "size": 12,
+      "top": 770
+     },
+     {
+      "text": "02 / 03",
+      "size": 12,
+      "top": 751
+     },
+     {
+      "text": "03 / 03",
+      "size": 12,
+      "top": 736
+     },
+     {
+      "text": "01",
+      "size": 14,
+      "top": 1679
+     },
+     {
+      "text": "02",
+      "size": 14,
+      "top": 1909
+     },
+     {
+      "text": "03",
+      "size": 14,
+      "top": 2167
+     }
+    ],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#0a1418",
+       "top": 0,
+       "hsl": {
+        "h": 197,
+        "s": 0.41,
+        "l": 0.07
+       }
+      },
+      {
+       "color": "#245f59",
+       "top": 3484,
+       "hsl": {
+        "h": 174,
+        "s": 0.45,
+        "l": 0.26
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#d7ede8",
+       "share": 0.39
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.25
+      },
+      {
+       "color": "#d7ece8",
+       "share": 0.21
+      },
+      {
+       "color": "#d7ebe7",
+       "share": 0.07
+      },
+      {
+       "color": "#6ec89a",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#245f59",
+      "hsl": {
+       "h": 174,
+       "s": 0.45,
+       "l": 0.26
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 3,
+     "radius": 16,
+     "height": 54,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start learning",
+      "Start learning",
+      "Explore words"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 22,
+     "shadowOverlay": 2,
+     "shadowSamples": [
+      "div.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.group.inline-flex → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "article.group.absolute → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
+     "gradients": 7,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.pointer-events-none.absolute → linear-gradient(oklab(0.273776 -0.0233665 -0.0161674 / 0.65) 0%, oklab(0.999994 0.0000455678 0.0000200868 / 0.",
+      "article.group.absolute → linear-gradient(to right bottom in oklab, rgb(25, 72, 60) 0%, rgb(16, 55, 46) 50%, rgb(9, 37, 31) 100%)",
+      "div.pointer-events-none.absolute → linear-gradient(to right bottom, oklab(0.999994 0.0000455678 0.0000200868 / 0.17) 0%, rgba(0, 0, 0, 0) 50%, rg",
+      "article.group.absolute → linear-gradient(to right bottom in oklab, rgb(25, 72, 60) 0%, rgb(16, 55, 46) 50%, rgb(9, 37, 31) 100%)"
+     ],
+     "gradientText": 1,
+     "hairlines": 3,
+     "hairlineSamples": [
+      "section#languages.border-y.border-[var(--sea-ink)]/8 753px",
+      "footer.border-t.border-[var(--sea-ink)]/8 753px",
+      "div.pointer-events-none.absolute 190px rule"
+     ],
+     "outlinedBoxes": 8,
+     "dashed": 0,
+     "blurred": 16,
+     "roundedBoxes": 27,
+     "boxRadius": 99,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": true,
+       "rounded": true,
+       "top": 1646
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 5,
+     "fixed": true,
+     "height": 84,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 4141,
+    "margins": {
+     "left": 32,
+     "right": 75
+    },
+    "sections": [
+     {
+      "sel": "div.pointer-events-none.absolute",
+      "tag": "div",
+      "top": 0,
+      "height": 4141,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.relative.isolate",
+      "tag": "section",
+      "top": 84,
+      "height": 1174,
+      "words": 94,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Discover a language.",
+       "size": 60,
+       "tag": "h1"
+      },
+      "left": 32,
+      "right": 106,
+      "textLeft": 32,
+      "textRight": 106,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#how-it-works.mx-auto.max-w-7xl",
+      "tag": "section",
+      "top": 1258,
+      "height": 1202,
+      "words": 81,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "A simple rhythm that keeps you learning",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 60,
+      "right": 75,
+      "textLeft": 60,
+      "textRight": 75,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#languages.border-y.border-[var(--sea-ink)]/8",
+      "tag": "section",
+      "top": 2460,
+      "height": 912,
+      "words": 59,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Start with the language that connects you",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 92,
+      "textLeft": 32,
+      "textRight": 92,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.mx-auto.max-w-7xl",
+      "tag": "section",
+      "top": 3372,
+      "height": 684,
+      "words": 32,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Build a connection, one word at a time.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 116,
+      "right": 131,
+      "textLeft": 116,
+      "textRight": 131,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Discover a language. Connect with a culture.",
+      "size": 60,
+      "top": 250,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 65,
+      "n": 7
+     },
+     {
+      "x": 32,
+      "n": 5
+     },
+     {
+      "x": 418,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 14,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    0.9,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 3,
+    "css": 0,
+    "transitions": 3,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 4344,
+     "screens": 5.1,
+     "words": 267,
+     "img": 1,
+     "video": 0,
+     "canvas": 0,
+     "svg": 17,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Discover a language. Connect with a culture.",
+     "words": 7,
+     "chars": 44,
+     "lines": 4,
+     "size": 48,
+     "vw": 12.3,
+     "font": "Manrope",
+     "weight": 700,
+     "tracking": -0.055,
+     "leading": 1.08,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.9,
+     "top": 218,
+     "gradientText": true,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Discover a language. Connect with a culture.",
+     "words": 7,
+     "lines": 4,
+     "size": 48,
+     "font": "Manrope"
+    },
+    "headings": [
+     {
+      "text": "Discover a language. Connect with a culture.",
+      "words": 7,
+      "chars": 44,
+      "lines": 4,
+      "size": 48,
+      "vw": 12.3,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.055,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 218,
+      "gradientText": true,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Meaning",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1.11,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.35,
+      "top": 922,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "ሰላም",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 60,
+      "vw": 15.4,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.36,
+      "top": 940,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 48,
+      "vw": 12.3,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.06,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.37,
+      "top": 940,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "A simple rhythm that keeps you learning",
+      "words": 7,
+      "chars": 39,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1387,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Start with the language that connects you",
+      "words": 7,
+      "chars": 41,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 2562,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Afaan Oromoo",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.33,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 3039,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.67,
+      "top": 3123,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Amharic",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.33,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 3373,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "ሰላም",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.67,
+      "top": 3457,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Build a connection, one word at a time.",
+      "words": 8,
+      "chars": 39,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Manrope",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 3819,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 11,
+     "maxLines": 4,
+     "over2Lines": 1,
+     "statements": 2,
+     "centered": 5,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Manrope",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      14,
+      16,
+      20,
+      24,
+      30,
+      36,
+      48,
+      60
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Manrope",
+      "size": 16,
+      "leading": 2,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.2
+     },
+     "measureChars": 44,
+     "max": {
+      "size": 60,
+      "vw": 15.4,
+      "font": "Manrope",
+      "text": "ሰላም"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 2,
+     "microLabelShare": 0.031,
+     "microSamples": [
+      "Made for steady progress",
+      "Your first word is waiting"
+     ],
+     "upperShare": 0.03,
+     "centerShare": 0.36,
+     "smallText": 6
+    },
+    "eyebrows": [
+     {
+      "text": "Learn at your own pace",
+      "above": "Discover a language. Connect with a cult",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 14,
+      "top": 148
+     },
+     {
+      "text": "Clear translations",
+      "above": "Meaning",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 894
+     },
+     {
+      "text": "Clear translations",
+      "above": "ሰላም",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 894
+     },
+     {
+      "text": "Clear translations",
+      "above": "Akkam",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 894
+     },
+     {
+      "text": "Made for steady progress",
+      "above": "A simple rhythm that keeps you learning",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": true,
+      "size": 12,
+      "top": 1339
+     },
+     {
+      "text": "Ethiopian languages, thoughtfully taught",
+      "above": "Start with the language that connects yo",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 2522
+     },
+     {
+      "text": "OM",
+      "above": "Afaan Oromoo",
+      "upper": false,
+      "tracked": true,
+      "mono": false,
+      "pill": true,
+      "size": 12,
+      "top": 2939
+     },
+     {
+      "text": "AM",
+      "above": "Amharic",
+      "upper": false,
+      "tracked": true,
+      "mono": false,
+      "pill": true,
+      "size": 12,
+      "top": 3273
+     },
+     {
+      "text": "Your first word is waiting",
+      "above": "Build a connection, one word at a time.",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 3783
+     }
+    ],
+    "numbered": [
+     {
+      "text": "01 / 03",
+      "size": 12,
+      "top": 843
+     },
+     {
+      "text": "02 / 03",
+      "size": 12,
+      "top": 825
+     },
+     {
+      "text": "03 / 03",
+      "size": 12,
+      "top": 809
+     },
+     {
+      "text": "01",
+      "size": 14,
+      "top": 1648
+     },
+     {
+      "text": "02",
+      "size": 14,
+      "top": 1890
+     },
+     {
+      "text": "03",
+      "size": 14,
+      "top": 2160
+     }
+    ],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#0a1418",
+       "top": 0,
+       "hsl": {
+        "h": 197,
+        "s": 0.41,
+        "l": 0.07
+       }
+      },
+      {
+       "color": "#245f59",
+       "top": 3727,
+       "hsl": {
+        "h": 174,
+        "s": 0.45,
+        "l": 0.26
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#d7ede8",
+       "share": 0.39
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.25
+      },
+      {
+       "color": "#d7ece8",
+       "share": 0.2
+      },
+      {
+       "color": "#d7ebe7",
+       "share": 0.07
+      },
+      {
+       "color": "#6ec89a",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#245f59",
+      "hsl": {
+       "h": 174,
+       "s": 0.45,
+       "l": 0.26
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 3,
+     "radius": 16,
+     "height": 54,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start learning",
+      "Start learning",
+      "Explore words"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 21,
+     "shadowOverlay": 2,
+     "shadowSamples": [
+      "div.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.group.inline-flex → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "article.group.absolute → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
+     "gradients": 7,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.pointer-events-none.absolute → linear-gradient(oklab(0.273776 -0.0233665 -0.0161674 / 0.65) 0%, oklab(0.999994 0.0000455678 0.0000200868 / 0.",
+      "article.group.absolute → linear-gradient(to right bottom in oklab, rgb(25, 72, 60) 0%, rgb(16, 55, 46) 50%, rgb(9, 37, 31) 100%)",
+      "div.pointer-events-none.absolute → linear-gradient(to right bottom, oklab(0.999994 0.0000455678 0.0000200868 / 0.17) 0%, rgba(0, 0, 0, 0) 50%, rg",
+      "article.group.absolute → linear-gradient(to right bottom in oklab, rgb(25, 72, 60) 0%, rgb(16, 55, 46) 50%, rgb(9, 37, 31) 100%)"
+     ],
+     "gradientText": 1,
+     "hairlines": 3,
+     "hairlineSamples": [
+      "section#languages.border-y.border-[var(--sea-ink)]/8 390px",
+      "footer.border-t.border-[var(--sea-ink)]/8 390px",
+      "div.pointer-events-none.absolute 170px rule"
+     ],
+     "outlinedBoxes": 8,
+     "dashed": 0,
+     "blurred": 15,
+     "roundedBoxes": 27,
+     "boxRadius": 99,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": true,
+       "rounded": true,
+       "top": 1623
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 3,
+     "fixed": true,
+     "height": 84,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 4344,
+    "margins": {
+     "left": 20,
+     "right": 24
+    },
+    "sections": [
+     {
+      "sel": "div.absolute.-top-40",
+      "tag": "div",
+      "top": -160,
+      "height": 420,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.absolute.right-[-100px]",
+      "tag": "div",
+      "top": 869,
+      "height": 360,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.absolute.bottom-[-100px]",
+      "tag": "div",
+      "top": 4124,
+      "height": 320,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.relative.isolate",
+      "tag": "section",
+      "top": 84,
+      "height": 1175,
+      "words": 90,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Discover a language.",
+       "size": 48,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 24,
+      "textLeft": 20,
+      "textRight": 24,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#how-it-works.mx-auto.max-w-7xl",
+      "tag": "section",
+      "top": 1259,
+      "height": 1182,
+      "words": 81,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "A simple rhythm that keeps you learning",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 30,
+      "right": 30,
+      "textLeft": 30,
+      "textRight": 30,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#languages.border-y.border-[var(--sea-ink)]/8",
+      "tag": "section",
+      "top": 2441,
+      "height": 1206,
+      "words": 59,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Start with the language that connects you",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 22,
+      "textLeft": 20,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.mx-auto.max-w-7xl",
+      "tag": "section",
+      "top": 3647,
+      "height": 580,
+      "words": 32,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Build a connection, one word at a time.",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 47,
+      "right": 47,
+      "textLeft": 47,
+      "textRight": 47,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Discover a language. Connect with a culture.",
+      "size": 48,
+      "top": 218,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 45,
+      "n": 8
+     },
+     {
+      "x": 20,
+      "n": 5
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 1440,
+   "message": "2 headline(s) wrap past two lines at 1440px: \"Discover a language. Connect with a culture.\" → 4 lines (7 words, 84px); \"Start with the language that connects you\" → 3 lines (7 words, 48px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 36px or less."
+  },
+  {
+   "level": "FAIL",
+   "id": "eyebrow",
+   "width": 1440,
+   "message": "7 eyebrow/kicker label(s) above headings: \"Learn at your own pace\" (pill) above \"Discover a language. Connect with a cult\"; \"Clear translations\" above \"Meaning\"; \"Amharic\" (pill) above \"ሰላም\"; \"Afaan Oromoo\" (pill) above \"Akkam\"; \"Made for steady progress\" (pill) above \"A simple rhythm that keeps you learning\"",
+   "fix": "Delete them. If the label carried real information, fold it into the headline or the supporting sentence.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "numbering",
+   "width": 1440,
+   "message": "Decorative index numbers: \"01 / 03\", \"02 / 03\", \"03 / 03\", \"01\", \"02\", \"03\"",
+   "fix": "Remove them. If order truly matters, write it into the words (\"First, …\") or use a real <ol>.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "micro-label",
+   "width": 1440,
+   "message": "2 tiny uppercase letter-spaced label(s): \"Made for steady progress\", \"Your first word is waiting\"",
+   "fix": "Prefer sentence case at body size.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "7 gradient fill(s): div.pointer-events-none.absolute → linear-gradient(oklab(0.273776 -0.0233665 -0.0161674 / 0.65) 0%, oklab(0.999994 0.0000455678 0.0000200868 / 0. | article.group.absolute → linear-gradient(to right bottom in oklab, rgb(25, 72, 60) 0%, rgb(16, 55, 46) 50%, rgb(9, 37, 31) 100%) | div.pointer-events-none.absolute → linear-gradient(to right bottom, oklab(0.999994 0.0000455678 0.0000200868 / 0.17) 0%, rgba(0, 0, 0, 0) 50%, rg",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient-text",
+   "width": 1440,
+   "message": "1 gradient-filled text element(s).",
+   "fix": "Solid colour text.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "shadow",
+   "width": 1440,
+   "message": "22 box-shadow(s) on elements at rest: div.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0 | a.group.inline-flex → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0 | a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+   "fix": "Remove. Separate surfaces with a tone step or space. Shadows are for things that really float (menus, dialogs, sticky bars).",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "hairline",
+   "width": 1440,
+   "message": "3 thin rule(s)/divider line(s): section#languages.border-y.border-[var(--sea-ink)]/8 1425px | footer.border-t.border-[var(--sea-ink)]/8 1425px | div.pointer-events-none.absolute 190px rule",
+   "fix": "Delete. Separate with space, a tone change, or scale. Lines are only for real tables and form fields.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "outlined-box",
+   "width": 1440,
+   "message": "8 boxes drawn with a 1px outline.",
+   "fix": "Define a surface by its fill (one tone step from the page) or leave the content unboxed.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "glass",
+   "width": 1440,
+   "message": "16 backdrop-blur surfaces.",
+   "fix": "One blurred sticky bar at most; glass cards are a tell.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "icon-cards",
+   "width": 1440,
+   "message": "1 row(s) of identical cards each topped with a small icon (3 cards).",
+   "fix": "Replace with one composed section from the direction: a narrative split, a list set in large type, or real imagery per item.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "size-count",
+   "width": 1440,
+   "message": "11 different font sizes (12, 14, 16, 18, 20, 24, 30, 48, 60, 72, 84).",
+   "fix": "A page needs about five: display, heading, lead, body, small.",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "few-pictures",
+   "width": 1440,
+   "message": "Only 0 picture(s) on the page (0 photographs, footage or raster images, 0 interface fragments). Drawings in SVG do not count.",
+   "fix": "Find real pictures of the subject's world with scripts/assets.mjs (photographs, archival images, maps, engravings, footage), download them to assets/ and give them room: a hero picture, one per section that has a subject, a full-width band. At least four, usually six to twelve."
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "FAIL",
+   "id": "small-text",
+   "width": 1440,
+   "message": "6 text blocks under 13px.",
+   "fix": "Nothing meant to be read goes below 13px.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "font-not-dealt",
+   "width": 1440,
+   "message": "The sheet dealt Archivo and Archivo, but the page renders Manrope.",
+   "fix": "Load the dealt face (the link on the sheet) and put it first in font-family. A build that falls back to a default face lands on the default look."
+  },
+  {
+   "level": "WARN",
+   "id": "off-centre",
+   "width": 1440,
+   "message": "The margins differ: 48px on the left, 68px on the right, at 1440px.",
+   "fix": "Put the navigation and the content on one pair of margins; check for padding on one side only, a scrollbar gutter, or a header on another inset than the page."
+  },
+  {
+   "level": "WARN",
+   "id": "ragged-edges",
+   "width": 1440,
+   "message": "Left-aligned text starts at 7 different lines (48px, 121px, 154px, 554px, 954px, 656px, 1005px); the three most used hold only 54% of it.",
+   "fix": "Pick two or three anchor lines from the grid and start every heading and paragraph on one of them."
+  },
+  {
+   "level": "FAIL",
+   "id": "covered-text",
+   "width": 1440,
+   "message": "Large text lies under another element at some scroll position: \"ሰላም\" (screen 1, 25% hidden); \"Meaning\" (screen 1, 25% hidden)",
+   "fix": "Nothing may sit on top of a headline or statement. Move the picture, shorten the pinned run, or raise the text above it (z-index) and give it a ground.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "still-page",
+   "width": 1440,
+   "message": "Only 3 element(s) moved while the page loaded and scrolled.",
+   "fix": "Build the motion layer (SKILL.md step 9, references/motion.md): the signature move, an entrance for the parts of every section, feedback on every control, and one moving picture. Transform and opacity only, with a reduced-motion fallback."
+  },
+  {
+   "level": "FAIL",
+   "id": "off-centre",
+   "width": 768,
+   "message": "The page sits off-centre: its content comes to 32px from the left edge but only to 75px from the right, at 768px.",
+   "fix": "Give the page one pair of equal margins. Check the wrapper for a max-width without margin-inline: auto, a grid with an empty last column, or padding on one side only. If one side is meant to hold air, it must still be closed by something that reaches the margin (a picture, the navigation's last item, a figure)."
+  },
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 390,
+   "message": "1 headline(s) wrap past two lines at 390px: \"Discover a language. Connect with a culture.\" → 4 lines (7 words, 48px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 24px or less."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\before\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\before\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\before\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\before\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\before\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\before\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

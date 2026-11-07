@@ -82,21 +82,21 @@ export function LanguageDeck({ start }: { start: "/Home" | "/sign-up" }) {
       onKeyDown={event => { if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); choose(active + (event.key === "ArrowRight" ? 1 : -1)); } }}>
       <div className="language-deck-story">
         <div className="language-deck-choices" role="group" aria-label="Choose a language">
-          {languages.map((language,index) => <button type="button" key={language.code} aria-pressed={active === index} onClick={() => choose(index)}>{language.name}</button>)}
+          {languages.map((language, index) => <button type="button" key={language.code} aria-pressed={active === index} onClick={() => choose(index)}>{language.name}</button>)}
         </div>
         <p className="language-deck-narrative">{selected.story}</p>
         {selected.code === "ti" ? <a className="language-deck-link" href="#atlas">Explore the map <ArrowUpRight size={20} aria-hidden="true" /></a> : <Link className="language-deck-link" to={start}>Start learning <ArrowUpRight size={20} aria-hidden="true" /></Link>}
       </div>
       <div className="language-deck-interaction">
         <div className="language-deck-stage" data-ui="Interactive language cards" onPointerDown={startSwipe} onPointerUp={finishSwipe} onPointerCancel={() => { gesture.current = null; }} onLostPointerCapture={() => { gesture.current = null; }}>
-          {languages.map((language,index) => {
+          {languages.map((language, index) => {
             const position = index === active ? "front" : index === (active + 1) % languages.length ? "right" : "left";
             return <article key={language.code} className={`language-postcard postcard-${language.colour} deck-${position}`} aria-hidden={index !== active} inert={index !== active} aria-roledescription="slide" aria-label={`${language.name} greeting`}>
               {index === active && <>
-              <div className="language-postcard-top"><span>{language.name}</span>{language.code !== "om" && <span lang={language.code}>{language.native}</span>}</div>
-              <div className="language-postcard-word"><h3 lang={language.code}>{language.greeting}</h3><p>{language.pronunciation}</p></div>
-              <div className="language-postcard-meaning"><p>{language.meaning}</p><p lang="am">{language.amharic}</p></div>
-              <p className="language-postcard-note">{language.note}</p>
+                <div className="language-postcard-top"><span>{language.name}</span>{language.code !== "om" && <span lang={language.code}>{language.native}</span>}</div>
+                <div className="language-postcard-word"><h3 lang={language.code}>{language.greeting}</h3><p>{language.pronunciation}</p></div>
+                <div className="language-postcard-meaning"><p>{language.meaning}</p><p lang="am">{language.amharic}</p></div>
+                <p className="language-postcard-note">{language.note}</p>
               </>}
               <svg className="postcard-weave" viewBox="0 0 240 18" fill="none" aria-hidden="true"><path d="m0 9 9-9 9 9-9 9Zm24 0 9-9 9 9-9 9Zm24 0 9-9 9 9-9 9Zm24 0 9-9 9 9-9 9Zm24 0 9-9 9 9-9 9Zm24 0 9-9 9 9-9 9Zm24 0 9-9 9 9-9 9Zm24 0 9-9 9 9-9 9Zm24 0 9-9 9 9-9 9Zm24 0 9-9 9 9-9 9Z" stroke="currentColor" strokeWidth="2" /></svg>
             </article>;

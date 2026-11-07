@@ -85,6 +85,7 @@ function LessonPage() {
     wordId: string;
     selectedWordId: string;
     questionIndex: number;
+    questionType?: "multiple_choice" | "matching";
   }) {
     if (!attempt) throw new Error("Start the lesson before answering questions.");
     const value = await saveLessonAnswer(await token(), attempt.id, {
@@ -92,9 +93,12 @@ function LessonPage() {
       word_id: answer.wordId,
       selected_word_id: answer.selectedWordId,
       question_index: answer.questionIndex,
+      question_type: answer.questionType ?? "multiple_choice",
     });
     cacheAttempt(value);
     void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
+    void queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
+    void queryClient.invalidateQueries({ queryKey: ["auth", "vocabulary-state", userId] });
   }
 
   async function finish() {
@@ -106,6 +110,7 @@ function LessonPage() {
       queryKey: learningProgressKeys.all(userId),
     });
     await queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
+    await queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
   }
 
   function goBack() {
@@ -173,7 +178,7 @@ function LessonPage() {
   }
 
   return (
-    <main className="mx-auto w-full min-w-0 max-w-5xl px-4 py-6 sm:px-6 sm:py-8">
+    <div className="w-full min-w-0">
       <FlashcardSession
         key={`${lessonId}-${language_code}-${attempt?.id ?? "new"}`}
         category={lesson.data.lesson.category}
@@ -186,6 +191,6 @@ function LessonPage() {
         onProgress={(index) => checkpoint("vocabulary", index)}
         onComplete={async () => checkpoint("practice", 0)}
       />
-    </main>
+    </div>
   );
 }

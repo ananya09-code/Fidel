@@ -39,6 +39,7 @@ export function useUpdateVocabularyState() {
         data: [saved, ...(current?.data ?? []).filter((item) => item.word_id !== saved.word_id)],
       }));
       await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId ?? "signed-out"] }),
         queryClient.invalidateQueries({ queryKey: ["auth", "reviews", userId ?? "signed-out"] }),
         queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId ?? "signed-out"] }),
       ]);

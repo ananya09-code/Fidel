@@ -1,0 +1,8 @@
+[
+  "Simultaneous exit/entry; rapid-click guard; animation cleanup",
+  "Previous and keyboard navigation",
+  "Real pointer drag advances one card",
+  "Cards-to-practice flow, five answers saved once, correct results",
+  "Failed save preserves unanswered state and retry controls",
+  "Reduced motion skips all card animation"
+]

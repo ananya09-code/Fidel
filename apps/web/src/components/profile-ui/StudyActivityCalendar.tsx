@@ -27,7 +27,7 @@ export function StudyActivityCalendar({ activity }: { activity: StudyActivity })
   }
 
   return (
-    <section aria-labelledby="study-activity-title" className="min-w-0 rounded-3xl border border-[var(--sea-ink)]/10 bg-[var(--bg-base)] p-5 sm:p-7">
+    <section aria-labelledby="study-activity-title" className="profile-activity">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-[var(--sea-ink)]">
@@ -45,13 +45,13 @@ export function StudyActivityCalendar({ activity }: { activity: StudyActivity })
 
       <div ref={scrollRef} className="mt-6 overflow-x-auto pb-3" role="group" aria-label="Daily practice activity. Use arrow keys to explore days.">
         <div className="flex min-w-max gap-3 p-1">
-          <div aria-hidden="true" className="sticky left-0 z-10 grid shrink-0 grid-rows-[20px_repeat(7,12px)] gap-[3px] bg-[var(--bg-base)] pr-2 text-[10px] leading-3 text-[var(--sea-ink)]/55">
+          <div aria-hidden="true" className="sticky left-0 z-10 grid shrink-0 grid-rows-[20px_repeat(7,12px)] gap-[3px] bg-[var(--bg-base)] pr-2 text-[11px] leading-3 text-[var(--sea-ink)]/55">
             <span /><span /><span>Mon</span><span /><span>Wed</span><span /><span>Fri</span><span />
           </div>
           <div className="flex gap-[3px]">
             {weeks.map((week, index) => (
               <div key={index} className="grid w-3 grid-rows-[20px_repeat(7,12px)] gap-[3px]">
-                <span aria-hidden="true" className="text-[10px] leading-4 text-[var(--sea-ink)]/55">{week.month}</span>
+                <span aria-hidden="true" className="text-[11px] leading-4 text-[var(--sea-ink)]/55">{week.month}</span>
                 {week.days.map((day, row) => day ? (
                   <button
                     key={day.date}

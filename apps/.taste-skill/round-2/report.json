@@ -1,0 +1,2147 @@
+{
+ "url": "http://localhost:3000/",
+ "at": "2026-11-04T13:07:39.598Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    1,
+    0.97,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 23,
+    "css": 20,
+    "transitions": 3,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 4031,
+     "screens": 4.5,
+     "words": 240,
+     "img": 7,
+     "video": 0,
+     "canvas": 0,
+     "svg": 14,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 1,
+     "uiAbuse": false,
+     "realPictures": 7,
+     "videoCount": 0,
+     "uiPictures": 1,
+     "pictureSamples": [
+      "dassanech-portrait.jpg",
+      "oromo-portrait.jpg",
+      "harar-portrait.jpg",
+      "ethiopian-portrait.jpg",
+      "oromo-portrait.jpg",
+      "harar-portrait.jpg",
+      "ethiopian-portrait.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Words bring us closer",
+     "words": 4,
+     "chars": 21,
+     "lines": 2,
+     "size": 99.4,
+     "vw": 6.9,
+     "font": "Archivo",
+     "weight": 400,
+     "tracking": -0.035,
+     "leading": 0.94,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.34,
+     "top": 248,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Words bring us closer",
+     "words": 4,
+     "lines": 2,
+     "size": 99.4,
+     "font": "Archivo"
+    },
+    "headings": [
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 36,
+      "vw": 2.5,
+      "font": "Archivo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.06,
+      "top": 26,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "ሰላም",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 44,
+      "vw": 3.1,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.1,
+      "top": 149,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "Words bring us closer",
+      "words": 4,
+      "chars": 21,
+      "lines": 2,
+      "size": 99.4,
+      "vw": 6.9,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 0.94,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.34,
+      "top": 248,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 44,
+      "vw": 3.1,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.1,
+      "top": 644,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "A country of voices",
+      "words": 4,
+      "chars": 19,
+      "lines": 1,
+      "size": 54.7,
+      "vw": 3.8,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.3,
+      "top": 1028,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Oromia",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 43.2,
+      "vw": 3,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.37,
+      "top": 1298,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 54.7,
+      "vw": 3.8,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.33,
+      "top": 1744,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Your first exchange",
+      "words": 3,
+      "chars": 19,
+      "lines": 1,
+      "size": 54.7,
+      "vw": 3.8,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.3,
+      "top": 2321,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 54.7,
+      "vw": 3.8,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.42,
+      "top": 2525,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Nagaa",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 54.7,
+      "vw": 3.8,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.34,
+      "top": 2654,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Take a word with you",
+      "words": 5,
+      "chars": 20,
+      "lines": 2,
+      "size": 54.7,
+      "vw": 3.8,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.18,
+      "top": 3355,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 36,
+      "vw": 2.5,
+      "font": "Archivo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.06,
+      "top": 3879,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Archivo",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      16,
+      18,
+      22,
+      28,
+      36,
+      43,
+      44,
+      55,
+      99
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Archivo",
+      "size": 16,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 9.5
+     },
+     "measureChars": 115,
+     "max": {
+      "size": 99.4,
+      "vw": 6.9,
+      "font": "Archivo",
+      "text": "Words bringus closer"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.03,
+     "centerShare": 0.04,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#101f19",
+       "top": 0,
+       "hsl": {
+        "h": 156,
+        "s": 0.32,
+        "l": 0.09
+       }
+      },
+      {
+       "color": "#1b3024",
+       "top": 96,
+       "hsl": {
+        "h": 146,
+        "s": 0.28,
+        "l": 0.15
+       }
+      },
+      {
+       "color": "#c5dfb4",
+       "top": 3217,
+       "hsl": {
+        "h": 96,
+        "s": 0.4,
+        "l": 0.79
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#e2eee3",
+       "share": 0.48
+      },
+      {
+       "color": "#b2c7b8",
+       "share": 0.46
+      },
+      {
+       "color": "#14261c",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#c5dfb4",
+      "hsl": {
+       "h": 96,
+       "s": 0.4,
+       "l": 0.79
+      },
+      "fg": "#e2eee3"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 1,
+     "radius": 0,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start learning"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 7,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.41
+     },
+     {
+      "type": "img",
+      "ratio": 0.41
+     },
+     {
+      "type": "img",
+      "ratio": 0.41
+     },
+     {
+      "type": "img",
+      "ratio": 0.41
+     }
+    ],
+    "nav": {
+     "links": 4,
+     "fixed": false,
+     "height": 96,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope",
+     "archivo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 4031,
+    "margins": {
+     "left": 32,
+     "right": 47
+    },
+    "sections": [
+     {
+      "sel": "section.editorial-hero",
+      "tag": "section",
+      "top": 96,
+      "height": 804,
+      "words": 37,
+      "media": 1,
+      "middle": 138,
+      "heading": {
+       "text": "Words bring",
+       "size": 99,
+       "tag": "h1"
+      },
+      "left": 32,
+      "right": 47,
+      "textLeft": 32,
+      "textRight": 141,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#atlas.editorial-atlas.editorial-section",
+      "tag": "section",
+      "top": 900,
+      "height": 1293,
+      "words": 93,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "A country of voices",
+       "size": 55,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 47,
+      "textLeft": 32,
+      "textRight": 158,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": true
+     },
+     {
+      "sel": "section#practice.editorial-practice.editorial-section",
+      "tag": "section",
+      "top": 2193,
+      "height": 896,
+      "words": 45,
+      "media": 2,
+      "middle": 64,
+      "heading": {
+       "text": "Your first exchange",
+       "size": 55,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 174,
+      "textLeft": 32,
+      "textRight": 174,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.editorial-close",
+      "tag": "section",
+      "top": 3217,
+      "height": 590,
+      "words": 16,
+      "media": 1,
+      "middle": 64,
+      "heading": {
+       "text": "Take a word",
+       "size": 55,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 352,
+      "textLeft": 777,
+      "textRight": 352,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.editorial-footer",
+      "tag": "footer",
+      "top": 3807,
+      "height": 224,
+      "words": 29,
+      "media": 0,
+      "middle": 402,
+      "heading": {
+       "text": "fidel",
+       "size": 36,
+       "tag": "a"
+      },
+      "left": 32,
+      "right": 47,
+      "textLeft": 32,
+      "textRight": 47,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Words bring us closer",
+      "size": 99,
+      "top": 248,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 32,
+      "n": 6
+     },
+     {
+      "x": 790,
+      "n": 3
+     },
+     {
+      "x": 777,
+      "n": 2
+     },
+     {
+      "x": 864,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.08,
+    "voidBox": {
+     "x": 0,
+     "y": 720,
+     "w": 600,
+     "h": 180
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    1,
+    0.96,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 20,
+    "css": 20,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 4167,
+     "screens": 4.1,
+     "words": 241,
+     "img": 7,
+     "video": 0,
+     "canvas": 0,
+     "svg": 14,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 1,
+     "uiAbuse": false,
+     "realPictures": 7,
+     "videoCount": 0,
+     "uiPictures": 1,
+     "pictureSamples": [
+      "dassanech-portrait.jpg",
+      "oromo-portrait.jpg",
+      "harar-portrait.jpg",
+      "ethiopian-portrait.jpg",
+      "oromo-portrait.jpg",
+      "harar-portrait.jpg",
+      "ethiopian-portrait.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Words bring us closer",
+     "words": 4,
+     "chars": 21,
+     "lines": 2,
+     "size": 59.9,
+     "vw": 7.8,
+     "font": "Archivo",
+     "weight": 400,
+     "tracking": -0.035,
+     "leading": 0.94,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.38,
+     "top": 331,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Words bring us closer",
+     "words": 4,
+     "lines": 2,
+     "size": 59.9,
+     "font": "Archivo"
+    },
+    "headings": [
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 36,
+      "vw": 4.7,
+      "font": "Archivo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.12,
+      "top": 26,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "ሰላም",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 44,
+      "vw": 5.7,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.16,
+      "top": 133,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "Words bring us closer",
+      "words": 4,
+      "chars": 21,
+      "lines": 2,
+      "size": 59.9,
+      "vw": 7.8,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 0.94,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 331,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 44,
+      "vw": 5.7,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.16,
+      "top": 758,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "A country of voices",
+      "words": 4,
+      "chars": 19,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.33,
+      "top": 1152,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Oromia",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.41,
+      "top": 1454,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.35,
+      "top": 1910,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Your first exchange",
+      "words": 3,
+      "chars": 19,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.33,
+      "top": 2469,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.41,
+      "top": 2705,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Nagaa",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.34,
+      "top": 2809,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Take a word with you",
+      "words": 5,
+      "chars": 20,
+      "lines": 2,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.2,
+      "top": 3499,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 36,
+      "vw": 4.7,
+      "font": "Archivo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.12,
+      "top": 4015,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Archivo",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      16,
+      18,
+      22,
+      28,
+      32,
+      36,
+      44,
+      60
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Archivo",
+      "size": 16,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 9.5
+     },
+     "measureChars": 89,
+     "max": {
+      "size": 59.9,
+      "vw": 7.8,
+      "font": "Archivo",
+      "text": "Words bringus closer"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.03,
+     "centerShare": 0.04,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#101f19",
+       "top": 0,
+       "hsl": {
+        "h": 156,
+        "s": 0.32,
+        "l": 0.09
+       }
+      },
+      {
+       "color": "#1b3024",
+       "top": 96,
+       "hsl": {
+        "h": 146,
+        "s": 0.28,
+        "l": 0.15
+       }
+      },
+      {
+       "color": "#c5dfb4",
+       "top": 3353,
+       "hsl": {
+        "h": 96,
+        "s": 0.4,
+        "l": 0.79
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#e2eee3",
+       "share": 0.48
+      },
+      {
+       "color": "#b2c7b8",
+       "share": 0.46
+      },
+      {
+       "color": "#14261c",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#c5dfb4",
+      "hsl": {
+       "h": 96,
+       "s": 0.4,
+       "l": 0.79
+      },
+      "fg": "#e2eee3"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 1,
+     "radius": 0,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start learning"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 5,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.38
+     },
+     {
+      "type": "img",
+      "ratio": 0.38
+     },
+     {
+      "type": "img",
+      "ratio": 0.38
+     },
+     {
+      "type": "img",
+      "ratio": 0.38
+     }
+    ],
+    "nav": {
+     "links": 4,
+     "fixed": false,
+     "height": 96,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope",
+     "archivo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 4167,
+    "margins": {
+     "left": 20,
+     "right": 35
+    },
+    "sections": [
+     {
+      "sel": "section.editorial-hero",
+      "tag": "section",
+      "top": 96,
+      "height": 928,
+      "words": 38,
+      "media": 1,
+      "middle": 48,
+      "heading": {
+       "text": "Words bring",
+       "size": 60,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 35,
+      "textLeft": 20,
+      "textRight": 95,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#atlas.editorial-atlas.editorial-section",
+      "tag": "section",
+      "top": 1024,
+      "height": 1317,
+      "words": 93,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "A country of voices",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 35,
+      "textLeft": 20,
+      "textRight": 57,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#practice.editorial-practice.editorial-section",
+      "tag": "section",
+      "top": 2341,
+      "height": 884,
+      "words": 45,
+      "media": 2,
+      "middle": 32,
+      "heading": {
+       "text": "Your first exchange",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 40,
+      "textLeft": 20,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.editorial-close",
+      "tag": "section",
+      "top": 3353,
+      "height": 590,
+      "words": 16,
+      "media": 1,
+      "middle": 40,
+      "heading": {
+       "text": "Take a word",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 130,
+      "textLeft": 417,
+      "textRight": 130,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.editorial-footer",
+      "tag": "footer",
+      "top": 3943,
+      "height": 224,
+      "words": 23,
+      "media": 0,
+      "middle": 54,
+      "heading": {
+       "text": "fidel",
+       "size": 36,
+       "tag": "a"
+      },
+      "left": 20,
+      "right": 35,
+      "textLeft": 20,
+      "textRight": 35,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Words bring us closer",
+      "size": 60,
+      "top": 331,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 416,
+      "n": 7
+     },
+     {
+      "x": 20,
+      "n": 6
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    1,
+    1,
+    0.83,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 20,
+    "css": 20,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 4871,
+     "screens": 5.8,
+     "words": 236,
+     "img": 7,
+     "video": 0,
+     "canvas": 0,
+     "svg": 14,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 1,
+     "uiAbuse": false,
+     "realPictures": 7,
+     "videoCount": 0,
+     "uiPictures": 1,
+     "pictureSamples": [
+      "dassanech-portrait.jpg",
+      "oromo-portrait.jpg",
+      "harar-portrait.jpg",
+      "ethiopian-portrait.jpg",
+      "oromo-portrait.jpg",
+      "harar-portrait.jpg",
+      "ethiopian-portrait.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Words bring us closer",
+     "words": 4,
+     "chars": 21,
+     "lines": 2,
+     "size": 52,
+     "vw": 13.3,
+     "font": "Archivo",
+     "weight": 400,
+     "tracking": -0.035,
+     "leading": 0.94,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.66,
+     "top": 108,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Words bring us closer",
+     "words": 4,
+     "lines": 2,
+     "size": 52,
+     "font": "Archivo"
+    },
+    "headings": [
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Archivo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.21,
+      "top": 16,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Words bring us closer",
+      "words": 4,
+      "chars": 21,
+      "lines": 2,
+      "size": 52,
+      "vw": 13.3,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 0.94,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.66,
+      "top": 108,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "ሰላም",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.3,
+      "top": 517,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.3,
+      "top": 792,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "A country of voices",
+      "words": 4,
+      "chars": 19,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 1111,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Oromia",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1880,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 2301,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Your first exchange",
+      "words": 3,
+      "chars": 19,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 2779,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 3317,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Nagaa",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.74,
+      "top": 3424,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Take a word with you",
+      "words": 5,
+      "chars": 20,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Archivo",
+      "weight": 400,
+      "tracking": -0.035,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 4297,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Archivo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.21,
+      "top": 4635,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Archivo",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      16,
+      17,
+      20,
+      24,
+      32,
+      36,
+      52
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "Archivo",
+      "size": 16,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 9.5
+     },
+     "measureChars": 44,
+     "max": {
+      "size": 52,
+      "vw": 13.3,
+      "font": "Archivo",
+      "text": "Words bringus closer"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.03,
+     "centerShare": 0.04,
+     "smallText": 0
+    },
+    "eyebrows": [
+     {
+      "text": "Find a language, find a connection",
+      "above": "ሰላም",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 16,
+      "top": 429
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#101f19",
+       "top": 0,
+       "hsl": {
+        "h": 156,
+        "s": 0.32,
+        "l": 0.09
+       }
+      },
+      {
+       "color": "#1b3024",
+       "top": 485,
+       "hsl": {
+        "h": 146,
+        "s": 0.28,
+        "l": 0.15
+       }
+      },
+      {
+       "color": "#c5dfb4",
+       "top": 3861,
+       "hsl": {
+        "h": 96,
+        "s": 0.4,
+        "l": 0.79
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#e2eee3",
+       "share": 0.47
+      },
+      {
+       "color": "#b2c7b8",
+       "share": 0.47
+      },
+      {
+       "color": "#14261c",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#c5dfb4",
+      "hsl": {
+       "h": 96,
+       "s": 0.4,
+       "l": 0.79
+      },
+      "fg": "#e2eee3"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 1,
+     "radius": 0,
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Start learning"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 5,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.38
+     },
+     {
+      "type": "img",
+      "ratio": 0.38
+     },
+     {
+      "type": "img",
+      "ratio": 0.38
+     },
+     {
+      "type": "img",
+      "ratio": 0.38
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": false,
+     "height": 76,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope",
+     "archivo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 4871,
+    "margins": {
+     "left": 20,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "section.editorial-hero",
+      "tag": "section",
+      "top": 76,
+      "height": 947,
+      "words": 38,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Words bring",
+       "size": 52,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 63,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.editorial-section-intro",
+      "tag": "div",
+      "top": 1111,
+      "height": 152,
+      "words": 20,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "A country of voices",
+       "size": 36,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 35,
+      "textLeft": 20,
+      "textRight": 35,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.editorial-atlas-layout",
+      "tag": "div",
+      "top": 1295,
+      "height": 1204,
+      "words": 51,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 61,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#practice.editorial-practice.editorial-section",
+      "tag": "section",
+      "top": 2691,
+      "height": 1082,
+      "words": 45,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "Your first exchange",
+       "size": 36,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.editorial-close",
+      "tag": "section",
+      "top": 3861,
+      "height": 727,
+      "words": 16,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Take a word",
+       "size": 36,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 44,
+      "textRight": 63,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.editorial-footer",
+      "tag": "footer",
+      "top": 4587,
+      "height": 284,
+      "words": 18,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "fidel",
+       "size": 32,
+       "tag": "a"
+      },
+      "left": 20,
+      "right": 56,
+      "textLeft": 20,
+      "textRight": 56,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Words bring us closer",
+      "size": 52,
+      "top": 108,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 20,
+      "n": 11
+     },
+     {
+      "x": 44,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "measure",
+   "width": 1440,
+   "message": "Longest paragraph runs about 115 characters per line.",
+   "fix": "Cap paragraphs at 45–75 characters (max-width: 60ch).",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "eyebrow",
+   "width": 390,
+   "message": "1 eyebrow/kicker label(s) above headings: \"Find a language, find a connection\" above \"ሰላም\"",
+   "fix": "Delete them. If the label carried real information, fold it into the headline or the supporting sentence."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\round-2\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\round-2\\desktop-page-01.jpg",
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\round-2\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\round-2\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\round-2\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\round-2\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\round-2\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "url": "/sign-in",
+    "width": 1440,
+    "h1": [
+      "Welcome back."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-in",
+    "width": 768,
+    "h1": [
+      "Welcome back."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-in",
+    "width": 390,
+    "h1": [
+      "Welcome back."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-in",
+    "width": 1440,
+    "h1": [
+      "Welcome back."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-in",
+    "width": 768,
+    "h1": [
+      "Welcome back."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-in",
+    "width": 390,
+    "h1": [
+      "Welcome back."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-up",
+    "width": 1440,
+    "h1": [
+      "Begin with a hello."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-up",
+    "width": 768,
+    "h1": [
+      "Begin with a hello."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-up",
+    "width": 390,
+    "h1": [
+      "Begin with a hello."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-up",
+    "width": 1440,
+    "h1": [
+      "Begin with a hello."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-up",
+    "width": 768,
+    "h1": [
+      "Begin with a hello."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  },
+  {
+    "url": "/sign-up",
+    "width": 390,
+    "h1": [
+      "Begin with a hello."
+    ],
+    "inputs": 2,
+    "overflow": false,
+    "clerk": true
+  }
+]

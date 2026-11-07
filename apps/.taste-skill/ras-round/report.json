@@ -1,0 +1,2077 @@
+{
+ "url": "http://localhost:3000/",
+ "at": "2026-11-04T17:35:05.404Z",
+ "allow": [
+  "outlined-box",
+  "font-not-dealt"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    1,
+    0.97,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 13,
+    "css": 13,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 3999,
+     "screens": 4.4,
+     "words": 231,
+     "img": 4,
+     "video": 0,
+     "canvas": 1,
+     "svg": 14,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 1,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 1,
+     "pictureSamples": [
+      "oromo-portrait.jpg",
+      "oromo-portrait.jpg",
+      "harar-portrait.jpg",
+      "ethiopian-portrait.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Ethiopia, word by word.",
+     "words": 4,
+     "chars": 23,
+     "lines": 2,
+     "size": 80.6,
+     "vw": 5.6,
+     "font": "Merriweather",
+     "weight": 900,
+     "tracking": -0.045,
+     "leading": 1.1,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.36,
+     "top": 290,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Ethiopia, word by word.",
+     "words": 4,
+     "lines": 2,
+     "size": 80.6,
+     "font": "Merriweather"
+    },
+    "headings": [
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Merriweather",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.06,
+      "top": 34,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Ethiopia, word by word.",
+      "words": 4,
+      "chars": 23,
+      "lines": 2,
+      "size": 80.6,
+      "vw": 5.6,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 290,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 44,
+      "vw": 3.1,
+      "font": "Merriweather",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.1,
+      "top": 629,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "A country of voices",
+      "words": 4,
+      "chars": 19,
+      "lines": 1,
+      "size": 43.2,
+      "vw": 3,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 1020,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Oromia",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.33,
+      "top": 1272,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 54.7,
+      "vw": 3.8,
+      "font": "Merriweather",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.29,
+      "top": 1700,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Learn. Practise. Remember.",
+      "words": 3,
+      "chars": 26,
+      "lines": 1,
+      "size": 43.2,
+      "vw": 3,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 2252,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 54.7,
+      "vw": 3.8,
+      "font": "Merriweather",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.35,
+      "top": 2484,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Nagaa",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 54.7,
+      "vw": 3.8,
+      "font": "Merriweather",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.28,
+      "top": 2613,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Take a word with you",
+      "words": 5,
+      "chars": 20,
+      "lines": 2,
+      "size": 44,
+      "vw": 3.1,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.17,
+      "top": 3345,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Merriweather",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.06,
+      "top": 3855,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 11,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Merriweather",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      16,
+      18,
+      19,
+      22,
+      28,
+      32,
+      43,
+      44,
+      55,
+      81
+     ],
+     "sizeCount": 11,
+     "notLoaded": [],
+     "body": {
+      "font": "Merriweather",
+      "size": 16,
+      "leading": 1.65,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 14.3
+     },
+     "measureChars": 129,
+     "max": {
+      "size": 80.6,
+      "vw": 5.6,
+      "font": "Merriweather",
+      "text": "Ethiopia,word by word."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.03,
+     "centerShare": 0.04,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#101f19",
+       "top": 20,
+       "hsl": {
+        "h": 156,
+        "s": 0.32,
+        "l": 0.09
+       }
+      },
+      {
+       "color": "#1b3024",
+       "top": 1154,
+       "hsl": {
+        "h": 146,
+        "s": 0.28,
+        "l": 0.15
+       }
+      },
+      {
+       "color": "#c5dfb4",
+       "top": 3193,
+       "hsl": {
+        "h": 96,
+        "s": 0.4,
+        "l": 0.79
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b2c7b8",
+       "share": 0.47
+      },
+      {
+       "color": "#e2eee3",
+       "share": 0.47
+      },
+      {
+       "color": "#14261c",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#c5dfb4",
+      "hsl": {
+       "h": 96,
+       "s": 0.4,
+       "l": 0.79
+      },
+      "fg": "#14261c"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 8,
+     "inHero": 2,
+     "radius": "pill",
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Log in",
+      "Start learning"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 4,
+     "boxRadius": 22,
+     "squareMedia": 3,
+     "roundedMedia": 2,
+     "mediaRadius": 10,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.32
+     },
+     {
+      "type": "canvas",
+      "ratio": 0.32
+     }
+    ],
+    "nav": {
+     "links": 4,
+     "fixed": false,
+     "height": 72,
+     "floatingPill": true,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope",
+     "archivo",
+     "merriweather"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 3999,
+    "margins": {
+     "left": 104,
+     "right": 119
+    },
+    "sections": [
+     {
+      "sel": "section.editorial-hero",
+      "tag": "section",
+      "top": 92,
+      "height": 800,
+      "words": 28,
+      "media": 1,
+      "middle": 71,
+      "heading": {
+       "text": "Ethiopia,",
+       "size": 81,
+       "tag": "h1"
+      },
+      "left": 104,
+      "right": 119,
+      "textLeft": 104,
+      "textRight": 568,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#atlas.editorial-atlas.editorial-section",
+      "tag": "section",
+      "top": 892,
+      "height": 1232,
+      "words": 93,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "A country of voices",
+       "size": 43,
+       "tag": "h2"
+      },
+      "left": 104,
+      "right": 119,
+      "textLeft": 104,
+      "textRight": 175,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": true
+     },
+     {
+      "sel": "section#practice.editorial-practice.editorial-section",
+      "tag": "section",
+      "top": 2124,
+      "height": 941,
+      "words": 45,
+      "media": 2,
+      "middle": 64,
+      "heading": {
+       "text": "Akkam",
+       "size": 55,
+       "tag": "p"
+      },
+      "left": 104,
+      "right": 216,
+      "textLeft": 104,
+      "textRight": 216,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.editorial-close",
+      "tag": "section",
+      "top": 3193,
+      "height": 590,
+      "words": 16,
+      "media": 1,
+      "middle": 64,
+      "heading": {
+       "text": "Take a word",
+       "size": 44,
+       "tag": "h2"
+      },
+      "left": 109,
+      "right": 271,
+      "textLeft": 777,
+      "textRight": 271,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.editorial-footer",
+      "tag": "footer",
+      "top": 3783,
+      "height": 216,
+      "words": 29,
+      "media": 0,
+      "middle": 209,
+      "heading": {
+       "text": "fidel",
+       "size": 28,
+       "tag": "a"
+      },
+      "left": 104,
+      "right": 119,
+      "textLeft": 104,
+      "textRight": 119,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [
+     {
+      "top": 2896,
+      "height": 296
+     }
+    ],
+    "h1s": [
+     {
+      "text": "Ethiopia, word by word.",
+      "size": 81,
+      "top": 290,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 104,
+      "n": 6
+     },
+     {
+      "x": 777,
+      "n": 5
+     },
+     {
+      "x": 850,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.1,
+    "voidBox": {
+     "x": 240,
+     "y": 600,
+     "w": 420,
+     "h": 300
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    1,
+    0.95,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 19,
+    "css": 19,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 4136,
+     "screens": 4,
+     "words": 231,
+     "img": 4,
+     "video": 0,
+     "canvas": 1,
+     "svg": 14,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 1,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 1,
+     "pictureSamples": [
+      "oromo-portrait.jpg",
+      "oromo-portrait.jpg",
+      "harar-portrait.jpg",
+      "ethiopian-portrait.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Ethiopia, word by word.",
+     "words": 4,
+     "chars": 23,
+     "lines": 2,
+     "size": 49.2,
+     "vw": 6.4,
+     "font": "Merriweather",
+     "weight": 900,
+     "tracking": -0.045,
+     "leading": 1.1,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.42,
+     "top": 358,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Ethiopia, word by word.",
+     "words": 4,
+     "lines": 2,
+     "size": 49.2,
+     "font": "Merriweather"
+    },
+    "headings": [
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Merriweather",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.12,
+      "top": 34,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Ethiopia, word by word.",
+      "words": 4,
+      "chars": 23,
+      "lines": 2,
+      "size": 49.2,
+      "vw": 6.4,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.42,
+      "top": 358,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Merriweather",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.16,
+      "top": 776,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "A country of voices",
+      "words": 4,
+      "chars": 19,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 1144,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Oromia",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.41,
+      "top": 1396,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Merriweather",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.35,
+      "top": 1824,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Learn. Practise. Remember.",
+      "words": 3,
+      "chars": 26,
+      "lines": 2,
+      "size": 30,
+      "vw": 3.9,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 2376,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Merriweather",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.36,
+      "top": 2618,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Nagaa",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Merriweather",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.3,
+      "top": 2723,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Take a word with you",
+      "words": 5,
+      "chars": 20,
+      "lines": 2,
+      "size": 44,
+      "vw": 5.7,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.32,
+      "top": 3465,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Merriweather",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.12,
+      "top": 3992,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 11,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Merriweather",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      16,
+      18,
+      19,
+      22,
+      28,
+      30,
+      32,
+      44,
+      49
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "Merriweather",
+      "size": 16,
+      "leading": 1.65,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 14.3
+     },
+     "measureChars": 89,
+     "max": {
+      "size": 49.2,
+      "vw": 6.4,
+      "font": "Merriweather",
+      "text": "Ethiopia,word by word."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.03,
+     "centerShare": 0.04,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#101f19",
+       "top": 20,
+       "hsl": {
+        "h": 156,
+        "s": 0.32,
+        "l": 0.09
+       }
+      },
+      {
+       "color": "#1b3024",
+       "top": 2494,
+       "hsl": {
+        "h": 146,
+        "s": 0.28,
+        "l": 0.15
+       }
+      },
+      {
+       "color": "#c5dfb4",
+       "top": 3330,
+       "hsl": {
+        "h": 96,
+        "s": 0.4,
+        "l": 0.79
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b2c7b8",
+       "share": 0.47
+      },
+      {
+       "color": "#e2eee3",
+       "share": 0.47
+      },
+      {
+       "color": "#14261c",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#c5dfb4",
+      "hsl": {
+       "h": 96,
+       "s": 0.4,
+       "l": 0.79
+      },
+      "fg": "#14261c"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 8,
+     "inHero": 2,
+     "radius": "pill",
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Log in",
+      "Start learning"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 4,
+     "boxRadius": 22,
+     "squareMedia": 3,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.38
+     },
+     {
+      "type": "canvas",
+      "ratio": 0.38
+     }
+    ],
+    "nav": {
+     "links": 4,
+     "fixed": false,
+     "height": 72,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope",
+     "archivo",
+     "merriweather"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 4136,
+    "margins": {
+     "left": 20,
+     "right": 35
+    },
+    "sections": [
+     {
+      "sel": "section.editorial-hero",
+      "tag": "section",
+      "top": 92,
+      "height": 924,
+      "words": 28,
+      "media": 1,
+      "middle": 30,
+      "heading": {
+       "text": "Ethiopia,",
+       "size": 49,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 35,
+      "textLeft": 20,
+      "textRight": 274,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#atlas.editorial-atlas.editorial-section",
+      "tag": "section",
+      "top": 1016,
+      "height": 1232,
+      "words": 93,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Oromia",
+       "size": 32,
+       "tag": "h3"
+      },
+      "left": 20,
+      "right": 35,
+      "textLeft": 20,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#practice.editorial-practice.editorial-section",
+      "tag": "section",
+      "top": 2248,
+      "height": 954,
+      "words": 45,
+      "media": 2,
+      "middle": 32,
+      "heading": {
+       "text": "Akkam",
+       "size": 32,
+       "tag": "p"
+      },
+      "left": 20,
+      "right": 50,
+      "textLeft": 20,
+      "textRight": 50,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.editorial-close",
+      "tag": "section",
+      "top": 3330,
+      "height": 590,
+      "words": 16,
+      "media": 1,
+      "middle": 40,
+      "heading": {
+       "text": "Take a word",
+       "size": 44,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 106,
+      "textLeft": 417,
+      "textRight": 106,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.editorial-footer",
+      "tag": "footer",
+      "top": 3920,
+      "height": 216,
+      "words": 23,
+      "media": 0,
+      "middle": 9,
+      "heading": {
+       "text": "fidel",
+       "size": 28,
+       "tag": "a"
+      },
+      "left": 20,
+      "right": 35,
+      "textLeft": 20,
+      "textRight": 35,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Ethiopia, word by word.",
+      "size": 49,
+      "top": 358,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 413,
+      "n": 7
+     },
+     {
+      "x": 20,
+      "n": 6
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 16,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    1,
+    0.99,
+    0.88,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 19,
+    "css": 19,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 4910,
+     "screens": 5.8,
+     "words": 226,
+     "img": 4,
+     "video": 0,
+     "canvas": 1,
+     "svg": 14,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 1,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 1,
+     "pictureSamples": [
+      "oromo-portrait.jpg",
+      "oromo-portrait.jpg",
+      "harar-portrait.jpg",
+      "ethiopian-portrait.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Ethiopia, word by word.",
+     "words": 4,
+     "chars": 23,
+     "lines": 2,
+     "size": 42,
+     "vw": 10.8,
+     "font": "Merriweather",
+     "weight": 900,
+     "tracking": -0.045,
+     "leading": 1.13,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.7,
+     "top": 124,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Ethiopia, word by word.",
+     "words": 4,
+     "lines": 2,
+     "size": 42,
+     "font": "Merriweather"
+    },
+    "headings": [
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 25,
+      "vw": 6.4,
+      "font": "Merriweather",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.19,
+      "top": 22,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Ethiopia, word by word.",
+      "words": 4,
+      "chars": 23,
+      "lines": 2,
+      "size": 42,
+      "vw": 10.8,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.7,
+      "top": 124,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Merriweather",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 1.3,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.32,
+      "top": 753,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "A country of voices",
+      "words": 4,
+      "chars": 19,
+      "lines": 1,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1065,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Oromia",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1819,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Merriweather",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 2243,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Learn. Practise. Remember.",
+      "words": 3,
+      "chars": 26,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.03,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 2735,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akkam",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Merriweather",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 3286,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Nagaa",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Merriweather",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.63,
+      "top": 3394,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Take a word with you",
+      "words": 5,
+      "chars": 20,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Merriweather",
+      "weight": 900,
+      "tracking": -0.045,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.52,
+      "top": 4339,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "fidel ፊ",
+      "words": 2,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Merriweather",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.22,
+      "top": 4678,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 11,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Merriweather",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      13,
+      14,
+      16,
+      17,
+      18,
+      20,
+      24,
+      25,
+      28,
+      30,
+      32,
+      36,
+      42
+     ],
+     "sizeCount": 13,
+     "notLoaded": [],
+     "body": {
+      "font": "Merriweather",
+      "size": 16,
+      "leading": 1.65,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 14.3
+     },
+     "measureChars": 44,
+     "max": {
+      "size": 42,
+      "vw": 10.8,
+      "font": "Merriweather",
+      "text": "Ethiopia,word by word."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.03,
+     "centerShare": 0.04,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#101f19",
+       "top": 12,
+       "hsl": {
+        "h": 156,
+        "s": 0.32,
+        "l": 0.09
+       }
+      },
+      {
+       "color": "#1b3024",
+       "top": 1234,
+       "hsl": {
+        "h": 146,
+        "s": 0.28,
+        "l": 0.15
+       }
+      },
+      {
+       "color": "#c5dfb4",
+       "top": 3903,
+       "hsl": {
+        "h": 96,
+        "s": 0.4,
+        "l": 0.79
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#b2c7b8",
+       "share": 0.48
+      },
+      {
+       "color": "#e2eee3",
+       "share": 0.46
+      },
+      {
+       "color": "#14261c",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#c5dfb4",
+      "hsl": {
+       "h": 96,
+       "s": 0.4,
+       "l": 0.79
+      },
+      "fg": "#14261c"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 8,
+     "inHero": 2,
+     "radius": "pill",
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Log in",
+      "Start learning"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 4,
+     "boxRadius": 22,
+     "squareMedia": 3,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.42
+     },
+     {
+      "type": "canvas",
+      "ratio": 0.42
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": false,
+     "height": 64,
+     "floatingPill": true,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "manrope",
+     "archivo",
+     "merriweather"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 4910,
+    "margins": {
+     "left": 20,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "section.editorial-hero",
+      "tag": "section",
+      "top": 76,
+      "height": 901,
+      "words": 28,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Ethiopia,",
+       "size": 42,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 52,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.editorial-section-intro",
+      "tag": "div",
+      "top": 1065,
+      "height": 137,
+      "words": 16,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 48,
+      "textLeft": 20,
+      "textRight": 48,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.editorial-atlas-layout",
+      "tag": "div",
+      "top": 1234,
+      "height": 1230,
+      "words": 51,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 55,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#practice.editorial-practice.editorial-section",
+      "tag": "section",
+      "top": 2647,
+      "height": 1168,
+      "words": 45,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "Learn. Practise. Remember.",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 31,
+      "textLeft": 20,
+      "textRight": 31,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.editorial-close",
+      "tag": "section",
+      "top": 3903,
+      "height": 727,
+      "words": 16,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Take a word",
+       "size": 36,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 44,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.editorial-footer",
+      "tag": "footer",
+      "top": 4630,
+      "height": 280,
+      "words": 18,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "fidel",
+       "size": 28,
+       "tag": "a"
+      },
+      "left": 20,
+      "right": 32,
+      "textLeft": 20,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Ethiopia, word by word.",
+      "size": 42,
+      "top": 124,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 20,
+      "n": 10
+     },
+     {
+      "x": 44,
+      "n": 3
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "pill-nav",
+   "width": 1440,
+   "message": "Floating rounded pill navigation.",
+   "fix": "Use a plain bar: wordmark left, a few links, one action.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "size-count",
+   "width": 1440,
+   "message": "11 different font sizes (14, 16, 18, 19, 22, 28, 32, 43, 44, 55, 81).",
+   "fix": "A page needs about five: display, heading, lead, body, small.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "measure",
+   "width": 1440,
+   "message": "Longest paragraph runs about 129 characters per line.",
+   "fix": "Cap paragraphs at 45–75 characters (max-width: 60ch).",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "still-page",
+   "width": 1440,
+   "message": "Little motion: 13 element(s) moved while the page loaded and scrolled.",
+   "fix": "Give every section an entrance for its parts (not one fade of the whole block) and add one moving picture: a looping clip or a slow move on a photograph."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\ras-round\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\ras-round\\desktop-page-01.jpg",
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\ras-round\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\ras-round\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\ras-round\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\ras-round\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\ananya\\Desktop\\Fidel\\apps\\.taste-skill\\ras-round\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

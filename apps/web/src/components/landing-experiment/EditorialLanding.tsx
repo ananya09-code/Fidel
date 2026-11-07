@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@clerk/tanstack-react-start";
 import { ArrowDown, ArrowUpRight, Moon, Sun } from "lucide-react";
-import { useThemePreview } from "@/components/theme/ThemeProvider";
+import { useAppearanceChoice } from "@/components/theme/ThemeProvider";
 import { PortraitStage } from "./PortraitStage";
+import { WovenGrid } from "./WovenGrid";
 import { FidelWordmark } from "./FidelWordmark";
 import { LanguageAtlas } from "./LanguageAtlas";
 import { LanguageDeck } from "./LanguageDeck";
@@ -11,23 +12,24 @@ import "./landing.css";
 
 export function EditorialLanding() {
   const { isSignedIn } = useAuth();
-  const previewTheme = useThemePreview();
+  const chooseTheme = useAppearanceChoice();
   const start = isSignedIn ? "/Home" : "/sign-up";
 
 
   function toggleTheme() {
     const next = document.documentElement.classList.contains("dark") ? "light" : "dark";
-    previewTheme(next);
+    chooseTheme(next);
   }
 
   return (
     <div className="fidel-editorial">
+      <WovenGrid />
       <a className="editorial-skip" href="#landing-main">Skip to content</a>
       <header className="editorial-header">
         <Link to="/" aria-label="Fidel home" className="editorial-wordmark"><FidelWordmark /></Link>
         <nav aria-label="Landing page"><a href="#practice">How it works</a><a href="#languages">Languages</a><a href="#atlas">Explore Ethiopia</a></nav>
         <div className="editorial-header-actions">
-          <button type="button" className="editorial-theme-toggle" onClick={toggleTheme} aria-label="Toggle light and dark appearance" title="Preview light or dark appearance">
+          <button type="button" className="editorial-theme-toggle" onClick={toggleTheme} aria-label="Toggle light and dark appearance" title="Switch light or dark appearance">
             <Moon className="editorial-light-icon" size={21} aria-hidden="true" /><Sun className="editorial-dark-icon" size={21} aria-hidden="true" />
           </button>
           <Link to={isSignedIn ? "/Home" : "/sign-in"}>{isSignedIn ? "Go to dashboard" : "Log in"}</Link>

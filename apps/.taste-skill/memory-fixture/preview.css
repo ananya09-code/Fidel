@@ -1,0 +1,14 @@
+@import "../../web/src/styles.css";
+@source "../../web/src";
+@source "./main.jsx";
+body {margin:0;background:#f8faf7;color:#193b31;}
+.dark body {background:#171c19;color:#e7ede6;}
+.demo-toolbar,.demo-notice {max-width:1164px;margin:auto;padding:16px 32px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px;}
+.demo-toolbar a {display:inline-flex;align-items:center;gap:8px;color:#193b31;}
+.dark .demo-toolbar a {color:#e7ede6;}
+.demo-toolbar nav {display:flex;gap:20px;margin-right:auto;}
+.demo-toolbar button,.demo-notice button {border:1px solid #8b998e;border-radius:6px;min-height:38px;padding:6px 12px;cursor:pointer;}
+.demo-notice {border-block:1px solid #8b998e;gap:10px 20px;}
+.demo-notice strong {font-weight:500;}
+.demo-notice span {margin-right:auto;}
+@media(max-width:600px){.demo-toolbar,.demo-notice{padding:12px 20px;gap:12px;}.demo-notice span{flex-basis:100%;}}
