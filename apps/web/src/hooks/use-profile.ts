@@ -14,12 +14,7 @@ export function useProfile() {
   return useQuery({
     queryKey: profileQueryKeys.byUser(userId),
     queryFn: async () => {
-      const token = await getToken();
-      if (!token) {
-        throw new Error("Your session expired. Please sign in again.");
-      }
-
-      return syncProfile(token);
+      return syncProfile(getToken);
     },
     enabled: isLoaded && Boolean(isSignedIn && userId),
     staleTime: 5 * 60 * 1000,

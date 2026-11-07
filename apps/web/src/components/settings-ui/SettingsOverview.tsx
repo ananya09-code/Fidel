@@ -84,9 +84,7 @@ export default function SettingsOverview() {
     if (!user || deleting || !window.confirm("Delete your Fidel account and local profile? This cannot be undone.")) return;
     setDeleting(true); setAccountError(null);
     try {
-      const token = await getToken();
-      if (!token) throw new Error("Your session expired. Please sign in again.");
-      await deleteProfile(token);
+      await deleteProfile(getToken);
       await user.delete();
       await signOut({ redirectUrl: "/" });
     } catch (error) { setAccountError(error instanceof Error ? error.message : "Unable to delete your account. Please try again."); }

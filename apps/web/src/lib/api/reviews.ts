@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { apiFetch } from "@/lib/api";
+import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
 
 const reviewWordSchema = z.object({
   id: z.string().uuid(), text: z.string(), meaning: z.string(),
@@ -31,31 +31,28 @@ export const spacedReviewSchema = z.object({
   interval_days: z.array(z.number().int().positive()),
 });
 export type SpacedReviewOverview = z.infer<typeof spacedReviewSchema>;
-export function getSpacedReviews(token: string, languageCode: "om" | "am", signal?: AbortSignal) {
-  return apiFetch(`/api/v1/reviews/spaced?language_code=${languageCode}`, spacedReviewSchema, { headers: headers(token), signal });
+export function getSpacedReviews(token: ApiToken, languageCode: "om" | "am", signal?: AbortSignal) {
+  return apiFetch(`/api/v1/reviews/spaced?language_code=${languageCode}`, spacedReviewSchema, { ...authenticatedRequest(token), signal });
 }
 
-function headers(token: string) {
-  return { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
+export function getReviews(token: ApiToken, signal?: AbortSignal) {
+  return apiFetch("/api/v1/reviews", reviewOverviewSchema, { ...authenticatedRequest(token), signal });
 }
-export function getReviews(token: string, signal?: AbortSignal) {
-  return apiFetch("/api/v1/reviews", reviewOverviewSchema, { headers: headers(token), signal });
-}
-export function startReview(token: string, mode: "manual" | "spaced" = "manual", languageCode: "om" | "am" = "om") {
+export function startReview(token: ApiToken, mode: "manual" | "spaced" = "manual", languageCode: "om" | "am" = "om") {
   return apiFetch(`/api/v1/reviews/start?mode=${mode}&language_code=${languageCode}`, reviewSessionSchema, {
-    method: "POST", headers: headers(token),
+    method: "POST", ...authenticatedRequest(token),
   });
 }
 export function saveReviewAnswer(
-  token: string, sessionId: string, wordId: string, selectedWordId: string,
+  token: ApiToken, sessionId: string, wordId: string, selectedWordId: string,
 ) {
   return apiFetch(`/api/v1/reviews/${sessionId}/answers`, reviewSessionSchema, {
-    method: "PUT", headers: headers(token),
+    method: "PUT", ...authenticatedRequest(token),
     body: JSON.stringify({ word_id: wordId, selected_word_id: selectedWordId }),
   });
 }
-export function completeReview(token: string, sessionId: string) {
+export function completeReview(token: ApiToken, sessionId: string) {
   return apiFetch(`/api/v1/reviews/${sessionId}/complete`, reviewSessionSchema, {
-    method: "POST", headers: headers(token),
+    method: "POST", ...authenticatedRequest(token),
   });
 }

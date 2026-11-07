@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { apiFetch } from "@/lib/api";
+import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
 
 export const learningStateSchema = z.enum(["learning", "learned", "needs_review"]);
 export const vocabularyStateSchema = z.object({
@@ -19,22 +19,18 @@ export type VocabularyStateUpdate = {
   learning_state?: LearningState;
 };
 
-function headers(token: string) {
-  return { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
-}
-
-export function getVocabularyState(token: string, signal?: AbortSignal) {
+export function getVocabularyState(token: ApiToken, signal?: AbortSignal) {
   return apiFetch("/api/v1/vocabulary", vocabularyStateListSchema, {
-    headers: headers(token), signal,
+    ...authenticatedRequest(token), signal,
   });
 }
 
 export function updateVocabularyState(
-  token: string,
+  token: ApiToken,
   wordId: string,
   update: VocabularyStateUpdate,
 ) {
   return apiFetch(`/api/v1/vocabulary/${wordId}`, vocabularyStateSchema, {
-    method: "PUT", headers: headers(token), body: JSON.stringify(update),
+    method: "PUT", ...authenticatedRequest(token), body: JSON.stringify(update),
   });
 }

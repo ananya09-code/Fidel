@@ -15,9 +15,7 @@ export function useLearningProgress() {
   return useQuery({
     queryKey: learningProgressKeys.all(userId),
     queryFn: async ({ signal }) => {
-      const token = await getToken();
-      if (!token) throw new Error("Your session expired. Please sign in again.");
-      return getProgress(token, signal);
+      return getProgress(getToken, signal);
     },
     enabled: isLoaded && Boolean(isSignedIn && userId), staleTime: 30_000, retry: false,
   });
@@ -28,9 +26,7 @@ export function useLessonProgress(lessonKey: string) {
   return useQuery({
     queryKey: learningProgressKeys.lesson(userId, lessonKey),
     queryFn: async ({ signal }) => {
-      const token = await getToken();
-      if (!token) throw new Error("Your session expired. Please sign in again.");
-      return getLessonAttempt(token, lessonKey, signal);
+      return getLessonAttempt(getToken, lessonKey, signal);
     },
     enabled: isLoaded && Boolean(isSignedIn && userId && lessonKey),
     staleTime: 30_000, retry: false,

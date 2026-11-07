@@ -15,9 +15,7 @@ export function useVocabularyState() {
   return useQuery({
     queryKey: key(userId),
     queryFn: async ({ signal }) => {
-      const token = await getToken();
-      if (!token) throw new Error("Your session expired. Please sign in again.");
-      return getVocabularyState(token, signal);
+      return getVocabularyState(getToken, signal);
     },
     enabled: isLoaded && Boolean(isSignedIn && userId),
     staleTime: 30_000,
@@ -30,9 +28,7 @@ export function useUpdateVocabularyState() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ wordId, update }: { wordId: string; update: VocabularyStateUpdate }) => {
-      const token = await getToken();
-      if (!token) throw new Error("Your session expired. Please sign in again.");
-      return updateVocabularyState(token, wordId, update);
+      return updateVocabularyState(getToken, wordId, update);
     },
     onSuccess: async (saved) => {
       queryClient.setQueryData<{ data: typeof saved[] }>(key(userId), (current) => ({

@@ -18,9 +18,7 @@ export function usePreferences() {
   return useQuery({
     queryKey: preferencesQueryKeys.byUser(userId),
     queryFn: async ({ signal }) => {
-      const token = await getToken();
-      if (!token) throw new Error("Your session expired. Please sign in again.");
-      return getPreferences(token, signal);
+      return getPreferences(getToken, signal);
     },
     enabled: isLoaded && Boolean(isSignedIn && userId),
     staleTime: 5 * 60 * 1000,
@@ -34,9 +32,7 @@ export function useUpdatePreferences() {
 
   return useMutation({
     mutationFn: async (update: UserPreferencesUpdate) => {
-      const token = await getToken();
-      if (!token) throw new Error("Your session expired. Please sign in again.");
-      return updatePreferences(token, update);
+      return updatePreferences(getToken, update);
     },
     onSuccess: (preferences) => {
       queryClient.setQueryData(

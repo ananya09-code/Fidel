@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { apiFetch } from "@/lib/api";
+import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
 
 const learningLessonSchema = z.object({
   id: z.string(), title: z.string(), subtitle: z.string(),
@@ -69,9 +69,7 @@ type StartLessonInput = {
   difficulty: string; category_key: string; category_label?: string | null;
   difficulty_label?: string | null; question_count: number;
 };
-function authHeaders(token: string): Record<string, string> {
-  return { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
-}
+
 export function getLearningPath(languageCode: string, signal?: AbortSignal) {
   const params = new URLSearchParams({ language_code: languageCode });
   return apiFetch(`/api/v1/learning/path?${params}`, learningPathSchema, { signal });
@@ -90,41 +88,41 @@ export async function getLessonWords(lessonKey: string, languageCode: string, si
   }
   return { ...result, pagination: { ...page.pagination, offset: 0, limit: result.words.length } };
 }
-export function getProgress(token: string, signal?: AbortSignal) {
+export function getProgress(token: ApiToken, signal?: AbortSignal) {
   return apiFetch("/api/v1/progress", progressSummarySchema, {
-    headers: authHeaders(token), signal,
+    ...authenticatedRequest(token), signal,
   });
 }
-export function getLessonAttempt(token: string, lessonKey: string, signal?: AbortSignal) {
+export function getLessonAttempt(token: ApiToken, lessonKey: string, signal?: AbortSignal) {
   return apiFetch(
     `/api/v1/progress/lessons/${encodeURIComponent(lessonKey)}`,
-    lessonAttemptSchema.nullable(), { headers: authHeaders(token), signal },
+    lessonAttemptSchema.nullable(), { ...authenticatedRequest(token), signal },
   );
 }
-export function startLesson(token: string, lessonKey: string, input: StartLessonInput) {
+export function startLesson(token: ApiToken, lessonKey: string, input: StartLessonInput) {
   return apiFetch(
     `/api/v1/progress/lessons/${encodeURIComponent(lessonKey)}/start`, lessonAttemptSchema,
-    { method: "POST", headers: authHeaders(token), body: JSON.stringify(input) },
+    { method: "POST", ...authenticatedRequest(token), body: JSON.stringify(input) },
   );
 }
 export function checkpointLesson(
-  token: string, attemptId: string, stage: "vocabulary" | "practice", questionIndex: number,
+  token: ApiToken, attemptId: string, stage: "vocabulary" | "practice", questionIndex: number,
 ) {
   return apiFetch(`/api/v1/progress/attempts/${attemptId}`, lessonAttemptSchema, {
-    method: "PATCH", headers: authHeaders(token),
+    method: "PATCH", ...authenticatedRequest(token),
     body: JSON.stringify({ stage, question_index: questionIndex }),
   });
 }
 export function saveLessonAnswer(
-  token: string, attemptId: string,
+  token: ApiToken, attemptId: string,
   input: { question_id: string; word_id: string; selected_word_id: string; question_index: number; question_type?: "multiple_choice" | "matching" },
 ) {
   return apiFetch(`/api/v1/progress/attempts/${attemptId}/answers`, lessonAttemptSchema, {
-    method: "PUT", headers: authHeaders(token), body: JSON.stringify(input),
+    method: "PUT", ...authenticatedRequest(token), body: JSON.stringify(input),
   });
 }
-export function completeLesson(token: string, attemptId: string) {
+export function completeLesson(token: ApiToken, attemptId: string) {
   return apiFetch(`/api/v1/progress/attempts/${attemptId}/complete`, lessonAttemptSchema, {
-    method: "POST", headers: authHeaders(token),
+    method: "POST", ...authenticatedRequest(token),
   });
 }
