@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Volume2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Volume2 } from "lucide-react";
 import "./lesson.css";
 
 export type FlashcardWord = {
@@ -46,6 +46,7 @@ export function Flashcard({
   const [dragging, setDragging] = useState(false);
   const [outgoing, setOutgoing] = useState<FlashcardWord | null>(null);
   const [audioError, setAudioError] = useState<string | null>(null);
+  const [audioState, setAudioState] = useState<"idle" | "playing" | "paused">("idle");
   const surface = useRef<HTMLDivElement>(null);
   const ghost = useRef<HTMLDivElement>(null);
   const moving = useRef(false);
@@ -91,6 +92,8 @@ export function Flashcard({
       return;
     }
     audio.current?.pause();
+    audio.current = null;
+    setAudioState("idle");
     setAudioError(null);
     setDragging(false);
     pointer.current = null;
@@ -113,13 +116,34 @@ export function Flashcard({
     setDragX(0);
   }
 
-  function playAudio() {
+  function toggleAudio() {
     if (!word.audioUrl) return;
-    audio.current?.pause();
-    const player = new Audio(word.audioUrl);
-    audio.current = player;
+    if (audio.current && audio.current.src !== word.audioUrl) {
+      audio.current.pause();
+      audio.current = null;
+    }
+    if (audio.current && !audio.current.paused) {
+      audio.current.pause();
+      return;
+    }
+    const player = audio.current ?? new Audio(word.audioUrl);
+    if (!audio.current) {
+      audio.current = player;
+      player.addEventListener("play", () => { if (audio.current === player) setAudioState("playing"); });
+      player.addEventListener("pause", () => { if (audio.current === player && !player.ended) setAudioState("paused"); });
+      player.addEventListener("ended", () => { if (audio.current === player) setAudioState("idle"); });
+      player.addEventListener("error", () => {
+        if (audio.current !== player) return;
+        setAudioState("idle");
+        setAudioError(word.id);
+      });
+    }
     setAudioError(null);
-    void player.play().catch(() => setAudioError(word.id));
+    void player.play().catch(() => {
+      if (audio.current !== player) return;
+      setAudioState("idle");
+      setAudioError(word.id);
+    });
   }
 
   return <section className="study-flashcards" aria-label="Vocabulary flashcards">
@@ -170,7 +194,10 @@ export function Flashcard({
       >
         <WordFace word={word} />
         <div className="study-audio">
-          <button type="button" className="study-secondary" disabled={!word.audioUrl} onClick={playAudio}><Volume2 size={18} aria-hidden="true" />{word.audioUrl ? "Listen" : "Audio unavailable"}</button>
+          <button type="button" className="study-secondary" disabled={!word.audioUrl} onClick={toggleAudio}>
+            {audioState === "playing" ? <Pause size={18} aria-hidden="true" /> : <Volume2 size={18} aria-hidden="true" />}
+            {!word.audioUrl ? "Audio unavailable" : audioState === "playing" ? "Pause" : audioState === "paused" ? "Resume" : "Listen"}
+          </button>
           {audioError === word.id && <p role="alert">Audio couldn’t play. Try again.</p>}
         </div>
       </div>
