@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { ParticlePortrait } from "@/components/landing-experiment/ParticlePortrait";
-import { photoCredits, portraits } from "@/components/landing-experiment/content";
+import { ParticlePortrait } from "@/components/landing-ui/ParticlePortrait";
+import { photoCredits, portraits } from "@/components/landing-ui/content";
 
 export function AuthPortrait({ initialIndex }: { initialIndex: number }) {
   const [index, setIndex] = useState(initialIndex);

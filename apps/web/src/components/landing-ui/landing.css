@@ -1,7 +1,7 @@
-@font-face { font-family: Merriweather; font-style: normal; font-weight: 400; font-display: swap; src: url('/landing-lab/merriweather-0.ttf') format('truetype'); }
-@font-face { font-family: Merriweather; font-style: normal; font-weight: 700; font-display: swap; src: url('/landing-lab/merriweather-1.ttf') format('truetype'); }
-@font-face { font-family: Merriweather; font-style: normal; font-weight: 900; font-display: swap; src: url('/landing-lab/merriweather-2.ttf') format('truetype'); }
-@font-face { font-family: 'Noto Serif Ethiopic'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/landing-lab/noto-serif-ethiopic.ttf') format('truetype'); }
+@font-face { font-family: Merriweather; font-style: normal; font-weight: 400; font-display: swap; src: url('/landing/merriweather-0.ttf') format('truetype'); }
+@font-face { font-family: Merriweather; font-style: normal; font-weight: 700; font-display: swap; src: url('/landing/merriweather-1.ttf') format('truetype'); }
+@font-face { font-family: Merriweather; font-style: normal; font-weight: 900; font-display: swap; src: url('/landing/merriweather-2.ttf') format('truetype'); }
+@font-face { font-family: 'Noto Serif Ethiopic'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/landing/noto-serif-ethiopic.ttf') format('truetype'); }
 
 .fidel-editorial {
   --e-ground:#edf4ee; --e-ink:#183b31; --e-muted:#476157; --e-field:#dce9dc;
