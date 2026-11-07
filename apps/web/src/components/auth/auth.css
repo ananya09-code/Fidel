@@ -1,5 +1,5 @@
-@font-face { font-family: 'Fidel Auth Serif'; src: url('/landing-lab/merriweather-1.ttf') format('truetype'); font-weight: 700; font-display: swap; }
-@font-face { font-family: 'Fidel Auth Ethiopic'; src: url('/landing-lab/noto-serif-ethiopic.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Fidel Auth Serif'; src: url('/landing/merriweather-1.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Fidel Auth Ethiopic'; src: url('/landing/noto-serif-ethiopic.ttf') format('truetype'); font-display: swap; }
 .fidel-auth {
   --auth-ground: #e7eee5; --auth-paper: #fbfcf9; --auth-art: #dce8d9;
   --auth-ink: #1b3b30; --auth-muted: #526456; --auth-line: #d3ddd2;

@@ -39,6 +39,6 @@ const regions = boundaries.features.map(feature => {
     path:shape.map(r=>path(simplify(r),mapPoint)).join(""), center:center.map(n=>+n.toFixed(1))};
 });
 const data = {source, license:"CC BY-IGO, OCHA/HDX", represented:"2025-01-01", regions};
-await mkdir(new URL("../src/components/landing-experiment/", import.meta.url),{recursive:true});
-await writeFile(new URL("../src/components/landing-experiment/map-data.json",import.meta.url),JSON.stringify(data));
+await mkdir(new URL("../src/components/landing-ui/", import.meta.url),{recursive:true});
+await writeFile(new URL("../src/components/landing-ui/map-data.json",import.meta.url),JSON.stringify(data));
 console.log(`Prepared ${regions.length} regions, ${Math.round(JSON.stringify(data).length/1024)} KB`);

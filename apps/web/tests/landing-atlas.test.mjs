@@ -3,9 +3,9 @@ import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import ts from "typescript";
 
-const map = JSON.parse(readFileSync(new URL("../src/components/landing-experiment/map-data.json",import.meta.url),"utf8"));
+const map = JSON.parse(readFileSync(new URL("../src/components/landing-ui/map-data.json",import.meta.url),"utf8"));
 const content = {};
-new Function("exports",ts.transpileModule(readFileSync(new URL("../src/components/landing-experiment/content.ts",import.meta.url),"utf8"),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText)(content);
+new Function("exports",ts.transpileModule(readFileSync(new URL("../src/components/landing-ui/content.ts",import.meta.url),"utf8"),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText)(content);
 
 test("the atlas covers all twelve regions and both city administrations",()=>{
   const expected=["ET01","ET02","ET03","ET04","ET05","ET06","ET07","ET08","ET11","ET12","ET13","ET14","ET15","ET16"];
