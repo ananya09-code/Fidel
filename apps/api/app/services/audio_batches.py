@@ -712,7 +712,7 @@ def approve_recording(
     recording_id: str,
     reviewed_by: str | None = None,
 ) -> dict[str, Any]:
-    """Approve a pending recording."""
+    """Approve the recording and publish its word in the same transaction."""
     recording = get_recording(session, recording_id)
 
     if recording is None:
@@ -744,6 +744,10 @@ def approve_recording(
             "reviewed_at": _utcnow(),
             "reviewed_by": reviewed_by,
         },
+    )
+    session.execute(
+        text("UPDATE words SET status = 'approved' WHERE id = :word_id"),
+        {"word_id": recording["word_id"]},
     )
     session.commit()
 

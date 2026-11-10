@@ -101,8 +101,11 @@ pronunciation certification. No recording has been approved.
    word, vowels, consonants and word ending; reject clipping or added speech.
 2. Have a fluent Tigrinya speaker confirm pronunciation and the English/Amharic
    meanings. Dialect-dependent alternatives should be documented before approval.
-3. Approve or reject through the existing admin workflow. Do not manually publish
-   draft words to bypass audio/editorial review.
+3. Approve or reject through the existing admin workflow. Recording approval also
+   publishes its word, in the same database transaction, for all three languages.
+   Do not manually publish draft words to bypass audio/editorial review.
+   Recordings approved before this fix do not automatically republish their words;
+   those entries need a separately reviewed repair or reapproval after deployment.
 
 Until content is approved, the Tigrinya learning path correctly shows its empty
 state; the code does not manufacture lessons or mark sample words as approved.

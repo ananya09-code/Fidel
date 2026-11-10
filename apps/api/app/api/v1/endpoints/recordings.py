@@ -445,7 +445,7 @@ def approve(
 
     return RecordingActionResponse(
         recording=_serialize_recording(row),
-        message="Recording approved.",
+        message="Recording and word approved.",
     )
 
 
