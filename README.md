@@ -1,5 +1,9 @@
 # Fidel
 
+For the Tigrinya course, multilingual audio workflow, sample vocabulary,
+pronunciation-review checklist and migration/deployment order, see
+[Tigrinya rollout](docs/tigrinya-rollout.md).
+
 A language-learning web app for Ethiopian languages (Afaan Oromoo, Amharic,
 English).
 

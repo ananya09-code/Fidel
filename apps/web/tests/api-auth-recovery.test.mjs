@@ -155,7 +155,9 @@ test("every protected client forwards the Clerk getter to shared recovery", asyn
       compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
     }).outputText;
     const exports = {};
-    const require = name => name === "zod" ? zod : {
+    const require = name => name === "zod" ? zod : name === "@/lib/languages" ? {
+      learningLanguageCodes: ["om", "am", "ti"],
+    } : {
       ...api,
       apiFetch: async (_path, _schema, init) => { assert.equal(init.getToken, getToken); return {}; },
     };

@@ -12,11 +12,12 @@ def _config() -> Config:
     return Config("alembic.ini")
 
 
-def test_revision_graph_matches_deployed_head() -> None:
+def test_revision_graph_matches_expected_head() -> None:
     script = ScriptDirectory.from_config(_config())
 
-    assert script.get_current_head() == "0007_reviews"
+    assert script.get_current_head() == "0008_tigrinya_preferences"
     assert [revision.revision for revision in script.walk_revisions()] == [
+        "0008_tigrinya_preferences",
         "0007_reviews",
         "0006_user_word_state",
         "0005_user_preferences",
@@ -60,6 +61,8 @@ def test_fresh_postgresql_upgrade_sql_contains_complete_schema(monkeypatch) -> N
     assert "0005_user_preferences" in sql
     assert "0006_user_word_state" in sql
     assert "0007_reviews" in sql
+    assert "0008_tigrinya_preferences" in sql
+    assert "learning_language IN ('om','am','ti')" in sql
     assert "user_words_learning_state_check" in sql
     assert "lesson_attempts_one_in_progress_per_lesson" in sql
     assert "audio_recordings_one_active_per_config" in sql

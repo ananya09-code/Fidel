@@ -1,12 +1,13 @@
-export type SampleLanguage = "om" | "am";
+export type SampleLanguage = "om" | "am" | "ti";
 
 export const greetings = {
+  ti: { name: "Tigrinya", word: "ሰላም", translation: "Hello / Peace", amharic: "ሰላም", reply: "የቐንየለይ", replyMeaning: "Thank you" },
   om: { name: "Afaan Oromoo", word: "Akkam", translation: "Hello", amharic: "ሰላም", reply: "Nagaa", replyMeaning: "Peace / I’m well" },
   am: { name: "Amharic", word: "ሰላም", translation: "Hello / Peace", amharic: "ሰላም", reply: "እንዴት ነህ?", replyMeaning: "How are you? (to a man)" },
 } as const;
 
 export const regions: { id: string; name: string; native: string; languages: string[]; description: string; sample: SampleLanguage }[] = [
-  { id: "ET01", name: "Tigray", native: "ትግራይ", languages: ["Tigrinya", "Saho", "Kunama"], description: "Tigrinya is widely spoken in this northern region. Saho and Kunama are also part of its linguistic landscape.", sample: "am" },
+  { id: "ET01", name: "Tigray", native: "ትግራይ", languages: ["Tigrinya", "Saho", "Kunama"], description: "Tigrinya is widely spoken in this northern region. Saho and Kunama are also part of its linguistic landscape.", sample: "ti" },
   { id: "ET02", name: "Afar", native: "አፋር", languages: ["Afar", "Amharic"], description: "The Afar language connects communities across Ethiopia’s northeastern lowlands and beyond its borders.", sample: "am" },
   { id: "ET03", name: "Amhara", native: "አማራ", languages: ["Amharic", "Awngi", "Xamtanga"], description: "Alongside Amharic, Agaw languages including Awngi and Xamtanga form part of the region’s living language heritage.", sample: "am" },
   { id: "ET04", name: "Oromia", native: "ኦሮሚያ", languages: ["Afaan Oromoo", "Amharic"], description: "Afaan Oromoo is spoken across this wide region, from highland towns to southern lowlands, with many local varieties.", sample: "om" },

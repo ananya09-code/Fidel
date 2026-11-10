@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -99,6 +99,8 @@ class StartBatchRequest(BaseModel):
         ge=1,
         description="Words per batch; defaults to 100.",
     )
+    language_code: Literal["om", "am", "ti"] = "om"
+    speaker_id: str | None = Field(default=None, max_length=100)
 
 
 class RejectRequest(BaseModel):

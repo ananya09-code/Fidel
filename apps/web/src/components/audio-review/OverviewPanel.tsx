@@ -5,6 +5,8 @@ import type { Batch, ReviewSummary } from '@/lib/audioReviewApi'
 
 type Props = {
   summary: ReviewSummary | undefined
+  latestBatch?: Batch | null
+  generationReady?: boolean
   isLoading: boolean
   isStarting: boolean
   onStartBatch: (batchSize: number) => void
@@ -96,7 +98,15 @@ function BatchProgress({ batch }: { batch: Batch }) {
         </div>
       </dl>
 
-      {batch.complete ? (
+      {batch.status === 'failed' ? (
+        <p role="alert" className="mt-3 rounded-lg bg-rose-50 dark:bg-rose-500/10 px-3 py-2 text-sm text-rose-800 dark:text-rose-300">
+          Audio generation stopped. {batch.error || 'Check the backend logs for this batch. No successful generation is implied by “Batch started”.'}
+        </p>
+      ) : batch.failed_count > 0 ? (
+        <p role="status" className="mt-3 text-sm text-rose-800 dark:text-rose-300">
+          {batch.failed_count} audio generation attempt{batch.failed_count === 1 ? '' : 's'} failed. Open “Failed generation” to see each recording’s error.
+        </p>
+      ) : batch.complete ? (
         <p className="mt-3 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 px-3 py-2 text-xs text-emerald-800 dark:text-emerald-300">
           This batch is fully reviewed. Generate the next batch when you are ready.
         </p>
@@ -107,7 +117,7 @@ function BatchProgress({ batch }: { batch: Batch }) {
         </p>
       ) : null}
 
-      {batch.error ? (
+      {batch.error && batch.status !== 'failed' ? (
         <p className="mt-2 rounded-lg bg-rose-50 dark:bg-rose-500/10 px-3 py-2 text-xs text-rose-800 dark:text-rose-300">
           {batch.error}
         </p>
@@ -118,6 +128,8 @@ function BatchProgress({ batch }: { batch: Batch }) {
 
 export default function OverviewPanel({
   summary,
+  latestBatch = null,
+  generationReady = true,
   isLoading,
   isStarting,
   onStartBatch,
@@ -131,11 +143,11 @@ export default function OverviewPanel({
   const isRunning = running?.status === 'running'
   const remaining = summary?.remaining_eligible ?? 0
   const isCancelling = cancellingBatchId !== null
-  const canStart = !isRunning && !isStarting && !isCancelling && remaining > 0
+  const canStart = generationReady && !isRunning && !isStarting && !isCancelling && remaining > 0
 
-  // The summary query already polls every few seconds while a batch is
-  // running, so it carries the live batch state; no extra query is needed.
-  const activeBatch: Batch | null = running
+  // Keep the last result visible after the worker stops, including failures
+  // that happen before it creates any recording rows (e.g. missing speech key).
+  const activeBatch: Batch | null = latestBatch ?? running
 
   if (isLoading && !summary) {
     return (
@@ -264,7 +276,7 @@ export default function OverviewPanel({
           ) : (
             <button
               type="button"
-              disabled={isRunning || isStarting}
+              disabled={!generationReady || isRunning || isStarting || isCancelling}
               onClick={() => setConfirming(true)}
               title={
                 isRunning

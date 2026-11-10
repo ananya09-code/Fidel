@@ -31,14 +31,14 @@ export const spacedReviewSchema = z.object({
   interval_days: z.array(z.number().int().positive()),
 });
 export type SpacedReviewOverview = z.infer<typeof spacedReviewSchema>;
-export function getSpacedReviews(token: ApiToken, languageCode: "om" | "am", signal?: AbortSignal) {
+export function getSpacedReviews(token: ApiToken, languageCode: "om" | "am" | "ti", signal?: AbortSignal) {
   return apiFetch(`/api/v1/reviews/spaced?language_code=${languageCode}`, spacedReviewSchema, { ...authenticatedRequest(token), signal });
 }
 
 export function getReviews(token: ApiToken, signal?: AbortSignal) {
   return apiFetch("/api/v1/reviews", reviewOverviewSchema, { ...authenticatedRequest(token), signal });
 }
-export function startReview(token: ApiToken, mode: "manual" | "spaced" = "manual", languageCode: "om" | "am" = "om") {
+export function startReview(token: ApiToken, mode: "manual" | "spaced" = "manual", languageCode: "om" | "am" | "ti" = "om") {
   return apiFetch(`/api/v1/reviews/start?mode=${mode}&language_code=${languageCode}`, reviewSessionSchema, {
     method: "POST", ...authenticatedRequest(token),
   });

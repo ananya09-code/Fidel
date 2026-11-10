@@ -39,7 +39,7 @@ export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
 });
 
-type Language = "om" | "am";
+type Language = "om" | "am" | "ti";
 type Level = "beginner" | "some" | "conversational" | "improving";
 type Motivation =
   | "family"
@@ -97,6 +97,14 @@ const languages = [
     nativeName: "አማርኛ",
     description: "Build confidence in one of Ethiopia's major languages.",
     symbol: "አ",
+    colors: "bg-[var(--foam)]",
+  },
+  {
+    id: "ti" as const,
+    name: "Tigrinya",
+    nativeName: "ትግርኛ",
+    description: "Begin with everyday words in Tigrinya’s own script.",
+    symbol: "ት",
     colors: "bg-[var(--foam)]",
   },
 ];
@@ -321,7 +329,7 @@ export function OnboardingView({ step, data, completed, canContinue, isSaving, e
     <progress className="onboarding-progress" value={step + 1} max={steps.length} aria-label="Setup progress" />
     <header className="onboarding-title"><h1>{steps[step].title}</h1><p>{steps[step].description}</p></header>
     <fieldset className="onboarding-options" disabled={isSaving}><legend className="sr-only">{steps[step].title}</legend>
-    {step === 0 && languages.map((item) => <Choice key={item.id} selected={data.language === item.id} title={item.name + (item.id === "am" ? " · " + item.nativeName : "")} description={item.description} onClick={() => onLanguage(item.id)} />)}
+    {step === 0 && languages.map((item) => <Choice key={item.id} selected={data.language === item.id} title={item.name + (item.id !== "om" ? " · " + item.nativeName : "")} description={item.description} onClick={() => onLanguage(item.id)} />)}
     {step === 1 && levels.map((item) => <Choice key={item.id} selected={data.level === item.id} title={item.title} description={item.description} onClick={() => onLevel(item.id)} />)}
     {step === 2 && <><p className="onboarding-select-note">Choose all that feel right.</p>{motivations.map((item) => <Choice key={item.id} selected={data.motivations.includes(item.id)} title={item.title} description={item.description} onClick={() => onMotivation(item.id)} />)}</>}
     {step === 3 && dailyGoals.map((item) => <Choice key={item.id} selected={data.dailyGoal === item.id} title={item.title} description={item.description} onClick={() => onGoal(item.id)} />)}

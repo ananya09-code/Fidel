@@ -7,12 +7,12 @@ from typing import Literal
 
 from pydantic import AliasChoices, BaseModel, Field, computed_field, field_validator
 
-LanguageCode = Literal["om", "am"]
+LanguageCode = Literal["om", "am", "ti"]
 ProficiencyLevel = Literal["beginner", "some", "conversational", "improving"]
 Motivation = Literal[
     "family", "conversation", "culture", "work", "travel", "literacy", "personal"
 ]
-InterfaceLanguage = Literal["en", "om", "am"]
+InterfaceLanguage = Literal["en", "om", "am", "ti"]
 Appearance = Literal["light", "dark", "system"]
 DailyGoal = Literal[5, 10, 15, 20]
 

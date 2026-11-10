@@ -1,8 +1,9 @@
 import { z } from "zod";
+import { learningLanguageCodes } from "@/lib/languages";
 
 import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
 
-export const learningLanguageSchema = z.enum(["om", "am"]);
+export const learningLanguageSchema = z.enum(learningLanguageCodes);
 export const proficiencyLevelSchema = z.enum([
   "beginner",
   "some",
@@ -18,7 +19,7 @@ export const motivationSchema = z.enum([
   "literacy",
   "personal",
 ]);
-export const interfaceLanguageSchema = z.enum(["en", "om", "am"]);
+export const interfaceLanguageSchema = z.enum(["en", ...learningLanguageCodes]);
 export const appearanceSchema = z.enum(["light", "dark", "system"]);
 export const dailyGoalSchema = z.union([
   z.literal(5),

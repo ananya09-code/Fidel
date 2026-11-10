@@ -1,3 +1,4 @@
+import { languageLabel } from "@/lib/languages";
 import { Link } from "@tanstack/react-router";
 import { useUser } from "@clerk/tanstack-react-start";
 import { ArrowRight } from "lucide-react";
@@ -48,5 +49,5 @@ export default function ProfileOverview() {
   const name = user?.fullName || local?.display_name || user?.username || "Fidel learner";
   const created = local?.created_at ? new Date(local.created_at) : null;
   const joinedLabel = created && !Number.isNaN(created.getTime()) ? "Joined " + new Intl.DateTimeFormat("en", { month: "long", year: "numeric", timeZone: "UTC" }).format(created) : "Fidel learner";
-  return <ProfileView name={name} username={user?.username ?? local?.username ?? ""} email={user?.primaryEmailAddress?.emailAddress ?? local?.email ?? ""} imageUrl={user?.imageUrl ?? local?.image_url} joinedLabel={joinedLabel} language={preferences.data?.learning_language === "am" ? "አማርኛ" : "Afaan Oromoo"} dashboard={dashboard.data} activity={<StudyActivitySection />} />;
+  return <ProfileView name={name} username={user?.username ?? local?.username ?? ""} email={user?.primaryEmailAddress?.emailAddress ?? local?.email ?? ""} imageUrl={user?.imageUrl ?? local?.image_url} joinedLabel={joinedLabel} language={languageLabel(preferences.data?.learning_language ?? "om")} dashboard={dashboard.data} activity={<StudyActivitySection />} />;
 }

@@ -203,7 +203,7 @@ def get_review_overview(
 @router.get("/spaced", response_model=SpacedReviewOverview)
 def get_spaced_reviews(
     current_user: Annotated[ClerkUser, Depends(get_current_user)],
-    language_code: Literal["om", "am"] = "om",
+    language_code: Literal["om", "am", "ti"] = "om",
     db: Session = Depends(get_db),
 ) -> SpacedReviewOverview:
     user_id = _user_id(db, current_user.user_id)
@@ -223,7 +223,7 @@ def get_spaced_reviews(
 def start_review(
     current_user: Annotated[ClerkUser, Depends(get_current_user)],
     mode: Literal["manual", "spaced"] = "manual",
-    language_code: Literal["om", "am"] = "om",
+    language_code: Literal["om", "am", "ti"] = "om",
     db: Session = Depends(get_db),
 ) -> ReviewSession:
     user_id = _user_id(db, current_user.user_id)

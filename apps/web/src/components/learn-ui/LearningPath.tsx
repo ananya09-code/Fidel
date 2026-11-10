@@ -1,3 +1,4 @@
+import { languageLabel } from "@/lib/languages";
 import { ArrowRight, Check, ChevronDown, LockKeyhole, Play } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useLearningPath } from "@/hooks/use-learning-path";
@@ -15,7 +16,7 @@ export function LearningPathView({ path, progress }: { path: LearningPathRespons
   const finished = lessons.filter((lesson) => completed.has(lesson.id)).length;
   const attempt = progress.in_progress.find((item) => ids.has(item.lesson_key) && !completed.has(item.lesson_key));
   const next = lessons.find((lesson) => lesson.id === attempt?.lesson_key) ?? lessons.find((lesson) => !completed.has(lesson.id));
-  const language = path.language_code === "om" ? "Afaan Oromoo" : path.language_code === "am" ? "አማርኛ" : path.language_code;
+  const language = languageLabel(path.language_code);
   return <>
     <header className="learn-page-title"><div><h1>Your learning path</h1><p>{language} · One conversation at a time.</p></div><Link to="/dictionary" search={{ category: undefined }} className="learn-dictionary">Explore words <ArrowRight size={16} aria-hidden="true" /></Link></header>
     {!lessons.length ? <PageState kind="empty" title="Lessons are on their way" description="No lessons are available for this language yet." compact /> : <>
