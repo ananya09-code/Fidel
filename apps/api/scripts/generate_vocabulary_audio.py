@@ -18,6 +18,8 @@ from app.services.storage import (  # noqa: E402
 )
 from app.services.speech import (  # noqa: E402
     DEFAULT_VOICE_ID,
+    resolve_voice,
+    build_storage_key,
     LANGUAGE_CODE,
     SPEED,
     clean_word_text,
@@ -62,7 +64,7 @@ __all__ = [
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate and upload Afaan Oromoo vocabulary audio."
+        description="Generate and upload vocabulary audio for om, am or ti."
     )
 
     parser.add_argument(
@@ -74,16 +76,17 @@ def main():
 
     parser.add_argument(
         "--voice",
-        default=DEFAULT_VOICE_ID,
-        help="Addis AI voice ID.",
+        default=None,
+        help="Addis AI voice ID matching the selected language.",
     )
 
+    parser.add_argument("--language", choices=["om", "am", "ti"], default="om")
     args = parser.parse_args()
 
     if args.limit < 1:
         parser.error("--limit must be at least 1")
 
-    voice_id = args.voice
+    voice_id = resolve_voice(args.language, args.voice)
     addis = create_addis_client()
 
     generated = 0
@@ -93,7 +96,7 @@ def main():
     orphaned = []
 
     print(f"API directory: {API_ROOT}")
-    print(f"Language: Afaan Oromoo ({LANGUAGE_CODE})")
+    print(f"Language: {args.language}")
     print(f"Voice: {voice_id}")
     print(f"Limit: {args.limit}")
 
@@ -117,7 +120,7 @@ def main():
                 LIMIT :limit
             """),
             {
-                "language_code": LANGUAGE_CODE,
+                "language_code": args.language,
                 "speed": SPEED,
                 "speaker_id": voice_id,
                 "limit": args.limit,
@@ -135,10 +138,7 @@ def main():
             raw_text = word["text"]
             content_type = word["content_type"]
 
-            storage_key = (
-                f"afaan-oromoo/words/{word_id}/"
-                f"{voice_id}-{SPEED}.mp3"
-            )
+            storage_key = build_storage_key(word_id, voice_id, SPEED)
 
             print(f"\nProcessing: {raw_text}")
 
@@ -147,10 +147,7 @@ def main():
             try:
                 original_text = clean_word_text(raw_text)
 
-                speech_text = make_speech_text(
-                    original_text,
-                    content_type,
-                )
+                speech_text = make_speech_text(original_text, content_type) if args.language == "om" else original_text
 
                 # Temporary files are removed automatically.
                 with tempfile.TemporaryDirectory() as temp_dir:

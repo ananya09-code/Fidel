@@ -1,4 +1,4 @@
-"""Import Afaan Oromoo vocabulary CSV into Fidel's existing PostgreSQL tables.
+"""Import multilingual vocabulary CSV into Fidel's existing PostgreSQL tables.
 
 Run from apps/api with:
     uv run python scripts/import_vocabulary.py --limit 5 --dry-run
@@ -27,13 +27,8 @@ REPO_ROOT = API_ROOT.parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-try:
-    from app.db.database import engine
-except ImportError:
-    # When the current working directory is apps/api, this is the expected path.
-    if str(API_ROOT) not in sys.path:
-        sys.path.insert(0, str(API_ROOT))
-    from app.db.database import engine  # type: ignore[no-redef]
+if str(API_ROOT) not in sys.path:
+    sys.path.insert(0, str(API_ROOT))
 
 DEFAULT_CSV = API_ROOT / "data" / "vocabulary" / "afaan_oromoo_vocabulary.csv"
 REQUIRED_COLUMNS = {
@@ -90,6 +85,8 @@ def classify_content(text_value: str) -> str:
 
 def normalize_row(row: dict[str, Any], line_number: int) -> dict[str, Any]:
     language_code = clean(row.get("language_code")) or "om"
+    if language_code not in {"om", "am", "ti"}:
+        raise ValueError(f"CSV line {line_number}: unsupported language_code.")
     word_text = clean(row.get("text"))
     if not word_text:
         raise ValueError(f"CSV line {line_number}: missing required 'text'.")
@@ -142,19 +139,13 @@ def load_rows(csv_path: Path, limit: int | None) -> list[dict[str, Any]]:
 
         for line_number, raw_row in enumerate(reader, start=2):
             row = normalize_row(raw_row, line_number)
-            if row["language_code"] != "om":
-                print(
-                    f"Skipping line {line_number}: language_code is "
-                    f"{row['language_code']!r}, expected 'om'."
-                )
-                continue
             rows.append(row)
             if limit is not None and len(rows) >= limit:
                 break
     return rows
 
 
-def import_rows(db_engine: Engine, rows: list[dict[str, Any]], dry_run: bool) -> dict[str, int]:
+def import_rows(db_engine: Engine | None, rows: list[dict[str, Any]], dry_run: bool) -> dict[str, int]:
     counts = {"words_inserted": 0, "words_existing": 0, "translations_inserted": 0}
 
     if dry_run:
@@ -170,6 +161,8 @@ def import_rows(db_engine: Engine, rows: list[dict[str, Any]], dry_run: bool) ->
 
     # One transaction means an error rolls back this import instead of leaving
     # half-written word/translation rows.
+    if db_engine is None:
+        raise ValueError("A database engine is required for an import.")
     with db_engine.begin() as connection:
         for row in rows:
             result = connection.execute(INSERT_WORD_SQL, row)
@@ -221,8 +214,13 @@ def main() -> int:
     try:
         rows = load_rows(args.csv, args.limit)
         print(f"CSV: {args.csv}")
-        print(f"Prepared {len(rows)} Afaan Oromoo row(s).")
-        counts = import_rows(engine, rows, args.dry_run)
+        print(f"Prepared {len(rows)} row(s) for {', '.join(sorted({row['language_code'] for row in rows}))}.")
+        if args.dry_run:
+            db_engine = None
+        else:
+            from app.db.database import engine
+            db_engine = engine
+        counts = import_rows(db_engine, rows, args.dry_run)
     except Exception as exc:
         print(f"Import failed: {exc}", file=sys.stderr)
         return 1
@@ -238,4 +236,5 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")
     raise SystemExit(main())

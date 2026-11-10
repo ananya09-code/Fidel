@@ -18,8 +18,8 @@ const languages = [
   {
     name: "Tigrinya", native: "ትግርኛ", code: "ti", greeting: "ሰላም", pronunciation: "Selam",
     meaning: "Hello · Peace", amharic: "ሰላም", colour: "sage",
-    story: "The same greeting, another living language. Explore Tigrinya’s place in Ethiopia on the map. This is a language preview; lessons are not available yet.",
-    note: "A language to discover. Lessons to come.",
+    story: "The same greeting, another living language. Explore Tigrinya’s place in Ethiopia on the map. The Tigrinya course is growing as new words and recordings are reviewed.",
+    note: "A small beginning, with room to grow.",
   },
 ] as const;
 
@@ -85,7 +85,7 @@ export function LanguageDeck({ start }: { start: "/Home" | "/sign-up" }) {
           {languages.map((language,index) => <button type="button" key={language.code} aria-pressed={active === index} onClick={() => choose(index)}>{language.name}</button>)}
         </div>
         <p className="language-deck-narrative">{selected.story}</p>
-        {selected.code === "ti" ? <a className="language-deck-link" href="#atlas">Explore the map <ArrowUpRight size={20} aria-hidden="true" /></a> : <Link className="language-deck-link" to={start}>Start learning <ArrowUpRight size={20} aria-hidden="true" /></Link>}
+        <Link className="language-deck-link" to={start}>Start learning <ArrowUpRight size={20} aria-hidden="true" /></Link>
       </div>
       <div className="language-deck-interaction">
         <div className="language-deck-stage" data-ui="Interactive language cards" onPointerDown={startSwipe} onPointerUp={finishSwipe} onPointerCancel={() => { gesture.current = null; }} onLostPointerCapture={() => { gesture.current = null; }}>

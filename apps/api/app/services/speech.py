@@ -15,8 +15,31 @@ from addisai import AddisAI
 API_ROOT = Path(__file__).resolve().parents[2]
 LANGUAGE_CODE = "om"
 DEFAULT_VOICE_ID = "om-hawi"
+VOICE_DEFAULTS = {"om": DEFAULT_VOICE_ID, "am": "am-hamen", "ti": "ti-berhane"}
+STORAGE_PREFIXES = {"om": "afaan-oromoo", "am": "amharic", "ti": "tigrinya"}
 SPEED = "normal"
 OUTPUT_FORMAT = "mp3_44100"
+
+
+def resolve_voice(language_code: str, voice_id: str | None = None) -> str:
+    """Reject unsupported languages and cross-language voice selections."""
+    if language_code not in VOICE_DEFAULTS:
+        raise ValueError("Audio language must be om, am or ti.")
+    selected = voice_id or VOICE_DEFAULTS[language_code]
+    if not re.fullmatch(r"[a-z]{2}-[a-z0-9-]+", selected) or not selected.startswith(f"{language_code}-"):
+        raise ValueError("The voice must belong to the selected language.")
+    return selected
+
+
+def list_available_voices(language_code: str) -> list[dict[str, str]]:
+    resolve_voice(language_code)
+    voices = create_addis_client().voices.list(language=language_code)
+    return [
+        {"id": voice.get("voice_id") or voice.get("id"), "name": voice.get("name") or voice.get("voice_id") or voice.get("id")}
+        for voice in voices
+        if (voice.get("voice_id") or voice.get("id") or "").startswith(f"{language_code}-")
+        and voice.get("available", True) is not False
+    ]
 
 
 def create_addis_client(api_key: str | None = None) -> AddisAI:
@@ -90,12 +113,15 @@ def generate_mp3(
     speech_text: str,
     output_path: Path,
     voice_id: str = DEFAULT_VOICE_ID,
+    language_code: str | None = None,
 ) -> int | None:
     """Generate an MP3 and return its duration in milliseconds."""
+    language_code = language_code or voice_id.split("-", 1)[0]
+    resolve_voice(language_code, voice_id)
     clip = addis.voice.generate(
         voice_id=voice_id,
         text=speech_text,
-        language=LANGUAGE_CODE,
+        language=language_code,
         output_format=OUTPUT_FORMAT,
     )
 
@@ -116,4 +142,6 @@ def build_storage_key(word_id: str, voice_id: str, speed: str, attempt: int = 1)
     attempts get an ``-aN`` suffix so the previous MP3 is never overwritten.
     """
     suffix = "" if attempt <= 1 else f"-a{attempt}"
-    return f"afaan-oromoo/words/{word_id}/{voice_id}-{speed}{suffix}.mp3"
+    language_code = voice_id.split("-", 1)[0]
+    resolve_voice(language_code, voice_id)
+    return f"{STORAGE_PREFIXES[language_code]}/words/{word_id}/{voice_id}-{speed}{suffix}.mp3"

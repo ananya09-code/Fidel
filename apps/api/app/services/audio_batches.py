@@ -29,6 +29,7 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from app.services.speech import (
     DEFAULT_VOICE_ID,
+    resolve_voice,
     LANGUAGE_CODE,
     SPEED,
     clean_word_text,
@@ -77,6 +78,7 @@ def _utcnow() -> datetime:
 ELIGIBLE_WORDS_SQL = text("""
     SELECT
         w.id            AS word_id,
+        w.language_code AS language_code,
         w.text          AS text,
         w.content_type  AS content_type,
         w.transliteration
@@ -274,31 +276,34 @@ def fail_abandoned_batches(
     return int(result.rowcount or 0)
 
 
-def get_running_batch(session: Session) -> dict[str, Any] | None:
-    """Return the currently running batch for the default configuration."""
+def get_running_batch(session: Session, language_code: str | None = None, speaker_id: str | None = None) -> dict[str, Any] | None:
+    """Return the latest running batch, optionally scoped by language/voice."""
     row = session.execute(
         text("""
             SELECT id
             FROM generation_batches
             WHERE status = 'running'
+              AND (CAST(:language_code AS TEXT) IS NULL OR language_code = :language_code)
+              AND (CAST(:speaker_id AS TEXT) IS NULL OR speaker_id = :speaker_id)
             ORDER BY created_at DESC
             LIMIT 1
-        """)
+        """), {"language_code": language_code, "speaker_id": speaker_id}
     ).mappings().first()
 
     return get_batch(session, str(row["id"])) if row else None
 
 
-def list_batches(session: Session, limit: int = 20) -> list[dict[str, Any]]:
+def list_batches(session: Session, limit: int = 20, language_code: str | None = None) -> list[dict[str, Any]]:
     """Return the most recent batches, newest first."""
     rows = session.execute(
         text("""
             SELECT id
             FROM generation_batches
+            WHERE (CAST(:language_code AS TEXT) IS NULL OR language_code = :language_code)
             ORDER BY created_at DESC
             LIMIT :limit
         """),
-        {"limit": limit},
+        {"limit": limit, "language_code": language_code},
     ).mappings().all()
 
     return [get_batch(session, str(row["id"])) for row in rows]  # type: ignore[misc]
@@ -427,6 +432,10 @@ def generate_one(
     from app.services.speech import build_storage_key
 
     word_id = str(word["word_id"])
+    language_code = session.execute(
+        text("SELECT language_code FROM words WHERE id = :id"), {"id": word_id},
+    ).scalar_one()
+    resolve_voice(language_code, speaker_id)
     attempt = _next_attempt(session, word_id, speaker_id, speed)
     storage_key = build_storage_key(word_id, speaker_id, speed, attempt)
     client = addis if addis is not None else create_addis_client()
@@ -435,10 +444,8 @@ def generate_one(
         _set_superseded(session, supersede_recording_id, _utcnow())
 
     try:
-        speech_text = make_speech_text(
-            clean_word_text(word["text"]),
-            word.get("content_type") or "word",
-        )
+        cleaned = clean_word_text(word["text"])
+        speech_text = make_speech_text(cleaned, word.get("content_type") or "word") if language_code == "om" else cleaned
 
         with tempfile.TemporaryDirectory() as temp_dir:
             output_path = Path(temp_dir) / f"{safe_filename(word['text'])}.mp3"
@@ -602,9 +609,6 @@ def run_batch(
     batch_id: str,
     *,
     addis: Any | None = None,
-    language_code: str = LANGUAGE_CODE,
-    speaker_id: str = DEFAULT_VOICE_ID,
-    speed: str = SPEED,
 ) -> None:
     """Execute a batch: generate, upload and record every selected word.
 
@@ -621,7 +625,12 @@ def run_batch(
         if batch is None:
             logger.error("Batch %s does not exist.", batch_id)
             return
+        if batch["status"] != BATCH_RUNNING:
+            return
 
+        language_code = batch["language_code"]
+        speaker_id = resolve_voice(language_code, batch["speaker_id"])
+        speed = batch["speed"]
         size = int(batch["requested_size"])
         words = select_batch_words(
             session,
@@ -810,7 +819,7 @@ def regenerate_recording(
         )
 
     word = session.execute(
-        text("SELECT id, text, content_type FROM words WHERE id = :word_id"),
+        text("SELECT id, text, content_type, language_code FROM words WHERE id = :word_id"),
         {"word_id": recording["word_id"]},
     ).mappings().first()
 
@@ -823,7 +832,7 @@ def regenerate_recording(
         "content_type": word["content_type"],
     }
 
-    effective_speaker = speaker_id or recording["speaker_id"] or DEFAULT_VOICE_ID
+    effective_speaker = resolve_voice(word["language_code"], speaker_id or recording["speaker_id"])
     effective_speed = speed or recording["speed"] or SPEED
 
     # If an active recording already exists for this word/config it must be
@@ -891,7 +900,7 @@ def retry_failed_recordings(
     session: Session,
     recording_ids: Iterable[str],
     *,
-    speaker_id: str = DEFAULT_VOICE_ID,
+    speaker_id: str | None = None,
     speed: str = SPEED,
     addis: Any | None = None,
 ) -> list[dict[str, Any]]:
@@ -916,7 +925,7 @@ def retry_failed_recordings(
             continue
 
         word = session.execute(
-            text("SELECT id, text, content_type FROM words WHERE id = :word_id"),
+            text("SELECT id, text, content_type, language_code FROM words WHERE id = :word_id"),
             {"word_id": recording["word_id"]},
         ).mappings().first()
 
@@ -926,6 +935,7 @@ def retry_failed_recordings(
             )
             continue
 
+        effective_speaker = resolve_voice(word["language_code"], recording.get("speaker_id") or speaker_id)
         # The failed row occupies the active slot for this word/config, so it
         # is superseded first and only then regenerated.
         session.execute(
@@ -947,7 +957,7 @@ def retry_failed_recordings(
                     "content_type": word["content_type"],
                 },
                 batch_id=recording.get("batch_id"),
-                speaker_id=recording.get("speaker_id") or speaker_id,
+                speaker_id=effective_speaker,
                 speed=recording.get("speed") or speed,
                 addis=addis,
             )

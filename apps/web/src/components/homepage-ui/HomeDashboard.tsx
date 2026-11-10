@@ -1,3 +1,4 @@
+import { learningLanguages } from "@/lib/languages";
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
@@ -7,7 +8,7 @@ import "./home.css";
 
 type Props = {
   data: DashboardSummary;
-  languageCode: "om" | "am";
+  languageCode: "om" | "am" | "ti";
   topics: ReactNode;
   dailyWord: ReactNode;
   memoryCheck?: ReactNode;
@@ -15,7 +16,7 @@ type Props = {
 
 /** Presentation only: all learner figures come from the authenticated dashboard. */
 export function HomeDashboard({ data, languageCode, topics, dailyWord, memoryCheck }: Props) {
-  const language = languageCode === "am" ? "Amharic" : "Afaan Oromoo";
+  const language = learningLanguages[languageCode].name;
   const remaining = Math.max(0, data.daily_word_goal - data.words_learned_today);
   const current = data.current_lesson;
   const lessonTotal = current?.question_count ?? 0;
@@ -26,7 +27,7 @@ export function HomeDashboard({ data, languageCode, topics, dailyWord, memoryChe
     <div className="fidel-home">
       <header className="home-title">
         <div>
-          <h1>{languageCode === "am" ? "ሰላም" : "Akkam"}. A little more, every day.</h1>
+          <h1>{languageCode === "om" ? "Akkam" : "ሰላም"}. A little more, every day.</h1>
           <p>{language} <span aria-hidden="true">·</span> {remaining > 0 ? `${remaining} more ${remaining === 1 ? "word" : "words"} to reach today’s goal.` : "Today’s word goal is complete."}</p>
         </div>
         <Link to="/settings" className="home-text-link">Your learning settings <ArrowRight size={15} aria-hidden="true" /></Link>

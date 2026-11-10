@@ -116,6 +116,12 @@ export type RecordingFilters = {
 }
 
 const BASE = '/api/audio-review'
+export type AudioLanguage = 'om' | 'am' | 'ti'
+export const audioLanguages = { om: 'Afaan Oromoo', am: 'Amharic', ti: 'Tigrinya' } as const
+const voiceSchema = z.object({ id: z.string(), name: z.string() })
+export function listVoices(languageCode: AudioLanguage) {
+  return apiFetch(`${BASE}/voices?language_code=${languageCode}`, z.array(voiceSchema), { headers: adminHeaders() })
+}
 
 /** Read the administrative key stored for this browser tab. */
 export function getAdminKey(): string {
@@ -146,8 +152,8 @@ function queryString(params: Record<string, string | number | boolean | undefine
   return encoded ? `?${encoded}` : ''
 }
 
-export function getSummary(): Promise<ReviewSummary> {
-  return apiFetch(`${BASE}/summary`, summarySchema, { headers: adminHeaders() })
+export function getSummary(languageCode: AudioLanguage = 'om', speakerId?: string): Promise<ReviewSummary> {
+  return apiFetch(`${BASE}/summary${queryString({ language_code: languageCode, speaker_id: speakerId })}`, summarySchema, { headers: adminHeaders() })
 }
 
 export function listRecordings(
@@ -216,16 +222,16 @@ export function retryFailed(recordingIds: string[]): Promise<{ retried: number }
   )
 }
 
-export function startBatch(batchSize?: number): Promise<Batch> {
+export function startBatch(batchSize?: number, languageCode: AudioLanguage = 'om', speakerId?: string): Promise<Batch> {
   return apiFetch(`${BASE}/batches`, batchSchema, {
     method: 'POST',
     headers: { ...adminHeaders(), 'Content-Type': 'application/json' },
-    body: JSON.stringify({ batch_size: batchSize ?? null }),
+    body: JSON.stringify({ batch_size: batchSize ?? null, language_code: languageCode, speaker_id: speakerId }),
   })
 }
 
-export function listBatches(): Promise<z.infer<typeof batchListSchema>> {
-  return apiFetch(`${BASE}/batches`, batchListSchema, { headers: adminHeaders() })
+export function listBatches(languageCode: AudioLanguage = 'om'): Promise<z.infer<typeof batchListSchema>> {
+  return apiFetch(`${BASE}/batches?language_code=${languageCode}`, batchListSchema, { headers: adminHeaders() })
 }
 
 export function getBatch(batchId: string): Promise<Batch> {

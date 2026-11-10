@@ -100,7 +100,7 @@ def get_learning_path(
         ...,
         min_length=2,
         max_length=10,
-        description="Language code, such as om or am",
+        description="Language code, such as om, am or ti",
     ),
     db: Session = Depends(get_db),
 ):

@@ -3,13 +3,16 @@
 from datetime import datetime, timezone
 from uuid import uuid4
 
+import pytest
+
 from sqlalchemy import text
 
 from tests.conftest import AUTH_HEADERS
 
 
+@pytest.mark.parametrize("language_code", ["om", "am", "ti"])
 def test_complete_journey_persists_and_is_user_isolated(
-    auth_client, mock_clerk, session_factory
+    auth_client, mock_clerk, session_factory, language_code
 ):
     now = datetime.now(timezone.utc)
     word_ids = [uuid4(), uuid4()]
@@ -22,12 +25,12 @@ def test_complete_journey_persists_and_is_user_isolated(
                       id, language_code, text, content_type, category,
                       difficulty, status, created_at
                     ) VALUES (
-                      :id, 'om', :word, 'word', 'journey',
+                      :id, :language_code, :word, 'word', 'journey',
                       'beginner', 'approved', :now
                     )
                     """
                 ),
-                {"id": word_id, "word": f"journey{index}", "now": now},
+                {"id": word_id, "word": f"journey{index}", "now": now, "language_code": language_code},
             )
             session.execute(
                 text(
@@ -50,16 +53,20 @@ def test_complete_journey_persists_and_is_user_isolated(
         "/api/v1/preferences",
         headers=AUTH_HEADERS,
         json={
-            "learning_language": "om",
+            "learning_language": language_code,
             "proficiency_level": "beginner",
             "daily_goal_words": 10,
             "onboarding_completed": True,
         },
     )
     assert preferences.status_code == 200
+    assert preferences.json()["learning_language"] == language_code
+    path = auth_client.get(f"/api/v1/learning/path?language_code={language_code}")
+    assert path.status_code == 200
+    assert path.json()["language_code"] == language_code
 
     attempt = auth_client.post(
-        "/api/v1/progress/lessons/om-beginner-journey/start",
+        f"/api/v1/progress/lessons/{language_code}-beginner-journey/start",
         headers=AUTH_HEADERS,
         json={
             "difficulty": "beginner",
@@ -99,7 +106,7 @@ def test_complete_journey_persists_and_is_user_isolated(
     )
     assert marked.status_code == 200
 
-    review = auth_client.post("/api/v1/reviews/start", headers=AUTH_HEADERS).json()
+    review = auth_client.post(f"/api/v1/reviews/start?language_code={language_code}", headers=AUTH_HEADERS).json()
     answer = auth_client.put(
         f"/api/v1/reviews/{review['id']}/answers",
         headers=AUTH_HEADERS,
@@ -125,6 +132,7 @@ def test_complete_journey_persists_and_is_user_isolated(
     assert dashboard["learned_words"] == 2
     assert dashboard["needs_review_words"] == 0
 
+    assert auth_client.get(f"/api/v1/reviews/spaced?language_code={language_code}", headers=AUTH_HEADERS).status_code == 200
     persisted_preferences = auth_client.get(
         "/api/v1/preferences", headers=AUTH_HEADERS
     ).json()

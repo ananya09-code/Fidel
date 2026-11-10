@@ -1,3 +1,4 @@
+import { learningLanguages } from "@/lib/languages";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { HomeDashboard } from "@/components/homepage-ui/HomeDashboard";
@@ -38,7 +39,7 @@ function HomePage() {
           meaning={dailyWord.data.translations.find((item) => item.language_code === "en")?.meaning ?? dailyWord.data.meaning ?? "Translation unavailable"}
           amharicMeaning={dailyWord.data.translations.find((item) => item.language_code === "am")?.meaning}
           audioSrc={dailyWord.data.audio.url ?? undefined}
-          language={languageCode === "am" ? "Amharic" : "Afaan Oromoo"}
+          language={learningLanguages[languageCode].name}
         />
       ) : (
         <PageState kind="empty" title="No daily word available" description="Approved vocabulary will appear here when it is ready." compact />

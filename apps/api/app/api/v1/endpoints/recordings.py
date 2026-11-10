@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import math
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, status
 from sqlalchemy import text
@@ -46,7 +46,7 @@ from app.services.audio_batches import (
     run_batch,
     validate_batch_size,
 )
-from app.services.speech import LANGUAGE_CODE, SPEED
+from app.services.speech import LANGUAGE_CODE, SPEED, resolve_voice, list_available_voices
 from app.services.storage import audio_exists, generate_audio_url
 
 router = APIRouter()
@@ -177,11 +177,17 @@ def _attach_translations(db: Session, items: list[dict[str, Any]]) -> None:
 
 @router.get("/summary", response_model=ReviewSummary)
 def get_summary(
+    language_code: Literal["om", "am", "ti"] = "om",
+    speaker_id: str | None = None,
     db: Session = Depends(get_db),
     reviewer: str = Depends(require_admin),
 ) -> ReviewSummary:
     """Return the dashboard overview cards."""
     del reviewer  # dependency exists to protect the endpoint
+    try:
+        speaker_id = resolve_voice(language_code, speaker_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
     # Recover before reporting: a batch left running by a dead worker would
     # otherwise make the dashboard claim "batch running" forever.
@@ -191,22 +197,23 @@ def get_summary(
         text("""
             SELECT
                 COUNT(*)                                          AS total,
-                SUM(CASE WHEN status = 'pending'  THEN 1 ELSE 0 END) AS pending,
-                SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) AS approved,
-                SUM(CASE WHEN status = 'rejected' THEN 1 ELSE 0 END) AS rejected,
-                SUM(CASE WHEN status = 'failed'   THEN 1 ELSE 0 END) AS failed,
+                SUM(CASE WHEN a.status = 'pending'  THEN 1 ELSE 0 END) AS pending,
+                SUM(CASE WHEN a.status = 'approved' THEN 1 ELSE 0 END) AS approved,
+                SUM(CASE WHEN a.status = 'rejected' THEN 1 ELSE 0 END) AS rejected,
+                SUM(CASE WHEN a.status = 'failed'   THEN 1 ELSE 0 END) AS failed,
                 SUM(CASE WHEN superseded_at IS NOT NULL THEN 1 ELSE 0 END)
                                                                AS superseded,
                 SUM(CASE WHEN storage_key IS NOT NULL THEN 1 ELSE 0 END)
                                                                AS has_audio
-            FROM audio_recordings
-        """)
+            FROM audio_recordings a JOIN words w ON w.id = a.word_id
+            WHERE w.language_code = :language_code
+        """), {"language_code": language_code}
     ).mappings().one()
 
     vocabulary = int(
         db.execute(
             text("SELECT COUNT(*) FROM words WHERE language_code = :language_code"),
-            {"language_code": LANGUAGE_CODE},
+            {"language_code": language_code},
         ).scalar_one()
     )
 
@@ -219,8 +226,8 @@ def get_summary(
         superseded=int(counts["superseded"] or 0),
         has_audio=int(counts["has_audio"] or 0),
         total_vocabulary=vocabulary,
-        remaining_eligible=count_eligible_words(db),
-        running_batch=_serialize_batch(get_running_batch(db)),
+        remaining_eligible=count_eligible_words(db, language_code, speaker_id),
+        running_batch=_serialize_batch(get_running_batch(db, language_code)),
     )
 
 
@@ -557,6 +564,18 @@ def retry_failed(
 # --------------------------------------------------
 
 
+@router.get("/voices")
+def get_voices(
+    language_code: Literal["om", "am", "ti"] = "om",
+    reviewer: str = Depends(require_admin),
+) -> list[dict[str, str]]:
+    del reviewer
+    try:
+        return list_available_voices(language_code)
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail="Could not load Addis AI voices. Check ADDIS_API_KEY and provider availability.") from exc
+
+
 @router.post("/batches", response_model=BatchState, status_code=status.HTTP_202_ACCEPTED)
 def start_batch(
     tasks: BackgroundTasks,
@@ -568,9 +587,11 @@ def start_batch(
     del reviewer
 
     requested = payload.batch_size if payload else None
+    language_code = payload.language_code if payload else LANGUAGE_CODE
 
     try:
         batch_size = validate_batch_size(requested)
+        speaker_id = resolve_voice(language_code, payload.speaker_id if payload else None)
     except ValueError as exc:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc)
@@ -580,7 +601,7 @@ def start_batch(
     # block this request forever.
     fail_abandoned_batches(db)
 
-    remaining = count_eligible_words(db)
+    remaining = count_eligible_words(db, language_code, speaker_id)
 
     if remaining == 0:
         # Check *before* creating the row: a 'running' batch blocks every
@@ -594,7 +615,7 @@ def start_batch(
         )
 
     try:
-        batch = create_batch(db, batch_size=batch_size)
+        batch = create_batch(db, batch_size=batch_size, language_code=language_code, speaker_id=speaker_id)
     except BatchAlreadyRunning as exc:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, detail=str(exc)
@@ -617,16 +638,17 @@ def start_batch(
 @router.get("/batches", response_model=BatchListResponse)
 def get_batches(
     limit: int = Query(default=20, ge=1, le=100),
+    language_code: Literal["om", "am", "ti"] | None = None,
     db: Session = Depends(get_db),
     reviewer: str = Depends(require_admin),
 ) -> BatchListResponse:
     """List recent batches and the running one."""
     del reviewer
 
-    batches = [b for b in list_batches(db, limit=limit) if b is not None]
+    batches = [b for b in list_batches(db, limit=limit, language_code=language_code) if b is not None]
 
     return BatchListResponse(
-        running=_serialize_batch(get_running_batch(db)),
+        running=_serialize_batch(get_running_batch(db, language_code)),
         batches=[_serialize_batch(b) for b in batches],  # type: ignore[misc]
     )
 

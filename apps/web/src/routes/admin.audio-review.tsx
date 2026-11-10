@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { KeyRound, Loader2, LogOut, RefreshCw } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 
 import OverviewPanel from '@/components/audio-review/OverviewPanel'
 import RecordingCard from '@/components/audio-review/RecordingCard'
@@ -13,13 +13,15 @@ import {
   getSummary,
   listBatches,
   listRecordings,
+  listVoices,
+  audioLanguages,
   regenerateRecording,
   rejectRecording,
   retryFailed,
   setAdminKey,
   startBatch,
 } from '@/lib/audioReviewApi'
-import type { Recording } from '@/lib/audioReviewApi'
+import type { AudioLanguage, Batch, Recording } from '@/lib/audioReviewApi'
 
 export const Route = createFileRoute('/admin/audio-review')({
   component: AudioReviewPage,
@@ -44,20 +46,45 @@ function AudioReviewPage() {
   const [page, setPage] = useState(1)
   const [notice, setNotice] = useState<{ kind: 'ok' | 'error'; text: string } | null>(null)
   const [busyId, setBusyId] = useState<string | null>(null)
+  const [languageCode, setLanguageCode] = useState<AudioLanguage>('om')
+  const [voiceId, setVoiceId] = useState('')
 
   const isAuthenticated = adminKey.length > 0
+  const voices = useQuery({
+    queryKey: ['audio-review', 'voices', languageCode],
+    queryFn: () => listVoices(languageCode), enabled: isAuthenticated,
+    staleTime: 5 * 60_000, retry: false,
+  })
+  const speakerId = voices.data?.find(voice => voice.id === voiceId)?.id
+    ?? voices.data?.find(voice => voice.id === 'om-hawi')?.id
+    ?? voices.data?.[0]?.id
 
   const batches = useQuery({
-    queryKey: ['audio-review', 'batches'],
-    queryFn: listBatches,
+    queryKey: ['audio-review', 'batches', languageCode],
+    queryFn: () => listBatches(languageCode),
     enabled: isAuthenticated,
     retry: false,
+    refetchInterval: (query) => query.state.data?.running?.status === 'running' ? 3000 : false,
   })
 
+  // Refresh recordings and totals on every batch update, including the final
+  // running -> completed/failed response. Do not invalidate the polling query.
+  useEffect(() => {
+    if (!isAuthenticated || !batches.dataUpdatedAt) return
+    void queryClient.invalidateQueries({ queryKey: ['audio-review', 'recordings'] })
+    void queryClient.invalidateQueries({ queryKey: ['audio-review', 'summary'] })
+  }, [isAuthenticated, batches.dataUpdatedAt, queryClient])
+
   const startBatchMutation = useMutation({
-    mutationFn: (size: number) => startBatch(size),
+    mutationFn: (size: number) => {
+      if (!speakerId) throw new Error('Choose an available voice before generating audio.')
+      return startBatch(size, languageCode, speakerId)
+    },
     onSuccess: (batch) => {
-      setNotice({ kind: 'ok', text: `Batch ${batch.id.slice(0, 8)} started.` })
+      setNotice({ kind: 'ok', text: `Batch ${batch.id.slice(0, 8)} requested. Audio generation runs in the background; its results appear below.` })
+      setStatusFilter('')
+      setBatchFilter(batch.id)
+      setPage(1)
       void queryClient.invalidateQueries({ queryKey: ['audio-review'] })
     },
     onError: (error) => setNotice({ kind: 'error', text: describeError(error) }),
@@ -114,6 +141,20 @@ function AudioReviewPage() {
       busyId={busyId}
       setBusyId={setBusyId}
       batches={batches.data?.batches ?? []}
+      languageCode={languageCode}
+      speakerId={speakerId}
+      generationReady={Boolean(speakerId) && !voices.isError}
+      generationControls={<div className="flex flex-wrap items-end gap-4 rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4">
+        <label className="grid gap-1 text-sm">Language<select value={languageCode} onChange={event => { setLanguageCode(event.target.value as AudioLanguage); setVoiceId(''); setBatchFilter(''); setStatusFilter(''); setPage(1); setNotice(null) }} className="rounded-lg border border-[var(--line)] bg-[var(--panel)] p-2">
+          {Object.entries(audioLanguages).map(([code, label]) => <option key={code} value={code}>{label}</option>)}
+        </select></label>
+        <label className="grid gap-1 text-sm">Voice<select value={speakerId ?? ''} onChange={event => setVoiceId(event.target.value)} disabled={!voices.data?.length} className="rounded-lg border border-[var(--line)] bg-[var(--panel)] p-2">
+          {!voices.data?.length && <option value="">{voices.isPending ? 'Loading voices…' : 'No voices available'}</option>}
+          {voices.data?.map(voice => <option key={voice.id} value={voice.id}>{voice.name} ({voice.id})</option>)}
+        </select></label>
+        {voices.isError && <p role="alert" className="text-sm text-rose-700 dark:text-rose-300">{describeError(voices.error)} <button type="button" className="underline" onClick={() => void voices.refetch()}>Retry voices</button></p>}
+      </div>}
+      batchesError={batches.error ? describeError(batches.error) : null}
       isStartingBatch={startBatchMutation.isPending}
       onStartBatch={(size) => startBatchMutation.mutate(size)}
       onCancelBatch={(batchId) => cancelBatchMutation.mutate(batchId)}
@@ -138,7 +179,12 @@ type DashboardProps = {
   setPage: (value: number) => void
   busyId: string | null
   setBusyId: (value: string | null) => void
-  batches: { id: string; status: string; requested_size: number }[]
+  batches: Batch[]
+  languageCode: AudioLanguage
+  speakerId?: string
+  generationReady: boolean
+  generationControls: ReactNode
+  batchesError: string | null
   isStartingBatch: boolean
   onStartBatch: (size: number) => void
   onCancelBatch: (batchId: string) => void
@@ -162,6 +208,11 @@ function AdminDashboard({
   busyId,
   setBusyId,
   batches,
+  languageCode,
+  speakerId,
+  generationReady,
+  generationControls,
+  batchesError,
   isStartingBatch,
   onStartBatch,
   onCancelBatch,
@@ -171,8 +222,8 @@ function AdminDashboard({
   const isAuthenticated = adminKey.length > 0
 
   const summaryQuery = useQuery({
-    queryKey: ['audio-review', 'summary'],
-    queryFn: getSummary,
+    queryKey: ['audio-review', 'summary', languageCode, speakerId],
+    queryFn: () => getSummary(languageCode, speakerId),
     enabled: isAuthenticated,
     retry: false,
     refetchInterval: (query) =>
@@ -180,11 +231,12 @@ function AdminDashboard({
   })
 
   const recordingsQuery = useQuery({
-    queryKey: ['audio-review', 'recordings', statusFilter, batchFilter, page],
+    queryKey: ['audio-review', 'recordings', languageCode, statusFilter, batchFilter, page],
     queryFn: () =>
       listRecordings(
         {
           status: statusFilter || undefined,
+          languageCode,
           batchId: batchFilter || undefined,
         },
         page,
@@ -311,14 +363,19 @@ function AdminDashboard({
           </section>
         ) : (
           <>
+            {generationControls}
             <OverviewPanel
               summary={summaryQuery.data}
+              latestBatch={batches[0] ?? null}
+              generationReady={generationReady}
               isLoading={summaryQuery.isLoading}
               isStarting={isStartingBatch}
               onStartBatch={onStartBatch}
               onCancelBatch={onCancelBatch}
               cancellingBatchId={cancellingBatchId}
             />
+
+            {batchesError && <p role="alert" className="rounded-lg border border-rose-300 px-3 py-2 text-sm text-rose-800 dark:text-rose-300">Couldn’t load batch status: {batchesError}</p>}
 
             {notice ? (
               <p
