@@ -24,7 +24,7 @@ function load(path) {
     if (name === '@/lib/api') return { SESSION_EXPIRED_MESSAGE: 'Session expired' };
     if (name.startsWith('@/')) {
       const relative = name.slice(2);
-      if (['lib/languages', 'components/common-ui/FidelTeacherMark', 'components/common-ui/PageState', 'components/theme/AppearancePicker'].includes(relative)) {
+      if (['lib/languages', 'components/common-ui/FidelTeacherMark', 'components/common-ui/PageState', 'components/theme/AppearancePicker', 'components/install/InstallFidel'].includes(relative)) {
         return load(relative + (relative === 'lib/languages' ? '.ts' : '.tsx'));
       }
       return {};
@@ -62,4 +62,16 @@ test('settings keep Tigrinya selected rather than falling back to Oromo', () => 
     onChange() {}, onAppearance() {}, onSave() {}, onSignOut() {}, onDelete() {},
   }));
   assert.equal((html.match(/value="ti" selected=""/g) ?? []).length, 2);
+  assert.match(html, /Install Fidel/);
+});
+
+test('finished onboarding offers installation after setup', () => {
+  const { OnboardingView } = load('routes/onboarding.tsx');
+  const html = renderToStaticMarkup(React.createElement(OnboardingView, {
+    step: 4, data: { language: 'ti', level: 'beginner', motivations: ['family'], dailyGoal: 5, appearance: 'light' },
+    completed: true, canContinue: true,
+    onBack() {}, onContinue() {}, onStart() {}, onLanguage() {}, onLevel() {}, onMotivation() {}, onGoal() {}, onAppearance() {},
+  }));
+  assert.match(html, /Want Fidel on your home screen\?/);
+  assert.match(html, /Install Fidel/);
 });

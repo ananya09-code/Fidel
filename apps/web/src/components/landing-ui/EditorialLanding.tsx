@@ -8,11 +8,13 @@ import { FidelWordmark } from "./FidelWordmark";
 import { LanguageAtlas } from "./LanguageAtlas";
 import { LanguageDeck } from "./LanguageDeck";
 import { photoCredits } from "./content";
+import { InstallFidel, useFidelInstalled } from "@/components/install/InstallFidel";
 import "./landing.css";
 
 export function EditorialLanding() {
   const { isSignedIn } = useAuth();
   const chooseTheme = useAppearanceChoice();
+  const installed = useFidelInstalled();
   const start = isSignedIn ? "/Home" : "/sign-up";
 
 
@@ -62,6 +64,11 @@ export function EditorialLanding() {
         </section>
 
         <LanguageDeck start={start} />
+
+        {!installed && <section className="editorial-install" aria-labelledby="install-heading">
+          <div><h2 id="install-heading">A place on your home screen.</h2><p>Keep Fidel close on your phone or computer. Learning still needs an internet connection.</p></div>
+          <InstallFidel buttonClassName="editorial-install-button" />
+        </section>}
 
         <section className="editorial-close" aria-labelledby="close-heading">
           <div className="editorial-close-copy">

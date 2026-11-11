@@ -2,6 +2,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@clerk/tanstack-react-start";
 import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import { InstallFidel, useFidelInstalled } from "@/components/install/InstallFidel";
 import { PageState } from "@/components/common-ui/PageState";
 import "@/components/common-ui/app-ui.css";
 
@@ -320,12 +321,13 @@ type OnboardingViewProps = {
 };
 
 export function OnboardingView({ step, data, completed, canContinue, isSaving, error, onBack, onContinue, onStart, onLanguage, onLevel, onMotivation, onGoal, onAppearance }: OnboardingViewProps) {
+ const installed = useFidelInstalled();
  const language = languages.find((item) => item.id === data.language);
  const level = levels.find((item) => item.id === data.level);
  return <main className="fidel-onboarding">
   <header className="onboarding-header"><Link to="/" className="app-wordmark" aria-label="Fidel home"><FidelTeacherMark className="app-header-mark" /><span>Fidel<span className="app-wordmark-dot">.</span></span></Link>{!completed && <span>{step + 1} of {steps.length}</span>}</header>
   <div className="onboarding-content">
-   {completed ? <section className="onboarding-complete"><FidelTeacherMark className="onboarding-teacher" /><h1>A new conversation starts here.</h1><p>Your learning plan is ready.</p><dl><div><dt>Learning</dt><dd>{language?.name ?? "Your language"}</dd></div><div><dt>Your level</dt><dd>{level?.title ?? "Your level"}</dd></div><div><dt>Daily goal</dt><dd>{data.dailyGoal} words</dd></div></dl><button type="button" className="app-primary" onClick={onStart}>Start learning<ArrowRight size={18} aria-hidden="true" /></button><button type="button" className="app-secondary" onClick={onBack}>Change my answers</button></section> : <>
+   {completed ? <section className="onboarding-complete"><FidelTeacherMark className="onboarding-teacher" /><h1>A new conversation starts here.</h1><p>Your learning plan is ready.</p><dl><div><dt>Learning</dt><dd>{language?.name ?? "Your language"}</dd></div><div><dt>Your level</dt><dd>{level?.title ?? "Your level"}</dd></div><div><dt>Daily goal</dt><dd>{data.dailyGoal} words</dd></div></dl><button type="button" className="app-primary" onClick={onStart}>Start learning<ArrowRight size={18} aria-hidden="true" /></button><button type="button" className="app-secondary" onClick={onBack}>Change my answers</button>{!installed && <div className="onboarding-install"><p>Want Fidel on your home screen?</p><InstallFidel /></div>}</section> : <>
     <progress className="onboarding-progress" value={step + 1} max={steps.length} aria-label="Setup progress" />
     <header className="onboarding-title"><h1>{steps[step].title}</h1><p>{steps[step].description}</p></header>
     <fieldset className="onboarding-options" disabled={isSaving}><legend className="sr-only">{steps[step].title}</legend>
