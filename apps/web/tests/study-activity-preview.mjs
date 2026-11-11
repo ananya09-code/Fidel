@@ -22,7 +22,9 @@ const server = await createServer({
         import { createRoot } from 'react-dom/client';
         import { StudyActivityCalendar } from '/src/components/profile-ui/StudyActivityCalendar.tsx';
         import '/src/styles.css';
+        import '/src/components/common-ui/app-ui.css';
         const empty = new URLSearchParams(location.search).has('empty');
+        document.documentElement.classList.toggle('dark', new URLSearchParams(location.search).has('dark'));
         const days = Array.from({ length: 365 }, (_, index) => ({
           date: new Date(Date.UTC(2025, 10, 4 + index)).toISOString().slice(0, 10),
           answers: empty || index % 7 < 2 ? 0 : (index * 13) % 25,
