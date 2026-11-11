@@ -3,6 +3,7 @@ import { useAuth, useClerk, useUser } from "@clerk/tanstack-react-start";
 import { Check, LoaderCircle, LogOut } from "lucide-react";
 import { PageState } from "@/components/common-ui/PageState";
 import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import { InstallFidel, useFidelInstalled } from "@/components/install/InstallFidel";
 import { AppearancePicker } from "@/components/theme/AppearancePicker";
 import { useThemePreview } from "@/components/theme/ThemeProvider";
 import { deleteProfile } from "@/lib/api/profile";
@@ -26,6 +27,7 @@ type SettingsFormProps = {
 };
 
 export function SettingsForm({ settings, onChange, onAppearance, onSave, onSignOut, onDelete, isSaving, saved, deleting, error, accountError }: SettingsFormProps) {
+  const installed = useFidelInstalled();
   return <div className="fidel-settings">
     <header className="app-page-title"><div><h1>Settings</h1><p>A routine that feels like yours.</p></div><FidelTeacherMark className="app-title-teacher" /></header>
     <form onSubmit={(event) => { event.preventDefault(); if (!isSaving) onSave(); }}>
@@ -45,6 +47,7 @@ export function SettingsForm({ settings, onChange, onAppearance, onSave, onSignO
       <div className="settings-save"><p role="status">{saved ? "Your preferences are saved." : "Save when you’re happy with your choices."}</p><button className="app-primary" type="submit" disabled={isSaving}>{isSaving ? <LoaderCircle size={17} className="app-spinner" aria-hidden="true" /> : saved ? <Check size={17} aria-hidden="true" /> : null}{saved ? "Saved" : "Save changes"}{isSaving && <span className="sr-only">Saving preferences</span>}</button></div>
       {error && <p className="app-error" role="alert">{error}</p>}
     </form>
+    {!installed && <section className="settings-section settings-install-section"><div className="settings-section-title"><h2>Install Fidel</h2><p>Keep learning close.</p></div><div className="settings-panel"><div className="settings-row"><span>Fidel on this device<span>Open it from your home screen. Lessons still need internet.</span></span><InstallFidel /></div></div></section>}
     <section className="settings-section settings-account"><div className="settings-section-title"><h2>Account</h2><p>Your account and this device.</p></div><div className="settings-panel">
       <div className="settings-row"><span>Sign out<span>End your session on this device</span></span><button type="button" className="app-secondary" onClick={onSignOut} disabled={deleting || isSaving}><LogOut size={16} aria-hidden="true" />Sign out</button></div>
       <details className="settings-delete"><summary>Delete account</summary><p>Permanently delete your Clerk account and Fidel profile. This cannot be undone.</p><button type="button" className="app-danger" onClick={onDelete} disabled={deleting || isSaving}>{deleting && <LoaderCircle size={16} className="app-spinner" aria-hidden="true" />}Delete account</button></details>

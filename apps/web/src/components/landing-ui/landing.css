@@ -169,6 +169,12 @@
 .language-deck-controls button { width:44px;height:44px;display:grid;place-content:center;border-radius:50%; }
 .language-deck-controls button:hover { background:var(--e-field); }
 .language-deck-controls button:last-child { margin-left:8px; }
+.editorial-install { max-width:1184px;margin:36px auto 0;padding:34px 0;border-top:1px solid var(--e-field);display:flex;align-items:center;justify-content:space-between;gap:24px; }
+.editorial-install h2 { font-size:clamp(23px,2.4vw,32px);line-height:1.3; }
+.editorial-install p { max-width:58ch;margin-top:8px;color:var(--e-muted);font-size:15px; }
+.editorial-install-button { display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:10px 22px;border:1px solid var(--e-ink)!important;border-radius:999px;background:transparent;color:var(--e-ink);white-space:nowrap;font-size:14px;font-weight:700; }
+.editorial-install-button:hover { background:var(--e-field); }
+.editorial-install .install-fidel-help { max-width:32ch; }
 .editorial-close { max-width:1184px;margin:80px auto 0;background:#183b31;color:#edf4ee; }
 .editorial-close-copy { display:grid;grid-template-columns:1.2fr 1fr;gap:28px 64px;padding:72px;align-items:center; }
 .editorial-close h2 { font-size:clamp(32px,3.6vw,48px);line-height:1.2;grid-row:span 2; }
@@ -183,7 +189,7 @@
 .editorial-credits li,.editorial-credits p { margin-bottom:12px; }
 @keyframes portrait-word-change { 0%,30% {opacity:0;} 100% {opacity:1;} }
 @keyframes portrait-progress { from {transform:scaleX(0);} to {transform:scaleX(1);} }
-@media (max-width:1280px) { .editorial-header {margin-inline:var(--e-gutter);} .editorial-close,.editorial-weave {margin-inline:var(--e-gutter);} }
+@media (max-width:1280px) { .editorial-header {margin-inline:var(--e-gutter);} .editorial-install,.editorial-close,.editorial-weave {margin-inline:var(--e-gutter);} }
 @media (max-width:1000px) {
   .editorial-header nav {gap:18px;font-size:14px;} .editorial-header {gap:14px;padding-inline:18px;}
   .editorial-header-actions > a {padding-inline:16px;} .editorial-hero h1 {font-size:6.1vw;}
@@ -200,6 +206,7 @@
   .language-deck-choices {gap:4px 18px;}
 }
 @media (max-width:720px) {
+  .editorial-install {align-items:flex-start;flex-direction:column;gap:18px;}
   .editorial-header {min-height:64px;margin-top:12px;padding:8px 12px;gap:8px;}
   .editorial-header nav {display:none;} .fidel-logo-lockup {gap:6px;} .fidel-logo-lockup > span {font-size:26px;}
   .editorial-header-actions {gap:2px;font-size:14px;} .editorial-header-actions > a {padding:8px 16px;}

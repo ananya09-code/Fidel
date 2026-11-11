@@ -80,6 +80,8 @@ body:has(.fidel-app)::before,body:has(.fidel-app)::after { display:none; }
 .settings-row { display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 0; border-bottom:1px solid var(--ui-line); font-size:14px; }
 .settings-row:last-child { border-bottom:0; }
 .settings-row > span > span { display:block; font-size:12px; color:var(--ui-muted); margin-top:5px; }
+.settings-row .install-fidel { flex:none; }
+.settings-row .install-fidel-help { color:var(--ui-muted); }
 .settings-row select,.settings-row input[type="time"] { font:inherit; font-size:13px; min-height:44px; border:1px solid var(--ui-line); border-radius:6px; padding:8px 12px; min-width:150px; max-width:100%; background:var(--ui-paper); color:var(--ui-ink); }
 .settings-goals { border:0; padding:20px 0 0; margin:0; min-width:0; }
 .settings-goals legend { padding:20px 0 0; font-size:14px; }
@@ -220,6 +222,9 @@ body:has(.fidel-onboarding)::before,body:has(.fidel-onboarding)::after { display
 .onboarding-complete dt { color:var(--ui-muted); font-size:13px; }
 .onboarding-complete dd { margin:0; text-align:right; font-size:14px; }
 .onboarding-complete > button { margin:0 12px 12px 0; }
+.onboarding-install { margin-top:18px;padding-top:22px;border-top:1px solid var(--ui-line); }
+.onboarding-install > p { margin:0 0 12px;color:var(--ui-muted);font-size:13px; }
+.onboarding-install .install-fidel-help { color:var(--ui-muted); }
 .fidel-onboarding :is(a,button):focus-visible { outline:2px solid var(--ui-ink); outline-offset:4px; }
 @media(max-width:640px) { .onboarding-header { padding:18px; } .onboarding-content { padding:20px 18px 32px; } .onboarding-title h1,.onboarding-complete h1 { font-size:24px; } }
 @media(max-width:640px) {
