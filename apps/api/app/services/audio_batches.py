@@ -17,6 +17,9 @@ Design notes
 from __future__ import annotations
 
 import logging
+import os
+import shutil
+import subprocess
 import tempfile
 import uuid
 from datetime import datetime, timedelta, timezone
@@ -38,7 +41,7 @@ from app.services.speech import (
     make_speech_text,
     safe_filename,
 )
-from app.services.storage import audio_exists, delete_audio, upload_audio
+from app.services.storage import audio_exists, delete_audio, download_audio, upload_audio
 
 logger = logging.getLogger(__name__)
 
@@ -727,6 +730,9 @@ def approve_recording(
             f"{recording['status']})."
         )
 
+    if recording.get("superseded_at") is not None:
+        raise RecordingError("A superseded recording cannot be approved.")
+
     if not recording.get("storage_key"):
         raise RecordingError("Recording has no audio to approve.")
 
@@ -791,9 +797,106 @@ def reject_recording(
             "reason": (reason or None),
         },
     )
+    if recording["status"] == STATUS_APPROVED and recording.get("superseded_at") is None:
+        session.execute(
+            text("""
+                UPDATE words SET status = CASE WHEN EXISTS (
+                    SELECT 1 FROM audio_recordings AS a
+                    WHERE a.word_id = words.id AND a.status = 'approved'
+                      AND a.superseded_at IS NULL
+                ) THEN 'approved' ELSE 'draft' END
+                WHERE id = :word_id
+            """),
+            {"word_id": recording["word_id"]},
+        )
     session.commit()
 
     return get_recording(session, recording_id)  # type: ignore[return-value]
+
+
+def trim_approved_recording(
+    session: Session,
+    recording_id: str,
+    *,
+    start_ms: int,
+    end_ms: int,
+    reviewed_by: str | None = None,
+) -> dict[str, Any]:
+    """Publish a trimmed MP3 as a new attempt while preserving the source."""
+    recording = get_recording(session, recording_id)
+    if recording is None:
+        raise RecordingError("Recording not found.")
+    if recording["status"] != STATUS_APPROVED or recording.get("superseded_at") is not None:
+        raise RecordingError("Only an active approved recording can be trimmed.")
+    if not recording.get("storage_key"):
+        raise RecordingError("Recording has no audio to trim.")
+    if start_ms < 0 or end_ms - start_ms < 200 or end_ms - start_ms > 30_000:
+        raise RecordingError("Choose a trim between 0.2 and 30 seconds.")
+    if recording.get("duration_ms") and end_ms > recording["duration_ms"] + 100:
+        raise RecordingError("Trim end is beyond the recording duration.")
+    ffmpeg = os.getenv("FFMPEG_BINARY") or shutil.which("ffmpeg")
+    if not ffmpeg:
+        raise RecordingError("Audio trimming is unavailable: ffmpeg is not installed on the API server.")
+
+    word_id = str(recording["word_id"])
+    speaker_id = recording["speaker_id"]
+    speed = recording["speed"]
+    attempt = _next_attempt(session, word_id, speaker_id, speed)
+    replacement_id = uuid.uuid4()
+    original_key = recording["storage_key"]
+    storage_key = f"{original_key.rsplit('.', 1)[0]}-trim-{replacement_id.hex}.mp3"
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        source_path = Path(temp_dir) / "source.mp3"
+        trimmed_path = Path(temp_dir) / "trimmed.mp3"
+        try:
+            download_audio(original_key, str(source_path))
+            result = subprocess.run(
+                [ffmpeg, "-hide_banner", "-loglevel", "error", "-y",
+                 "-ss", f"{start_ms / 1000:.3f}", "-i", str(source_path),
+                 "-t", f"{(end_ms - start_ms) / 1000:.3f}",
+                 "-vn", "-codec:a", "libmp3lame", "-q:a", "3", str(trimmed_path)],
+                capture_output=True, timeout=30, check=False,
+            )
+            if result.returncode != 0 or not trimmed_path.is_file() or trimmed_path.stat().st_size == 0:
+                raise RecordingError("The audio could not be trimmed. The original is unchanged.")
+            upload_audio(str(trimmed_path), storage_key)
+        except RecordingError:
+            raise
+        except Exception as exc:
+            raise RecordingError("The audio could not be prepared. The original is unchanged.") from exc
+
+    try:
+        changed = session.execute(
+            text("""
+                UPDATE audio_recordings SET superseded_at = :now
+                WHERE id = :id AND status = 'approved' AND superseded_at IS NULL
+            """),
+            {"id": recording_id, "now": _utcnow()},
+        )
+        if changed.rowcount != 1:
+            raise RecordingError("Recording changed during editing. Reload and try again.")
+        session.execute(INSERT_RECORDING_SQL, {
+            "id": replacement_id, "word_id": recording["word_id"],
+            "storage_key": storage_key, "speaker_id": speaker_id, "speed": speed,
+            "duration_ms": end_ms - start_ms, "status": STATUS_APPROVED,
+            "batch_id": recording.get("batch_id"), "attempt": attempt,
+            "generation_error": None,
+        })
+        session.execute(
+            text("UPDATE audio_recordings SET reviewed_at = :now, reviewed_by = :reviewer WHERE id = :id"),
+            {"id": replacement_id, "now": _utcnow(), "reviewer": reviewed_by},
+        )
+        session.commit()
+    except Exception:
+        session.rollback()
+        try:
+            delete_audio(storage_key)
+        except Exception:
+            logger.error("Untracked trimmed object %s could not be removed.", storage_key)
+        raise
+
+    return get_recording(session, str(replacement_id))  # type: ignore[return-value]
 
 
 def regenerate_recording(

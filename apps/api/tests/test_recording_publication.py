@@ -51,3 +51,20 @@ def test_failed_recording_does_not_publish_word(admin_client, session_factory, s
     assert admin_client.post(f"/api/audio-review/recordings/{recording_id}/approve").status_code == 409
     with session_factory() as session:
         assert session.execute(text("SELECT COUNT(*) FROM words WHERE status='approved'")).scalar_one() == 0
+
+
+def test_disapproval_removes_word_from_learning_path(
+    admin_client, auth_client, session_factory, seed_words, fake_storage,
+):
+    word_id = seed_words[0]["id"]
+    with session_factory() as session:
+        session.execute(
+            text("UPDATE words SET category='greetings' WHERE id=:id"),
+            {"id": word_id},
+        )
+        recording_id = make_word_record(session, word_id)
+    path = "/api/v1/learning/path?language_code=om"
+    assert admin_client.post(f"/api/audio-review/recordings/{recording_id}/approve").status_code == 200
+    assert auth_client.get(path).json()["total_words"] == 1
+    assert admin_client.post(f"/api/audio-review/recordings/{recording_id}/reject").status_code == 200
+    assert auth_client.get(path).json()["total_words"] == 0

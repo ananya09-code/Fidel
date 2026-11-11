@@ -237,6 +237,11 @@ def fake_storage(monkeypatch):
             self.objects[storage_key] = Path(file_path).read_bytes()
             return storage_key
 
+        def download_audio(self, storage_key, file_path):
+            from pathlib import Path
+
+            Path(file_path).write_bytes(self.objects[storage_key])
+
         def delete_audio(self, storage_key):
             self.deleted.append(storage_key)
             self.objects.pop(storage_key, None)
@@ -250,6 +255,7 @@ def fake_storage(monkeypatch):
     fake = FakeStorage()
 
     monkeypatch.setattr(batches, "upload_audio", fake.upload_audio)
+    monkeypatch.setattr(batches, "download_audio", fake.download_audio)
     monkeypatch.setattr(batches, "delete_audio", fake.delete_audio)
     monkeypatch.setattr(batches, "audio_exists", fake.audio_exists)
     monkeypatch.setattr(storage, "audio_exists", fake.audio_exists)

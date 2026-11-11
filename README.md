@@ -98,9 +98,15 @@ Run the backend from `apps/api` so its `.env` resolves consistently.
 | `AUDIO_BASE_URL` | api | Public audio base URL |
 | `CORS_ORIGINS` | api | JSON array of allowed origins |
 | `AUDIO_URL_EXPIRES_IN` | api | Presigned URL lifetime (seconds) |
+| `FFMPEG_BINARY` | api | Optional path to ffmpeg for admin audio trimming; otherwise uses `ffmpeg` on `PATH` |
 | `DEBUG` | api | Defaults to `false` in `.env.example` |
 
 ## Checks
+
+The admin audio trim action requires `ffmpeg` on the API host. Render's native
+Python runtime includes it at runtime, so no extra install or environment
+variable is needed there. For a custom Docker image, include `ffmpeg` in the
+image. A failed trim leaves the approved recording and stored object unchanged.
 
 ```bash
 pnpm typecheck

@@ -201,6 +201,18 @@ export function rejectRecording(
   })
 }
 
+export function trimRecording(
+  recordingId: string,
+  startMs: number,
+  endMs: number,
+): Promise<z.infer<typeof actionResponseSchema>> {
+  return apiFetch(`${BASE}/recordings/${recordingId}/trim`, actionResponseSchema, {
+    method: 'POST',
+    headers: { ...adminHeaders(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ start_ms: startMs, end_ms: endMs }),
+  })
+}
+
 export function regenerateRecording(
   recordingId: string,
 ): Promise<z.infer<typeof actionResponseSchema>> {

@@ -124,6 +124,15 @@ def upload_audio(file_path: str, storage_key: str) -> str:
     return key
 
 
+def download_audio(storage_key: str, file_path: str) -> None:
+    """Download a recording to a temporary file for server-side editing."""
+    key = _validate_storage_key(storage_key)
+    try:
+        s3.download_file(BUCKET_NAME, key, file_path)
+    except ClientError as exc:
+        raise RuntimeError(f"Could not download audio {key}: {_describe(exc)}") from exc
+
+
 def generate_audio_url(
     storage_key: str,
     expires_in: int = 3600,
