@@ -1,5 +1,22 @@
 import type { StudyActivityDay } from "@/lib/api/dashboard";
 
+export type ActivityRange = "7d" | "30d" | "3m" | "6m" | "1y";
+
+export function activityRangeStart(end: string, range: ActivityRange, earliest: string) {
+  if (range === "1y") return earliest;
+  const endDate = activityDate(end);
+  if (range === "7d" || range === "30d") {
+    endDate.setUTCDate(endDate.getUTCDate() - (range === "7d" ? 6 : 29));
+  } else {
+    const months = range === "3m" ? 3 : 6;
+    const monthStart = new Date(Date.UTC(endDate.getUTCFullYear(), endDate.getUTCMonth() - months, 1));
+    const lastDay = new Date(Date.UTC(monthStart.getUTCFullYear(), monthStart.getUTCMonth() + 1, 0)).getUTCDate();
+    endDate.setTime(Date.UTC(monthStart.getUTCFullYear(), monthStart.getUTCMonth(), Math.min(endDate.getUTCDate(), lastDay) + 1));
+  }
+  const start = endDate.toISOString().slice(0, 10);
+  return start < earliest ? earliest : start;
+}
+
 export function activityDate(key: string) {
   // Keys already represent the learner's local day. Never convert them again.
   return new Date(`${key}T00:00:00Z`);
