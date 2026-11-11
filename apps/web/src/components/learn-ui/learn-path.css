@@ -1,4 +1,10 @@
 /* Same centered frame as Home; equal gutters and a single full-width lesson trail. */
+.learn-quest-entry { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:24px; padding:20px 0; border-block:1px solid var(--learn-line); }
+.learn-quest-entry strong { display:block; font-size:16px; font-weight:600; }
+.learn-quest-entry > span > span { color:var(--learn-muted); font-size:13px; }
+.learn-quest-entry > span:last-child { flex:none; font-size:13px; }
+.learn-quest-entry:hover { text-decoration:underline; text-underline-offset:4px; }
+.learn-quest-entry:focus-visible { outline:2px solid var(--learn-ink); outline-offset:4px; }
 .fidel-learn { --learn-ink:#193b31; --learn-muted:#53645c; --learn-ground:#f8faf7; --learn-panel:#eff3ed; --learn-line:#dce3dc; --learn-gold:#eda334; --fidel-mark-accent:var(--learn-gold); width:100%; max-width:1164px; margin:auto; padding:32px; color:var(--learn-ink); font-size:14px; line-height:1.5; font-variant-numeric:tabular-nums; }
 .dark .fidel-learn { --learn-ink:#e7ede6; --learn-muted:#b0bcb2; --learn-ground:#171c19; --learn-panel:#222924; --learn-line:#39433b; }
 body:has(.fidel-learn), body:has(.fidel-learn) [data-slot="sidebar-inset"] { background:#f8faf7; }
