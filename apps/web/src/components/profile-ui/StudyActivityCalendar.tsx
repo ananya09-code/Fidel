@@ -68,7 +68,6 @@ export function StudyActivityCalendar({ activity }: { activity: StudyActivity })
           <span className="study-weave-range-full">{option.label}</span><span className="study-weave-range-short">{option.shortLabel}</span>
         </button>)}
       </div>
-      <span className="study-weave-date-span">{activityDateLabel(startDate)} – {activityDateLabel(activity.end_date)}</span>
     </div>
     {range === "7d" || range === "30d" ?
       <div className="study-weave-short" role="group" aria-label="Daily practice activity. Use arrow keys to explore days.">
@@ -86,6 +85,7 @@ export function StudyActivityCalendar({ activity }: { activity: StudyActivity })
           </div></div>
         </div>
       </div>}
+    <p className="study-weave-date-span">{activityDateLabel(startDate)} – {activityDateLabel(activity.end_date)}</p>
     <div className="study-weave-foot">
       <p className="study-weave-selected" aria-live="polite">{selected ? <><strong>{activityDateLabel(selected.date)}</strong><span>{selected.answers} practice {selected.answers === 1 ? "answer" : "answers"}</span></> : <><strong>Choose a day</strong><span>Tap a mark, or use the arrow keys.</span></>}</p>
       <div className="study-weave-legend" aria-label="A fuller mark means more practice answers"><span>Fewer answers</span><div>{levels.map((label, level) => <span key={label} className="study-weave-swatch" data-level={level} title={label} aria-label={label} />)}</div><span>More answers</span></div>
