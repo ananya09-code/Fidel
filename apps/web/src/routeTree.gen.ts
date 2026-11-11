@@ -18,6 +18,7 @@ import { Route as AppHomeRouteImport } from './routes/_app/Home'
 import { Route as AppLearnRouteRouteImport } from './routes/_app/Learn/route'
 import { Route as AppDictionaryRouteImport } from './routes/_app/dictionary'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppQuestRouteImport } from './routes/_app/quest'
 import { Route as AppReviewRouteImport } from './routes/_app/review'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppTestRouteImport } from './routes/_app/test'
@@ -71,6 +72,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppQuestRoute = AppQuestRouteImport.update({
+  id: '/quest',
+  path: '/quest',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppReviewRoute = AppReviewRouteImport.update({
   id: '/review',
   path: '/review',
@@ -121,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/Home': typeof AppHomeRoute
   '/dictionary': typeof AppDictionaryRoute
   '/profile': typeof AppProfileRoute
+  '/quest': typeof AppQuestRoute
   '/review': typeof AppReviewRoute
   '/settings': typeof AppSettingsRoute
   '/test': typeof AppTestRoute
@@ -138,6 +145,7 @@ export interface FileRoutesByTo {
   '/Home': typeof AppHomeRoute
   '/dictionary': typeof AppDictionaryRoute
   '/profile': typeof AppProfileRoute
+  '/quest': typeof AppQuestRoute
   '/review': typeof AppReviewRoute
   '/settings': typeof AppSettingsRoute
   '/test': typeof AppTestRoute
@@ -158,6 +166,7 @@ export interface FileRoutesById {
   '/_app/Home': typeof AppHomeRoute
   '/_app/dictionary': typeof AppDictionaryRoute
   '/_app/profile': typeof AppProfileRoute
+  '/_app/quest': typeof AppQuestRoute
   '/_app/review': typeof AppReviewRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/test': typeof AppTestRoute
@@ -178,6 +187,7 @@ export interface FileRouteTypes {
     | '/Home'
     | '/dictionary'
     | '/profile'
+    | '/quest'
     | '/review'
     | '/settings'
     | '/test'
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
     | '/Home'
     | '/dictionary'
     | '/profile'
+    | '/quest'
     | '/review'
     | '/settings'
     | '/test'
@@ -214,6 +225,7 @@ export interface FileRouteTypes {
     | '/_app/Home'
     | '/_app/dictionary'
     | '/_app/profile'
+    | '/_app/quest'
     | '/_app/review'
     | '/_app/settings'
     | '/_app/test'
@@ -298,6 +310,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/quest': {
+      id: '/_app/quest'
+      path: '/quest'
+      fullPath: '/quest'
+      preLoaderRoute: typeof AppQuestRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/review': {
       id: '/_app/review'
       path: '/review'
@@ -376,6 +395,7 @@ interface AppRouteRouteChildren {
   AppHomeRoute: typeof AppHomeRoute
   AppDictionaryRoute: typeof AppDictionaryRoute
   AppProfileRoute: typeof AppProfileRoute
+  AppQuestRoute: typeof AppQuestRoute
   AppReviewRoute: typeof AppReviewRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppTestRoute: typeof AppTestRoute
@@ -386,6 +406,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppHomeRoute: AppHomeRoute,
   AppDictionaryRoute: AppDictionaryRoute,
   AppProfileRoute: AppProfileRoute,
+  AppQuestRoute: AppQuestRoute,
   AppReviewRoute: AppReviewRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppTestRoute: AppTestRoute,
@@ -428,12 +449,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

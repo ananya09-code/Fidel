@@ -321,6 +321,23 @@ user_preferences = Table(
 )
 
 
+quest_progress = Table(
+    "quest_progress", metadata,
+    Column("user_id", Uuid, ForeignKey("users.id"), primary_key=True),
+    Column("language_code", String, primary_key=True),
+    Column("quest_key", String, primary_key=True),
+    Column("definition_version", Integer, nullable=False),
+    Column("step_index", Integer, nullable=False, server_default="0"),
+    Column("answers", JSON, nullable=False),
+    Column("started_at", DateTime(timezone=True), nullable=False),
+    Column("updated_at", DateTime(timezone=True), nullable=False),
+    Column("completed_at", DateTime(timezone=True)),
+    CheckConstraint("language_code IN ('om','am','ti')", name="quest_language_check"),
+    CheckConstraint("step_index >= 0", name="quest_step_check"),
+    CheckConstraint("definition_version > 0", name="quest_version_check"),
+)
+
+
 def _stringify_uuids(value: Any) -> Any:
     """SQLite cannot bind ``uuid.UUID``; store and compare them as text."""
     if isinstance(value, uuid.UUID):

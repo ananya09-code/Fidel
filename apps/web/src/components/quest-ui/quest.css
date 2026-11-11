@@ -1,0 +1,1549 @@
+/* 1100px canvas: (2 × 356px) + 340px rail + (2 × 24px gaps). Stack at 960px. */
+@font-face {
+  font-family: "Fidel Quest Ethiopic";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/landing/noto-serif-ethiopic.ttf") format("truetype");
+}
+.fidel-quest :is([lang="am"], [lang="ti"]) {
+  font-family: "Fidel Quest Ethiopic", serif;
+}
+.fidel-quest {
+  --quest-hills: #e0e7dd;
+  --quest-hills-front: #cbd8c7;
+  --quest-house: #f8f3e7;
+  --quest-door: #dfcdb0;
+  --quest-drawing: #4d6553;
+  --quest-path: #dfcfb1;
+  --fidel-mark-accent: var(--ui-gold);
+  max-width: 1164px;
+  width: 100%;
+  margin: auto;
+  padding: 28px 32px 40px;
+  color: var(--ui-ink);
+  font-size: 14px;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+}
+.dark .fidel-quest {
+  --quest-hills: #2a362e;
+  --quest-hills-front: #344a39;
+  --quest-house: #29382e;
+  --quest-door: #34443a;
+  --quest-drawing: #b4c3b4;
+  --quest-path: #4b4937;
+}
+.quest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+}
+.quest-header h1 {
+  margin: 8px 0 2px;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+.quest-header h1 > span {
+  color: var(--ui-gold);
+}
+.quest-header p {
+  margin: 6px 0 0;
+  color: var(--ui-muted);
+}
+.quest-back {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--ui-muted);
+  min-height: 32px;
+}
+.quest-back:hover {
+  color: var(--ui-ink);
+}
+.quest-language {
+  display: grid;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+.quest-language select,
+.quest-keyboard select {
+  padding: 8px 10px;
+  min-height: 44px;
+  border: 1px solid var(--ui-line);
+  border-radius: 6px;
+  background: var(--ui-paper);
+  color: var(--ui-ink);
+  font-size: 14px;
+  max-width: 100%;
+}
+.quest-preview {
+  margin: 20px 0;
+  padding: 10px 0;
+  border-block: 1px solid var(--ui-line);
+  color: var(--ui-muted);
+  font-size: 12px;
+}
+.quest-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(270px, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+.quest-play-area {
+  min-width: 0;
+}
+.quest-world {
+  border: 1px solid var(--ui-line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--ui-paper);
+}
+.quest-world-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px 16px;
+  align-items: start;
+}
+.quest-world-heading h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  letter-spacing: -0.025em;
+}
+.quest-world-heading p {
+  font-size: 13px;
+  color: var(--ui-muted);
+  margin: 0;
+}
+.quest-world-heading > span {
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--ui-muted);
+  padding-top: 5px;
+}
+.quest-map {
+  --quest-meadow: #bacb91;
+  --quest-meadow-light: #c6d49f;
+  --quest-map-edge: #69775d;
+  --quest-map-shadow: #50684933;
+  --quest-leaf: #6f9653;
+  --quest-leaf-dark: #557842;
+  --quest-leaf-light: #a0b979;
+  --quest-pine: #447a68;
+  --quest-pine-dark: #356250;
+  --quest-trunk: #7c6243;
+  --quest-water: #76a6ac;
+  --quest-water-light: #b4d3d1;
+  --quest-river-bank: #abc7bb;
+  --quest-rock: #b0b4a5;
+  --quest-trail-mark: #a87836;
+  position: relative;
+  aspect-ratio: 680/620;
+  isolation: isolate;
+  background: var(--ui-surface);
+}
+.dark .quest-map {
+  --quest-meadow: #3a5039;
+  --quest-meadow-light: #435c3e;
+  --quest-map-edge: #25382b;
+  --quest-map-shadow: #18251e66;
+  --quest-leaf: #527348;
+  --quest-leaf-dark: #344f38;
+  --quest-leaf-light: #75915b;
+  --quest-pine: #386251;
+  --quest-pine-dark: #284a3e;
+  --quest-trunk: #8b7555;
+  --quest-water: #426e77;
+  --quest-water-light: #71999d;
+  --quest-river-bank: #536f65;
+  --quest-rock: #7a8677;
+  --quest-trail-mark: #d5ae6b;
+}
+.quest-house-art {
+  --quest-roof: #d6ac60;
+  --quest-roof-side: #b68b46;
+  --quest-roof-line: #8b693c;
+  --quest-wall-side: #cfbea0;
+  --quest-window: #9bac93;
+}
+.dark .quest-house-art {
+  --quest-roof: #a0834c;
+  --quest-roof-side: #80623b;
+  --quest-roof-line: #d2b780;
+  --quest-wall-side: #566146;
+  --quest-window: #9eae82;
+}
+.quest-map-ribbon {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 7px 28px;
+  background: var(--ui-ink);
+  color: var(--ui-ground);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  clip-path: polygon(0 0, 100% 0, 97% 50%, 100% 100%, 0 100%, 3% 50%);
+}
+.quest-map-landscape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.quest-house-stop {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 36%;
+  padding: 0 8px 10px;
+  cursor: pointer;
+  border-radius: 14px;
+  color: var(--ui-ink);
+  background: transparent;
+  border: 0;
+}
+.quest-house-intro {
+  left: 10%;
+  top: 19%;
+}
+.quest-house-cafe {
+  right: 10%;
+  top: 38%;
+}
+.quest-house-art {
+  width: clamp(100px, 22vw, 160px);
+  max-width: 100%;
+  height: auto;
+  transition: transform 180ms ease;
+}
+.quest-house-stop:hover:not(:disabled) .quest-house-art {
+  transform: translateY(-5px);
+}
+.quest-house-stop:active:not(:disabled) .quest-house-art {
+  transform: translateY(-1px) scale(0.97);
+}
+.quest-house-stop strong {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 0;
+  text-align: center;
+  background: var(--ui-paper);
+  padding: 3px 10px 0;
+  border-radius: 6px 6px 0 0;
+}
+.quest-house-stop small {
+  font-size: 12px;
+  color: var(--ui-muted);
+  text-align: center;
+  background: var(--ui-paper);
+  padding: 0 8px 4px;
+  border-radius: 4px;
+}
+.quest-house-state {
+  position: absolute;
+  top: 0;
+  right: 24%;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 34px;
+  z-index: 1;
+  border-radius: 5px 5px 5px 0;
+  background: var(--ui-paper);
+  border: 2px solid var(--ui-line);
+  font-size: 16px;
+  font-weight: 600;
+}
+.quest-house-state::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: -2px;
+  border-top: 8px solid var(--ui-line);
+  border-right: 8px solid transparent;
+}
+.quest-house-stop:is(.is-ready, .is-done) .quest-house-state::after {
+  border-top-color: var(--ui-gold);
+}
+.quest-house-stop:is(.is-ready, .is-done) .quest-house-state {
+  background: var(--ui-gold);
+  color: #193b31;
+  border-color: var(--ui-gold);
+}
+.fidel-quest .quest-house-stop:disabled {
+  background: transparent;
+  color: var(--ui-muted);
+}
+.quest-house-stop.is-locked .quest-house-art {
+  opacity: 0.8;
+}
+.quest-map-guide {
+  position: absolute;
+  bottom: 5%;
+  left: 7%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 65%;
+}
+.quest-map-guide > svg {
+  width: 52px;
+  height: 64px;
+  flex: none;
+}
+.quest-map-guide span {
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+.quest-map-guide b {
+  font-weight: 500;
+  color: var(--ui-ink);
+}
+.quest-map-note {
+  padding: 16px 24px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--ui-muted);
+  border-top: 1px solid var(--ui-line);
+}
+.quest-map.quest-map-static {
+  --quest-roof: #d6ac60;
+  --quest-roof-line: #8b693c;
+  width: min(100%, 600px, calc(60svh * 680 / 620));
+  aspect-ratio: 680/620;
+  margin-inline: auto;
+}
+.dark .quest-map-static {
+  --quest-roof: #a0834c;
+  --quest-roof-line: #d2b780;
+}
+.quest-map-frame {
+  position: absolute;
+  inset: 6%;
+  isolation: isolate;
+}
+.quest-map-static .quest-house-stop {
+  width: 36%;
+}
+.quest-map-static .quest-house-intro {
+  left: 10%;
+  top: 19%;
+}
+.quest-map-static .quest-house-cafe {
+  right: 10%;
+  top: 38%;
+}
+.quest-map-static .quest-house-art {
+  width: 65%;
+  max-width: 160px;
+}
+.quest-map-static .quest-dynamic-house {
+  width: 28%;
+}
+.quest-reply-choices {
+  max-height: 330px;
+  overflow: auto;
+  padding: 3px;
+  overscroll-behavior: contain;
+}
+.quest-return {
+  margin: 4px 20px;
+}
+.quest-reply-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.quest-word-choice {
+  text-align: left;
+  min-height: 72px;
+  border: 1px solid var(--ui-line);
+  border-bottom-width: 3px;
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: var(--ui-ground);
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease;
+}
+.quest-word-choice:hover {
+  border-color: var(--ui-gold);
+  transform: translateY(-2px);
+}
+.quest-word-choice:active {
+  transform: translateY(1px);
+  border-bottom-width: 1px;
+}
+.quest-word-choice strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.quest-word-choice small {
+  display: block;
+  color: var(--ui-muted);
+  font-size: 12px;
+}
+.quest-answer-form .quest-choice-label {
+  color: var(--ui-ink);
+  font-weight: 600;
+  font-size: 14px;
+}
+.quest-adventure {
+  border: 1px solid var(--ui-line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ui-paper);
+  min-width: 0;
+}
+.quest-scene {
+  position: relative;
+  background: var(--ui-surface);
+  padding-bottom: 60px;
+}
+.quest-village {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.quest-scene-caption {
+  position: absolute;
+  inset: 14px 20px auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+.quest-guide {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  position: absolute;
+  left: 24px;
+  bottom: 12px;
+  padding: 8px 18px 8px 0;
+}
+.quest-teacher {
+  width: 68px;
+  height: 74px;
+  color: var(--ui-ink);
+}
+.quest-guide > span {
+  font-size: 16px;
+  font-weight: 600;
+}
+.quest-guide small {
+  display: block;
+  color: var(--ui-muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+.quest-conversation {
+  padding: 24px;
+}
+.quest-conversation-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ui-muted);
+  font-size: 12px;
+}
+.quest-progress {
+  display: block;
+  width: 100%;
+  height: 3px;
+  margin: 10px 0 24px;
+  appearance: none;
+  border: none;
+  background: var(--ui-line);
+  overflow: hidden;
+}
+.quest-progress::-webkit-progress-bar {
+  background: var(--ui-line);
+}
+.quest-progress::-webkit-progress-value {
+  background: var(--ui-gold);
+}
+.quest-progress::-moz-progress-bar {
+  background: var(--ui-gold);
+}
+.quest-conversation h2 {
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+.quest-your-reply {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: 0 0 20px;
+  font-size: 14px;
+}
+.quest-your-reply > span {
+  color: var(--ui-muted);
+  font-size: 12px;
+}
+.quest-your-reply b {
+  max-width: 75%;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+  padding: 8px 14px;
+  border-radius: 8px 8px 0 8px;
+  background: var(--ui-surface);
+}
+.quest-greeting {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 20px;
+}
+.quest-greeting > span:first-child {
+  font-size: 24px;
+}
+.quest-greeting > span:nth-child(2),
+.quest-greeting small {
+  color: var(--ui-muted);
+  font-size: 12px;
+}
+.quest-greeting small {
+  flex-basis: 100%;
+}
+.quest-answer-form > label {
+  font-weight: 500;
+}
+.quest-answer-form > p:not(.quest-feedback) {
+  margin: 6px 0 12px;
+  color: var(--ui-muted);
+  font-size: 13px;
+}
+.quest-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+.quest-input-row input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--ui-line);
+  border-radius: 6px;
+  color: var(--ui-ink);
+  background: var(--ui-ground);
+  font-size: 18px;
+  min-height: 48px;
+}
+.quest-input-row input::placeholder {
+  color: var(--ui-muted);
+  font-size: 14px;
+}
+.quest-primary,
+.quest-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 6px;
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.quest-primary {
+  background: var(--ui-ink);
+  color: var(--ui-ground);
+  border: 1px solid var(--ui-ink);
+  flex: none;
+}
+.quest-primary:hover:not(:disabled) {
+  background: var(--ui-gold);
+  color: #193b31;
+  border-color: var(--ui-gold);
+}
+.quest-secondary {
+  border: 1px solid var(--ui-line);
+  background: transparent;
+  color: var(--ui-ink);
+}
+.quest-secondary:hover:not(:disabled) {
+  border-color: var(--ui-ink);
+}
+.fidel-quest button:disabled {
+  cursor: not-allowed;
+  background: var(--ui-surface);
+  border-color: var(--ui-line);
+  color: var(--ui-muted);
+}
+.quest-text-button {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+  cursor: pointer;
+  text-underline-offset: 4px;
+}
+.quest-text-button:hover {
+  text-decoration: underline;
+}
+.quest-feedback {
+  color: var(--ui-muted);
+  font-size: 13px;
+  margin: 8px 0 0;
+  overflow-wrap: anywhere;
+}
+.quest-feedback:not(:empty) {
+  padding: 10px 12px;
+  border-left: 3px solid var(--ui-gold);
+  background: var(--ui-surface);
+}
+.quest-hint {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.quest-hint p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ui-muted);
+}
+.quest-hint p > span[lang] {
+  color: var(--ui-ink);
+  font-size: 18px;
+}
+.quest-keyboard {
+  border-top: 1px solid var(--ui-line);
+  margin-top: 16px;
+  padding-top: 4px;
+}
+.quest-keyboard summary,
+.quest-bank-more summary {
+  cursor: pointer;
+  min-height: 44px;
+  align-content: center;
+  color: var(--ui-muted);
+  font-size: 13px;
+}
+.quest-keyboard label {
+  display: block;
+  margin: 8px 0;
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+.quest-keyboard select {
+  width: 100%;
+}
+.quest-keys {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 12px;
+}
+.quest-keys button {
+  border: 1px solid var(--ui-line);
+  min-height: 44px;
+  border-radius: 6px;
+  font-size: 20px;
+  background: var(--ui-ground);
+  cursor: pointer;
+}
+.quest-keys button:hover {
+  border-color: var(--ui-ink);
+}
+.quest-keyboard > p {
+  font-size: 12px;
+  color: var(--ui-muted);
+  margin: 0;
+}
+.quest-notebook {
+  min-width: 0;
+}
+.quest-notebook h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px;
+}
+.quest-trail {
+  padding: 4px 0 24px;
+  border-bottom: 1px solid var(--ui-line);
+}
+.quest-trail ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.quest-trail ol > li {
+  display: flex;
+  gap: 12px;
+  padding: 0 0 20px;
+}
+.quest-trail-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--ui-line);
+  border-radius: 50%;
+  font-size: 12px;
+}
+.quest-current .quest-trail-number {
+  border-color: var(--ui-gold);
+}
+.quest-trail h3 {
+  font-size: 14px;
+  margin: 1px 0 3px;
+  font-weight: 500;
+}
+.quest-trail p {
+  margin: 0;
+  color: var(--ui-muted);
+  font-size: 12px;
+}
+.quest-requirements {
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+.quest-requirements li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--ui-line);
+}
+.quest-requirements li > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+.quest-requirements small {
+  color: var(--ui-muted);
+  font-size: 12px;
+  text-align: right;
+}
+.quest-empty-check {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--ui-line);
+  border-radius: 50%;
+}
+.quest-bank {
+  padding-top: 24px;
+}
+.quest-bank header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+.quest-bank h2 {
+  margin-bottom: 8px;
+}
+.quest-bank header > span,
+.quest-bank > p {
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+.quest-bank > p {
+  margin: 0 0 12px;
+}
+.quest-bank-empty {
+  padding: 12px 0;
+}
+.quest-journal {
+  padding: 20px;
+  border: 1px solid var(--ui-line);
+  border-radius: 14px;
+  background: var(--quest-house);
+}
+.quest-journal-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.quest-journal-header > svg {
+  width: 42px;
+  height: 54px;
+  flex: none;
+}
+.quest-journal-header > div > span {
+  display: block;
+  font-size: 12px;
+  color: var(--ui-muted);
+  margin-bottom: 3px;
+}
+.quest-journal-header h2 {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+.quest-journal > p {
+  font-size: 13px;
+  line-height: 1.65;
+}
+.quest-journal .quest-journal-action {
+  width: 100%;
+  margin-top: 16px;
+}
+.quest-journal .quest-journal-footnote {
+  font-size: 12px;
+  margin-top: 12px;
+}
+.quest-packing-list {
+  margin-top: 18px;
+  border-top: 1px dashed var(--ui-line);
+  padding-top: 4px;
+}
+.quest-packing-list summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  list-style: none;
+}
+.quest-packing-list summary::-webkit-details-marker {
+  display: none;
+}
+.quest-packing-list summary > span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+.quest-packing-list[open] summary svg {
+  transform: rotate(90deg);
+}
+.quest-word-keys {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+.quest-word-keys li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px dashed var(--ui-line);
+  border-radius: 4px 10px 10px 4px;
+  padding: 8px 10px;
+  min-height: 54px;
+}
+.quest-word-keys .is-packed {
+  background: var(--ui-paper);
+  border-style: solid;
+}
+.quest-key-hole {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--ui-muted);
+  border-radius: 50%;
+  flex: none;
+}
+.is-packed .quest-key-hole {
+  background: var(--ui-gold);
+  border-color: var(--ui-gold);
+}
+.quest-word-keys li > div {
+  min-width: 0;
+  flex: 1;
+}
+.quest-word-keys strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.quest-word-keys small {
+  display: block;
+  font-size: 11px;
+  color: var(--ui-muted);
+}
+.quest-word-keys button {
+  min-width: 36px;
+  min-height: 36px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.quest-word-keys button:hover {
+  background: var(--ui-surface);
+}
+.quest-pouch {
+  padding: 22px 4px 0;
+}
+.quest-pouch header {
+  align-items: center;
+  margin-bottom: 8px;
+}
+.quest-pouch header h2 {
+  font-size: 17px;
+  margin: 0;
+}
+.quest-pouch header > span {
+  border-bottom: 2px solid var(--ui-gold);
+  white-space: nowrap;
+}
+.quest-pouch-words {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.quest-pouch-words button {
+  display: block;
+  text-align: left;
+  width: 100%;
+  min-height: 66px;
+  padding: 10px;
+  border: 1px solid var(--ui-line);
+  border-bottom-width: 3px;
+  border-radius: 8px;
+  background: var(--ui-paper);
+  cursor: pointer;
+}
+.quest-pouch-words button:hover {
+  border-color: var(--ui-gold);
+}
+.quest-pouch-words button[aria-pressed="true"] {
+  border-color: var(--ui-ink);
+  background: var(--ui-surface);
+}
+.quest-pouch-words button > span {
+  display: block;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+.quest-pouch-words small {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ui-muted);
+  overflow-wrap: anywhere;
+}
+.quest-bank-more .quest-pouch-words {
+  max-height: 280px;
+  overflow: auto;
+  padding: 4px;
+  margin-top: 0;
+}
+.quest-word-inspection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px;
+  border-left: 3px solid var(--ui-gold);
+  background: var(--ui-surface);
+  flex-wrap: wrap;
+}
+.quest-word-inspection strong {
+  font-size: 20px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.quest-word-inspection p,
+.quest-word-inspection > small {
+  font-size: 12px;
+  margin: 3px 0 0;
+  color: var(--ui-muted);
+}
+.quest-pouch-empty {
+  border: 1px dashed var(--ui-line);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 16px;
+  color: var(--ui-muted);
+}
+.quest-pouch-empty > svg {
+  margin: auto;
+  color: var(--ui-ink);
+}
+.quest-pouch-empty p {
+  font-size: 13px;
+  margin: 10px 0;
+}
+.quest-pouch-empty a {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ui-ink);
+  font-size: 13px;
+}
+.quest-bank-words {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.quest-bank-words li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ui-line);
+}
+.quest-bank-words li > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.quest-bank-words strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+}
+.quest-bank-words small {
+  display: block;
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+.quest-no-audio {
+  flex: none;
+}
+.quest-audio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  min-height: 44px;
+  flex: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.quest-audio:hover,
+.quest-audio[aria-pressed="true"] {
+  background: var(--ui-surface);
+}
+.quest-ending > p {
+  color: var(--ui-muted);
+  margin: 0 0 16px;
+}
+.quest-ending .quest-fine-print {
+  font-size: 12px;
+}
+.quest-ending > .quest-text-button {
+  display: flex;
+  width: fit-content;
+  margin-top: 8px;
+}
+.fidel-quest :is(button, a, input, select, summary):focus-visible {
+  outline: 2px solid var(--ui-ink);
+  outline-offset: 4px;
+}
+.quest-conversation h2:focus {
+  outline: none;
+}
+.quest-teacher.is-pleased .fidel-teacher-whisk {
+  transform-origin: 70px 227px;
+  animation: quest-whisk 550ms ease-in-out;
+}
+@keyframes quest-whisk {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(-9deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+@media (max-width: 960px) {
+  .quest-layout {
+    grid-template-columns: 1fr;
+  }
+  .quest-notebook {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .quest-trail {
+    border-bottom: none;
+  }
+  .quest-bank {
+    padding-top: 4px;
+  }
+  .quest-village {
+    max-height: 235px;
+  }
+}
+@media (max-width: 580px) {
+  .fidel-quest {
+    padding: 20px 16px 28px;
+  }
+  .quest-header {
+    align-items: start;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .quest-header h1 {
+    font-size: 26px;
+  }
+  .quest-language {
+    width: 100%;
+  }
+  .quest-language select {
+    width: 100%;
+  }
+  .quest-preview {
+    margin: 16px 0;
+  }
+  .quest-notebook {
+    display: block;
+  }
+  .quest-trail {
+    border-bottom: 1px solid var(--ui-line);
+  }
+  .quest-bank {
+    padding-top: 24px;
+  }
+  .quest-conversation {
+    padding: 20px 16px;
+  }
+  .quest-conversation h2 {
+    font-size: 19px;
+  }
+  .quest-guide {
+    left: 16px;
+  }
+  .quest-scene-caption {
+    inset-inline: 16px;
+  }
+  .quest-scene-caption > span {
+    font-size: 11px;
+  }
+  .quest-teacher {
+    width: 52px;
+    height: 58px;
+  }
+  .quest-scene {
+    padding-bottom: 64px;
+  }
+  .quest-keys {
+    gap: 4px;
+  }
+  .quest-primary {
+    padding-inline: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fidel-quest * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media (max-width: 580px) {
+  .quest-map-static .quest-house-stop strong {
+    font-size: 11px;
+    white-space: nowrap;
+    padding: 3px 5px;
+    border-radius: 5px;
+  }
+  .quest-map-static .quest-house-stop small {
+    display: none;
+  }
+  .quest-world-heading {
+    padding: 16px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .quest-world-heading h2 {
+    font-size: 18px;
+  }
+  .quest-world-heading > span {
+    padding: 0;
+  }
+  .quest-map {
+    aspect-ratio: 350/420;
+  }
+  .quest-house-art {
+    width: 110px;
+  }
+  .quest-house-stop {
+    width: 48%;
+  }
+  .quest-house-intro {
+    left: 1%;
+    top: 23%;
+  }
+  .quest-house-cafe {
+    right: 1%;
+    top: 46%;
+  }
+  .quest-house-state {
+    width: 26px;
+    height: 28px;
+    right: 20%;
+    font-size: 13px;
+  }
+  .quest-map-ribbon {
+    font-size: 15px;
+    padding: 6px 24px;
+  }
+  .quest-house-stop strong {
+    font-size: 13px;
+  }
+  .quest-house-stop small {
+    font-size: 11px;
+  }
+  .quest-map-guide {
+    bottom: 4%;
+    left: 6%;
+    max-width: 62%;
+    gap: 8px;
+  }
+  .quest-map-guide > svg {
+    width: 40px;
+    height: 48px;
+  }
+  .quest-map-guide span {
+    font-size: 11px;
+  }
+  .quest-map-guide b {
+    display: none;
+  }
+  .quest-map-note {
+    padding: 12px 16px;
+  }
+  .quest-word-choice {
+    padding: 10px;
+  }
+  .quest-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 148px;
+    align-items: end;
+    gap: 12px;
+  }
+  .quest-header p {
+    display: none;
+  }
+  .quest-language {
+    font-size: 11px;
+  }
+  .quest-language select {
+    padding-inline: 6px;
+    font-size: 12px;
+  }
+  .quest-preview {
+    margin: 12px 0;
+    padding-block: 8px;
+  }
+  .quest-village {
+    height: 108px;
+  }
+  .quest-scene {
+    padding-bottom: 48px;
+  }
+  .quest-scene-caption {
+    top: 8px;
+  }
+  .quest-scene-caption > span:last-child {
+    display: none;
+  }
+  .quest-guide {
+    bottom: 4px;
+    gap: 12px;
+  }
+  .quest-teacher {
+    width: 44px;
+    height: 48px;
+  }
+  .quest-conversation {
+    padding: 16px;
+  }
+  .quest-conversation h2 {
+    margin-bottom: 12px;
+  }
+  .quest-progress {
+    margin-bottom: 16px;
+  }
+  .quest-greeting {
+    padding-bottom: 12px;
+    gap: 8px;
+  }
+}
+.quest-map-static .quest-house-stop strong {
+  position: relative;
+  background: var(--ui-ink);
+  color: var(--ui-ground);
+  border-radius: 4px;
+  padding: 4px 9px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.quest-map-static .quest-house-stop small {
+  display: none;
+}
+.quest-map-static .quest-house-state {
+  width: 26px;
+  height: 28px;
+  font-size: 13px;
+  right: 22%;
+}
+.quest-map-static .quest-house-stop:hover:not(:disabled) strong {
+  color: var(--ui-gold);
+}
+.quest-layout.is-chatting {
+  display: block;
+  max-width: 900px;
+  margin-inline: auto;
+}
+.is-chatting .quest-adventure {
+  border-radius: 18px;
+}
+.quest-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 76px;
+  padding: 12px 20px;
+  background: var(--ui-paper);
+}
+.quest-chat-header .quest-return {
+  margin: 0;
+  min-width: 36px;
+  justify-content: center;
+}
+.quest-chat-header img,
+.quest-chat-character img {
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.quest-chat-header > div {
+  flex: 1;
+}
+.quest-chat-header strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+}
+.quest-chat-header > div > span,
+.quest-chat-header > span {
+  display: block;
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+.is-chatting .quest-conversation {
+  padding: 0;
+}
+.is-chatting .quest-progress {
+  margin: 0;
+}
+.quest-chat-stage {
+  display: grid;
+  grid-template-columns: 164px minmax(0, 1fr);
+  gap: 24px;
+  padding: 28px;
+  background: var(--ui-surface);
+  min-height: 270px;
+}
+.quest-chat-character {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-self: start;
+  padding-top: 12px;
+}
+.quest-chat-character img {
+  width: 144px;
+  height: 180px;
+}
+.quest-chat-character > span {
+  font-size: 12px;
+  margin-top: 8px;
+  color: var(--ui-muted);
+}
+.quest-chat-log {
+  max-height: 300px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 4px 8px;
+}
+.quest-conversation .quest-guide-bubble {
+  background: var(--ui-paper);
+  border: 1px solid var(--ui-line);
+  padding: 14px 18px;
+  border-radius: 16px 16px 16px 3px;
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+.quest-chat-log .quest-your-reply {
+  margin: 0 0 16px;
+}
+.quest-chat-log .quest-your-reply b {
+  background: var(--ui-ink);
+  color: var(--ui-ground);
+  border-radius: 14px 14px 3px 14px;
+  padding: 8px 16px;
+}
+.quest-chat-log .quest-your-reply > svg {
+  color: var(--ui-muted);
+  flex: none;
+}
+.quest-chat-gentle {
+  font-size: 13px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--ui-gold);
+  color: var(--ui-muted);
+  background: var(--ui-paper);
+  margin: 0 0 12px;
+}
+.is-chatting .quest-answer-form {
+  padding: 20px 28px;
+  border-top: 1px solid var(--ui-line);
+}
+.is-chatting .quest-choice-label {
+  margin-top: 0;
+}
+.is-chatting .quest-reply-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 220px;
+}
+.is-chatting .quest-word-choice {
+  min-height: 60px;
+  padding: 8px 12px;
+  min-width: 100px;
+  max-width: 100%;
+  border-radius: 10px;
+}
+.is-chatting .quest-word-choice strong {
+  font-size: 18px;
+}
+.is-chatting .quest-word-choice small {
+  font-size: 11px;
+}
+.is-chatting .quest-greeting {
+  padding: 16px 28px;
+  margin: 0;
+  border-top: 1px solid var(--ui-line);
+}
+.is-chatting .quest-ending {
+  padding: 24px 28px;
+  border-top: 1px solid var(--ui-line);
+}
+.quest-chat-bank-state {
+  width: 100%;
+  font-size: 13px;
+  color: var(--ui-muted);
+}
+.quest-chat-bank-state p {
+  margin: 0;
+}
+@media (max-width: 580px) {
+  .quest-chat-header {
+    padding: 10px 12px;
+    gap: 8px;
+    min-height: 68px;
+  }
+  .quest-chat-header strong {
+    font-size: 14px;
+  }
+  .quest-chat-header > div > span {
+    font-size: 11px;
+  }
+  .quest-chat-stage {
+    grid-template-columns: 58px minmax(0, 1fr);
+    padding: 16px 10px;
+    gap: 6px;
+    min-height: 190px;
+  }
+  .quest-chat-character {
+    padding-top: 10px;
+  }
+  .quest-chat-character img {
+    width: 56px;
+    height: 70px;
+  }
+  .quest-chat-character > span {
+    font-size: 10px;
+    text-align: center;
+  }
+  .quest-chat-log {
+    max-height: 245px;
+    padding-inline: 4px;
+  }
+  .quest-conversation .quest-guide-bubble {
+    font-size: 14px;
+    padding: 12px;
+  }
+  .quest-chat-log .quest-your-reply {
+    gap: 6px;
+    font-size: 13px;
+  }
+  .is-chatting .quest-answer-form,
+  .is-chatting .quest-ending {
+    padding: 16px;
+  }
+  .is-chatting .quest-greeting {
+    padding: 12px 16px;
+  }
+  .is-chatting .quest-word-choice {
+    min-width: 88px;
+    padding: 8px 10px;
+  }
+  .is-chatting .quest-reply-choices {
+    max-height: 210px;
+  }
+  .quest-journal {
+    padding: 16px;
+  }
+  .quest-map-static .quest-house-stop strong {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+  .quest-notebook .quest-pouch {
+    padding-top: 24px;
+  }
+}

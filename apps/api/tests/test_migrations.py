@@ -15,8 +15,9 @@ def _config() -> Config:
 def test_revision_graph_matches_expected_head() -> None:
     script = ScriptDirectory.from_config(_config())
 
-    assert script.get_current_head() == "0008_tigrinya_preferences"
+    assert script.get_current_head() == "0009_quests"
     assert [revision.revision for revision in script.walk_revisions()] == [
+        "0009_quests",
         "0008_tigrinya_preferences",
         "0007_reviews",
         "0006_user_word_state",
@@ -55,6 +56,7 @@ def test_fresh_postgresql_upgrade_sql_contains_complete_schema(monkeypatch) -> N
         "user_preferences",
         "review_sessions",
         "review_answers",
+        "quest_progress",
     ):
         assert f"CREATE TABLE {table_name}" in sql
 
