@@ -113,6 +113,13 @@ class RejectRequest(BaseModel):
     )
 
 
+class TrimRequest(BaseModel):
+    """Boundaries of the section to keep, in milliseconds."""
+
+    start_ms: int = Field(ge=0)
+    end_ms: int = Field(gt=0)
+
+
 class RetryRequest(BaseModel):
     """Body for retrying failed generation attempts."""
 

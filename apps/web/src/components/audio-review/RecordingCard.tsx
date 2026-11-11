@@ -1,7 +1,8 @@
-import { AlertTriangle, Ban, Check, RotateCcw } from 'lucide-react'
+import { AlertTriangle, Ban, Check, RotateCcw, Scissors } from 'lucide-react'
 import { useState } from 'react'
 
 import AudioPlayer from './AudioPlayer'
+import TrimEditor from './TrimEditor'
 import type { Recording } from '@/lib/audioReviewApi'
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
   onApprove: (recording: Recording) => void
   onReject: (recording: Recording, reason: string) => void
   onRegenerate: (recording: Recording) => void
+  onTrim: (recording: Recording, startMs: number, endMs: number) => void
 }
 
 const STATUS_STYLES: Record<string, string> = {
@@ -25,13 +27,15 @@ function translation(recording: Recording, languageCode: string): string {
     ?? 'Translation unavailable'
 }
 
-export default function RecordingCard({ recording, isWorking, onApprove, onReject, onRegenerate }: Props) {
+export default function RecordingCard({ recording, isWorking, onApprove, onReject, onRegenerate, onTrim }: Props) {
   const [showRejectForm, setShowRejectForm] = useState(false)
+  const [showTrimEditor, setShowTrimEditor] = useState(false)
   const [reason, setReason] = useState('')
 
   const isPending = recording.status === 'pending'
   const isRejected = recording.status === 'rejected'
   const isFailed = recording.status === 'failed'
+  const isApproved = recording.status === 'approved' && !recording.superseded_at
 
   return (
     <article className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-5 shadow-sm">
@@ -52,6 +56,9 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
               <span className="rounded-full bg-[var(--sand)] px-2 py-0.5 text-xs text-[var(--sea-ink)]/75">
                 attempt {recording.attempt}
               </span>
+            ) : null}
+            {recording.superseded_at ? (
+              <span className="text-xs text-[var(--sea-ink)]/60">Previous version</span>
             ) : null}
           </div>
 
@@ -162,17 +169,36 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
           </button>
         ) : null}
 
-        {recording.status === 'approved' ? (
-          <p className="text-xs text-[var(--sea-ink)]/65">
-            Approved{recording.reviewed_at
-              ? ` on ${new Date(recording.reviewed_at).toLocaleString()}`
-              : ''}
-            {recording.reviewed_by ? ` by ${recording.reviewed_by}` : ''}.
-          </p>
+        {isApproved ? (
+          <>
+            <button type="button" disabled={isWorking || !recording.has_audio}
+              onClick={() => { setShowTrimEditor((value) => !value); setShowRejectForm(false) }}
+              aria-expanded={showTrimEditor}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] px-3 py-1.5 text-sm font-medium text-[var(--sea-ink)] hover:bg-[var(--sand)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--action)] disabled:opacity-50">
+              <Scissors className="size-4" /> Trim audio
+            </button>
+            <button type="button" disabled={isWorking}
+              onClick={() => { setShowRejectForm((value) => !value); setShowTrimEditor(false) }}
+              aria-expanded={showRejectForm}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] px-3 py-1.5 text-sm font-medium text-rose-700 dark:text-rose-300 hover:bg-[var(--sand)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600 disabled:opacity-50">
+              <Ban className="size-4" /> Disapprove
+            </button>
+            <p className="text-xs text-[var(--sea-ink)]/65">
+              Approved{recording.reviewed_at
+                ? ` on ${new Date(recording.reviewed_at).toLocaleString()}`
+                : ''}{recording.reviewed_by ? ` by ${recording.reviewed_by}` : ''}.
+            </p>
+          </>
         ) : null}
       </div>
 
-      {showRejectForm && isPending ? (
+      {showTrimEditor && isApproved && (
+        <TrimEditor recording={recording} isWorking={isWorking}
+          onSave={(startMs, endMs) => onTrim(recording, startMs, endMs)}
+          onCancel={() => setShowTrimEditor(false)} />
+      )}
+
+      {showRejectForm && (isPending || isApproved) ? (
         <form
           className="mt-3 flex flex-wrap items-end gap-2 rounded-lg bg-[var(--sand)] p-3"
           onSubmit={(event) => {
@@ -184,7 +210,7 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
         >
           <label className="flex-1 text-sm">
             <span className="mb-1 block text-xs font-medium text-[var(--sea-ink)]/75">
-              Rejection reason (optional)
+              {isApproved ? 'Why disapprove this audio? (optional)' : 'Rejection reason (optional)'}
             </span>
             <input
               type="text"
@@ -194,6 +220,9 @@ export default function RecordingCard({ recording, isWorking, onApprove, onRejec
               className="w-full rounded-lg border border-[var(--line)] px-3 py-1.5 text-sm outline-none focus:border-[var(--lagoon-deep)]"
             />
           </label>
+          {isApproved && <p className="w-full text-xs text-[var(--sea-ink)]/70">
+            This audio will stop playing for learners. If no other approved recording exists, the word will leave lessons until you approve one.
+          </p>}
           <button
             type="submit"
             disabled={isWorking}

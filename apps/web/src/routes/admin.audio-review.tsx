@@ -20,6 +20,7 @@ import {
   retryFailed,
   setAdminKey,
   startBatch,
+  trimRecording,
 } from '@/lib/audioReviewApi'
 import type { AudioLanguage, Batch, Recording } from '@/lib/audioReviewApi'
 
@@ -42,6 +43,7 @@ function AudioReviewPage() {
   const [adminKey, setKey] = useState(getAdminKey())
   const [keyDraft, setKeyDraft] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
+  const [showHistory, setShowHistory] = useState(false)
   const [batchFilter, setBatchFilter] = useState('')
   const [page, setPage] = useState(1)
   const [notice, setNotice] = useState<{ kind: 'ok' | 'error'; text: string } | null>(null)
@@ -127,6 +129,8 @@ function AudioReviewPage() {
       notice={notice}
       setNotice={setNotice}
       statusFilter={statusFilter}
+      showHistory={showHistory}
+      setShowHistory={(value) => { setShowHistory(value); setPage(1) }}
       setStatusFilter={(value) => {
         setStatusFilter(value)
         setPage(1)
@@ -172,6 +176,8 @@ type DashboardProps = {
   notice: { kind: 'ok' | 'error'; text: string } | null
   setNotice: (value: { kind: 'ok' | 'error'; text: string } | null) => void
   statusFilter: string
+  showHistory: boolean
+  setShowHistory: (value: boolean) => void
   setStatusFilter: (value: string) => void
   batchFilter: string
   setBatchFilter: (value: string) => void
@@ -200,6 +206,8 @@ function AdminDashboard({
   notice,
   setNotice,
   statusFilter,
+  showHistory,
+  setShowHistory,
   setStatusFilter,
   batchFilter,
   setBatchFilter,
@@ -231,13 +239,14 @@ function AdminDashboard({
   })
 
   const recordingsQuery = useQuery({
-    queryKey: ['audio-review', 'recordings', languageCode, statusFilter, batchFilter, page],
+    queryKey: ['audio-review', 'recordings', languageCode, statusFilter, batchFilter, showHistory, page],
     queryFn: () =>
       listRecordings(
         {
           status: statusFilter || undefined,
           languageCode,
           batchId: batchFilter || undefined,
+          includeSuperseded: showHistory,
         },
         page,
         PAGE_SIZE,
@@ -429,6 +438,13 @@ function AdminDashboard({
                   ))}
                 </select>
 
+                <label className="inline-flex cursor-pointer items-center gap-2 text-sm text-[var(--sea-ink)]/75">
+                  <input type="checkbox" checked={showHistory}
+                    onChange={(event) => setShowHistory(event.target.checked)}
+                    className="accent-[var(--action)]" />
+                  Show previous versions
+                </label>
+
                 <button
                   type="button"
                   onClick={refresh}
@@ -503,6 +519,13 @@ function AdminDashboard({
                             item,
                             () => regenerateRecording(item.id),
                             `Regenerating “${item.text}”.`,
+                          )
+                        }
+                        onTrim={(item, startMs, endMs) =>
+                          runAction(
+                            item,
+                            () => trimRecording(item.id, startMs, endMs),
+                            `Saved the trimmed audio for “${item.text}”.`,
                           )
                         }
                       />

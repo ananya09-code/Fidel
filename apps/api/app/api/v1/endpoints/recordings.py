@@ -26,6 +26,7 @@ from app.schemas.recordings import (
     RetryResponse,
     ReviewSummary,
     StartBatchRequest,
+    TrimRequest,
 )
 from app.services.audio_batches import (
     DEFAULT_BATCH_SIZE,
@@ -42,6 +43,7 @@ from app.services.audio_batches import (
     list_batches,
     regenerate_recording,
     reject_recording,
+    trim_approved_recording,
     retry_failed_recordings,
     run_batch,
     validate_batch_size,
@@ -475,6 +477,30 @@ def reject(
     return RecordingActionResponse(
         recording=_serialize_recording(row),
         message="Recording rejected.",
+    )
+
+
+@router.post("/recordings/{recording_id}/trim", response_model=RecordingActionResponse)
+def trim_recording(
+    recording_id: str,
+    payload: TrimRequest,
+    db: Session = Depends(get_db),
+    reviewer: str = Depends(require_admin),
+) -> RecordingActionResponse:
+    """Publish a trimmed copy, retaining the source in review history."""
+    try:
+        replacement = trim_approved_recording(
+            db, recording_id, start_ms=payload.start_ms,
+            end_ms=payload.end_ms, reviewed_by=reviewer,
+        )
+    except RecordingError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
+
+    row = _load_recording_row(db, str(replacement["id"]))
+    _attach_translations(db, [row])
+    return RecordingActionResponse(
+        recording=_serialize_recording(row),
+        message="Trimmed recording published. The original remains in history.",
     )
 
 
