@@ -103,10 +103,10 @@ Run the backend from `apps/api` so its `.env` resolves consistently.
 
 ## Checks
 
-The admin audio trim action requires an `ffmpeg` executable on the API host.
-Install it on the Render service before enabling this action there; approval,
-rejection, and playback do not require it. A failed trim leaves the approved
-recording and stored object unchanged.
+The admin audio trim action requires `ffmpeg` on the API host. Render's native
+Python runtime includes it at runtime, so no extra install or environment
+variable is needed there. For a custom Docker image, include `ffmpeg` in the
+image. A failed trim leaves the approved recording and stored object unchanged.
 
 ```bash
 pnpm typecheck
