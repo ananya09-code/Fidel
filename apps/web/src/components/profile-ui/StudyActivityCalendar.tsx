@@ -1,11 +1,9 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { CalendarDays } from "lucide-react";
-
 import type { StudyActivity } from "@/lib/api/dashboard";
 import { activityDateLabel, activityKeyboardDate, activityLevel, activityWeeks } from "@/lib/study-activity";
+import "./study-activity.css";
 
-const colors = Array.from({ length: 5 }, (_, index) => `var(--activity-${index})`);
-const intensityLabels = ["No answers", "1–4 answers", "5–9 answers", "10–19 answers", "20+ answers"];
+const levels = ["No answers", "1–4 answers", "5–9 answers", "10–19 answers", "20+ answers"];
 
 export function StudyActivityCalendar({ activity }: { activity: StudyActivity }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -14,11 +12,10 @@ export function StudyActivityCalendar({ activity }: { activity: StudyActivity })
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const weeks = activityWeeks(activity.days);
   const total = activity.days.reduce((sum, day) => sum + day.answers, 0);
-  const activeDays = activity.days.filter((day) => day.answers > 0).length;
-  const selected = activity.days.find((day) => day.date === selectedDate);
+  const activeDays = activity.days.filter(day => day.answers > 0).length;
+  const selected = activity.days.find(day => day.date === selectedDate);
 
   useLayoutEffect(() => {
-    // On phones show the most recent weeks first, without scrolling the page.
     if (scrollRef.current) scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
   }, [activity.end_date]);
 
@@ -26,71 +23,37 @@ export function StudyActivityCalendar({ activity }: { activity: StudyActivity })
     return `${activityDateLabel(date)}: ${answers} practice ${answers === 1 ? "answer" : "answers"}`;
   }
 
-  return (
-    <section aria-labelledby="study-activity-title" className="profile-activity">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 text-[var(--sea-ink)]">
-            <CalendarDays className="size-5" aria-hidden="true" />
-            <h2 id="study-activity-title" className="font-semibold">Your study activity</h2>
-          </div>
-          <p className="mt-2 text-sm text-[var(--sea-ink)]/60">
-            {total.toLocaleString("en-US")} practice {total === 1 ? "answer" : "answers"} in the last year
-          </p>
-        </div>
-        <span className="rounded-full bg-[var(--sand)]/60 px-3 py-1.5 text-xs font-medium text-[var(--sea-ink)]">
-          {activeDays} active {activeDays === 1 ? "day" : "days"}
-        </span>
+  return <section aria-labelledby="study-activity-title" className="profile-activity study-weave">
+    <div className="study-weave-intro">
+      <div><h2 id="study-activity-title">A year in words.</h2><p>Each mark is a day you came back to practise.</p></div>
+      <div className="study-weave-totals" aria-label="Your activity this year">
+        <p><strong>{activeDays}</strong><span>active {activeDays === 1 ? "day" : "days"}</span></p>
+        <p><strong>{total.toLocaleString("en-US")}</strong><span>practice {total === 1 ? "answer" : "answers"}</span></p>
       </div>
-
-      <div ref={scrollRef} className="mt-6 overflow-x-auto pb-3" role="group" aria-label="Daily practice activity. Use arrow keys to explore days.">
-        <div className="flex min-w-max gap-3 p-1">
-          <div aria-hidden="true" className="sticky left-0 z-10 grid shrink-0 grid-rows-[20px_repeat(7,12px)] gap-[3px] bg-[var(--bg-base)] pr-2 text-[11px] leading-3 text-[var(--sea-ink)]/55">
-            <span /><span /><span>Mon</span><span /><span>Wed</span><span /><span>Fri</span><span />
-          </div>
-          <div className="flex gap-[3px]">
-            {weeks.map((week, index) => (
-              <div key={index} className="grid w-3 grid-rows-[20px_repeat(7,12px)] gap-[3px]">
-                <span aria-hidden="true" className="text-[11px] leading-4 text-[var(--sea-ink)]/55">{week.month}</span>
-                {week.days.map((day, row) => day ? (
-                  <button
-                    key={day.date}
-                    ref={(element) => { if (element) buttons.current.set(day.date, element); else buttons.current.delete(day.date); }}
-                    type="button"
-                    tabIndex={focusedDate === day.date ? 0 : -1}
-                    aria-label={detail(day.date, day.answers)}
-                    aria-pressed={selectedDate === day.date}
-                    title={detail(day.date, day.answers)}
-                    onFocus={() => { setFocusedDate(day.date); setSelectedDate(day.date); }}
-                    onClick={() => { setFocusedDate(day.date); setSelectedDate(day.date); }}
-                    onKeyDown={(event) => {
-                      const next = activityKeyboardDate(event.key, day.date, activity.start_date, activity.end_date);
-                      if (next) { event.preventDefault(); buttons.current.get(next)?.focus(); }
-                    }}
-                    className={`size-3 rounded-[3px] border border-[var(--sea-ink)]/5 outline-offset-2 transition-[filter] hover:brightness-90 focus-visible:outline-2 focus-visible:outline-[var(--sea-ink)] ${day.date === activity.end_date ? "ring-1 ring-[var(--sea-ink)]/40 ring-offset-1 ring-offset-[var(--bg-base)]" : ""}`}
-                    style={{ backgroundColor: colors[activityLevel(day.answers)] }}
-                  />
-                ) : <span key={`blank-${row}`} aria-hidden="true" />)}
-              </div>
-            ))}
-          </div>
+    </div>
+    <div className="study-weave-chart-shell" role="group" aria-label="Daily practice activity. Use arrow keys to explore days.">
+      <div aria-hidden="true" className="study-weave-weekdays"><span /><span /><span>Mon</span><span /><span>Wed</span><span /><span>Fri</span><span /></div>
+      <div ref={scrollRef} className="study-weave-chart">
+        <div className="study-weave-grid">
+        <div className="study-weave-weeks">{weeks.map((week, index) => <div key={index} className="study-weave-week">
+          <span aria-hidden="true" className="study-weave-month">{week.month}</span>
+          {week.days.map((day, row) => day ? <button key={day.date}
+            ref={element => { if (element) buttons.current.set(day.date, element); else buttons.current.delete(day.date); }}
+            type="button" tabIndex={focusedDate === day.date ? 0 : -1}
+            aria-label={detail(day.date, day.answers)} aria-pressed={selectedDate === day.date} title={detail(day.date, day.answers)}
+            data-level={activityLevel(day.answers)} data-today={day.date === activity.end_date ? "true" : undefined}
+            onFocus={() => { setFocusedDate(day.date); setSelectedDate(day.date); }}
+            onClick={() => { setFocusedDate(day.date); setSelectedDate(day.date); }}
+            onKeyDown={event => { const next = activityKeyboardDate(event.key, day.date, activity.start_date, activity.end_date); if (next) { event.preventDefault(); buttons.current.get(next)?.focus(); } }}
+            className="study-weave-day"><span /></button> : <span key={`blank-${row}`} aria-hidden="true" />)}
+        </div>)}</div>
         </div>
       </div>
-
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--sea-ink)]/60">
-        <p aria-live="polite" className="min-h-4">
-          {selected ? detail(selected.date, selected.answers) : "Tap a square or use the arrow keys to explore."}
-        </p>
-        <div className="flex items-center gap-1.5" aria-label="Darker green means more practice answers">
-          <span className="mr-1">Less</span>
-          {colors.map((color, index) => <span key={color} title={intensityLabels[index]} className="size-3 rounded-[3px] border border-[var(--sea-ink)]/5" style={{ backgroundColor: color }} />)}
-          <span className="ml-1">More</span>
-        </div>
-      </div>
-      <p className="mt-4 border-t border-[var(--sea-ink)]/10 pt-4 text-xs leading-5 text-[var(--sea-ink)]/55">
-        {total === 0 ? "Your first practice answer will light up this calendar. " : "Every saved lesson or review answer counts, even when you’re still practising. "}
-        Dates use {activity.timezone.replaceAll("_", " ")} time.
-      </p>
-    </section>
-  );
+    </div>
+    <div className="study-weave-foot">
+      <p className="study-weave-selected" aria-live="polite">{selected ? <><strong>{activityDateLabel(selected.date)}</strong><span>{selected.answers} practice {selected.answers === 1 ? "answer" : "answers"}</span></> : <><strong>Choose a day</strong><span>Swipe through the year, or use the arrow keys.</span></>}</p>
+      <div className="study-weave-legend" aria-label="A fuller mark means more practice answers"><span>Fewer answers</span><div>{levels.map((label, level) => <span key={label} className="study-weave-swatch" data-level={level} title={label} aria-label={label} />)}</div><span>More answers</span></div>
+    </div>
+    <p className="study-weave-note">{total === 0 ? "Your first saved answer will start the pattern. " : "Saved lesson and review answers build this pattern. "}Dates use {activity.timezone.replaceAll("_", " ")} time.</p>
+  </section>;
 }
