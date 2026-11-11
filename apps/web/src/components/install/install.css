@@ -1,0 +1,2 @@
+.install-fidel-help { max-width:34ch; margin:10px 0 0; font-size:13px; line-height:1.6; }
+@media (display-mode:standalone) { .install-fidel, .editorial-install, .settings-install-section, .onboarding-install { display:none; } }

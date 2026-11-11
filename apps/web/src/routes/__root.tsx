@@ -13,6 +13,7 @@ import { useState } from "react";
 import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
 import { PageState } from "@/components/common-ui/PageState";
 import { AuthLoading } from "@/components/auth/AuthLoading";
+import { InstallFidelProvider } from "@/components/install/InstallFidel";
 import { PreferenceThemeSync, ThemeProvider } from "@/components/theme/ThemeProvider";
 import { themeInitScript } from "@/lib/theme";
 
@@ -76,7 +77,7 @@ function RootComponent() {
             <QueryClientProvider client={queryClient}>
               <ThemeProvider>
                 <PreferenceThemeSync />
-                <Outlet />
+                <InstallFidelProvider><Outlet /></InstallFidelProvider>
               </ThemeProvider>
             </QueryClientProvider>
           </ClerkProvider>
