@@ -23,7 +23,16 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      { name: "theme-color", content: "#173a40" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+      { name: "apple-mobile-web-app-title", content: "Fidel" },
       { title: "Fidel" },
+    ],
+    links: [
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "icon", href: "/fidel-icon.svg", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/fidel-icon-180.png", sizes: "180x180" },
     ],
   }),
   component: RootComponent,
