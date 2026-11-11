@@ -9,7 +9,19 @@ const compiled = ts.transpileModule(source, {
 }).outputText;
 const exports = {};
 new Function("exports", compiled)(exports);
-const { activityLevel, activityWeeks, activityDateLabel, activityKeyboardDate } = exports;
+const { activityLevel, activityWeeks, activityDateLabel, activityKeyboardDate, activityRangeStart } = exports;
+
+test("activity ranges use local date keys and clamp to available history", () => {
+  const earliest = "2025-11-12";
+  const end = "2026-11-11";
+  assert.equal(activityRangeStart(end, "7d", earliest), "2026-11-05");
+  assert.equal(activityRangeStart(end, "30d", earliest), "2026-10-13");
+  assert.equal(activityRangeStart(end, "3m", earliest), "2026-08-12");
+  assert.equal(activityRangeStart(end, "6m", earliest), "2026-05-12");
+  assert.equal(activityRangeStart(end, "1y", earliest), earliest);
+  assert.equal(activityRangeStart("2026-03-31", "3m", "2025-01-01"), "2026-01-01");
+  assert.equal(activityRangeStart("2026-11-11", "30d", "2026-11-01"), "2026-11-01");
+});
 
 test("every day occupies the correct Sunday-first row without inventing future days", () => {
   const days = Array.from({ length: 365 }, (_, offset) => {
