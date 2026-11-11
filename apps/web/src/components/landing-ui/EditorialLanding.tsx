@@ -7,6 +7,7 @@ import { WovenGrid } from "./WovenGrid";
 import { FidelWordmark } from "./FidelWordmark";
 import { LanguageAtlas } from "./LanguageAtlas";
 import { LanguageDeck } from "./LanguageDeck";
+import { LessonPreview } from "./LessonPreview";
 import { photoCredits } from "./content";
 import { InstallFidel, useFidelInstalled } from "@/components/install/InstallFidel";
 import "./landing.css";
@@ -51,17 +52,7 @@ export function EditorialLanding() {
 
         <LanguageAtlas />
 
-        <section id="practice" className="editorial-practice editorial-section" aria-labelledby="practice-heading">
-          <div className="editorial-section-intro">
-            <h2 id="practice-heading">Learn it, say it, keep it.</h2>
-            <p className="editorial-reveal">Begin with a greeting. Listen, then take it into your next conversation.</p>
-          </div>
-          <div className="editorial-learning-methods">
-            <article className="editorial-reveal"><h3>Learn</h3><p>See words in their own script, understand their meaning in English and Amharic, and listen when a reviewed recording is available.</p></article>
-            <article className="editorial-reveal"><h3>Practise</h3><p>Explore flashcards and answer practice questions. Save your progress and pick up where you left off.</p></article>
-            <article className="editorial-reveal"><h3>Review</h3><p>Return to words that need another look. Keep track of learned words and build a daily habit that lasts.</p></article>
-          </div>
-        </section>
+        <LessonPreview />
 
         <LanguageDeck start={start} />
 

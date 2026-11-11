@@ -1,0 +1,80 @@
+.lesson-preview .editorial-section-intro { align-items:center; }
+.lesson-preview-note { margin-top:14px!important; font-size:13px; color:var(--e-muted); }
+.lesson-preview-nav { display:flex; align-items:center; gap:24px; margin-bottom:22px; }
+.lesson-preview-nav > button { display:flex; align-items:center; gap:18px; min-height:44px; padding:8px 0; font-size:16px; opacity:.65; }
+.lesson-preview-nav > button[aria-pressed=true] { opacity:1; font-weight:700; }
+.lesson-preview-nav > button[aria-pressed=true] svg { color:var(--e-orange-ink); }
+.lesson-preview-nav .lesson-preview-reset { margin-left:auto; width:44px; justify-content:center; }
+.lesson-preview-spread { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.lesson-preview-panel { min-width:0; padding:28px 22px 22px; background:var(--e-field); border-radius:20px; display:flex; flex-direction:column; }
+.lesson-preview .preview-panel-heading h3 { font-size:20px; line-height:1.4; letter-spacing:-.04em; }
+.preview-panel-heading > span { display:block; font-size:13px; color:var(--e-muted); margin-top:6px; }
+.preview-learn { background:var(--e-panel); }
+.preview-flashcard { display:block; width:100%; height:268px; padding:0; margin:26px 0 18px; perspective:1000px; border-radius:12px; }
+.preview-card-inner { display:block; position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform 650ms cubic-bezier(.22,1,.36,1); }
+.is-flipped .preview-card-inner { transform:rotateY(180deg); }
+.preview-card-face { position:absolute; inset:0; backface-visibility:hidden; background:var(--e-orange); color:var(--e-on-orange); border-radius:12px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:8px; padding:24px 12px; font-size:15px; }
+.preview-card-back { transform:rotateY(180deg); background:var(--e-field); color:var(--e-ink); }
+.lesson-preview .preview-large-word { font-size:clamp(35px,3.7vw,53px); font-weight:700; letter-spacing:-.06em; line-height:1.4; }
+.preview-card-hint { position:absolute; bottom:22px; display:flex; align-items:center; gap:8px; font-size:12px; }
+.preview-audio-row { display:flex; flex-direction:column; align-items:center; gap:8px; font-size:12px; }
+.preview-audio-row button { display:flex; align-items:center; gap:8px; min-height:44px; padding:6px 12px; font-size:14px; }
+.preview-audio-row button:disabled { cursor:default; opacity:.65; }
+.preview-audio-row > span { color:var(--e-muted); text-align:center; }
+.preview-match-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:40px 0 28px; }
+.preview-match-grid > div { display:flex; flex-direction:column; gap:12px; }
+.lesson-preview .preview-match-grid button { display:flex; justify-content:center; align-items:center; gap:5px; width:100%; min-height:88px; padding:12px 6px; border-radius:8px; background:var(--e-panel); font-size:14px; transition:transform 160ms ease,background 200ms ease; }
+.preview-match-grid button:active { transform:scale(.96); }
+.lesson-preview .preview-match-grid button[aria-pressed=true] { background:var(--e-orange); color:var(--e-on-orange); }
+.preview-match-grid button span span { display:block; font-size:14px; margin-top:5px; }
+.lesson-preview .preview-match-grid button.is-matched { background:var(--e-accent); color:var(--e-on-accent); opacity:1; cursor:default; }
+.preview-teacher { display:flex; align-items:center; gap:12px; margin-top:auto; min-height:84px; }
+.preview-teacher > svg { width:54px; height:65px; }
+.preview-teacher > p { font-size:13px; line-height:1.6; }
+.preview-review { background:var(--e-accent); color:var(--e-on-accent); }
+.preview-review .preview-panel-heading > span { color:inherit; opacity:.75; }
+.preview-review button:focus-visible { outline-color:var(--e-on-accent); }
+.preview-recall { text-align:center; padding-top:28px; }
+.preview-recall > p:first-child { font-size:13px; margin-bottom:16px; }
+.preview-recall-answer { min-height:70px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:14px; }
+.preview-recall-answer > span:only-child { font-size:12px; opacity:.8; }
+.preview-recall .preview-recall-button { background:var(--e-orange); color:var(--e-on-orange); border-radius:999px; min-height:44px; padding:9px 16px; font-size:13px; display:inline-flex; align-items:center; justify-content:center; gap:7px; }
+.preview-recall-button:disabled { cursor:default; }
+.preview-review-rhythm { display:flex; justify-content:space-between; gap:8px; margin-top:32px; }
+.preview-review-rhythm > span { position:relative; flex:1; padding-top:14px; font-size:11px; opacity:.6; }
+.preview-review-rhythm > span::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; border-radius:8px; background:currentColor; }
+.preview-review-rhythm > span.is-done { color:var(--e-orange); opacity:1; }
+.dark .preview-review-rhythm > span.is-done { color:var(--e-on-accent); }
+.preview-review .preview-review-note { margin-top:15px; font-size:12px; line-height:1.65; }
+.lesson-preview .preview-mobile-next { display:none; }
+@media (max-width:1050px) and (min-width:901px) {
+  .lesson-preview-panel { padding:22px 14px; }
+  .lesson-preview .preview-panel-heading h3 { font-size:18px; }
+  .preview-match-grid { gap:6px; }
+  .preview-match-grid button { font-size:12px; }
+}
+@media (max-width:900px) {
+  .lesson-preview-nav { gap:20px; }
+  .lesson-preview-nav > button { font-size:14px; gap:6px; }
+  .lesson-preview-nav > button svg { width:14px; }
+  .lesson-preview-nav .lesson-preview-reset { width:32px; }
+  .lesson-preview-spread { display:block; }
+  .lesson-preview-panel { display:none; padding:28px 24px; min-height:465px; }
+  .lesson-preview-panel.is-active { display:flex; }
+  .lesson-preview .preview-large-word { font-size:50px; }
+  .preview-flashcard { height:250px; margin-top:22px; }
+  .preview-audio-row { gap:0; }
+  .lesson-preview .preview-mobile-next { display:flex; align-items:center; justify-content:center; gap:10px; min-height:44px; margin:14px auto 0; font-size:14px; }
+  .preview-match-grid { margin:32px 0 24px; }
+  .preview-match-grid button { min-height:95px; }
+  .preview-teacher { margin-top:0; }
+  .preview-recall { padding-top:35px; }
+  .preview-review-rhythm { margin-top:38px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .preview-card-inner { transition:none; transform:none!important; }
+  .preview-card-face { backface-visibility:visible; }
+  .preview-card-back { transform:none; visibility:hidden; }
+  .is-flipped .preview-card-face:first-child { visibility:hidden; }
+  .is-flipped .preview-card-back { visibility:visible; }
+}
