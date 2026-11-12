@@ -1,6 +1,9 @@
 .teacher-feedback { display:grid;grid-template-columns:76px minmax(0,1fr);align-items:center;gap:16px;max-width:640px;width:100%;padding:8px 0;color:var(--study-ink,#193b31); }
 .teacher-feedback-figure { width:76px;height:88px;align-self:center;transform-origin:50% 92%; }
 .teacher-feedback-mascot { display:block;width:100%;height:100%;overflow:visible;--fidel-mark-accent:var(--study-gold,#eda334); }
+.teacher-feedback-quest-guide { display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated; }
+.teacher-feedback.is-quest-guide { grid-template-columns:92px minmax(0,1fr); }
+.teacher-feedback.is-quest-guide .teacher-feedback-figure { width:92px;height:108px; }
 .teacher-feedback-bubble { position:relative;min-width:0;background:var(--feedback-bg,var(--study-paper,#fff));border:1px solid var(--feedback-color,var(--study-line,#dce3dc));border-radius:14px;padding:16px 18px;transform-origin:0 65%; }
 .teacher-feedback-bubble::before { content:"";position:absolute;left:-7px;top:calc(50% - 7px);width:12px;height:12px;transform:rotate(45deg);background:var(--feedback-bg,var(--study-paper,#fff));border-left:1px solid var(--feedback-color,var(--study-line,#dce3dc));border-bottom:1px solid var(--feedback-color,var(--study-line,#dce3dc)); }
 .teacher-feedback:is(.reaction-correct,.reaction-streak,.reaction-complete,.reaction-recovered) { --feedback-bg:var(--study-success-bg,#edf5ee);--feedback-color:var(--study-success,#275f43); }
@@ -24,6 +27,7 @@
 .teacher-feedback .fidel-teacher-whisk { transform-box:view-box;transform-origin:19% 58%; }
 .teacher-feedback .fidel-teacher-book { transform-box:view-box;transform-origin:71% 71%; }
 .teacher-feedback.reaction-encourage.is-animated .fidel-teacher-head { animation:teacher-nod 680ms ease-in-out both; }
+.teacher-feedback.is-quest-guide.reaction-encourage.is-animated .teacher-feedback-figure { animation:teacher-nod 680ms ease-in-out both; }
 .teacher-feedback:is(.reaction-correct,.reaction-streak,.reaction-complete).is-animated .fidel-teacher-whisk { animation:teacher-whisk-wave 720ms ease-in-out both; }
 .teacher-feedback:is(.reaction-correct,.reaction-recovered,.reaction-streak,.reaction-complete).is-animated .fidel-teacher-book { animation:teacher-book-open 620ms ease-in-out both; }
 @keyframes teacher-bubble-arrive { from { opacity:0;transform:translateX(-6px) scale(.98); } to { opacity:1;transform:none; } }
@@ -35,4 +39,5 @@
 @keyframes teacher-whisk-wave { 0%,100% {transform:none;} 30% {transform:rotate(-9deg);} 65% {transform:rotate(6deg);} }
 @keyframes teacher-book-open { 0%,100% {transform:none;} 40% {transform:scaleX(1.06) rotate(-2deg);} 70% {transform:scaleX(.98) rotate(1deg);} }
 @media(max-width:640px) { .teacher-feedback {grid-template-columns:58px minmax(0,1fr);gap:12px;} .teacher-feedback-figure {width:58px;height:70px;} .teacher-feedback-bubble {padding:13px 14px;} .teacher-feedback-title {font-size:15px;} .teacher-feedback .teacher-feedback-message {font-size:13px;} }
+@media(max-width:640px) { .teacher-feedback.is-quest-guide { grid-template-columns:70px minmax(0,1fr); } .teacher-feedback.is-quest-guide .teacher-feedback-figure { width:70px;height:84px; } }
 @media(prefers-reduced-motion:reduce) { .teacher-feedback *, .teacher-feedback *::before {animation:none!important;transition:none!important;transform:none!important;} .teacher-feedback-bubble::before {transform:rotate(45deg)!important;} }
