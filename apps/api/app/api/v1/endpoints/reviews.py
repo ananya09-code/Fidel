@@ -130,7 +130,7 @@ def _session(db: Session, row, user_id: UUID) -> ReviewSession:
     )
 
 
-def _active_row(db: Session, user_id: UUID):
+def _active_row(db: Session, user_id: UUID, language_code: str | None = None):
     return db.execute(
         text(
             """
@@ -138,9 +138,10 @@ def _active_row(db: Session, user_id: UUID):
                    started_at, completed_at, updated_at
             FROM review_sessions
             WHERE user_id = :user_id AND status = 'in_progress'
+              AND COALESCE(language_code, '') LIKE :language_filter
             """
         ),
-        {"user_id": user_id},
+        {"user_id": user_id, "language_filter": language_code or "%"},
     ).mappings().first()
 
 
@@ -166,6 +167,7 @@ def _owned_row(db: Session, session_id: UUID, user_id: UUID, *, lock: bool = Fal
 @router.get("", response_model=ReviewOverview)
 def get_review_overview(
     current_user: Annotated[ClerkUser, Depends(get_current_user)],
+    language_code: Literal["om", "am", "ti"] | None = None,
     db: Session = Depends(get_db),
 ) -> ReviewOverview:
     user_id = _user_id(db, current_user.user_id)
@@ -174,24 +176,26 @@ def get_review_overview(
     queue_ids = db.execute(
         text(
             """
-            SELECT word_id FROM user_words
-            WHERE user_id = :user_id AND learning_state = 'needs_review'
-            ORDER BY last_seen_at ASC LIMIT 20
+            SELECT uw.word_id FROM user_words AS uw JOIN words AS w ON w.id = uw.word_id
+            WHERE uw.user_id = :user_id AND uw.learning_state = 'needs_review'
+              AND w.language_code LIKE :language_filter
+            ORDER BY uw.last_seen_at ASC LIMIT 20
             """
         ),
-        {"user_id": user_id},
+        {"user_id": user_id, "language_filter": language_code or "%"},
     ).scalars().all()
-    active = _active_row(db, user_id)
+    active = _active_row(db, user_id, language_code)
     history_rows = db.execute(
         text(
             """
             SELECT id, total_count, correct_count, completed_at
             FROM review_sessions
             WHERE user_id = :user_id AND status = 'completed'
+              AND COALESCE(language_code, '') LIKE :language_filter
             ORDER BY completed_at DESC LIMIT 10
             """
         ),
-        {"user_id": user_id},
+        {"user_id": user_id, "language_filter": language_code or "%"},
     ).mappings().all()
     return ReviewOverview(
         queue=_load_words(db, list(queue_ids), user_id),
@@ -210,7 +214,7 @@ def get_spaced_reviews(
     now = datetime.now(timezone.utc)
     planned = schedule(db, user_id, language_code) if user_id else []
     due = [item for item in planned if item[1] <= now]
-    active = _active_row(db, user_id) if user_id else None
+    active = _active_row(db, user_id, language_code) if user_id else None
     return SpacedReviewOverview(
         due_count=len(due), scheduled_count=len(planned),
         next_review_at=min((item[1] for item in planned if item[1] > now), default=None),
@@ -229,7 +233,7 @@ def start_review(
     user_id = _user_id(db, current_user.user_id)
     if user_id is None:
         raise HTTPException(status_code=409, detail="No words need review.")
-    active = _active_row(db, user_id)
+    active = _active_row(db, user_id, language_code)
     if active:
         return _session(db, active, user_id)
     if mode == "spaced":
@@ -243,12 +247,13 @@ def start_review(
         ids = list(db.execute(
             text(
                 """
-                SELECT word_id FROM user_words
-                WHERE user_id = :user_id AND learning_state = 'needs_review'
-                ORDER BY last_seen_at ASC LIMIT 20
+                SELECT uw.word_id FROM user_words AS uw JOIN words AS w ON w.id = uw.word_id
+                WHERE uw.user_id = :user_id AND uw.learning_state = 'needs_review'
+                  AND w.language_code = :language_code
+                ORDER BY uw.last_seen_at ASC LIMIT 20
                 """
             ),
-            {"user_id": user_id},
+            {"user_id": user_id, "language_code": language_code},
         ).scalars().all())
     if not ids:
         raise HTTPException(status_code=409, detail="No words are due yet." if mode == "spaced" else "No words need review.")
@@ -257,15 +262,15 @@ def start_review(
     statement = text(
         """
         INSERT INTO review_sessions (
-            id, user_id, word_ids, status, total_count, correct_count,
+            id, user_id, language_code, word_ids, status, total_count, correct_count,
             started_at, completed_at, updated_at
-        ) VALUES (:id, :user_id, :word_ids, 'in_progress', :total, 0, :now, NULL, :now)
+        ) VALUES (:id, :user_id, :language_code, :word_ids, 'in_progress', :total, 0, :now, NULL, :now)
         ON CONFLICT DO NOTHING
         """
     ).bindparams(bindparam("word_ids", type_=JSON()))
-    db.execute(statement, {"id": session_id, "user_id": user_id, "word_ids": [str(item) for item in ids], "total": len(ids), "now": now})
+    db.execute(statement, {"id": session_id, "user_id": user_id, "language_code": language_code, "word_ids": [str(item) for item in ids], "total": len(ids), "now": now})
     db.commit()
-    return _session(db, _active_row(db, user_id), user_id)
+    return _session(db, _active_row(db, user_id, language_code), user_id)
 
 
 @router.put("/{session_id}/answers", response_model=ReviewSession)

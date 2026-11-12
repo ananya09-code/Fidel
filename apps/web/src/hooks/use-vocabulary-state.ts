@@ -6,18 +6,21 @@ import {
   updateVocabularyState,
   type VocabularyStateUpdate,
 } from "@/lib/api/vocabulary";
+import { usePreferences } from "@/hooks/use-preferences";
 
-const key = (userId: string | null | undefined) =>
-  ["auth", "vocabulary-state", userId ?? "signed-out"] as const;
+const key = (userId: string | null | undefined, languageCode: string) =>
+  ["auth", "vocabulary-state", userId ?? "signed-out", languageCode] as const;
 
 export function useVocabularyState() {
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+  const preferences = usePreferences();
+  const languageCode = preferences.data?.learning_language;
   return useQuery({
-    queryKey: key(userId),
+    queryKey: key(userId, languageCode ?? "unselected"),
     queryFn: async ({ signal }) => {
-      return getVocabularyState(getToken, signal);
+      return getVocabularyState(getToken, languageCode!, signal);
     },
-    enabled: isLoaded && Boolean(isSignedIn && userId),
+    enabled: isLoaded && Boolean(isSignedIn && userId && languageCode),
     staleTime: 30_000,
     retry: false,
   });
@@ -30,11 +33,9 @@ export function useUpdateVocabularyState() {
     mutationFn: async ({ wordId, update }: { wordId: string; update: VocabularyStateUpdate }) => {
       return updateVocabularyState(getToken, wordId, update);
     },
-    onSuccess: async (saved) => {
-      queryClient.setQueryData<{ data: typeof saved[] }>(key(userId), (current) => ({
-        data: [saved, ...(current?.data ?? []).filter((item) => item.word_id !== saved.word_id)],
-      }));
+    onSuccess: async () => {
       await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["auth", "vocabulary-state", userId ?? "signed-out"] }),
         queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId ?? "signed-out"] }),
         queryClient.invalidateQueries({ queryKey: ["auth", "reviews", userId ?? "signed-out"] }),
         queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId ?? "signed-out"] }),

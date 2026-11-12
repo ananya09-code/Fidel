@@ -20,10 +20,12 @@ import {
   startLesson,
   type LessonAttempt,
 } from "@/lib/api/learning";
+import { learningLanguageCodes, type LearningLanguage } from "@/lib/languages";
 
 export const Route = createFileRoute("/_app/Learn/$lessonId")({
   validateSearch: (search: Record<string, unknown>) => ({
-    language_code: typeof search.language_code === "string" ? search.language_code : "om",
+    language_code: learningLanguageCodes.includes(search.language_code as LearningLanguage)
+      ? search.language_code as LearningLanguage : "om",
   }),
   component: LessonPage,
 });
@@ -35,7 +37,7 @@ function LessonPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const savedProgress = useLessonProgress(lessonId);
-  const progress = useLearningProgress();
+  const progress = useLearningProgress(language_code);
   const [localAttempt, setLocalAttempt] = useState<LessonAttempt | null>(null);
   const [sessionWordIds, setSessionWordIds] = useState<string[] | null>(null);
 
@@ -101,7 +103,7 @@ function LessonPage() {
     const value = await completeLesson(getToken, attempt.id);
     cacheAttempt(value);
     await queryClient.invalidateQueries({
-      queryKey: learningProgressKeys.all(userId),
+      queryKey: ["auth", "learning-progress", userId ?? "signed-out"],
     });
     await queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
     await queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });

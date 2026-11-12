@@ -9,6 +9,7 @@ import { LessonQuiz } from "@/components/learn-ui/lesson/LessonQuiz";
 import { ReviewHeader, ReviewOverview } from "@/components/learn-ui/review/ReviewOverview";
 import { MemoryCheck } from "@/components/learn-ui/review/MemoryCheck";
 import { usePreferences } from "@/hooks/use-preferences";
+import type { LearningLanguage } from "@/lib/languages";
 import {
   completeReview,
   getReviews,
@@ -30,24 +31,26 @@ function ReviewPage() {
   const queryClient = useQueryClient();
   const { start, mode } = Route.useSearch();
   const preferences = usePreferences();
+  const languageCode = preferences.data?.learning_language;
   const navigate = useNavigate();
-  const [session, setSession] = useState<ReviewSession | null>(null);
+  const [session, setSession] = useState<{ course: LearningLanguage; value: ReviewSession } | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
   const [isStarting, setIsStarting] = useState(false);
-  const autoStartAttempted = useRef(false);
+  const autoStartAttempted = useRef<LearningLanguage | null>(null);
   const overview = useQuery({
-    queryKey: ["auth", "reviews", userId ?? "signed-out"],
+    queryKey: ["auth", "reviews", userId ?? "signed-out", languageCode],
     queryFn: async ({ signal }) => {
-      return getReviews(getToken, signal);
+      return getReviews(getToken, languageCode!, signal);
     },
-    enabled: Boolean(userId), staleTime: 30_000, retry: false,
+    enabled: Boolean(userId && languageCode), staleTime: 30_000, retry: false,
   });
 
   const begin = useCallback(async (selectedMode: "manual" | "spaced" = "manual") => {
     setActionError(null);
     setIsStarting(true);
     try {
-      setSession(await startReview(getToken, selectedMode, preferences.data?.learning_language ?? "om"));
+      const course = preferences.data?.learning_language ?? "om";
+      setSession({ course, value: await startReview(getToken, selectedMode, course) });
       void queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
     } catch (error) {
       setActionError(error instanceof Error ? error.message : "Unable to start review.");
@@ -57,19 +60,22 @@ function ReviewPage() {
   }, [getToken, preferences.data, queryClient, userId]);
 
   useEffect(() => {
-    if (!start) autoStartAttempted.current = false;
+    if (!start) autoStartAttempted.current = null;
     if (
       start &&
       preferences.isSuccess &&
-      !autoStartAttempted.current &&
+      autoStartAttempted.current !== languageCode &&
       !overview.isPending &&
       overview.data
     ) {
-      autoStartAttempted.current = true;
+      autoStartAttempted.current = languageCode ?? null;
       void begin(mode ?? "manual");
     }
-  }, [begin, overview.data, overview.isPending, start, preferences.isSuccess, mode]);
+  }, [begin, overview.data, overview.isPending, start, preferences.isSuccess, mode, languageCode]);
 
+  if (preferences.isError) {
+    return <div className="fidel-review"><ReviewHeader /><PageState kind="error" title="Couldn't load your learning language" description={preferences.error.message} actionLabel="Try again" onAction={() => void preferences.refetch()} /></div>;
+  }
   if (overview.isPending) {
     return <div className="fidel-review"><ReviewHeader /><PageState kind="loading" title="Loading your review words" /></div>;
   }
@@ -77,7 +83,7 @@ function ReviewPage() {
     return <div className="fidel-review"><ReviewHeader /><PageState kind="error" title="Couldn't load reviews" description={overview.error?.message ?? "No review data was returned."} actionLabel="Try again" onAction={() => void overview.refetch()} /></div>;
   }
 
-  const active = session;
+  const active = session && session.course === languageCode ? session.value : null;
   if (!active) {
     return <ReviewOverview data={overview.data} memoryCheck={<MemoryCheck />} onStart={() => void begin()} isStarting={isStarting} error={actionError} />;
   }
@@ -102,13 +108,13 @@ function ReviewPage() {
       onBack={() => { setSession(null); void overview.refetch(); void navigate({ to: "/review", search: { start: false } }); }}
       onAnswer={async ({ wordId, selectedWordId }) => {
         const saved = await saveReviewAnswer(getToken, active.id, wordId, selectedWordId);
-        setSession(saved);
+        setSession({ course: languageCode!, value: saved });
         void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
         void queryClient.invalidateQueries({ queryKey: ["auth", "vocabulary-state", userId] });
       }}
       onFinish={async () => {
         const completed = await completeReview(getToken, active.id);
-        setSession(completed);
+        setSession({ course: languageCode!, value: completed });
         void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
         await overview.refetch();
         void queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });

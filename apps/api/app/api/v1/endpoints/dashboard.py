@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections import Counter, defaultdict
 from datetime import date, datetime, time, timedelta, timezone
 from math import ceil
-from typing import Annotated, Generator
+from typing import Annotated, Generator, Literal
 from uuid import UUID
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
@@ -74,6 +74,7 @@ def _local_today(learner_tz: ZoneInfo) -> date:
 @router.get("/activity", response_model=StudyActivity)
 def get_study_activity(
     current_user: Annotated[ClerkUser, Depends(get_current_user)],
+    language_code: Literal["om", "am", "ti"] | None = None,
     db: Session = Depends(get_db),
 ) -> StudyActivity:
     """Return a rolling year of saved answers, grouped by the learner's local day.
@@ -96,12 +97,18 @@ def get_study_activity(
         start_at = datetime.combine(start, time.min, tzinfo=learner_tz).astimezone(timezone.utc)
         end_at = datetime.combine(today + timedelta(days=1), time.min, tzinfo=learner_tz).astimezone(timezone.utc)
         timestamps = db.execute(text("""
-            SELECT answered_at FROM answer_attempts
-            WHERE user_id = :user_id AND answered_at >= :start_at AND answered_at < :end_at
+            SELECT a.answered_at FROM answer_attempts AS a
+            JOIN lesson_attempts AS l ON l.id = a.attempt_id AND l.user_id = a.user_id
+            WHERE a.user_id = :user_id AND l.lesson_key LIKE :language_prefix
+              AND a.answered_at >= :start_at AND a.answered_at < :end_at
             UNION ALL
-            SELECT answered_at FROM review_answers
-            WHERE user_id = :user_id AND answered_at >= :start_at AND answered_at < :end_at
-        """), {"user_id": user["id"], "start_at": start_at, "end_at": end_at}).scalars()
+            SELECT a.answered_at FROM review_answers AS a
+            JOIN words AS w ON w.id = a.word_id
+            WHERE a.user_id = :user_id AND w.language_code LIKE :language_filter
+              AND a.answered_at >= :start_at AND a.answered_at < :end_at
+        """), {"user_id": user["id"], "start_at": start_at, "end_at": end_at,
+               "language_prefix": f"{language_code}-%" if language_code else "%",
+               "language_filter": language_code or "%"}).scalars()
         counts.update(_as_datetime(value).astimezone(learner_tz).date() for value in timestamps)
     return StudyActivity(
         timezone=learner_tz.key,
@@ -138,6 +145,7 @@ def _empty(today: date) -> DashboardSummary:
 @router.get("", response_model=DashboardSummary)
 def get_dashboard(
     current_user: Annotated[ClerkUser, Depends(get_current_user)],
+    language_code: Literal["om", "am", "ti"] | None = None,
     db: Session = Depends(get_db),
 ) -> DashboardSummary:
     user = db.execute(
@@ -155,6 +163,8 @@ def get_dashboard(
     if user is None:
         return _empty(datetime.now(timezone.utc).date())
     user_id: UUID = user["id"]
+    language_filter = language_code or "%"
+    language_prefix = f"{language_code}-%" if language_code else "%"
     learner_tz = _learner_timezone(user["timezone"])
     today = _local_today(learner_tz)
     today_start = datetime.combine(today, time.min, tzinfo=learner_tz).astimezone(timezone.utc)
@@ -166,16 +176,17 @@ def get_dashboard(
             SELECT
               COALESCE(SUM(CASE WHEN learning_state = 'learned' THEN 1 ELSE 0 END), 0) AS learned,
               COALESCE(SUM(CASE WHEN learning_state = 'needs_review' THEN 1 ELSE 0 END), 0) AS review
-            FROM user_words WHERE user_id = :user_id
+            FROM user_words AS uw JOIN words AS w ON w.id = uw.word_id
+            WHERE uw.user_id = :user_id AND w.language_code LIKE :language_filter
             """
         ),
-        {"user_id": user_id},
+        {"user_id": user_id, "language_filter": language_filter},
     ).mappings().one()
     words_learned_today = db.execute(
         text(
             """
-            SELECT COUNT(*) FROM user_words
-            WHERE user_id = :user_id
+            SELECT COUNT(*) FROM user_words AS uw JOIN words AS w ON w.id = uw.word_id
+            WHERE uw.user_id = :user_id AND w.language_code LIKE :language_filter
               AND learning_state = 'learned'
               AND last_seen_at >= :today_start
               AND last_seen_at < :tomorrow_start
@@ -183,6 +194,7 @@ def get_dashboard(
         ),
         {
             "user_id": user_id,
+            "language_filter": language_filter,
             "today_start": today_start,
             "tomorrow_start": tomorrow_start,
         },
@@ -192,38 +204,44 @@ def get_dashboard(
             """
             SELECT lesson_key, category_label, status, stage, question_index,
                    question_count, correct_count, started_at, completed_at, updated_at
-            FROM lesson_attempts WHERE user_id = :user_id
+            FROM lesson_attempts WHERE user_id = :user_id AND lesson_key LIKE :language_prefix
             ORDER BY updated_at DESC
             """
         ),
-        {"user_id": user_id},
+        {"user_id": user_id, "language_prefix": language_prefix},
     ).mappings().all()
     review_rows = db.execute(
         text(
             """
             SELECT status, total_count, correct_count, started_at, completed_at, updated_at
-            FROM review_sessions WHERE user_id = :user_id
+            FROM review_sessions WHERE user_id = :user_id AND COALESCE(language_code, '') LIKE :language_filter
             ORDER BY updated_at DESC
             """
         ),
-        {"user_id": user_id},
+        {"user_id": user_id, "language_filter": language_filter},
     ).mappings().all()
     answer_times = list(db.execute(
-        text("SELECT answered_at FROM answer_attempts WHERE user_id = :user_id"),
-        {"user_id": user_id},
+        text("""SELECT a.answered_at FROM answer_attempts AS a
+                JOIN lesson_attempts AS l ON l.id = a.attempt_id AND l.user_id = a.user_id
+                WHERE a.user_id = :user_id AND l.lesson_key LIKE :language_prefix"""),
+        {"user_id": user_id, "language_prefix": language_prefix},
     ).scalars().all()) + list(db.execute(
-        text("SELECT answered_at FROM review_answers WHERE user_id = :user_id"),
-        {"user_id": user_id},
+        text("""SELECT a.answered_at FROM review_answers AS a JOIN words AS w ON w.id = a.word_id
+                WHERE a.user_id = :user_id AND w.language_code LIKE :language_filter"""),
+        {"user_id": user_id, "language_filter": language_filter},
     ).scalars().all())
     correct_answers = db.execute(
         text(
             """
             SELECT
-              (SELECT COUNT(*) FROM answer_attempts WHERE user_id = :user_id AND is_correct = true) +
-              (SELECT COUNT(*) FROM review_answers WHERE user_id = :user_id AND is_correct = true)
+              (SELECT COUNT(*) FROM answer_attempts AS a
+               JOIN lesson_attempts AS l ON l.id = a.attempt_id AND l.user_id = a.user_id
+               WHERE a.user_id = :user_id AND a.is_correct = true AND l.lesson_key LIKE :language_prefix) +
+              (SELECT COUNT(*) FROM review_answers AS a JOIN words AS w ON w.id = a.word_id
+               WHERE a.user_id = :user_id AND a.is_correct = true AND w.language_code LIKE :language_filter)
             """
         ),
-        {"user_id": user_id},
+        {"user_id": user_id, "language_prefix": language_prefix, "language_filter": language_filter},
     ).scalar_one()
 
     minutes_by_date: dict[date, int] = defaultdict(int)
@@ -274,7 +292,7 @@ def get_dashboard(
         streak_days=streak,
         learned_words=int(word_counts["learned"]),
         needs_review_words=int(word_counts["review"]),
-        lessons_completed=len(lesson_word_coverage(db, user_id)[0]),
+        lessons_completed=len(lesson_word_coverage(db, user_id, language_code)[0]),
         reviews_completed=sum(row["status"] == "completed" for row in review_rows),
         correct_answers=int(correct_answers),
         current_lesson=current,

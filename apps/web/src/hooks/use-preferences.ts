@@ -40,6 +40,10 @@ export function useUpdatePreferences() {
         preferences,
       );
       void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
+      void queryClient.invalidateQueries({ queryKey: ["auth", "learning-progress", userId] });
+      void queryClient.invalidateQueries({ queryKey: ["auth", "reviews", userId] });
+      void queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
+      void queryClient.invalidateQueries({ queryKey: ["auth", "vocabulary-state", userId] });
     },
   });
 }

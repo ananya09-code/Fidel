@@ -12,7 +12,7 @@ const learningLevelSchema = z.object({
   lessons: z.array(learningLessonSchema),
 });
 export const learningPathSchema = z.object({
-  language_code: z.string(), total_words: z.number().int().nonnegative(),
+  language_code: z.enum(["om", "am", "ti"]), total_words: z.number().int().nonnegative(),
   levels: z.array(learningLevelSchema),
 });
 const lessonWordSchema = z.object({
@@ -88,8 +88,8 @@ export async function getLessonWords(lessonKey: string, languageCode: string, si
   }
   return { ...result, pagination: { ...page.pagination, offset: 0, limit: result.words.length } };
 }
-export function getProgress(token: ApiToken, signal?: AbortSignal) {
-  return apiFetch("/api/v1/progress", progressSummarySchema, {
+export function getProgress(token: ApiToken, languageCode: "om" | "am" | "ti", signal?: AbortSignal) {
+  return apiFetch(`/api/v1/progress?language_code=${languageCode}`, progressSummarySchema, {
     ...authenticatedRequest(token), signal,
   });
 }
