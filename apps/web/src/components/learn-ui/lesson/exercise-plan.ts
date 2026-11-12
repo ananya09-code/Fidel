@@ -13,14 +13,31 @@ export function shuffleExercise<T>(items: T[], seed: string): T[] {
 
 const normalize = (value: string) => value.normalize("NFKC").trim().toLocaleLowerCase("en").replace(/\s+/g, " ");
 
-/** Two recognition questions, then 3–5 unambiguous pairs; the rest stay choice. */
+/** A contiguous round of unambiguous pairs after two choice questions. */
 export function matchingIndices(words: WordIdentity[], variant: "practice" | "quiz"): number[] {
-  if (variant === "quiz") return [];
+  if (variant === "quiz" && words.length < 8) return [];
+  const target = variant === "quiz"
+    ? Math.min(5, Math.max(3, Math.round(words.length / 4)))
+    : 5;
+  if (variant === "quiz") {
+    // Keep the round contiguous so finishing it never skips an unanswered word.
+    for (let size = target; size >= 3; size--) {
+      for (let start = 2; start + size <= words.length; start++) {
+        const block = words.slice(start, start + size);
+        if (new Set(block.map(word => normalize(word.word))).size !== size ||
+            new Set(block.map(word => normalize(word.meaning))).size !== size ||
+            new Set(block.map(word => word.id)).size !== size ||
+            block.some(word => !normalize(word.word) || !normalize(word.meaning))) continue;
+        return block.map((_, offset) => start + offset);
+      }
+    }
+    return [];
+  }
   const labels = new Set<string>();
   const meanings = new Set<string>();
   const ids = new Set<string>();
   const indices: number[] = [];
-  for (let i = 2; i < Math.min(words.length, 7); i++) {
+  for (let i = 2; i < Math.min(words.length, 2 + target); i++) {
     const word = words[i];
     const label = normalize(word.word);
     const meaning = normalize(word.meaning);
@@ -30,14 +47,18 @@ export function matchingIndices(words: WordIdentity[], variant: "practice" | "qu
   return indices.length >= 3 ? indices : [];
 }
 
-/** One audio question per session, outside the matching round. Stable on resume. */
-export function listeningIndex(
+/** About a quarter of review words use audio; practice introduces one. Stable on resume. */
+export function listeningIndices(
   words: (WordIdentity & { audioUrl?: string | null })[],
   variant: "practice" | "quiz",
-): number {
-  if (words.length < 2) return -1;
+): number[] {
+  if (words.length < 2) return [];
   const matching = new Set(matchingIndices(words, variant));
   const eligible = words.map((word, index) => word.audioUrl && !matching.has(index) ? index : -1)
     .filter(index => index >= 0);
-  return eligible.find(index => index > 0) ?? eligible[0] ?? -1;
+  const target = variant === "quiz" ? Math.min(5, Math.max(1, Math.floor(words.length / 4))) : 1;
+  const preferred = eligible.filter(index => index > 0);
+  const candidates = preferred.length >= target ? preferred : eligible;
+  const count = Math.min(target, candidates.length);
+  return Array.from({ length: count }, (_, slot) => candidates[Math.floor((slot + .5) * candidates.length / count)]);
 }
