@@ -5,7 +5,7 @@ import ts from 'typescript';
 const source=readFileSync(new URL('../src/components/learn-ui/lesson/exercise-plan.ts',import.meta.url),'utf8');
 const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
 const exports={};new Function('exports',compiled)(exports);
-const {matchingIndices,shuffleExercise}=exports;
+const {matchingIndices,listeningIndex,shuffleExercise}=exports;
 const words=Array.from({length:10},(_,i)=>({id:String(i),word:'word '+i,meaning:'meaning '+i}));
 test('mixes two recognition questions with up to five pairs',()=>{
  assert.deepEqual(matchingIndices(words,'practice'),[2,3,4,5,6]);
@@ -28,4 +28,12 @@ test('shuffle is stable across a resumed session and never mutates input',()=>{
  assert.deepEqual(a,shuffleExercise(words,'same-session'));
  assert.deepEqual(words.map(w=>w.id),before);
  assert.deepEqual(a.map(w=>w.id).sort(),before.slice().sort());
+});
+test('listening uses an approved audio word outside matching and stays stable on resume',()=>{
+ const withAudio=words.map((word,index)=>({...word,audioUrl:[0,3,7].includes(index)?`/audio/${index}`:null}));
+ assert.equal(listeningIndex(withAudio,'practice'),7);
+ assert.equal(listeningIndex(withAudio,'practice'),7);
+ assert.equal(listeningIndex(withAudio,'quiz'),3);
+ assert.equal(listeningIndex(words,'practice'),-1);
+ assert.equal(listeningIndex(withAudio.slice(0,1),'practice'),-1);
 });

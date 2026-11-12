@@ -29,3 +29,15 @@ export function matchingIndices(words: WordIdentity[], variant: "practice" | "qu
   }
   return indices.length >= 3 ? indices : [];
 }
+
+/** One audio question per session, outside the matching round. Stable on resume. */
+export function listeningIndex(
+  words: (WordIdentity & { audioUrl?: string | null })[],
+  variant: "practice" | "quiz",
+): number {
+  if (words.length < 2) return -1;
+  const matching = new Set(matchingIndices(words, variant));
+  const eligible = words.map((word, index) => word.audioUrl && !matching.has(index) ? index : -1)
+    .filter(index => index >= 0);
+  return eligible.find(index => index > 0) ?? eligible[0] ?? -1;
+}
