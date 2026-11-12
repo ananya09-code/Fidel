@@ -4,6 +4,7 @@ import type { FlashcardWord } from "./Flashcard";
 import { shuffleExercise } from "./exercise-plan";
 import { TeacherFeedback } from "./TeacherFeedback";
 import type { EncouragementEvent } from "./encouragement";
+import { playFeedbackSound, prepareFeedbackSound } from "@/lib/feedback-sounds";
 import "./matching.css";
 
 type Props = {
@@ -13,9 +14,10 @@ type Props = {
   onComplete: () => Promise<void>;
   isCompleting?: boolean;
   continueLabel?: string;
+  soundEnabled?: boolean;
 };
 
-export function MatchingRound({ words, initialAnswers = {}, onAnswer, onComplete, isCompleting, continueLabel = "Continue practice" }: Props) {
+export function MatchingRound({ words, initialAnswers = {}, onAnswer, onComplete, isCompleting, continueLabel = "Continue practice", soundEnabled = false }: Props) {
   const seed = words.map(word => word.id).join("|");
   const left = useMemo(() => shuffleExercise(words, seed + "-words"), [words, seed]);
   const right = useMemo(() => {
@@ -54,6 +56,7 @@ export function MatchingRound({ words, initialAnswers = {}, onAnswer, onComplete
     selection.current = { word: a, meaning: b };
     setSelectedLeft(a); setSelectedRight(b);
     if (!a || !b) return;
+    prepareFeedbackSound(soundEnabled);
     busy.current = true;
     setSaving(true);
     const correct = a === b;
@@ -64,6 +67,7 @@ export function MatchingRound({ words, initialAnswers = {}, onAnswer, onComplete
         setResults(previous => ({ ...previous, [a]: correct }));
       }
       if (correct) {
+        playFeedbackSound("correct", soundEnabled);
         setMatched(previous => new Set([...previous, a]));
         setSelectedLeft(null); setSelectedRight(null);
         selection.current = { word: null, meaning: null };
@@ -80,6 +84,7 @@ export function MatchingRound({ words, initialAnswers = {}, onAnswer, onComplete
           else continueButton.current?.focus();
         });
       } else {
+        playFeedbackSound("retry", soundEnabled);
         setWrong(true);
         run.current = 0;
         reactionCount.current++;

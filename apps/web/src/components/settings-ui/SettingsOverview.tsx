@@ -40,7 +40,7 @@ export function SettingsForm({ settings, onChange, onAppearance, onSave, onSignO
         <section className="settings-section"><div className="settings-section-title"><h2>Make it comfortable</h2><p>Your time, sound and appearance.</p></div><div className="settings-panel">
           <label className="settings-row"><span>Daily reminder<span>Save your reminder preference</span></span><input className="app-switch" type="checkbox" role="switch" checked={settings.reminders_enabled} onChange={(event) => onChange("reminders_enabled", event.target.checked)} /></label>
           {settings.reminders_enabled && <label className="settings-row"><span>Reminder time<span>A time that suits your day</span></span><input type="time" value={settings.reminder_time} onChange={(event) => onChange("reminder_time", event.target.value)} /></label>}
-          <label className="settings-row"><span>Lesson sounds<span>Sound effects where supported</span></span><input className="app-switch" type="checkbox" role="switch" checked={settings.sound_enabled} onChange={(event) => onChange("sound_enabled", event.target.checked)} /></label>
+          <label className="settings-row"><span>Practice sounds<span>Answer and completion cues. Word audio plays separately.</span></span><input className="app-switch" type="checkbox" role="switch" checked={settings.sound_enabled} onChange={(event) => onChange("sound_enabled", event.target.checked)} /></label>
           <div className="settings-appearance"><h3>Appearance</h3><AppearancePicker value={settings.appearance} onChange={onAppearance} /><p>Preview now. Save changes to remember it.</p></div>
         </div></section>
       </fieldset>
