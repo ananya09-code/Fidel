@@ -94,6 +94,7 @@ function ReviewPage() {
     <LessonQuiz
       words={words}
       variant="quiz"
+      languageCode={preferences.data?.learning_language === "am" || preferences.data?.learning_language === "ti" ? preferences.data.learning_language : "om"}
       choiceWords={active.choice_words.map((word) => ({ id: word.id, word: word.text, meaning: word.meaning, amharic: word.amharic, audioUrl: word.audio_url }))}
       category="Vocabulary quiz"
       initialQuestionIndex={firstUnanswered}

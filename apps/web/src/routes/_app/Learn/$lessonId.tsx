@@ -154,6 +154,7 @@ function LessonPage() {
       <LessonQuiz
         key={attempt.id}
         words={sessionWords}
+        languageCode={language_code === "am" || language_code === "ti" ? language_code : "om"}
         category={lesson.data.lesson.category}
         initialQuestionIndex={attempt.question_index}
         initialAnswers={Object.fromEntries(
