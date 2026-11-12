@@ -13,7 +13,7 @@ function clientWith(apiFetch) {
   }).outputText;
   const require = (name) => {
     if (name === "zod") return zod;
-    if (name === "@/lib/api") return { apiFetch };
+    if (name === "@/lib/api") return { apiFetch, authenticatedRequest: () => ({}) };
     throw new Error(`Unexpected import: ${name}`);
   };
   new Function("require", "exports", compiled)(require, exports);
@@ -57,4 +57,15 @@ test("rejects pagination that makes no progress instead of looping forever", asy
     words: [], pagination: { limit: 50, offset: 0, total: 60, has_more: true },
   }));
   await assert.rejects(client.getLessonWords("lesson", "om"), /remaining lesson words/);
+});
+
+test("requests progress for the selected language", async () => {
+  const paths = [];
+  const client = clientWith(async (path) => { paths.push(path); return { completed_lesson_keys: [] }; });
+  await client.getProgress(async () => "test-token", "om");
+  await client.getProgress(async () => "test-token", "am");
+  assert.deepEqual(paths, [
+    "/api/v1/progress?language_code=om",
+    "/api/v1/progress?language_code=am",
+  ]);
 });

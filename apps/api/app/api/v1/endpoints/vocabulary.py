@@ -1,7 +1,7 @@
 """Authenticated per-user vocabulary state."""
 
 from datetime import datetime, timezone
-from typing import Annotated, Generator
+from typing import Annotated, Generator, Literal
 from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -60,6 +60,7 @@ def _serialize(row) -> VocabularyState:
 @router.get("", response_model=VocabularyStateList)
 def list_vocabulary_state(
     current_user: Annotated[ClerkUser, Depends(get_current_user)],
+    language_code: Literal["om", "am", "ti"] | None = None,
     db: Session = Depends(get_db),
 ) -> VocabularyStateList:
     user_id = _user_id(db, current_user.user_id)
@@ -68,13 +69,14 @@ def list_vocabulary_state(
     rows = db.execute(
         text(
             """
-            SELECT word_id, is_favorite, learning_state, times_seen, times_correct
-            FROM user_words
-            WHERE user_id = :user_id
-            ORDER BY last_seen_at DESC, word_id
+            SELECT uw.word_id, uw.is_favorite, uw.learning_state, uw.times_seen, uw.times_correct
+            FROM user_words AS uw
+            JOIN words AS w ON w.id = uw.word_id
+            WHERE uw.user_id = :user_id AND w.language_code LIKE :language_filter
+            ORDER BY uw.last_seen_at DESC, uw.word_id
             """
         ),
-        {"user_id": user_id},
+        {"user_id": user_id, "language_filter": language_code or "%"},
     ).mappings().all()
     return VocabularyStateList(data=[_serialize(row) for row in rows])
 

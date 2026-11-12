@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
+import type { LearningLanguage } from "@/lib/languages";
 
 const currentLessonSchema = z.object({
   lesson_key: z.string(), title: z.string(), stage: z.string(),
@@ -38,14 +39,14 @@ export const studyActivitySchema = z.object({
 export type StudyActivity = z.infer<typeof studyActivitySchema>;
 export type StudyActivityDay = StudyActivity["days"][number];
 
-export function getStudyActivity(token: ApiToken, signal?: AbortSignal) {
-  return apiFetch("/api/v1/dashboard/activity", studyActivitySchema, {
+export function getStudyActivity(token: ApiToken, languageCode: LearningLanguage, signal?: AbortSignal) {
+  return apiFetch(`/api/v1/dashboard/activity?language_code=${languageCode}`, studyActivitySchema, {
     ...authenticatedRequest(token), signal,
   });
 }
 
-export function getDashboard(token: ApiToken, signal?: AbortSignal) {
-  return apiFetch("/api/v1/dashboard", dashboardSchema, {
+export function getDashboard(token: ApiToken, languageCode: LearningLanguage, signal?: AbortSignal) {
+  return apiFetch(`/api/v1/dashboard?language_code=${languageCode}`, dashboardSchema, {
     ...authenticatedRequest(token), signal,
   });
 }

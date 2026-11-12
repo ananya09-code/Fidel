@@ -10,7 +10,7 @@ from app.api.v1.endpoints.learning import make_slug, normalize_level
 
 
 def lesson_word_coverage(
-    db: Session, user_id: UUID
+    db: Session, user_id: UUID, language_code: str | None = None
 ) -> tuple[list[str], dict[str, list[str]]]:
     """Count distinct target words in this user's finished practice sessions.
 
@@ -22,8 +22,8 @@ def lesson_word_coverage(
     for word in db.execute(text("""
         SELECT id, language_code, difficulty,
                COALESCE(NULLIF(TRIM(category), ''), 'uncategorized') AS category
-        FROM words WHERE status = 'approved'
-    """)).mappings():
+        FROM words WHERE status = 'approved' AND language_code LIKE :language_filter
+    """), {"language_filter": language_code or "%"}).mappings():
         key = "-".join((
             make_slug(word["language_code"]),
             make_slug(normalize_level(word["difficulty"])),
@@ -37,7 +37,8 @@ def lesson_word_coverage(
         FROM answer_attempts AS a
         JOIN lesson_attempts AS l ON l.id = a.attempt_id AND l.user_id = a.user_id
         WHERE a.user_id = :user_id AND l.status = 'completed'
-    """).columns(word_ids=JSON()), {"user_id": user_id}).mappings()
+          AND l.lesson_key LIKE :language_prefix
+    """).columns(word_ids=JSON()), {"user_id": user_id, "language_prefix": f"{language_code}-%" if language_code else "%"}).mappings()
     for answer in answers:
         targets = answer["word_ids"]
         key = answer["lesson_key"]

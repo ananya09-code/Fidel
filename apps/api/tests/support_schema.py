@@ -269,6 +269,7 @@ review_sessions = Table(
     metadata,
     Column("id", Uuid, primary_key=True),
     Column("user_id", Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False),
+    Column("language_code", String),
     Column("word_ids", JSON, nullable=False),
     Column("status", String, nullable=False, server_default="in_progress"),
     Column("total_count", Integer, nullable=False),
@@ -281,7 +282,9 @@ review_sessions = Table(
     CheckConstraint("correct_count >= 0 AND correct_count <= total_count", name="review_sessions_correct_count_check"),
     CheckConstraint("(status = 'completed') = (completed_at IS NOT NULL)", name="review_sessions_completion_check"),
     Index("review_sessions_user_recent_idx", "user_id", "started_at"),
-    Index("review_sessions_one_in_progress_per_user", "user_id", unique=True, sqlite_where=text("status = 'in_progress'"), postgresql_where=text("status = 'in_progress'")),
+    CheckConstraint("language_code IS NULL OR language_code IN ('om','am','ti')", name="review_sessions_language_check"),
+    Index("review_sessions_one_in_progress_per_language", "user_id", "language_code", unique=True, sqlite_where=text("status = 'in_progress' AND language_code IS NOT NULL"), postgresql_where=text("status = 'in_progress' AND language_code IS NOT NULL")),
+    Index("review_sessions_one_legacy_in_progress", "user_id", unique=True, sqlite_where=text("status = 'in_progress' AND language_code IS NULL"), postgresql_where=text("status = 'in_progress' AND language_code IS NULL")),
 )
 
 review_answers = Table(

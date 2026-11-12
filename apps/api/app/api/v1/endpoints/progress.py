@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
-from typing import Annotated, Any, Generator, Mapping
+from typing import Annotated, Any, Generator, Literal, Mapping
 from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -127,6 +127,7 @@ def _require_attempt(
 @router.get("", response_model=ProgressSummary)
 def get_progress_summary(
     current_user: Annotated[ClerkUser, Depends(get_current_user)],
+    language_code: Literal["om", "am", "ti"] | None = None,
     db: Session = Depends(get_db),
 ) -> ProgressSummary:
     """Return progress owned by the verified Clerk user."""
@@ -141,17 +142,18 @@ def get_progress_summary(
             in_progress=[],
         )
 
-    completed, practiced = lesson_word_coverage(db, user_id)
+    completed, practiced = lesson_word_coverage(db, user_id, language_code)
     counts = db.execute(
         text(
             """
             SELECT COUNT(*) AS answered,
                    COALESCE(SUM(CASE WHEN is_correct THEN 1 ELSE 0 END), 0) AS correct
-            FROM answer_attempts
-            WHERE user_id = :user_id
+            FROM answer_attempts AS a
+            JOIN lesson_attempts AS l ON l.id = a.attempt_id AND l.user_id = a.user_id
+            WHERE a.user_id = :user_id AND l.lesson_key LIKE :language_prefix
             """
         ),
-        {"user_id": user_id},
+        {"user_id": user_id, "language_prefix": f"{language_code}-%" if language_code else "%"},
     ).mappings().one()
     active = db.execute(
         text(
@@ -162,10 +164,11 @@ def get_progress_summary(
                    updated_at
             FROM lesson_attempts
             WHERE user_id = :user_id AND status = 'in_progress'
+              AND lesson_key LIKE :language_prefix
             ORDER BY updated_at DESC
             """
         ),
-        {"user_id": user_id},
+        {"user_id": user_id, "language_prefix": f"{language_code}-%" if language_code else "%"},
     ).mappings().all()
     return ProgressSummary(
         lessons_completed=len(completed),

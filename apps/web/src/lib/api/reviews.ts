@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
+import type { LearningLanguage } from "@/lib/languages";
 
 const reviewWordSchema = z.object({
   id: z.string().uuid(), text: z.string(), meaning: z.string(),
@@ -35,8 +36,8 @@ export function getSpacedReviews(token: ApiToken, languageCode: "om" | "am" | "t
   return apiFetch(`/api/v1/reviews/spaced?language_code=${languageCode}`, spacedReviewSchema, { ...authenticatedRequest(token), signal });
 }
 
-export function getReviews(token: ApiToken, signal?: AbortSignal) {
-  return apiFetch("/api/v1/reviews", reviewOverviewSchema, { ...authenticatedRequest(token), signal });
+export function getReviews(token: ApiToken, languageCode: LearningLanguage, signal?: AbortSignal) {
+  return apiFetch(`/api/v1/reviews?language_code=${languageCode}`, reviewOverviewSchema, { ...authenticatedRequest(token), signal });
 }
 export function startReview(token: ApiToken, mode: "manual" | "spaced" = "manual", languageCode: "om" | "am" | "ti" = "om") {
   return apiFetch(`/api/v1/reviews/start?mode=${mode}&language_code=${languageCode}`, reviewSessionSchema, {

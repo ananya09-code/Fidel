@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
+import type { LearningLanguage } from "@/lib/languages";
 
 export const learningStateSchema = z.enum(["learning", "learned", "needs_review"]);
 export const vocabularyStateSchema = z.object({
@@ -19,8 +20,8 @@ export type VocabularyStateUpdate = {
   learning_state?: LearningState;
 };
 
-export function getVocabularyState(token: ApiToken, signal?: AbortSignal) {
-  return apiFetch("/api/v1/vocabulary", vocabularyStateListSchema, {
+export function getVocabularyState(token: ApiToken, languageCode: LearningLanguage, signal?: AbortSignal) {
+  return apiFetch(`/api/v1/vocabulary?language_code=${languageCode}`, vocabularyStateListSchema, {
     ...authenticatedRequest(token), signal,
   });
 }
