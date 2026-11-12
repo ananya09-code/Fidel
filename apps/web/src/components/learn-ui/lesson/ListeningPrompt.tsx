@@ -1,26 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Volume2, AudioLines } from "lucide-react";
 import type { FlashcardWord } from "./Flashcard";
-
-type LanguageCode = "am" | "om" | "ti";
-
-const guides: Record<LanguageCode, { name: string; image: string }> = {
-  am: { name: "Abeba", image: "/quest/characters/am-guide.svg" },
-  om: { name: "Caaltuu", image: "/quest/characters/om-guide.svg" },
-  ti: { name: "Selam", image: "/quest/characters/ti-guide.svg" },
-};
+import { questGuides, type QuestLanguageCode } from "./quest-guide";
 
 export function ListeningPrompt({
   word, languageCode, onAudioUnavailable,
 }: {
   word: FlashcardWord;
-  languageCode: LanguageCode;
+  languageCode: QuestLanguageCode;
   onAudioUnavailable: () => void;
 }) {
   const audio = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
   const [error, setError] = useState(false);
-  const guide = guides[languageCode];
+  const guide = questGuides[languageCode];
 
   useEffect(() => {
     const player = audio.current;

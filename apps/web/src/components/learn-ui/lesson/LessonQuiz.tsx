@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Check, LoaderCircle, RotateCcw, X } from "lucide
 import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
 import { topicLabel } from "@/components/homepage-ui/labels";
 import { MatchingRound } from "./MatchingRound";
-import { listeningIndex, matchingIndices, shuffleExercise as shuffle } from "./exercise-plan";
+import { listeningIndices, matchingIndices, shuffleExercise as shuffle } from "./exercise-plan";
 import { ListeningPrompt } from "./ListeningPrompt";
 import { TeacherFeedback } from "./TeacherFeedback";
 import { correctRun, type EncouragementEvent } from "./encouragement";
@@ -102,8 +102,8 @@ export function LessonQuiz({
 
   const answered = selectedId !== undefined;
   const correct = selectedId === currentQuestion?.word.id;
-  const audioQuestionIndex = listeningIndex(questions.map(question => question.word), variant);
-  const listening = currentIndex === audioQuestionIndex && readInstead !== currentQuestion?.word.id;
+  const listening = listeningIndices(questions.map(question => question.word), variant).includes(currentIndex)
+    && readInstead !== currentQuestion?.word.id;
 
   const missedWords = questions
     .filter((question) => answers[question.word.id] !== question.word.id)
@@ -211,12 +211,12 @@ export function LessonQuiz({
   if (matching.includes(currentIndex)) {
     const roundWords = matching.map(index => questions[index].word);
     const nextIndex = matching[matching.length - 1] + 1;
-    return <div className="fidel-study">
-      <header className="study-header"><button type="button" className="study-text-button" onClick={onBack}><ArrowLeft size={18} aria-hidden="true" />Exit practice</button><span>{topicLabel(category)}</span></header>
+    return <div className={"fidel-study" + (variant === "quiz" ? " is-quiz" : "")}>
+      <header className="study-header"><button type="button" className="study-text-button" onClick={onBack}><ArrowLeft size={18} aria-hidden="true" />{variant === "quiz" ? "Save & exit quiz" : "Exit practice"}</button><span>{topicLabel(category)}</span></header>
       <div className="study-progress-label"><h1>Match the pairs</h1><span>{Object.keys(answers).length} / {questions.length} answered</span></div>
-      <progress className="study-progress" value={Object.keys(answers).length} max={questions.length} aria-label="Saved practice answers" />
+      <progress className="study-progress" value={Object.keys(answers).length} max={questions.length} aria-label={variant === "quiz" ? "Saved quiz answers" : "Saved practice answers"} />
       <MatchingRound words={roundWords} initialAnswers={Object.fromEntries(roundWords.filter(word => word.id in answers).map(word => [word.id, answers[word.id] === word.id]))}
-        isCompleting={isSaving} continueLabel={nextIndex >= questions.length ? "See my results" : "Continue practice"}
+        isCompleting={isSaving} continueLabel={nextIndex >= questions.length ? variant === "quiz" ? "Finish quiz" : "See my results" : variant === "quiz" ? "Continue quiz" : "Continue practice"}
         onAnswer={async (wordId, selectedWordId) => {
           const questionIndex = questions.findIndex(question => question.word.id === wordId);
           if (questionIndex < 0) throw new Error("This word is no longer in the practice session.");
@@ -233,12 +233,12 @@ export function LessonQuiz({
     <div className="study-progress-label"><h1>{listening ? "Listening challenge" : variant === "quiz" ? "Choose the right word" : "Find the matching word"}</h1><span>{variant === "quiz" ? "Question " : ""}{currentIndex + 1} of {questions.length}</span></div>
     <progress className="study-progress" value={variant === "quiz" ? Object.keys(answers).length : currentIndex + 1} max={questions.length} aria-label={variant === "quiz" ? "Quiz progress" : "Practice progress"} />
     <div className="study-feedback-space" aria-live="polite" aria-atomic="true">
-      {answered && <TeacherFeedback event={reaction ?? { id: currentQuestion.word.id, outcome: correct ? "correct" : "incorrect", turn: 0 }} animate={reaction !== null}>
+      {answered && <TeacherFeedback event={reaction ?? { id: currentQuestion.word.id, outcome: correct ? "correct" : "incorrect", turn: 0 }} animate={reaction !== null} questGuide={listening ? languageCode : undefined}>
         <p>{currentQuestion.word.meaning} — <strong>{currentQuestion.word.word}</strong></p>
         <p lang="am">{currentQuestion.word.amharic ?? "Amharic translation unavailable"}</p>
       </TeacherFeedback>}
     </div>
-    {listening ? <ListeningPrompt key={currentQuestion.word.id} word={currentQuestion.word} languageCode={languageCode} onAudioUnavailable={() => setReadInstead(currentQuestion.word.id)} /> : <section className="study-question" aria-label="Word to translate">
+    {listening ? !answered && <ListeningPrompt key={currentQuestion.word.id} word={currentQuestion.word} languageCode={languageCode} onAudioUnavailable={() => setReadInstead(currentQuestion.word.id)} /> : <section className="study-question" aria-label="Word to translate">
       <dl className="study-translations"><div><dt>English</dt><dd>{currentQuestion.word.meaning}</dd></div><div><dt>Amharic</dt><dd lang="am">{currentQuestion.word.amharic ?? "Translation unavailable"}</dd></div></dl>
     </section>}
     <div className="study-options" role="group" aria-label={listening ? "Choose the meaning you heard" : "Choose the matching word"}>
