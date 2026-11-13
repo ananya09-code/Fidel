@@ -33,7 +33,8 @@ def _load_row(db: Session, clerk_id: str) -> Mapping[str, Any] | None:
             SELECT
                 p.learning_language, p.proficiency_level, p.motivations,
                 p.daily_goal_minutes, p.interface_language,
-                p.reminders_enabled, p.reminder_time, p.sound_enabled,
+                p.reminders_enabled, p.quiz_notifications_enabled,
+                p.streak_notifications_enabled, p.reminder_time, p.sound_enabled,
                 p.sound_volume,
                 p.haptics_enabled,
                 p.appearance, p.timezone, p.onboarding_completed,
@@ -62,6 +63,8 @@ def _serialize(row: Mapping[str, Any] | None) -> UserPreferences:
         daily_goal_words=row["daily_goal_minutes"],
         interface_language=row["interface_language"],
         reminders_enabled=bool(row["reminders_enabled"]),
+        quiz_notifications_enabled=bool(row["quiz_notifications_enabled"]),
+        streak_notifications_enabled=bool(row["streak_notifications_enabled"]),
         reminder_time=row["reminder_time"],
         sound_enabled=bool(row["sound_enabled"]),
         sound_volume=row["sound_volume"],
@@ -130,11 +133,13 @@ def update_preferences(
             INSERT INTO user_preferences (
                 user_id, learning_language, proficiency_level, motivations,
                 daily_goal_minutes, interface_language, reminders_enabled,
+                quiz_notifications_enabled, streak_notifications_enabled,
                 reminder_time, sound_enabled, sound_volume, haptics_enabled, appearance, timezone,
                 onboarding_completed, created_at, updated_at
             ) VALUES (
                 :user_id, :learning_language, :proficiency_level, :motivations,
                 :daily_goal_minutes, :interface_language, :reminders_enabled,
+                :quiz_notifications_enabled, :streak_notifications_enabled,
                 :reminder_time, :sound_enabled, :sound_volume, :haptics_enabled, :appearance, :timezone,
                 :onboarding_completed, :now, :now
             )
@@ -145,6 +150,8 @@ def update_preferences(
                 daily_goal_minutes = excluded.daily_goal_minutes,
                 interface_language = excluded.interface_language,
                 reminders_enabled = excluded.reminders_enabled,
+                quiz_notifications_enabled = excluded.quiz_notifications_enabled,
+                streak_notifications_enabled = excluded.streak_notifications_enabled,
                 reminder_time = excluded.reminder_time,
                 sound_enabled = excluded.sound_enabled,
                 sound_volume = excluded.sound_volume,

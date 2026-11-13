@@ -46,6 +46,12 @@ class Settings(BaseSettings):
     clerk_jwt_key: SecretStr | None = None
     clerk_authorized_parties: list[str] | None = None
 
+    # Web Push credentials. The public key may be returned to browsers;
+    # the private key and contact address remain server-only.
+    vapid_public_key: str | None = None
+    vapid_private_key: SecretStr | None = None
+    vapid_subject: str | None = None
+
 
 @lru_cache
 def get_settings() -> Settings:
