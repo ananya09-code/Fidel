@@ -31,6 +31,8 @@ class UserPreferencesUpdate(BaseModel):
         default=None, pattern=r"^(?:[01][0-9]|2[0-3]):[0-5][0-9]$"
     )
     sound_enabled: bool | None = None
+    sound_volume: int | None = Field(default=None, ge=0, le=100)
+    haptics_enabled: bool | None = None
     appearance: Appearance | None = None
     timezone: str | None = Field(default=None, min_length=1, max_length=100)
     onboarding_completed: bool | None = None
@@ -57,6 +59,8 @@ class UserPreferences(BaseModel):
     reminders_enabled: bool = True
     reminder_time: str = "19:00"
     sound_enabled: bool = True
+    sound_volume: int = Field(default=75, ge=0, le=100)
+    haptics_enabled: bool = True
     appearance: Appearance = "system"
     timezone: str = "UTC"
     onboarding_completed: bool = False

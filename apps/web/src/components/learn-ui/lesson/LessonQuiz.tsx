@@ -11,6 +11,7 @@ import { TeacherFeedback } from "./TeacherFeedback";
 import { correctRun, type EncouragementEvent } from "./encouragement";
 import { usePreferences } from "@/hooks/use-preferences";
 import { playFeedbackSound, prepareFeedbackSound } from "@/lib/feedback-sounds";
+import { playFeedbackHaptic } from "@/lib/feedback-haptics";
 import "./lesson.css";
 
 type LessonQuizProps = {
@@ -59,7 +60,10 @@ export function LessonQuiz({
   onAnswer,
   onFinish,
 }: LessonQuizProps) {
-  const soundEnabled = usePreferences().data?.sound_enabled ?? false;
+  const feedbackPreferences = usePreferences().data;
+  const soundEnabled = feedbackPreferences?.sound_enabled ?? false;
+  const soundVolume = feedbackPreferences?.sound_volume ?? 75;
+  const hapticsEnabled = feedbackPreferences?.haptics_enabled ?? false;
   const questions = useMemo<QuizQuestion[]>(() => {
     const usableWords = words.filter(
       (word) => word.word.trim() && word.meaning.trim(),
@@ -120,7 +124,7 @@ export function LessonQuiz({
 
   async function selectAnswer(wordId: string) {
     if (answered || isSaving || !currentQuestion) return;
-    prepareFeedbackSound(soundEnabled);
+    prepareFeedbackSound(soundEnabled, soundVolume);
     setIsSaving(true);
     setSaveError(null);
     try {
@@ -138,7 +142,9 @@ export function LessonQuiz({
         turn: Object.keys(savedAnswers).length,
         streak: correctRun(savedAnswers),
       });
-      playFeedbackSound(wordId === currentQuestion.word.id ? "correct" : "retry", soundEnabled);
+      const cue = wordId === currentQuestion.word.id ? "correct" : "retry";
+      playFeedbackSound(cue, soundEnabled, soundVolume);
+      playFeedbackHaptic(cue, hapticsEnabled);
     } catch (error) {
       setSaveError(error instanceof Error ? error.message : "Unable to save your answer.");
     } finally {
@@ -149,7 +155,7 @@ export function LessonQuiz({
   async function nextQuestion(nextIndex = currentIndex + 1) {
     if (!answered || isSaving) return;
     if (nextIndex >= questions.length) {
-      prepareFeedbackSound(soundEnabled);
+      prepareFeedbackSound(soundEnabled, soundVolume);
       const nextAnswers = answers;
       const finalMissedWords = questions
         .filter(
@@ -169,7 +175,8 @@ export function LessonQuiz({
           missedWords: finalMissedWords,
         });
         setFinished(true);
-        playFeedbackSound("complete", soundEnabled);
+        playFeedbackSound("complete", soundEnabled, soundVolume);
+        playFeedbackHaptic("complete", hapticsEnabled);
       } catch (error) {
         setSaveError(error instanceof Error ? error.message : "Unable to complete this lesson.");
       } finally {
@@ -222,7 +229,7 @@ export function LessonQuiz({
       <header className="study-header"><button type="button" className="study-text-button" onClick={onBack}><ArrowLeft size={18} aria-hidden="true" />{variant === "quiz" ? "Save & exit quiz" : "Exit practice"}</button><span>{topicLabel(category)}</span></header>
       <div className="study-progress-label"><h1>Match the pairs</h1><span>{Object.keys(answers).length} / {questions.length} answered</span></div>
       <progress className="study-progress" value={Object.keys(answers).length} max={questions.length} aria-label={variant === "quiz" ? "Saved quiz answers" : "Saved practice answers"} />
-      <MatchingRound words={roundWords} soundEnabled={soundEnabled} initialAnswers={Object.fromEntries(roundWords.filter(word => word.id in answers).map(word => [word.id, answers[word.id] === word.id]))}
+      <MatchingRound words={roundWords} soundEnabled={soundEnabled} soundVolume={soundVolume} hapticsEnabled={hapticsEnabled} initialAnswers={Object.fromEntries(roundWords.filter(word => word.id in answers).map(word => [word.id, answers[word.id] === word.id]))}
         isCompleting={isSaving} continueLabel={nextIndex >= questions.length ? variant === "quiz" ? "Finish quiz" : "See my results" : variant === "quiz" ? "Continue quiz" : "Continue practice"}
         onAnswer={async (wordId, selectedWordId) => {
           const questionIndex = questions.findIndex(question => question.word.id === wordId);

@@ -80,6 +80,8 @@ def test_settings_patch_preserves_onboarding_values(auth_client, mock_clerk):
             "daily_goal_minutes": 20,
             "reminders_enabled": False,
             "sound_enabled": False,
+            "sound_volume": 85,
+            "haptics_enabled": True,
             "appearance": "dark",
         },
     )
@@ -91,13 +93,16 @@ def test_settings_patch_preserves_onboarding_values(auth_client, mock_clerk):
     assert body["onboarding_completed"] is True
     assert body["daily_goal_minutes"] == 20
     assert body["appearance"] == "dark"
+    assert body["sound_enabled"] is False
+    assert body["sound_volume"] == 85
+    assert body["haptics_enabled"] is True
 
 
 def test_preferences_are_isolated_by_clerk_user(auth_client, mock_clerk):
     auth_client.patch(
         BASE,
         headers=AUTH_HEADERS,
-        json={"learning_language": "am", "daily_goal_minutes": 20},
+        json={"learning_language": "am", "daily_goal_minutes": 20, "haptics_enabled": False, "sound_volume": 30},
     )
 
     mock_clerk(user_id="user_other")
@@ -107,11 +112,39 @@ def test_preferences_are_isolated_by_clerk_user(auth_client, mock_clerk):
         json={"learning_language": "om", "daily_goal_minutes": 5},
     )
     assert other.status_code == 200
+    assert other.json()["haptics_enabled"] is True
+    assert other.json()["sound_volume"] == 75
 
     mock_clerk(user_id="user_test")
     first = auth_client.get(BASE, headers=AUTH_HEADERS)
     assert first.json()["learning_language"] == "am"
     assert first.json()["daily_goal_minutes"] == 20
+    assert first.json()["haptics_enabled"] is False
+    assert first.json()["sound_volume"] == 30
+
+
+def test_haptics_preference_is_independent_of_sound(auth_client, mock_clerk):
+    saved = auth_client.patch(
+        BASE, headers=AUTH_HEADERS,
+        json={"sound_enabled": False, "haptics_enabled": True},
+    )
+    assert saved.status_code == 200
+    assert saved.json()["sound_enabled"] is False
+    assert saved.json()["haptics_enabled"] is True
+    auth_client.patch(BASE, headers=AUTH_HEADERS, json={"haptics_enabled": False})
+    loaded = auth_client.get(BASE, headers=AUTH_HEADERS).json()
+    assert loaded["sound_enabled"] is False
+    assert loaded["haptics_enabled"] is False
+
+
+def test_feedback_volume_persists_and_rejects_out_of_range_values(auth_client, mock_clerk):
+    saved = auth_client.patch(BASE, headers=AUTH_HEADERS, json={"sound_volume": 0})
+    assert saved.status_code == 200
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["sound_volume"] == 0
+    for value in (-1, 101):
+        rejected = auth_client.patch(BASE, headers=AUTH_HEADERS, json={"sound_volume": value})
+        assert rejected.status_code == 422
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["sound_volume"] == 0
 
 
 def test_invalid_preferences_are_rejected(auth_client, mock_clerk):

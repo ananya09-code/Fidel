@@ -9,9 +9,10 @@ import { useThemePreview } from "@/components/theme/ThemeProvider";
 import { deleteProfile } from "@/lib/api/profile";
 import { usePreferences, useUpdatePreferences } from "@/hooks/use-preferences";
 import type { UserPreferences } from "@/lib/api/preferences";
+import { playFeedbackSound, prepareFeedbackSound } from "@/lib/feedback-sounds";
 import "@/components/common-ui/app-ui.css";
 
-export type Settings = Pick<UserPreferences, "learning_language" | "interface_language" | "daily_goal_words" | "reminders_enabled" | "reminder_time" | "sound_enabled" | "appearance">;
+export type Settings = Pick<UserPreferences, "learning_language" | "interface_language" | "daily_goal_words" | "reminders_enabled" | "reminder_time" | "sound_enabled" | "sound_volume" | "haptics_enabled" | "appearance">;
 type SettingsFormProps = {
   settings: Settings;
   onChange: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
@@ -37,10 +38,12 @@ export function SettingsForm({ settings, onChange, onAppearance, onSave, onSignO
           <label className="settings-row"><span>Interface preference<span>Your saved language preference</span></span><select value={settings.interface_language} onChange={(event) => onChange("interface_language", event.target.value as Settings["interface_language"])}><option value="en">English</option><option value="om">Afaan Oromoo</option><option value="am">Amharic</option><option value="ti">Tigrinya</option></select></label>
         </div></section>
         <section className="settings-section"><div className="settings-section-title"><h2>Daily goal</h2><p>A few words, every day.</p></div><div className="settings-panel"><fieldset className="settings-goals"><legend>Words to learn each day</legend><div>{([5, 10, 15, 20] as const).map((count) => <button type="button" key={count} aria-pressed={settings.daily_goal_words === count} onClick={() => onChange("daily_goal_words", count)}><span>{count}</span> words{settings.daily_goal_words === count && <Check size={15} aria-hidden="true" />}</button>)}</div></fieldset><p className="settings-goal-caption">{settings.daily_goal_words} new words. One small daily habit.</p></div></section>
-        <section className="settings-section"><div className="settings-section-title"><h2>Make it comfortable</h2><p>Your time, sound and appearance.</p></div><div className="settings-panel">
+        <section className="settings-section"><div className="settings-section-title"><h2>Make it comfortable</h2><p>Your time, feedback and appearance.</p></div><div className="settings-panel">
           <label className="settings-row"><span>Daily reminder<span>Save your reminder preference</span></span><input className="app-switch" type="checkbox" role="switch" checked={settings.reminders_enabled} onChange={(event) => onChange("reminders_enabled", event.target.checked)} /></label>
           {settings.reminders_enabled && <label className="settings-row"><span>Reminder time<span>A time that suits your day</span></span><input type="time" value={settings.reminder_time} onChange={(event) => onChange("reminder_time", event.target.value)} /></label>}
           <label className="settings-row"><span>Practice sounds<span>Answer and completion cues. Word audio plays separately.</span></span><input className="app-switch" type="checkbox" role="switch" checked={settings.sound_enabled} onChange={(event) => onChange("sound_enabled", event.target.checked)} /></label>
+          <div className="settings-volume"><div className="settings-volume-heading"><label htmlFor="practice-sound-volume">Feedback volume<span>Adjust the answer sounds, not word pronunciation.</span></label><output htmlFor="practice-sound-volume">{settings.sound_volume}%</output></div><div className="settings-volume-controls"><input id="practice-sound-volume" type="range" min="0" max="100" step="5" value={settings.sound_volume} disabled={!settings.sound_enabled} onChange={(event) => onChange("sound_volume", Number(event.target.value))} /><button type="button" className="app-secondary" disabled={!settings.sound_enabled || settings.sound_volume === 0} onClick={() => { void prepareFeedbackSound(true, settings.sound_volume).then(() => playFeedbackSound("correct", true, settings.sound_volume)); }}>Hear sample</button></div></div>
+          <label className="settings-row"><span>Touch feedback<span>Gentle taps on supported phones. Device settings still apply.</span></span><input className="app-switch" type="checkbox" role="switch" checked={settings.haptics_enabled} onChange={(event) => onChange("haptics_enabled", event.target.checked)} /></label>
           <div className="settings-appearance"><h3>Appearance</h3><AppearancePicker value={settings.appearance} onChange={onAppearance} /><p>Preview now. Save changes to remember it.</p></div>
         </div></section>
       </fieldset>
@@ -78,8 +81,8 @@ export default function SettingsOverview() {
     if (!settings) return;
     setSaved(false);
     try {
-      const { learning_language, interface_language, daily_goal_words, reminders_enabled, reminder_time, sound_enabled, appearance } = settings;
-      await update.mutateAsync({ learning_language, interface_language, daily_goal_words, reminders_enabled, reminder_time, sound_enabled, appearance });
+      const { learning_language, interface_language, daily_goal_words, reminders_enabled, reminder_time, sound_enabled, sound_volume, haptics_enabled, appearance } = settings;
+      await update.mutateAsync({ learning_language, interface_language, daily_goal_words, reminders_enabled, reminder_time, sound_enabled, sound_volume, haptics_enabled, appearance });
       setSaved(true);
     } catch { /* Render the mutation error beside the save action. */ }
   }

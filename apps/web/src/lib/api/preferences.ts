@@ -37,6 +37,8 @@ export const userPreferencesSchema = z.object({
   reminders_enabled: z.boolean(),
   reminder_time: z.string(),
   sound_enabled: z.boolean(),
+  sound_volume: z.number().int().min(0).max(100),
+  haptics_enabled: z.boolean(),
   appearance: appearanceSchema,
   timezone: z.string(),
   onboarding_completed: z.boolean(),

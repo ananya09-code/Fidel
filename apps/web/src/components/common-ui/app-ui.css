@@ -83,6 +83,16 @@ body:has(.fidel-app)::before,body:has(.fidel-app)::after { display:none; }
 .settings-row .install-fidel { flex:none; }
 .settings-row .install-fidel-help { color:var(--ui-muted); }
 .settings-row select,.settings-row input[type="time"] { font:inherit; font-size:13px; min-height:44px; border:1px solid var(--ui-line); border-radius:6px; padding:8px 12px; min-width:150px; max-width:100%; background:var(--ui-paper); color:var(--ui-ink); }
+.settings-volume { padding:20px 0; border-bottom:1px solid var(--ui-line); }
+.settings-volume-heading,.settings-volume-controls { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.settings-volume-heading label { font-size:14px; }
+.settings-volume-heading label span { display:block; color:var(--ui-muted); font-size:12px; margin-top:5px; }
+.settings-volume-heading output { font-size:13px; font-variant-numeric:tabular-nums; }
+.settings-volume-controls { margin-top:12px; }
+.settings-volume-controls input[type="range"] { flex:1; min-width:0; accent-color:var(--ui-gold); cursor:pointer; }
+.settings-volume-controls input[type="range"]:disabled { cursor:not-allowed; opacity:.45; }
+.settings-volume-controls input[type="range"]:focus-visible { outline:2px solid var(--ui-ink); outline-offset:5px; }
+.settings-volume-controls button { flex:none; }
 .settings-goals { border:0; padding:20px 0 0; margin:0; min-width:0; }
 .settings-goals legend { padding:20px 0 0; font-size:14px; }
 .settings-goals > div { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
