@@ -33,15 +33,17 @@ function audioContext(): AudioContext | null {
 }
 
 /** Call from the answer button gesture so browsers can unlock audio before the save finishes. */
-export function prepareFeedbackSound(enabled: boolean): void {
-  if (!enabled) return;
+export async function prepareFeedbackSound(enabled: boolean, volume = 75): Promise<void> {
+  if (!enabled || volume <= 0) return;
   const audio = audioContext();
-  if (audio?.state === "suspended") void audio.resume().catch(() => {});
+  if (audio?.state === "suspended") {
+    try { await audio.resume(); } catch { /* The browser may block sound. */ }
+  }
 }
 
 /** Feedback is optional: a missing or blocked audio device must never interrupt practice. */
-export function playFeedbackSound(kind: FeedbackSound, enabled: boolean): void {
-  if (!enabled) return;
+export function playFeedbackSound(kind: FeedbackSound, enabled: boolean, volume = 75): void {
+  if (!enabled || volume <= 0) return;
   const audio = audioContext();
   if (!audio || audio.state !== "running") return;
 
@@ -63,7 +65,7 @@ export function playFeedbackSound(kind: FeedbackSound, enabled: boolean): void {
       voice.type = "sine";
       voice.frequency.setValueAtTime(note.frequency, start);
       envelope.gain.setValueAtTime(0.0001, start);
-      envelope.gain.exponentialRampToValueAtTime(note.volume, start + 0.015);
+      envelope.gain.exponentialRampToValueAtTime(note.volume * Math.min(volume, 100) / 50, start + 0.015);
       envelope.gain.exponentialRampToValueAtTime(0.0001, end);
       voice.connect(envelope);
       envelope.connect(group);

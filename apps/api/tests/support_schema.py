@@ -311,6 +311,8 @@ user_preferences = Table(
     Column("reminders_enabled", Boolean, nullable=False, server_default="1"),
     Column("reminder_time", String, nullable=False, server_default="19:00"),
     Column("sound_enabled", Boolean, nullable=False, server_default="1"),
+    Column("sound_volume", Integer, nullable=False, server_default="75"),
+    Column("haptics_enabled", Boolean, nullable=False, server_default="1"),
     Column("appearance", String, nullable=False, server_default="system"),
     Column("timezone", String, nullable=False, server_default="UTC"),
     Column("onboarding_completed", Boolean, nullable=False, server_default="0"),

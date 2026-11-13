@@ -34,6 +34,8 @@ def _load_row(db: Session, clerk_id: str) -> Mapping[str, Any] | None:
                 p.learning_language, p.proficiency_level, p.motivations,
                 p.daily_goal_minutes, p.interface_language,
                 p.reminders_enabled, p.reminder_time, p.sound_enabled,
+                p.sound_volume,
+                p.haptics_enabled,
                 p.appearance, p.timezone, p.onboarding_completed,
                 p.created_at, p.updated_at
             FROM users AS u
@@ -62,6 +64,8 @@ def _serialize(row: Mapping[str, Any] | None) -> UserPreferences:
         reminders_enabled=bool(row["reminders_enabled"]),
         reminder_time=row["reminder_time"],
         sound_enabled=bool(row["sound_enabled"]),
+        sound_volume=row["sound_volume"],
+        haptics_enabled=bool(row["haptics_enabled"]),
         appearance=row["appearance"],
         timezone=row["timezone"],
         onboarding_completed=bool(row["onboarding_completed"]),
@@ -126,12 +130,12 @@ def update_preferences(
             INSERT INTO user_preferences (
                 user_id, learning_language, proficiency_level, motivations,
                 daily_goal_minutes, interface_language, reminders_enabled,
-                reminder_time, sound_enabled, appearance, timezone,
+                reminder_time, sound_enabled, sound_volume, haptics_enabled, appearance, timezone,
                 onboarding_completed, created_at, updated_at
             ) VALUES (
                 :user_id, :learning_language, :proficiency_level, :motivations,
                 :daily_goal_minutes, :interface_language, :reminders_enabled,
-                :reminder_time, :sound_enabled, :appearance, :timezone,
+                :reminder_time, :sound_enabled, :sound_volume, :haptics_enabled, :appearance, :timezone,
                 :onboarding_completed, :now, :now
             )
             ON CONFLICT (user_id) DO UPDATE SET
@@ -143,6 +147,8 @@ def update_preferences(
                 reminders_enabled = excluded.reminders_enabled,
                 reminder_time = excluded.reminder_time,
                 sound_enabled = excluded.sound_enabled,
+                sound_volume = excluded.sound_volume,
+                haptics_enabled = excluded.haptics_enabled,
                 appearance = excluded.appearance,
                 timezone = excluded.timezone,
                 onboarding_completed = excluded.onboarding_completed,

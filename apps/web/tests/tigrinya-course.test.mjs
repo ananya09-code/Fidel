@@ -58,7 +58,7 @@ test('onboarding renders a selectable Tigrinya course in both scripts', () => {
 test('settings keep Tigrinya selected rather than falling back to Oromo', () => {
   const { SettingsForm } = load('components/settings-ui/SettingsOverview.tsx');
   const html = renderToStaticMarkup(React.createElement(SettingsForm, {
-    settings: { learning_language: 'ti', interface_language: 'ti', daily_goal_words: 5, reminders_enabled: false, reminder_time: '19:00', sound_enabled: true, appearance: 'light' },
+    settings: { learning_language: 'ti', interface_language: 'ti', daily_goal_words: 5, reminders_enabled: false, reminder_time: '19:00', sound_enabled: true, sound_volume: 75, haptics_enabled: true, appearance: 'light' },
     onChange() {}, onAppearance() {}, onSave() {}, onSignOut() {}, onDelete() {},
   }));
   assert.equal((html.match(/value="ti" selected=""/g) ?? []).length, 2);

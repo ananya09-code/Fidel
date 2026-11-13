@@ -21,6 +21,7 @@ test("optional feedback stays silent when disabled or browser audio is unavailab
 
 test("answer cues unlock on the gesture and schedule distinct, quiet sounds", async () => {
   const frequencies = [];
+  const peaks = [];
   let contexts = 0;
   class AudioContextMock {
     state = "suspended";
@@ -31,7 +32,7 @@ test("answer cues unlock on the gesture and schedule distinct, quiet sounds", as
     createGain() {
       return {
         gain: {
-          setValueAtTime() {}, exponentialRampToValueAtTime() {},
+          setValueAtTime() {}, exponentialRampToValueAtTime(value) { peaks.push(value); },
           cancelScheduledValues() {}, setTargetAtTime() {},
         },
         connect() {}, disconnect() {},
@@ -54,7 +55,17 @@ test("answer cues unlock on the gesture and schedule distinct, quiet sounds", as
   playFeedbackSound("complete", true);
   assert.equal(contexts, 1);
   assert.deepEqual(frequencies, [523.25, 659.25, 392, 349.23, 392, 523.25, 659.25]);
-  playFeedbackSound("complete", false);
+  const hasPeak = expected => peaks.some(value => Math.abs(value - expected) < 1e-10);
+  assert.ok(hasPeak(0.031 * 1.5));
+  assert.ok(Math.max(...peaks) < 0.05);
+  playFeedbackSound("correct", true, 0);
   assert.equal(frequencies.length, 7);
+  playFeedbackSound("correct", true, 25);
+  playFeedbackSound("correct", true, 100);
+  assert.ok(hasPeak(0.031 * 0.5));
+  assert.ok(hasPeak(0.031 * 2));
+  const played = frequencies.length;
+  playFeedbackSound("complete", false);
+  assert.equal(frequencies.length, played);
   delete globalThis.window;
 });
