@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import type { DashboardSummary } from "@/lib/api/dashboard";
+import type { QuestItem } from "@/lib/api/quests";
+import { characterForQuest } from "@/lib/character-cast";
 import { topicLabel } from "./labels";
 import "./home.css";
 
@@ -12,10 +14,11 @@ type Props = {
   topics: ReactNode;
   dailyWord: ReactNode;
   memoryCheck?: ReactNode;
+  nextQuest?: QuestItem;
 };
 
 /** Presentation only: all learner figures come from the authenticated dashboard. */
-export function HomeDashboard({ data, languageCode, topics, dailyWord, memoryCheck }: Props) {
+export function HomeDashboard({ data, languageCode, topics, dailyWord, memoryCheck, nextQuest }: Props) {
   const language = learningLanguages[languageCode].name;
   const remaining = Math.max(0, data.daily_word_goal - data.words_learned_today);
   const current = data.current_lesson;
@@ -72,6 +75,12 @@ export function HomeDashboard({ data, languageCode, topics, dailyWord, memoryChe
         </section>
         <div className="home-word-panel home-panel">{dailyWord}</div>
       </div>
+
+      {nextQuest && <section className="home-quest-invite" aria-labelledby="home-quest-title">
+        <img src={characterForQuest(languageCode, nextQuest.id, nextQuest.character).image} alt="" width="66" height="82" loading="lazy" />
+        <div><h2 id="home-quest-title">{nextQuest.title}</h2><p>{nextQuest.locked ? nextQuest.missing_words.length ? `Collect ${nextQuest.missing_words.length} ${nextQuest.missing_words.length === 1 ? "word" : "words"} to visit ${characterForQuest(languageCode, nextQuest.id, nextQuest.character).name}.` : nextQuest.reasons[0] ?? "Keep learning to open this door." : `${characterForQuest(languageCode, nextQuest.id, nextQuest.character).name} is waiting at the next door.`}</p></div>
+        <Link to="/quest" className="home-quest-link">{nextQuest.locked ? "See the village" : "Continue your quest"} <ArrowRight size={16} aria-hidden="true" /></Link>
+      </section>}
 
       {memoryCheck}
       <div className="home-bottom-grid">

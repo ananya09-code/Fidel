@@ -11,6 +11,7 @@ import { TeacherFeedback } from "./TeacherFeedback";
 import { correctRun, type EncouragementEvent } from "./encouragement";
 import { usePreferences } from "@/hooks/use-preferences";
 import { playFeedbackSound, prepareFeedbackSound } from "@/lib/feedback-sounds";
+import { characterFor, reviewCharacterFor } from "@/lib/character-cast";
 import { playFeedbackHaptic } from "@/lib/feedback-haptics";
 import "./lesson.css";
 
@@ -80,6 +81,9 @@ export function LessonQuiz({
       };
     });
   }, [words, choiceWords]);
+  const companion = variant === "quiz"
+    ? reviewCharacterFor(languageCode, questions.map(({ word }) => word.id))
+    : characterFor(languageCode, "student");
 
   const [currentIndex, setCurrentIndex] = useState(() => {
     // Matching can be answered out of order; never skip an unanswered word.
@@ -247,12 +251,12 @@ export function LessonQuiz({
     <div className="study-progress-label"><h1>{listening ? "Listening challenge" : variant === "quiz" ? "Choose the right word" : "Find the matching word"}</h1><span>{variant === "quiz" ? "Question " : ""}{currentIndex + 1} of {questions.length}</span></div>
     <progress className="study-progress" value={variant === "quiz" ? Object.keys(answers).length : currentIndex + 1} max={questions.length} aria-label={variant === "quiz" ? "Quiz progress" : "Practice progress"} />
     <div className="study-feedback-space" aria-live="polite" aria-atomic="true">
-      {answered && <TeacherFeedback event={reaction ?? { id: currentQuestion.word.id, outcome: correct ? "correct" : "incorrect", turn: 0 }} animate={reaction !== null} questGuide={listening ? languageCode : undefined}>
+      {answered && <TeacherFeedback event={reaction ?? { id: currentQuestion.word.id, outcome: correct ? "correct" : "incorrect", turn: 0 }} animate={reaction !== null} character={listening ? companion : undefined}>
         <p>{currentQuestion.word.meaning} — <strong>{currentQuestion.word.word}</strong></p>
         <p lang="am">{currentQuestion.word.amharic ?? "Amharic translation unavailable"}</p>
       </TeacherFeedback>}
     </div>
-    {listening ? !answered && <ListeningPrompt key={currentQuestion.word.id} word={currentQuestion.word} languageCode={languageCode} onAudioUnavailable={() => setReadInstead(currentQuestion.word.id)} /> : <section className="study-question" aria-label="Word to translate">
+    {listening ? !answered && <ListeningPrompt key={currentQuestion.word.id} word={currentQuestion.word} character={companion} onAudioUnavailable={() => setReadInstead(currentQuestion.word.id)} /> : <section className="study-question" aria-label="Word to translate">
       <dl className="study-translations"><div><dt>English</dt><dd>{currentQuestion.word.meaning}</dd></div><div><dt>Amharic</dt><dd lang="am">{currentQuestion.word.amharic ?? "Translation unavailable"}</dd></div></dl>
     </section>}
     <div className="study-options" role="group" aria-label={listening ? "Choose the meaning you heard" : "Choose the matching word"}>

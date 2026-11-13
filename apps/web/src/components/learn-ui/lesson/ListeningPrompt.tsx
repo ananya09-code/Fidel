@@ -1,19 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { Volume2, AudioLines } from "lucide-react";
 import type { FlashcardWord } from "./Flashcard";
-import { questGuides, type QuestLanguageCode } from "./quest-guide";
+import type { CastMember } from "@/lib/character-cast";
 
 export function ListeningPrompt({
-  word, languageCode, onAudioUnavailable,
+  word, character, onAudioUnavailable,
 }: {
   word: FlashcardWord;
-  languageCode: QuestLanguageCode;
+  character: CastMember;
   onAudioUnavailable: () => void;
 }) {
   const audio = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
   const [error, setError] = useState(false);
-  const guide = questGuides[languageCode];
 
   useEffect(() => {
     const player = audio.current;
@@ -37,11 +36,11 @@ export function ListeningPrompt({
 
   return <section className="study-listening" aria-label="Listening challenge">
     <div className="study-listening-guide">
-      <img src={guide.image} alt={`${guide.name}, your Quest guide`} width={120} height={144} />
-      <span>{guide.name}</span>
+      <img src={character.image} alt={character.name} width={120} height={144} />
+      <span>{character.name}</span>
     </div>
     <div className="study-listening-content">
-      <p className="study-listening-eyebrow">A word from {guide.name}</p>
+      <p className="study-listening-eyebrow">Listen with {character.name}</p>
       <h2>What did you hear?</h2>
       <p>Listen, then choose its meaning.</p>
       <div className="study-listening-controls">

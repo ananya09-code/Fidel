@@ -2,6 +2,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@clerk/tanstack-react-start";
 import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import { characterFor } from "@/lib/character-cast";
 import { InstallFidel, useFidelInstalled } from "@/components/install/InstallFidel";
 import { PageState } from "@/components/common-ui/PageState";
 import "@/components/common-ui/app-ui.css";
@@ -331,7 +332,7 @@ export function OnboardingView({ step, data, completed, canContinue, isSaving, e
     <progress className="onboarding-progress" value={step + 1} max={steps.length} aria-label="Setup progress" />
     <header className="onboarding-title"><h1>{steps[step].title}</h1><p>{steps[step].description}</p></header>
     <fieldset className="onboarding-options" disabled={isSaving}><legend className="sr-only">{steps[step].title}</legend>
-    {step === 0 && languages.map((item) => <Choice key={item.id} selected={data.language === item.id} title={item.name + (item.id !== "om" ? " · " + item.nativeName : "")} description={item.description} onClick={() => onLanguage(item.id)} />)}
+    {step === 0 && languages.map((item) => <Choice key={item.id} selected={data.language === item.id} title={item.name + (item.id !== "om" ? " · " + item.nativeName : "")} description={item.description} image={characterFor(item.id, "student").image} onClick={() => onLanguage(item.id)} />)}
     {step === 1 && levels.map((item) => <Choice key={item.id} selected={data.level === item.id} title={item.title} description={item.description} onClick={() => onLevel(item.id)} />)}
     {step === 2 && <><p className="onboarding-select-note">Choose all that feel right.</p>{motivations.map((item) => <Choice key={item.id} selected={data.motivations.includes(item.id)} title={item.title} description={item.description} onClick={() => onMotivation(item.id)} />)}</>}
     {step === 3 && dailyGoals.map((item) => <Choice key={item.id} selected={data.dailyGoal === item.id} title={item.title} description={item.description} onClick={() => onGoal(item.id)} />)}
@@ -345,6 +346,6 @@ export function OnboardingView({ step, data, completed, canContinue, isSaving, e
  </main>;
 }
 
-function Choice({ selected, title, description, onClick }: { selected: boolean; title: string; description: string; onClick: () => void }) {
- return <button type="button" className="app-choice" aria-pressed={selected} onClick={onClick}><span><strong>{title}</strong><span>{description}</span></span><span className="choice-check" aria-hidden="true">{selected && <Check size={16} />}</span></button>;
+function Choice({ selected, title, description, image, onClick }: { selected: boolean; title: string; description: string; image?: string; onClick: () => void }) {
+ return <button type="button" className="app-choice" aria-pressed={selected} onClick={onClick}>{image && <img className="app-choice-character" src={image} alt="" width="40" height="52" />}<span><strong>{title}</strong><span>{description}</span></span><span className="choice-check" aria-hidden="true">{selected && <Check size={16} />}</span></button>;
 }

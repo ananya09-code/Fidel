@@ -55,6 +55,13 @@ body:has(.fidel-home) nav[aria-label="Mobile navigation"] li > a > span:last-chi
 .home-main-grid, .home-bottom-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
 .home-next { grid-column: span 8; }
 .home-word-panel { grid-column: span 4; }
+.home-quest-invite { display:flex; align-items:center; gap:18px; padding:14px 20px; margin-bottom:16px; border:1px solid var(--home-line); border-radius:8px; background:var(--home-ground); }
+.home-quest-invite img { width:66px; height:82px; flex:none; object-fit:contain; image-rendering:pixelated; }
+.home-quest-invite > div { flex:1; min-width:0; }
+.home-quest-invite h2 { font-size:18px; font-weight:500; }
+.home-quest-invite p { margin:4px 0 0; color:var(--home-muted); }
+.home-quest-link { display:inline-flex; align-items:center; gap:8px; min-height:44px; white-space:nowrap; font-weight:600; text-underline-offset:4px; }
+.home-quest-link:hover { text-decoration:underline; }
 .home-bottom-grid > * { grid-column: span 6; }
 .home-panel { background: var(--home-surface); border-radius: 8px; padding: 24px; min-width: 0; }
 .home-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
@@ -147,5 +154,9 @@ body:has(.fidel-home) nav[aria-label="Mobile navigation"] li > a > span:last-chi
   .home-section-heading .home-text-link, .home-topic-controls button { min-height: 44px; }
   .home-section-heading { margin-bottom: 8px; }
   .home-listen { min-height: 44px; }
+  .home-quest-invite { gap:12px; padding:12px; flex-wrap:wrap; }
+  .home-quest-invite img { width:48px; height:60px; }
+  .home-quest-invite > div { flex-basis:calc(100% - 60px); }
+  .home-quest-link { margin-left:60px; }
 }
 @media (prefers-reduced-motion: reduce) { .fidel-home *, .fidel-home *::before, .fidel-home *::after { animation: none !important; transition: none !important; } }
