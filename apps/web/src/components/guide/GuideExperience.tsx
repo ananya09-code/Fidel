@@ -3,8 +3,8 @@ import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { useAuth } from "@clerk/tanstack-react-start";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
-import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
 import { usePreferences, useUpdatePreferences } from "@/hooks/use-preferences";
+import { characterFor } from "@/lib/character-cast";
 import "./guide.css";
 
 export const GUIDE_EVENT = "fidel:guide";
@@ -14,11 +14,11 @@ const UPDATE_VERSION = "2026-11";
 
 type GuideMode = "tour" | "updates" | null;
 const stops = [
-  { title: "Your day starts here", body: "Home shows your daily word goal, the lesson you can continue, and what you recently practised.", destination: "Home" },
-  { title: "Follow your learning path", body: "Learn is arranged by topic. Finish the words in a lesson to move forward, and pick up unfinished sessions here.", destination: "Learn" },
-  { title: "Keep words close", body: "Search the Dictionary to hear approved recordings, save favourites, and mark words you want to review.", destination: "Dictionary" },
-  { title: "Bring words back", body: "Review gives you practice from your saved words. Your answers are remembered so words return when you need them.", destination: "Review" },
-  { title: "Take your words into the village", body: "Fidel Quest opens short conversations as your word bank grows. Choose a word you know to reply.", destination: "Quest" },
+  { title: "Your day starts here", body: "Your goal, next lesson, and recent practice live on Home.", bubble: "A few words today? I’ll keep count with you.", tip: "The goal counts new words, not minutes. Change it any time in Settings.", destination: "Home" },
+  { title: "Follow your learning path", body: "Choose a topic and finish its words to move forward.", bubble: "See that path? Each stop has words to collect.", tip: "Leave a lesson halfway through and you can continue it later.", destination: "Learn" },
+  { title: "Keep words close", body: "Find a word, hear it, and save it for later.", bubble: "The Dictionary is our word shelf.", tip: "Mark a word for review when you want more practice with it.", destination: "Dictionary" },
+  { title: "Bring words back", body: "Practise familiar words and see what is ready for review.", bubble: "Let’s see what you remember.", tip: "Your answers are saved so words can return when you need them.", destination: "Review" },
+  { title: "Take your words into the village", body: "Use words you’ve learned in short Quest conversations.", bubble: "There’s someone waiting at the next door.", tip: "Choose a word from your bank to reply. More words open more doors.", destination: "Quest" },
 ] as const;
 
 export function GuideExperience() {
@@ -30,6 +30,8 @@ export function GuideExperience() {
   const [mode, setMode] = useState<GuideMode>(null);
   const [step, setStep] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [tipOpen, setTipOpen] = useState(false);
+  const [characterBeat, setCharacterBeat] = useState(0);
   const heading = useRef<HTMLHeadingElement>(null);
   const autoOpened = useRef<string | null>(null);
 
@@ -48,6 +50,7 @@ export function GuideExperience() {
     const open = (event: Event) => {
       const requested = (event as CustomEvent<"tour" | "updates">).detail;
       setError(null);
+      setTipOpen(false);
       setMode(requested);
       if (requested === "tour") {
         setStep(0);
@@ -63,6 +66,8 @@ export function GuideExperience() {
   function visit(index: number) {
     setStep(index);
     setError(null);
+    setTipOpen(false);
+    setCharacterBeat((beat) => beat + 1);
     switch (stops[index].destination) {
       case "Home": void navigate({ to: "/Home" }); break;
       case "Learn": void navigate({ to: "/Learn" }); break;
@@ -94,8 +99,18 @@ export function GuideExperience() {
 
   if (!mode) return null;
   const stop = stops[step];
+  const companion = characterFor(preferences.data?.learning_language ?? "om", "student");
+  const bubble = mode === "tour"
+    ? tipOpen ? stop.tip : step === 0 ? `Your goal is ${preferences.data?.daily_goal_words ?? 5} words today. I’ll keep count with you.` : stop.bubble
+    : tipOpen ? "Try a village conversation after you collect a few words." : "I’ve found a few new ways for us to practise.";
   return <aside className="guide-panel" role="dialog" aria-modal="false" aria-labelledby="guide-title" aria-describedby="guide-copy">
-    <div className="guide-top"><FidelTeacherMark className="guide-teacher" /><button type="button" className="guide-close" onClick={() => void close()} disabled={update.isPending} aria-label={mode === "tour" ? "Close tour" : "Close what's new"}><X size={18} /></button></div>
+    <div className="guide-top"><span className="guide-journey">A little walk with {companion.name}</span><button type="button" className="guide-close" onClick={() => void close()} disabled={update.isPending} aria-label={mode === "tour" ? "Close tour" : "Close what's new"}><X size={18} /></button></div>
+    <div className="guide-scene">
+      <button type="button" className="guide-character" aria-label={`${tipOpen ? "Show message from" : "Ask"} ${companion.name}${tipOpen ? "" : " for a tip"}`} aria-pressed={tipOpen} onClick={() => { setTipOpen((open) => !open); setCharacterBeat((beat) => beat + 1); }}>
+        <img key={characterBeat} src={companion.image} alt="" width="88" height="118" />
+      </button>
+      <div className="guide-speech" aria-live="polite"><strong>{companion.name}</strong><p key={`${mode}-${step}-${tipOpen}`}>{bubble}</p><span>{tipOpen ? "Tap to hear the first thought" : "Tap your guide for a tip"}</span></div>
+    </div>
     {mode === "tour" ? <>
       <p className="guide-progress">{step + 1} of {stops.length} · {stop.destination}</p>
       <h2 id="guide-title" ref={heading} tabIndex={-1}>{stop.title}</h2>
