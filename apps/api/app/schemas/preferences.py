@@ -27,6 +27,8 @@ class UserPreferencesUpdate(BaseModel):
     )
     interface_language: InterfaceLanguage | None = None
     reminders_enabled: bool | None = None
+    quiz_notifications_enabled: bool | None = None
+    streak_notifications_enabled: bool | None = None
     reminder_time: str | None = Field(
         default=None, pattern=r"^(?:[01][0-9]|2[0-3]):[0-5][0-9]$"
     )
@@ -57,6 +59,8 @@ class UserPreferences(BaseModel):
     )
     interface_language: InterfaceLanguage = "en"
     reminders_enabled: bool = True
+    quiz_notifications_enabled: bool = False
+    streak_notifications_enabled: bool = False
     reminder_time: str = "19:00"
     sound_enabled: bool = True
     sound_volume: int = Field(default=75, ge=0, le=100)
