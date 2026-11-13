@@ -222,3 +222,32 @@ def test_invalid_appearance_does_not_change_saved_choice(auth_client, mock_clerk
     rejected = auth_client.patch(BASE, headers=AUTH_HEADERS, json={"appearance": "invalid"})
     assert rejected.status_code == 422
     assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["appearance"] == "dark"
+
+
+def test_guide_progress_persists_and_is_isolated(auth_client, mock_clerk):
+    initial = auth_client.get(BASE, headers=AUTH_HEADERS).json()
+    assert initial["tour_completed_version"] == 0
+    assert initial["last_seen_update"] is None
+
+    saved = auth_client.patch(
+        BASE, headers=AUTH_HEADERS,
+        json={"tour_completed_version": 1, "last_seen_update": "2026-11"},
+    )
+    assert saved.status_code == 200
+    assert saved.json()["tour_completed_version"] == 1
+    assert saved.json()["last_seen_update"] == "2026-11"
+    auth_client.patch(BASE, headers=AUTH_HEADERS, json={"sound_enabled": False})
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["tour_completed_version"] == 1
+
+    mock_clerk(user_id="another_guide_user")
+    other = auth_client.get(BASE, headers=AUTH_HEADERS).json()
+    assert other["tour_completed_version"] == 0
+    assert other["last_seen_update"] is None
+    auth_client.patch(BASE, headers=AUTH_HEADERS, json={"last_seen_update": "2026-11"})
+    mock_clerk(user_id="user_test")
+    assert auth_client.get(BASE, headers=AUTH_HEADERS).json()["last_seen_update"] == "2026-11"
+
+
+def test_negative_tour_version_is_rejected(auth_client, mock_clerk):
+    response = auth_client.patch(BASE, headers=AUTH_HEADERS, json={"tour_completed_version": -1})
+    assert response.status_code == 422

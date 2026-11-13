@@ -36,6 +36,8 @@ class UserPreferencesUpdate(BaseModel):
     appearance: Appearance | None = None
     timezone: str | None = Field(default=None, min_length=1, max_length=100)
     onboarding_completed: bool | None = None
+    tour_completed_version: int | None = Field(default=None, ge=0)
+    last_seen_update: str | None = Field(default=None, max_length=40)
 
     @field_validator("motivations")
     @classmethod
@@ -64,6 +66,8 @@ class UserPreferences(BaseModel):
     appearance: Appearance = "system"
     timezone: str = "UTC"
     onboarding_completed: bool = False
+    tour_completed_version: int = Field(default=0, ge=0)
+    last_seen_update: str | None = None
     created_at: datetime | None = None
     updated_at: datetime | None = None
 
