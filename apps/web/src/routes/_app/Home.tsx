@@ -1,5 +1,7 @@
 import { learningLanguages } from "@/lib/languages";
 import { createFileRoute } from "@tanstack/react-router";
+import { useAuth } from "@clerk/tanstack-react-start";
+import { useQuery } from "@tanstack/react-query";
 
 import { HomeDashboard } from "@/components/homepage-ui/HomeDashboard";
 import { PageState } from "@/components/common-ui/PageState";
@@ -9,14 +11,24 @@ import { useDashboard } from "@/hooks/use-dashboard";
 import { usePreferences } from "@/hooks/use-preferences";
 import { useDailyWord } from "@/hooks/use-words";
 import { MemoryCheck } from "@/components/learn-ui/review/MemoryCheck";
+import { getQuests } from "@/lib/api/quests";
 
 export const Route = createFileRoute("/_app/Home")({ component: HomePage });
 
 function HomePage() {
+  const { userId, getToken } = useAuth();
   const dashboard = useDashboard();
   const preferences = usePreferences();
   const languageCode = preferences.data?.learning_language ?? "om";
   const dailyWord = useDailyWord(languageCode);
+  const quests = useQuery({
+    queryKey: ["auth", "quests", userId, languageCode],
+    queryFn: ({ signal }) => getQuests(getToken, languageCode, signal),
+    enabled: Boolean(userId) && Boolean(preferences.data),
+    staleTime: 30_000,
+    retry: false,
+  });
+  const nextQuest = quests.data?.quests.find((quest) => !quest.state?.completed);
 
   if (dashboard.isPending || preferences.isPending) {
     return <div className="fidel-home"><h1 className="text-2xl font-medium">Your learning, today.</h1><PageState kind="loading" title="Loading your dashboard" /></div>;
@@ -27,7 +39,7 @@ function HomePage() {
   }
 
   return (
-    <HomeDashboard data={dashboard.data} languageCode={languageCode} memoryCheck={<MemoryCheck />} topics={<ExploreTopics />} dailyWord={
+    <HomeDashboard data={dashboard.data} languageCode={languageCode} nextQuest={nextQuest} memoryCheck={<MemoryCheck />} topics={<ExploreTopics />} dailyWord={
       dailyWord.isPending ? (
         <PageState kind="loading" title="Loading the word of the day" compact />
       ) : dailyWord.isError ? (

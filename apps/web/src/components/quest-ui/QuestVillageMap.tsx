@@ -1,5 +1,7 @@
 import { Check, LockKeyhole } from "lucide-react";
 import type { QuestItem } from "@/lib/api/quests";
+import { characterForQuest } from "@/lib/character-cast";
+import type { LearningLanguage } from "@/lib/languages";
 
 const trees = [
   [290, 110],
@@ -144,11 +146,12 @@ function House({ cafe = false }: { cafe?: boolean }) {
 }
 
 type Props = {
+  language: LearningLanguage;
   quests: QuestItem[];
   onEnter: (quest: QuestItem) => void;
   disabled: boolean;
 };
-export function QuestVillageMap({ quests, onEnter, disabled }: Props) {
+export function QuestVillageMap({ language, quests, onEnter, disabled }: Props) {
   const trail =
     "M124 473C200 426 115 363 185 310S274 269 330 304 381 407 450 402 506 347 494 332";
   return (
@@ -274,6 +277,7 @@ export function QuestVillageMap({ quests, onEnter, disabled }: Props) {
           ];
           const [left, top] = positions[index] ?? [34, 40];
           const completed = Boolean(quest.state?.completed);
+          const character = characterForQuest(language, quest.id, quest.character);
           return (
             <button
               type="button"
@@ -282,10 +286,11 @@ export function QuestVillageMap({ quests, onEnter, disabled }: Props) {
               style={{ left: `${left}%`, top: `${top}%`, right: "auto" }}
               onClick={() => onEnter(quest)}
               disabled={disabled || (quest.locked && !completed)}
-              aria-label={`Enter ${quest.title}`}
+              aria-label={`Enter ${quest.title} with ${character.name}`}
               aria-describedby={`quest-lock-${quest.id}`}
             >
               <House cafe={quest.character === "host"} />
+              <img className="quest-house-character" src={character.image} alt="" width="30" height="40" loading="lazy" />
               <span className="quest-house-state">
                 {completed ? (
                   <Check size={15} />
@@ -296,6 +301,7 @@ export function QuestVillageMap({ quests, onEnter, disabled }: Props) {
                 )}
               </span>
               <strong>{quest.title}</strong>
+              <small>{character.name}</small>
               <span id={`quest-lock-${quest.id}`} className="sr-only">
                 {quest.reasons.join(" ")}
               </span>

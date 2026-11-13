@@ -34,6 +34,7 @@ body:has(.fidel-learn) nav[aria-label="Mobile navigation"] { background:#edf2ec;
 .learn-dictionary:hover { text-decoration:underline; text-underline-offset:4px; }
 .learn-next { display:flex; align-items:center; gap:24px; padding:24px; background:var(--learn-panel); border-radius:8px; }
 .learn-teacher { width:76px; height:84px; flex:none; }
+.learn-cast-character { object-fit:contain; image-rendering:pixelated; }
 .learn-next-copy { flex:1; min-width:0; }
 .learn-next-copy > p { color:var(--learn-muted); margin:0; font-size:13px; }
 .learn-next-copy h2 { font-size:24px; line-height:1.3; font-weight:500; letter-spacing:-.03em; margin:6px 0; overflow-wrap:anywhere; }

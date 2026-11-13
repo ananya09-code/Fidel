@@ -8,9 +8,9 @@ import {
   LockKeyhole,
   Volume2,
 } from "lucide-react";
-import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
 import { PageState } from "@/components/common-ui/PageState";
 import { learningLanguages, type LearningLanguage } from "@/lib/languages";
+import { characterFor, characterForQuest } from "@/lib/character-cast";
 import type {
   QuestBankWord,
   QuestItem,
@@ -29,7 +29,6 @@ type Props = {
   onReply: (key: string, reply: QuestReply) => Promise<QuestReplyResult>;
   onRefresh: () => void;
 };
-const guides = { om: "Caaltuu", am: "Abeba", ti: "Selam" };
 const families = [
   "ሀሁሂሃሄህሆ",
   "ለሉሊላሌልሎ",
@@ -75,8 +74,8 @@ export function QuestExperience({
   onReply,
   onRefresh,
 }: Props) {
-  const language = overview.language_code,
-    guide = guides[language];
+  const language = overview.language_code;
+  const guide = characterFor(language, "student");
   const [selected, setSelected] = useState<string | null>(null);
   const [saved, setSaved] = useState<QuestState | null>(null);
   const [pending, setPending] = useState(false);
@@ -97,7 +96,7 @@ export function QuestExperience({
   const state = saved ?? item?.state;
   const chatting = Boolean(item && state);
   const step = item && state ? item.steps[state.step_index] : null;
-  const character = item?.character === "host" ? "Your host" : guide;
+  const character = item ? characterForQuest(language, item.id, item.character) : guide;
   const ownName =
     overview.quests
       .flatMap((q) => q.state?.answers ?? [])
@@ -108,6 +107,7 @@ export function QuestExperience({
   const next =
     overview.quests.find((q) => !q.state?.completed) ??
     overview.quests[overview.quests.length - 1];
+  const nextCharacter = next ? characterForQuest(language, next.id, next.character) : guide;
   const inspectedWord = overview.bank.find((word) => word.id === inspected);
 
   useEffect(() => () => audio.current?.pause(), []);
@@ -271,6 +271,7 @@ export function QuestExperience({
                 </span>
               </div>
               <QuestVillageMap
+                language={language}
                 quests={overview.quests}
                 onEnter={(quest) => void enter(quest)}
                 disabled={pending}
@@ -304,13 +305,13 @@ export function QuestExperience({
                   <ArrowLeft size={18} />
                 </button>
                 <img
-                  src={`/quest/characters/${language}-${item!.character}.svg`}
+                  src={character.image}
                   alt=""
                   width="32"
                   height="40"
                 />
                 <div>
-                  <strong>{character}</strong>
+                  <strong>{character.name}</strong>
                   <span>{item!.title}</span>
                 </div>
                 <span>
@@ -327,12 +328,12 @@ export function QuestExperience({
                 <div className="quest-chat-stage">
                   <div className="quest-chat-character" aria-hidden="true">
                     <img
-                      src={`/quest/characters/${language}-${item!.character}.svg`}
+                      src={character.image}
                       alt=""
                       width="144"
                       height="180"
                     />
-                    <span>{character}</span>
+                    <span>{character.name}</span>
                   </div>
                   <div
                     className="quest-chat-log"
@@ -550,9 +551,9 @@ export function QuestExperience({
           >
             <section className="quest-trail quest-journal">
               <header className="quest-journal-header">
-                <FidelTeacherMark />
+                <img src={nextCharacter.image} alt="" width="42" height="54" />
                 <div>
-                  <span>A note from {guide}</span>
+                  <span>A note from {nextCharacter.name}</span>
                   <h2>
                     {next.state?.completed
                       ? "You know your way around."

@@ -794,6 +794,11 @@
   height: 54px;
   flex: none;
 }
+.quest-journal-header > img { width:42px; height:54px; flex:none; object-fit:contain; image-rendering:pixelated; }
+.quest-map-static .quest-house-stop .quest-house-character { position:absolute; width:30px; height:40px; object-fit:contain; image-rendering:pixelated; left:10%; top:10%; z-index:1; }
+.quest-map-static .quest-house-stop.is-locked .quest-house-character { filter:grayscale(1); opacity:.7; }
+.quest-map-static .quest-house-stop small { display:block; color:var(--ui-ink); background:var(--ui-paper); padding:0 5px 3px; border-radius:0 0 4px 4px; line-height:1.15; }
+@media(max-width:580px) { .quest-map-static .quest-house-stop .quest-house-character { width:22px; height:30px; left:4%; top:12%; } .quest-map-static .quest-house-stop small { font-size:11px; } }
 .quest-journal-header > div > span {
   display: block;
   font-size: 12px;
@@ -1547,3 +1552,5 @@
     padding-top: 24px;
   }
 }
+.quest-map-static .quest-house-stop small { display:block; }
+@media(max-width:580px) { .quest-map-static .quest-house-stop strong { font-size:11px; } }

@@ -208,6 +208,8 @@ body:has(.fidel-onboarding)::before,body:has(.fidel-onboarding)::after { display
 .onboarding-title p,.onboarding-complete > p { font-size:14px; color:var(--ui-muted); margin:12px 0 0; }
 .onboarding-options { display:grid; gap:10px; padding:0; margin:0; border:0; min-width:0; }
 .app-choice { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:80px; padding:18px 20px; background:var(--ui-surface); color:var(--ui-ink); border:1px solid var(--ui-line); border-radius:8px; cursor:pointer; font:inherit; text-align:left; }
+.app-choice > span:first-of-type { flex:1; min-width:0; }
+.app-choice-character { width:40px; height:52px; flex:none; object-fit:contain; image-rendering:pixelated; }
 .app-choice[aria-pressed="true"] { outline:2px solid var(--ui-gold); outline-offset:-2px; }
 .app-choice strong { display:block; font-size:15px; font-weight:500; }
 .app-choice > span > span { display:block; font-size:13px; color:var(--ui-muted); margin-top:5px; }
