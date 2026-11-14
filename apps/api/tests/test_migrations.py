@@ -15,8 +15,9 @@ def _config() -> Config:
 def test_revision_graph_matches_expected_head() -> None:
     script = ScriptDirectory.from_config(_config())
 
-    assert script.get_current_head() == "0012_push_notifications"
+    assert script.get_current_head() == "0013_guided_tour"
     assert [revision.revision for revision in script.walk_revisions()] == [
+        "0013_guided_tour",
         "0012_push_notifications",
         "0011_haptics_preference",
         "0010_review_language",
@@ -71,6 +72,9 @@ def test_fresh_postgresql_upgrade_sql_contains_complete_schema(monkeypatch) -> N
     assert "0008_tigrinya_preferences" in sql
     assert "0010_review_language" in sql
     assert "0011_haptics_preference" in sql
+    assert "0013_guided_tour" in sql
+    assert "tour_completed_version" in sql
+    assert "last_seen_update" in sql
     assert "0012_push_notifications" in sql
     assert "haptics_enabled" in sql
     assert "sound_volume" in sql

@@ -6,6 +6,7 @@ import { AuthLoading } from "@/components/auth/AuthLoading";
 import { AppSidebar } from "@/components/common-ui/AppSideBar";
 import { Header } from "@/components/common-ui/Header";
 import { MobileBottomNavigation } from "@/components/common-ui/MobileBottomNavigation";
+import { GuideExperience } from "@/components/guide/GuideExperience";
 import { useProfile } from "@/hooks/use-profile";
 
 import {
@@ -53,6 +54,7 @@ function AppLayout() {
         </main>
       </SidebarInset>
       <MobileBottomNavigation />
+      <GuideExperience />
     </SidebarProvider>
   );
 }

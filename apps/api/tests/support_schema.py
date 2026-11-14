@@ -319,6 +319,8 @@ user_preferences = Table(
     Column("appearance", String, nullable=False, server_default="system"),
     Column("timezone", String, nullable=False, server_default="UTC"),
     Column("onboarding_completed", Boolean, nullable=False, server_default="0"),
+    Column("tour_completed_version", Integer, nullable=False, server_default="0"),
+    Column("last_seen_update", String(40)),
     Column("created_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
     Column("updated_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
     CheckConstraint("learning_language IN ('om','am','ti')", name="user_preferences_learning_language_check"),
@@ -326,6 +328,7 @@ user_preferences = Table(
     CheckConstraint("daily_goal_minutes IN (5,10,15,20)", name="user_preferences_daily_goal_check"),
     CheckConstraint("interface_language IN ('en','om','am','ti')", name="user_preferences_interface_language_check"),
     CheckConstraint("appearance IN ('light','dark','system')", name="user_preferences_appearance_check"),
+    CheckConstraint("tour_completed_version >= 0", name="user_preferences_tour_version_check"),
 )
 
 

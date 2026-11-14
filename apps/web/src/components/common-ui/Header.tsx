@@ -1,7 +1,8 @@
 import { languageLabel } from "@/lib/languages";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useAuth, useClerk, useUser } from "@clerk/tanstack-react-start";
-import { ChevronDown, LogOut, Settings, UserRound } from "lucide-react";
+import { ChevronDown, CircleHelp, LogOut, Settings, UserRound } from "lucide-react";
+import { openGuide } from "@/components/guide/GuideExperience";
 import { useSidebar } from "@/components/ui/sidebar";
 import { usePreferences } from "@/hooks/use-preferences";
 import { disablePushOnThisDevice } from "@/lib/push-device";
@@ -32,6 +33,9 @@ export function HeaderView({ displayName, email, imageUrl, language, area, sideb
           <DropdownMenuLabel><p>{displayName}</p>{email && <span>{email}</span>}</DropdownMenuLabel><DropdownMenuSeparator />
           <DropdownMenuItem asChild><Link to="/profile"><UserRound size={16} />My profile</Link></DropdownMenuItem>
           <DropdownMenuItem asChild><Link to="/settings"><Settings size={16} />Settings</Link></DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onSelect={() => openGuide("tour")}><CircleHelp size={16} />Take the tour</DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => openGuide("updates")}><CircleHelp size={16} />What’s new</DropdownMenuItem>
           <DropdownMenuSeparator /><DropdownMenuItem onSelect={onSignOut}><LogOut size={16} />Sign out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

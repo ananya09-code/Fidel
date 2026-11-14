@@ -38,6 +38,7 @@ def _load_row(db: Session, clerk_id: str) -> Mapping[str, Any] | None:
                 p.sound_volume,
                 p.haptics_enabled,
                 p.appearance, p.timezone, p.onboarding_completed,
+                p.tour_completed_version, p.last_seen_update,
                 p.created_at, p.updated_at
             FROM users AS u
             JOIN user_preferences AS p ON p.user_id = u.id
@@ -72,6 +73,8 @@ def _serialize(row: Mapping[str, Any] | None) -> UserPreferences:
         appearance=row["appearance"],
         timezone=row["timezone"],
         onboarding_completed=bool(row["onboarding_completed"]),
+        tour_completed_version=row["tour_completed_version"],
+        last_seen_update=row["last_seen_update"],
         created_at=row["created_at"],
         updated_at=row["updated_at"],
     )
@@ -135,13 +138,13 @@ def update_preferences(
                 daily_goal_minutes, interface_language, reminders_enabled,
                 quiz_notifications_enabled, streak_notifications_enabled,
                 reminder_time, sound_enabled, sound_volume, haptics_enabled, appearance, timezone,
-                onboarding_completed, created_at, updated_at
+                onboarding_completed, tour_completed_version, last_seen_update, created_at, updated_at
             ) VALUES (
                 :user_id, :learning_language, :proficiency_level, :motivations,
                 :daily_goal_minutes, :interface_language, :reminders_enabled,
                 :quiz_notifications_enabled, :streak_notifications_enabled,
                 :reminder_time, :sound_enabled, :sound_volume, :haptics_enabled, :appearance, :timezone,
-                :onboarding_completed, :now, :now
+                :onboarding_completed, :tour_completed_version, :last_seen_update, :now, :now
             )
             ON CONFLICT (user_id) DO UPDATE SET
                 learning_language = excluded.learning_language,
@@ -159,6 +162,8 @@ def update_preferences(
                 appearance = excluded.appearance,
                 timezone = excluded.timezone,
                 onboarding_completed = excluded.onboarding_completed,
+                tour_completed_version = excluded.tour_completed_version,
+                last_seen_update = excluded.last_seen_update,
                 updated_at = excluded.updated_at
             """
         ).bindparams(bindparam("motivations", type_=JSON()))

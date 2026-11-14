@@ -44,6 +44,8 @@ export const userPreferencesSchema = z.object({
   appearance: appearanceSchema,
   timezone: z.string(),
   onboarding_completed: z.boolean(),
+  tour_completed_version: z.number().int().nonnegative(),
+  last_seen_update: z.string().nullable(),
   created_at: z.string().nullable(),
   updated_at: z.string().nullable(),
 });
