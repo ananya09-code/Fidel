@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { LearningPath } from "@/components/learn-ui/LearningPath";
-import { SentenceBuilder } from "@/components/learn-ui/SentenceBuilder";
 import { ArrowUpRight } from "lucide-react";
 
 export const Route = createFileRoute("/_app/Learn/")({ component: LearnPage });
@@ -26,6 +25,5 @@ function LearnPage() {
       </svg>
     </Link>
     <LearningPath />
-    <SentenceBuilder />
   </div>;
 }
