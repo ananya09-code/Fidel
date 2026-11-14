@@ -21,3 +21,5 @@ Each item needs `language_code` (`am`, `om`, or `ti`), `sentence` (the full spok
 ```
 
 Preview with `uv run python scripts/import_sentences.py --file reviewed.json`. After migration `0014_sentence_building` is applied to the intended database and the content is reviewed, add `--write` to insert draft sentences and their exercise definitions. The command is idempotent for an existing sentence; changing an existing exercise requires an editorial review and a separate update. In Audio review, select **Sentences**, generate recordings, and approve each recording. The learner exercise stays locked until the full sentence audio is approved and the learner has learned every required word.
+
+`starter_sentences.json` reuses two already-approved Oromo phrase texts and their English and Amharic meanings from the vocabulary catalog, split into approved word tiles. The sentence audio is new and remains unpublished until it is generated and approved. Amharic and Tigrinya need more approved prerequisite words before comparable sentence exercises can be imported.
