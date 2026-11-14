@@ -1,0 +1,56 @@
+name: Deliver learning reminders
+
+on:
+  schedule:
+    # Avoid the start-of-hour load that can delay scheduled GitHub Actions.
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fidel-notification-delivery
+  cancel-in-progress: false
+
+jobs:
+  deliver:
+    if: github.ref == 'refs/heads/main' && vars.NOTIFICATION_WORKER_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: notification-worker
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check worker configuration
+        shell: bash
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          VAPID_SUBJECT: ${{ secrets.VAPID_SUBJECT }}
+        run: |
+          for key in DATABASE_URL VAPID_PUBLIC_KEY VAPID_PRIVATE_KEY VAPID_SUBJECT; do
+            if [[ -z "${!key}" ]]; then
+              echo "::error::$key is missing from the notification-worker environment"
+              exit 1
+            fi
+          done
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@v10.3.3
+        with:
+          python-version: "3.13"
+
+      - name: Install locked API dependencies
+        working-directory: apps/api
+        run: uv sync --locked --no-dev
+
+      - name: Send due reminders
+        working-directory: apps/api
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          VAPID_SUBJECT: ${{ secrets.VAPID_SUBJECT }}
+        run: uv run --no-sync python -m app.services.notification_delivery
