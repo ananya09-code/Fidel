@@ -37,7 +37,7 @@ export function HomeDashboard({ data, languageCode, topics, dailyWord, memoryChe
       </header>
 
       <section className="home-summary" aria-label="Your learning progress">
-        <div className="home-goal">
+        <div className="home-goal" data-guide-target="Home">
           <h2>Today’s word goal</h2>
           <p className="home-goal-value">{data.words_learned_today.toLocaleString()} <span>/ {data.daily_word_goal} words</span></p>
           <div className="home-track" role="progressbar" aria-label="Daily word goal" aria-valuemin={0} aria-valuemax={data.daily_word_goal} aria-valuenow={Math.min(data.words_learned_today, data.daily_word_goal)}>

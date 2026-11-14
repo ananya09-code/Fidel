@@ -128,7 +128,7 @@ export function DictionaryOverview({
 
   return <div className="fidel-dictionary">
     <DictionaryHeader languageCode={languageCode} />
-    <DictionaryFilters query={query} onQueryChange={setQuery} activeCategory={activeCategory} onCategoryChange={changeCategory} categories={categories.data?.data ?? []} />
+    <DictionaryFilters query={query} onQueryChange={setQuery} activeCategory={activeCategory} onCategoryChange={changeCategory} categories={categories.data?.data ?? []} guideReady={!loading && !failed} />
     {updateVocabulary.isError && <p className="dict-error" role="alert">{updateVocabulary.error.message}</p>}
     {audioNotice && <p className="dict-error" role="alert">{audioNotice}</p>}
     <div className={"dict-layout" + (showFeatured ? " has-feature" : "")}>
