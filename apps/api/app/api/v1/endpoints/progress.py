@@ -394,7 +394,7 @@ def save_answer(
                  ORDER BY wt.created_at LIMIT 1),
                 :now, :now, false, :learning_state
             FROM words AS w
-            WHERE w.id = :word_id AND w.status = 'approved'
+            WHERE w.id = :word_id AND w.status = 'approved' AND w.content_type <> 'sentence'
             ON CONFLICT (user_id, word_id) DO UPDATE SET
                 times_seen = user_words.times_seen + :seen_increment,
                 times_correct = user_words.times_correct + :correct_delta,

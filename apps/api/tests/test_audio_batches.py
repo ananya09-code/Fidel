@@ -70,6 +70,19 @@ def test_count_eligible_matches_selection(db_session, seed_words):
     assert count == len(rows) == len(seed_words) - 1
 
 
+def test_sentence_batch_selects_only_sentences(db_session, seed_words):
+    sentence_id = uuid.uuid4()
+    db_session.execute(text("""INSERT INTO words (id,language_code,text,content_type,status)
+        VALUES (:id,'om','A reviewed sentence.','sentence','draft')"""), {"id": sentence_id})
+    db_session.commit()
+    rows = batches.select_batch_words(db_session, "batch", 10, content_type="sentence")
+    assert [str(row["word_id"]) for row in rows] == [str(sentence_id)]
+    assert batches.count_eligible_words(db_session, content_type="sentence") == 1
+    assert batches.count_eligible_words(db_session, content_type="word") == sum(
+        word["content_type"] == "word" for word in seed_words
+    )
+
+
 # --------------------------------------------------
 # Batch size validation
 # --------------------------------------------------

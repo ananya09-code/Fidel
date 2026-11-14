@@ -115,6 +115,7 @@ generation_batches = Table(
     Column("language_code", String, nullable=False),
     Column("speaker_id", String, nullable=False),
     Column("speed", String, nullable=False),
+    Column("content_type", String),
     Column("status", String, nullable=False, server_default="running"),
     Column("requested_size", Integer, nullable=False),
     Column("total_selected", Integer, nullable=False, server_default="0"),
@@ -263,6 +264,26 @@ user_words = Table(
     Index("user_words_user_recent_idx", "user_id", "last_seen_at"),
     Index("user_words_user_state_idx", "user_id", "learning_state"),
     Index("user_words_user_favorite_idx", "user_id", "is_favorite"),
+)
+
+sentence_exercises = Table(
+    "sentence_exercises", metadata,
+    Column("id", Uuid, primary_key=True),
+    Column("sentence_word_id", Uuid, ForeignKey("words.id", ondelete="CASCADE"), nullable=False, unique=True),
+    Column("tiles", JSON, nullable=False),
+    Column("accepted_orders", JSON, nullable=False),
+    Column("created_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+)
+
+sentence_attempts = Table(
+    "sentence_attempts", metadata,
+    Column("id", Uuid, primary_key=True),
+    Column("user_id", Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False),
+    Column("exercise_id", Uuid, ForeignKey("sentence_exercises.id", ondelete="CASCADE"), nullable=False),
+    Column("selected_order", JSON, nullable=False),
+    Column("is_correct", Boolean, nullable=False),
+    Column("answered_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    Index("sentence_attempts_user_exercise_idx", "user_id", "exercise_id", "answered_at"),
 )
 
 review_sessions = Table(

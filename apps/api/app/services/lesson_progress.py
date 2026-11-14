@@ -22,7 +22,7 @@ def lesson_word_coverage(
     for word in db.execute(text("""
         SELECT id, language_code, difficulty,
                COALESCE(NULLIF(TRIM(category), ''), 'uncategorized') AS category
-        FROM words WHERE status = 'approved' AND language_code LIKE :language_filter
+        FROM words WHERE status = 'approved' AND content_type <> 'sentence' AND language_code LIKE :language_filter
     """), {"language_filter": language_code or "%"}).mappings():
         key = "-".join((
             make_slug(word["language_code"]),

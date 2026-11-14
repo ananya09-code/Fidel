@@ -181,6 +181,7 @@ def _attach_translations(db: Session, items: list[dict[str, Any]]) -> None:
 def get_summary(
     language_code: Literal["om", "am", "ti"] = "om",
     speaker_id: str | None = None,
+    content_type: Literal["word", "phrase", "sentence"] | None = None,
     db: Session = Depends(get_db),
     reviewer: str = Depends(require_admin),
 ) -> ReviewSummary:
@@ -228,7 +229,7 @@ def get_summary(
         superseded=int(counts["superseded"] or 0),
         has_audio=int(counts["has_audio"] or 0),
         total_vocabulary=vocabulary,
-        remaining_eligible=count_eligible_words(db, language_code, speaker_id),
+        remaining_eligible=count_eligible_words(db, language_code, speaker_id, content_type=content_type),
         running_batch=_serialize_batch(get_running_batch(db, language_code)),
     )
 
@@ -627,7 +628,8 @@ def start_batch(
     # block this request forever.
     fail_abandoned_batches(db)
 
-    remaining = count_eligible_words(db, language_code, speaker_id)
+    content_type = payload.content_type if payload else None
+    remaining = count_eligible_words(db, language_code, speaker_id, content_type=content_type)
 
     if remaining == 0:
         # Check *before* creating the row: a 'running' batch blocks every
@@ -641,7 +643,7 @@ def start_batch(
         )
 
     try:
-        batch = create_batch(db, batch_size=batch_size, language_code=language_code, speaker_id=speaker_id)
+        batch = create_batch(db, batch_size=batch_size, language_code=language_code, speaker_id=speaker_id, content_type=content_type)
     except BatchAlreadyRunning as exc:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, detail=str(exc)

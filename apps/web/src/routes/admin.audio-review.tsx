@@ -50,6 +50,7 @@ function AudioReviewPage() {
   const [busyId, setBusyId] = useState<string | null>(null)
   const [languageCode, setLanguageCode] = useState<AudioLanguage>('om')
   const [voiceId, setVoiceId] = useState('')
+  const [contentType, setContentType] = useState<'word' | 'phrase' | 'sentence'>('word')
 
   const isAuthenticated = adminKey.length > 0
   const voices = useQuery({
@@ -80,7 +81,7 @@ function AudioReviewPage() {
   const startBatchMutation = useMutation({
     mutationFn: (size: number) => {
       if (!speakerId) throw new Error('Choose an available voice before generating audio.')
-      return startBatch(size, languageCode, speakerId)
+      return startBatch(size, languageCode, speakerId, contentType)
     },
     onSuccess: (batch) => {
       setNotice({ kind: 'ok', text: `Batch ${batch.id.slice(0, 8)} requested. Audio generation runs in the background; its results appear below.` })
@@ -146,12 +147,14 @@ function AudioReviewPage() {
       setBusyId={setBusyId}
       batches={batches.data?.batches ?? []}
       languageCode={languageCode}
+      contentType={contentType}
       speakerId={speakerId}
       generationReady={Boolean(speakerId) && !voices.isError}
       generationControls={<div className="flex flex-wrap items-end gap-4 rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4">
         <label className="grid gap-1 text-sm">Language<select value={languageCode} onChange={event => { setLanguageCode(event.target.value as AudioLanguage); setVoiceId(''); setBatchFilter(''); setStatusFilter(''); setPage(1); setNotice(null) }} className="rounded-lg border border-[var(--line)] bg-[var(--panel)] p-2">
           {Object.entries(audioLanguages).map(([code, label]) => <option key={code} value={code}>{label}</option>)}
         </select></label>
+        <label className="grid gap-1 text-sm">Record<select value={contentType} onChange={event => setContentType(event.target.value as 'word' | 'phrase' | 'sentence')} className="rounded-lg border border-[var(--line)] bg-[var(--panel)] p-2"><option value="word">Words</option><option value="phrase">Phrases</option><option value="sentence">Sentences</option></select></label>
         <label className="grid gap-1 text-sm">Voice<select value={speakerId ?? ''} onChange={event => setVoiceId(event.target.value)} disabled={!voices.data?.length} className="rounded-lg border border-[var(--line)] bg-[var(--panel)] p-2">
           {!voices.data?.length && <option value="">{voices.isPending ? 'Loading voices…' : 'No voices available'}</option>}
           {voices.data?.map(voice => <option key={voice.id} value={voice.id}>{voice.name} ({voice.id})</option>)}
@@ -187,6 +190,7 @@ type DashboardProps = {
   setBusyId: (value: string | null) => void
   batches: Batch[]
   languageCode: AudioLanguage
+  contentType: 'word' | 'phrase' | 'sentence'
   speakerId?: string
   generationReady: boolean
   generationControls: ReactNode
@@ -217,6 +221,7 @@ function AdminDashboard({
   setBusyId,
   batches,
   languageCode,
+  contentType,
   speakerId,
   generationReady,
   generationControls,
@@ -230,8 +235,8 @@ function AdminDashboard({
   const isAuthenticated = adminKey.length > 0
 
   const summaryQuery = useQuery({
-    queryKey: ['audio-review', 'summary', languageCode, speakerId],
-    queryFn: () => getSummary(languageCode, speakerId),
+    queryKey: ['audio-review', 'summary', languageCode, speakerId, contentType],
+    queryFn: () => getSummary(languageCode, speakerId, contentType),
     enabled: isAuthenticated,
     retry: false,
     refetchInterval: (query) =>

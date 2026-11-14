@@ -56,6 +56,7 @@ export const batchSchema = z.object({
   speaker_id: z.string(),
   speed: z.string(),
   status: z.string(),
+  content_type: z.string().nullable().optional(),
   requested_size: z.number(),
   total_selected: z.number(),
   generated_count: z.number(),
@@ -152,8 +153,8 @@ function queryString(params: Record<string, string | number | boolean | undefine
   return encoded ? `?${encoded}` : ''
 }
 
-export function getSummary(languageCode: AudioLanguage = 'om', speakerId?: string): Promise<ReviewSummary> {
-  return apiFetch(`${BASE}/summary${queryString({ language_code: languageCode, speaker_id: speakerId })}`, summarySchema, { headers: adminHeaders() })
+export function getSummary(languageCode: AudioLanguage = 'om', speakerId?: string, contentType?: 'word' | 'phrase' | 'sentence'): Promise<ReviewSummary> {
+  return apiFetch(`${BASE}/summary${queryString({ language_code: languageCode, speaker_id: speakerId, content_type: contentType })}`, summarySchema, { headers: adminHeaders() })
 }
 
 export function listRecordings(
@@ -234,11 +235,11 @@ export function retryFailed(recordingIds: string[]): Promise<{ retried: number }
   )
 }
 
-export function startBatch(batchSize?: number, languageCode: AudioLanguage = 'om', speakerId?: string): Promise<Batch> {
+export function startBatch(batchSize?: number, languageCode: AudioLanguage = 'om', speakerId?: string, contentType?: 'word' | 'phrase' | 'sentence'): Promise<Batch> {
   return apiFetch(`${BASE}/batches`, batchSchema, {
     method: 'POST',
     headers: { ...adminHeaders(), 'Content-Type': 'application/json' },
-    body: JSON.stringify({ batch_size: batchSize ?? null, language_code: languageCode, speaker_id: speakerId }),
+    body: JSON.stringify({ batch_size: batchSize ?? null, language_code: languageCode, speaker_id: speakerId, content_type: contentType ?? null }),
   })
 }
 
