@@ -255,7 +255,7 @@ export function QuestExperience({
         <div className="quest-play-area">
           {!chatting ? (
             <section className="quest-world" aria-labelledby="quest-map-title">
-              <div className="quest-world-heading">
+              <div className="quest-world-heading" data-guide-target="Quest">
                 <div>
                   <h2 id="quest-map-title">
                     A village of little conversations
