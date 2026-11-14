@@ -17,6 +17,7 @@ from sqlalchemy import (
     Boolean,
     CheckConstraint,
     Column,
+    Date,
     DateTime,
     ForeignKey,
     Index,
@@ -309,6 +310,8 @@ user_preferences = Table(
     Column("daily_goal_minutes", Integer, nullable=False, server_default="5"),
     Column("interface_language", String, nullable=False, server_default="en"),
     Column("reminders_enabled", Boolean, nullable=False, server_default="1"),
+    Column("quiz_notifications_enabled", Boolean, nullable=False, server_default="0"),
+    Column("streak_notifications_enabled", Boolean, nullable=False, server_default="0"),
     Column("reminder_time", String, nullable=False, server_default="19:00"),
     Column("sound_enabled", Boolean, nullable=False, server_default="1"),
     Column("sound_volume", Integer, nullable=False, server_default="75"),
@@ -326,6 +329,26 @@ user_preferences = Table(
     CheckConstraint("interface_language IN ('en','om','am','ti')", name="user_preferences_interface_language_check"),
     CheckConstraint("appearance IN ('light','dark','system')", name="user_preferences_appearance_check"),
     CheckConstraint("tour_completed_version >= 0", name="user_preferences_tour_version_check"),
+)
+
+
+push_subscriptions = Table(
+    "push_subscriptions", metadata,
+    Column("id", Uuid, primary_key=True),
+    Column("user_id", Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True),
+    Column("endpoint", String, nullable=False, unique=True),
+    Column("p256dh", String, nullable=False),
+    Column("auth", String, nullable=False),
+    Column("created_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+)
+
+notification_deliveries = Table(
+    "notification_deliveries", metadata,
+    Column("id", Uuid, primary_key=True),
+    Column("subscription_id", Uuid, ForeignKey("push_subscriptions.id", ondelete="CASCADE"), nullable=False),
+    Column("kind", String(16), nullable=False),
+    Column("local_date", Date, nullable=False),
+    UniqueConstraint("subscription_id", "local_date", name="notification_deliveries_once_per_day"),
 )
 
 

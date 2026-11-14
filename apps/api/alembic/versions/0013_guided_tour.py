@@ -1,14 +1,14 @@
 """Remember each learner's tour and release-note progress.
 
-Revision ID: 0012_guided_tour
-Revises: 0011_haptics_preference
+Revision ID: 0013_guided_tour
+Revises: 0012_push_notifications
 """
 
 from alembic import op
 import sqlalchemy as sa
 
-revision = "0012_guided_tour"
-down_revision = "0011_haptics_preference"
+revision = "0013_guided_tour"
+down_revision = "0012_push_notifications"
 branch_labels = None
 depends_on = None
 

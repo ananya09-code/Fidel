@@ -1,10 +1,11 @@
 import { languageLabel } from "@/lib/languages";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useClerk, useUser } from "@clerk/tanstack-react-start";
+import { useAuth, useClerk, useUser } from "@clerk/tanstack-react-start";
 import { ChevronDown, CircleHelp, LogOut, Settings, UserRound } from "lucide-react";
 import { openGuide } from "@/components/guide/GuideExperience";
 import { useSidebar } from "@/components/ui/sidebar";
 import { usePreferences } from "@/hooks/use-preferences";
+import { disablePushOnThisDevice } from "@/lib/push-device";
 import { FidelTeacherMark } from "./FidelTeacherMark";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -46,8 +47,9 @@ export function Header() {
   const { state } = useSidebar();
   const { user } = useUser();
   const { signOut } = useClerk();
+  const { getToken } = useAuth();
   const preferences = usePreferences();
   const pathname = useRouterState({ select: (router) => router.location.pathname }).toLowerCase();
   const area = pathname.startsWith("/learn/") ? "Lesson" : pathname.startsWith("/learn") ? "Learn" : pathname.startsWith("/dictionary") ? "Dictionary" : pathname.startsWith("/review") ? "Review" : pathname.startsWith("/settings") ? "Settings" : pathname.startsWith("/profile") ? "Profile" : "Home";
-  return <HeaderView displayName={user?.fullName || user?.username || "Fidel learner"} email={user?.primaryEmailAddress?.emailAddress} imageUrl={user?.imageUrl} language={preferences.data ? languageLabel(preferences.data.learning_language) : undefined} area={area} sidebarOpen={state === "expanded"} onSignOut={() => { void signOut({ redirectUrl: "/" }); }} />;
+  return <HeaderView displayName={user?.fullName || user?.username || "Fidel learner"} email={user?.primaryEmailAddress?.emailAddress} imageUrl={user?.imageUrl} language={preferences.data ? languageLabel(preferences.data.learning_language) : undefined} area={area} sidebarOpen={state === "expanded"} onSignOut={() => { void disablePushOnThisDevice(getToken).catch(() => undefined).then(() => signOut({ redirectUrl: "/" })); }} />;
 }

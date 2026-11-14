@@ -100,6 +100,29 @@ Run the backend from `apps/api` so its `.env` resolves consistently.
 | `AUDIO_URL_EXPIRES_IN` | api | Presigned URL lifetime (seconds) |
 | `FFMPEG_BINARY` | api | Optional path to ffmpeg for admin audio trimming; otherwise uses `ffmpeg` on `PATH` |
 | `DEBUG` | api | Defaults to `false` in `.env.example` |
+| `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` | api and scheduled worker | Web Push keypair and contact URI; private key is server-only |
+
+### Push notifications
+
+Fidel offers daily word-goal, due-quiz, and streak reminders in Settings. A learner
+must enable notifications on each device; the browser permission prompt appears
+only after that button is pressed. iPhone and iPad require the Home Screen app.
+The service worker handles push only and does not cache lessons for offline use.
+
+Before enabling notifications in a deployed environment, verify its Alembic head
+and apply `0012_push_notifications` using the normal reviewed migration process.
+Generate a stable VAPID keypair with [py-vapid](https://github.com/web-push-libs/vapid/tree/main/python)
+outside the repository. Set `VAPID_PUBLIC_KEY` to its application server key,
+`VAPID_PRIVATE_KEY` to its base64url DER private key, and `VAPID_SUBJECT` to a
+`mailto:` contact. Keep the private key in server secrets and give the same three
+values to the API and scheduled worker. Rotating the pair requires users to
+subscribe again.
+
+Run `uv run python -m app.services.notification_delivery` from `apps/api` every
+hour on a trusted scheduled service with the API's database and VAPID environment.
+The worker uses each learner's timezone and reminder time, sends at most one
+relevant message per device and local day, and removes expired subscriptions.
+The web service alone does not run the schedule.
 
 ## Checks
 

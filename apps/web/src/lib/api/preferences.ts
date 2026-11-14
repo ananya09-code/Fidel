@@ -35,6 +35,8 @@ export const userPreferencesSchema = z.object({
   daily_goal_words: dailyGoalSchema,
   interface_language: interfaceLanguageSchema,
   reminders_enabled: z.boolean(),
+  quiz_notifications_enabled: z.boolean(),
+  streak_notifications_enabled: z.boolean(),
   reminder_time: z.string(),
   sound_enabled: z.boolean(),
   sound_volume: z.number().int().min(0).max(100),
