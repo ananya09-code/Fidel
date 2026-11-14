@@ -1,5 +1,6 @@
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { useAuth } from "@clerk/tanstack-react-start";
 import type { FlashcardWord } from "./Flashcard";
 import { ArrowLeft, ArrowRight, Check, LoaderCircle, RotateCcw, X } from "lucide-react";
 import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
@@ -13,6 +14,9 @@ import { usePreferences } from "@/hooks/use-preferences";
 import { playFeedbackSound, prepareFeedbackSound } from "@/lib/feedback-sounds";
 import { characterFor, reviewCharacterFor } from "@/lib/character-cast";
 import { playFeedbackHaptic } from "@/lib/feedback-haptics";
+import { getSentenceExercises, type SentenceExercise } from "@/lib/api/sentences";
+import { SentenceRound } from "./SentenceRound";
+import { sentenceAfterWord } from "./sentence-plan";
 import "./lesson.css";
 
 type LessonQuizProps = {
@@ -61,6 +65,8 @@ export function LessonQuiz({
   onAnswer,
   onFinish,
 }: LessonQuizProps) {
+  const { getToken } = useAuth();
+  const shownSentences = useRef(new Set<string>());
   const feedbackPreferences = usePreferences().data;
   const soundEnabled = feedbackPreferences?.sound_enabled ?? false;
   const soundVolume = feedbackPreferences?.sound_volume ?? 75;
@@ -105,6 +111,8 @@ export function LessonQuiz({
   const [saveError, setSaveError] = useState<string | null>(null);
   const [reaction, setReaction] = useState<EncouragementEvent | null>(null);
   const [readInstead, setReadInstead] = useState<string | null>(null);
+  const [nextSentence, setNextSentence] = useState<SentenceExercise | null>(null);
+  const [showSentence, setShowSentence] = useState(false);
 
   const currentQuestion = questions[currentIndex];
   const selectedId = currentQuestion
@@ -149,6 +157,18 @@ export function LessonQuiz({
       const cue = wordId === currentQuestion.word.id ? "correct" : "retry";
       playFeedbackSound(cue, soundEnabled, soundVolume);
       playFeedbackHaptic(cue, hapticsEnabled);
+      if (variant === "practice" && wordId === currentQuestion.word.id) {
+        try {
+          const catalogue = await getSentenceExercises(getToken, languageCode);
+          const eligible = sentenceAfterWord(catalogue.exercises, currentQuestion.word.id, shownSentences.current);
+          if (eligible) {
+            shownSentences.current.add(eligible.id);
+            setNextSentence(eligible);
+          }
+        } catch {
+          // Sentence practice is an optional step; the saved word answer still stands.
+        }
+      }
     } catch (error) {
       setSaveError(error instanceof Error ? error.message : "Unable to save your answer.");
     } finally {
@@ -156,8 +176,14 @@ export function LessonQuiz({
     }
   }
 
-  async function nextQuestion(nextIndex = currentIndex + 1) {
+  async function nextQuestion(nextIndex = currentIndex + 1, afterSentence = false) {
     if (!answered || isSaving) return;
+    if (nextSentence && !afterSentence) {
+      setShowSentence(true);
+      return;
+    }
+    setShowSentence(false);
+    setNextSentence(null);
     if (nextIndex >= questions.length) {
       prepareFeedbackSound(soundEnabled, soundVolume);
       const nextAnswers = answers;
@@ -224,6 +250,10 @@ export function LessonQuiz({
   }
 
   if (!currentQuestion) return null;
+
+  if (showSentence && nextSentence) {
+    return <SentenceRound key={nextSentence.id} exercise={nextSentence} character={companion} onContinue={() => void nextQuestion(currentIndex + 1, true)} />;
+  }
 
   const matching = matchingIndices(questions.map(question => question.word), variant);
   if (matching.includes(currentIndex)) {
