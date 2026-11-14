@@ -1,6 +1,70 @@
-.guide-panel{position:fixed;z-index:60;right:24px;bottom:24px;width:min(420px,calc(100vw - 32px));max-height:calc(100svh - 48px);overflow:auto;padding:18px 22px 20px;background:var(--ui-paper);color:var(--ui-ink);box-shadow:0 4px 18px #14251c12;/* taste-skill-ignore: floating dialog */border-radius:10px}
-.guide-top,.guide-actions,.guide-actions>div{display:flex;align-items:center;justify-content:space-between;gap:10px}.guide-journey{color:var(--ui-muted);font-size:13px}.guide-close,.guide-back,.guide-quiet{background:transparent;border:0;color:var(--ui-ink);cursor:pointer}.guide-close{display:grid;place-items:center;min-width:44px;min-height:44px}
-.guide-scene{display:flex;align-items:center;gap:12px;min-height:140px;margin:8px 0 16px;padding:8px 12px 0 8px;background:var(--ui-surface);border-radius:8px}.guide-character{display:grid;place-items:end center;align-self:stretch;flex:0 0 96px;min-height:132px;padding:0;border:0;border-bottom:4px solid var(--ui-gold);background:transparent;cursor:pointer}.guide-character img{width:88px;height:118px;object-fit:contain;object-position:bottom;image-rendering:pixelated}.guide-speech{position:relative;flex:1;min-width:0;padding:12px 13px;background:var(--ui-paper);border-radius:8px}.guide-speech::before{content:"";position:absolute;top:22px;left:-6px;width:12px;height:12px;transform:rotate(45deg);background:var(--ui-paper)}.guide-speech strong{display:block;font-size:13px}.guide-speech p{margin:5px 0 7px;font-size:15px;line-height:1.35}.guide-speech span{display:block;color:var(--ui-muted);font-size:12px}
-.guide-progress{margin:0 0 6px;color:var(--ui-muted);font-size:13px}.guide-panel h2{margin:7px 0 9px;font-size:23px;line-height:1.15;letter-spacing:-.035em;font-weight:600}.guide-panel h2:focus{outline:none}.guide-panel p#guide-copy{margin:0 0 16px;color:var(--ui-muted);font-size:15px;line-height:1.45}.guide-dashes{display:flex;gap:8px;margin:18px 0}.guide-dashes button{height:8px;flex:1;border:0;border-radius:20px;background:var(--ui-line);cursor:pointer}.guide-dashes button.active{background:var(--ui-gold)}.guide-actions>span{color:var(--ui-muted);font-size:13px}.guide-quiet,.guide-back{min-height:44px;padding:8px;font-size:14px}.guide-back{display:inline-flex;align-items:center;gap:4px}.guide-next{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:9px 15px;border:0;border-radius:6px;background:var(--ui-ink);color:var(--ui-ground);font:inherit;font-size:14px;cursor:pointer}.guide-next:disabled,.guide-close:disabled,.guide-quiet:disabled{opacity:.6;cursor:wait}.guide-updates{list-style:none;padding:0;margin:16px 0 20px}.guide-updates li{padding:8px 0}.guide-updates strong,.guide-updates span{display:block}.guide-updates strong{font-size:15px}.guide-updates span{margin-top:3px;color:var(--ui-muted);font-size:14px}.guide-error{margin:12px 0 0;color:var(--ui-error);font-size:13px}.guide-panel button:focus-visible{outline:2px solid var(--ui-ink);outline-offset:3px}
-@media(max-width:767px){.guide-panel{left:16px;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:auto;max-height:calc(100svh - 160px);padding:14px 18px 17px}.guide-scene{gap:8px;min-height:120px;margin:4px 0 14px;padding:7px 8px 0 4px}.guide-character{flex-basis:76px;min-height:114px}.guide-character img{width:74px;height:105px}.guide-speech{padding:9px 11px}.guide-speech p{font-size:14px}.guide-panel h2{font-size:22px}.guide-dashes{margin:14px 0}}
-@media(prefers-reduced-motion:no-preference){.guide-panel{animation:guide-enter .22s ease-out}.guide-character img{animation:guide-hop .35s steps(4,end)}.guide-speech p{animation:guide-speak .25s ease-out}@keyframes guide-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes guide-hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px) rotate(-3deg)}}@keyframes guide-speak{from{opacity:.4;transform:translateX(-5px)}to{opacity:1;transform:translateX(0)}}}
+.guide-spotlight {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  border: 2px solid var(--ui-gold);
+  border-radius: 10px;
+  box-shadow: 0 0 0 200vmax rgb(9 24 18 / 58%);
+}
+
+.guide-panel {
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 61;
+  right: 20px;
+  bottom: 20px;
+  width: min(324px, calc(100vw - 32px));
+  max-height: calc(100svh - 32px);
+  overflow: auto;
+  padding: 14px 16px 16px;
+  background: var(--ui-paper);
+  color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgb(9 24 18 / 7%);
+}
+
+.guide-panel.is-tour { right: auto; bottom: auto; }
+.guide-waiting { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; width: min(240px, calc(100vw - 32px)); padding: 8px 10px 8px 14px; color: var(--ui-muted); font-size: 13px; }
+.guide-waiting .guide-error { flex-basis: 100%; }
+.guide-top, .guide-actions, .guide-actions > div { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.guide-journey, .guide-progress { color: var(--ui-muted); font-size: 12px; }
+.guide-close, .guide-back, .guide-quiet { border: 0; background: transparent; color: var(--ui-ink); cursor: pointer; }
+.guide-close { display: grid; place-items: center; min-width: 36px; min-height: 36px; }
+.guide-scene { display: flex; align-items: center; gap: 9px; min-height: 84px; margin: 3px 0 10px; }
+.guide-character { flex: 0 0 62px; display: grid; place-items: end center; min-height: 80px; padding: 0; border: 0; border-bottom: 3px solid var(--ui-gold); background: transparent; cursor: pointer; }
+.guide-character img { width: 58px; height: 78px; object-fit: contain; object-position: bottom; image-rendering: pixelated; }
+.guide-speech { position: relative; flex: 1; min-width: 0; padding: 8px 10px; background: var(--ui-surface); border-radius: 7px; }
+.guide-speech::before { content: ""; position: absolute; top: 18px; left: -5px; width: 10px; height: 10px; transform: rotate(45deg); background: var(--ui-surface); }
+.guide-speech strong { display: block; font-size: 12px; }
+.guide-speech p { margin: 3px 0 4px; font-size: 13px; line-height: 1.3; }
+.guide-speech span { display: block; color: var(--ui-muted); font-size: 11px; }
+.guide-progress { margin: 0; }
+.guide-panel h2 { margin: 4px 0 5px; font-size: 19px; line-height: 1.2; letter-spacing: -.025em; font-weight: 600; }
+.guide-panel h2:focus { outline: none; }
+.guide-panel p#guide-copy { margin: 0 0 10px; color: var(--ui-muted); font-size: 13px; line-height: 1.35; }
+.guide-dashes { display: flex; gap: 6px; margin: 11px 0; }
+.guide-dashes button { flex: 1; height: 6px; border: 0; border-radius: 8px; background: var(--ui-line); cursor: pointer; }
+.guide-dashes button.active { background: var(--ui-gold); }
+.guide-actions > span { color: var(--ui-muted); font-size: 12px; }
+.guide-quiet, .guide-back { min-height: 40px; padding: 6px; font-size: 13px; }
+.guide-back { display: inline-flex; align-items: center; gap: 3px; }
+.guide-next { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 40px; padding: 7px 11px; border: 0; border-radius: 6px; background: var(--ui-ink); color: var(--ui-ground); font: inherit; font-size: 13px; cursor: pointer; }
+.guide-next:disabled, .guide-close:disabled, .guide-quiet:disabled { opacity: .6; cursor: wait; }
+.guide-updates { list-style: none; padding: 0; margin: 10px 0 14px; }
+.guide-updates li { padding: 5px 0; }
+.guide-updates strong, .guide-updates span { display: block; }
+.guide-updates strong { font-size: 14px; }
+.guide-updates span { margin-top: 2px; color: var(--ui-muted); font-size: 13px; }
+.guide-error { margin: 10px 0 0; color: var(--ui-error); font-size: 12px; }
+.guide-panel button:focus-visible { outline: 2px solid var(--ui-ink); outline-offset: 2px; }
+
+@media (max-width: 767px) {
+  .guide-panel { right: 16px; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); max-height: calc(100svh - 104px); }
+  .guide-panel.is-tour { max-height: calc(100svh - 32px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .guide-character img { animation: guide-hop .3s steps(4, end); }
+  @keyframes guide-hop { 50% { transform: translateY(-5px); } }
+}

@@ -21,7 +21,7 @@ export function LearningPathView({ path, progress }: { path: LearningPathRespons
   return <>
     <header className="learn-page-title"><div><h1>Your learning path</h1><p>{language} · One conversation at a time.</p></div><Link to="/dictionary" search={{ category: undefined }} className="learn-dictionary">Explore words <ArrowRight size={16} aria-hidden="true" /></Link></header>
     {!lessons.length ? <PageState kind="empty" title="Lessons are on their way" description="No lessons are available for this language yet." compact /> : <>
-      <section className="learn-next" aria-labelledby="learn-next-title">
+      <section className="learn-next" data-guide-target="Learn" aria-labelledby="learn-next-title">
         <img className="learn-teacher learn-cast-character" src={companion.image} alt="" width="76" height="84" />
         <div className="learn-next-copy"><p>{next ? (attempt ? "Pick up where you left off" : "Your next lesson") : "Every lesson completed"}</p><h2 id="learn-next-title">{next?.title ?? "Look how far you’ve come."}</h2><p>{next ? `${next.word_count} words${attempt ? ` · ${attempt.question_index} of ${attempt.question_count} practice questions finished` : ""}` : "Keep familiar words fresh with a review."}</p></div>
         {next ? <Link className="learn-start" to="/Learn/$lessonId" params={{ lessonId: next.id }} search={{ language_code: path.language_code }}>{attempt ? "Continue lesson" : "Start lesson"}<ArrowRight size={18} aria-hidden="true" /></Link> : <Link className="learn-start" to="/review" search={{ start: false }}>Review words<ArrowRight size={18} aria-hidden="true" /></Link>}

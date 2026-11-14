@@ -8,10 +8,11 @@ type DictionaryFiltersProps = {
   activeCategory: string;
   onCategoryChange: (category: string) => void;
   categories: WordCategory[];
+  guideReady?: boolean;
 };
 
-export function DictionaryFilters({ query, onQueryChange, activeCategory, onCategoryChange, categories }: DictionaryFiltersProps) {
-  return <section className="dict-filters" aria-label="Find vocabulary">
+export function DictionaryFilters({ query, onQueryChange, activeCategory, onCategoryChange, categories, guideReady = false }: DictionaryFiltersProps) {
+  return <section className="dict-filters" data-guide-target={guideReady ? "Dictionary" : undefined} aria-label="Find vocabulary">
     <div className="dict-search"><Search size={18} aria-hidden="true" />
       <input value={query} onChange={(event) => onQueryChange(event.target.value)} placeholder="Search a word or meaning" aria-label="Search dictionary" />
       {query && <button type="button" className="dict-icon-button" onClick={() => onQueryChange("")} aria-label="Clear search"><X size={18} aria-hidden="true" /></button>}

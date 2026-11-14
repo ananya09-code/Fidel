@@ -63,7 +63,7 @@ export function ReviewOverview({ data, onStart, isStarting = false, error, memor
     {memoryCheck}
     <section className="review-start-panel" aria-labelledby="review-start-title">
       <FidelTeacherMark className="review-teacher" />
-      <div className="review-start-copy">
+      <div className="review-start-copy" data-guide-target="Review">
         <h2 id="review-start-title">{active ? "Pick up your review" : data.queue.length ? data.queue.length + (data.queue.length === 1 ? " word to reconnect with" : " words to reconnect with") : "A little room for new words"}</h2>
         <p>{active ? answered + " of " + active.total_count + " answered. Your place is saved." : data.queue.length ? "A short practice with words that need another look." : "No words are waiting for review. Keep learning and come back when you need a refresher."}</p>
         {active && <progress value={answered} max={active.total_count} aria-label="Saved review progress" />}
