@@ -124,6 +124,18 @@ The worker uses each learner's timezone and reminder time, sends at most one
 relevant message per device and local day, and removes expired subscriptions.
 The web service alone does not run the schedule.
 
+For the free GitHub Actions scheduler, `.github/workflows/notification-delivery.yml`
+runs at minute 17 of every UTC hour on `main`. Configure the `notification-worker`
+GitHub environment with `DATABASE_URL`, `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`,
+and `VAPID_SUBJECT` as environment secrets. Use the same database URL and VAPID
+values as the Render API; replacing the VAPID pair invalidates existing device
+subscriptions. Restrict this environment to the `main` branch. After the secrets
+are in place, set the repository Actions variable `NOTIFICATION_WORKER_ENABLED`
+to `true` and trigger the workflow manually once to check its run log. Until
+then, scheduled jobs are skipped. GitHub may delay or drop scheduled runs, and
+automatically disables schedules in public repositories after 60 days without
+repository activity.
+
 ## Checks
 
 The admin audio trim action requires `ffmpeg` on the API host. Render's native
