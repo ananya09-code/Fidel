@@ -217,8 +217,8 @@ export default function OverviewPanel({
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-[var(--sea-ink)]/100">
             {remaining > 0
-              ? `${remaining} vocabulary entr${remaining === 1 ? 'y' : 'ies'} still need audio`
-              : 'No eligible vocabulary remains'}
+              ? `${remaining} selected entr${remaining === 1 ? 'y' : 'ies'} still need audio`
+              : 'No eligible entries remain for this selection'}
           </p>
           <p className="text-xs text-[var(--sea-ink)]/65">
             A batch selects up to {batchSize} entries that have no recording for this
@@ -263,7 +263,7 @@ export default function OverviewPanel({
                 ) : (
                   <Sparkles className="size-4" />
                 )}
-                Confirm {batchSize} words
+                Confirm {batchSize} entries
               </button>
               <button
                 type="button"

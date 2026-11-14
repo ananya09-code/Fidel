@@ -1,0 +1,24 @@
+[
+  {
+    "language_code": "om",
+    "sentence": "Baayyee galatoomi.",
+    "meaning": "Thank you very much.",
+    "meaning_amharic": "በጣም አመሰግናለሁ።",
+    "tiles": [
+      { "word": "galatoomi", "text": "galatoomi" },
+      { "word": "baayyee", "text": "Baayyee" }
+    ],
+    "accepted_order": [1, 0]
+  },
+  {
+    "language_code": "om",
+    "sentence": "Mee ilaali.",
+    "meaning": "Please look.",
+    "meaning_amharic": "እባክህ ተመልከት።",
+    "tiles": [
+      { "word": "ilaali", "text": "ilaali" },
+      { "word": "mee", "text": "Mee" }
+    ],
+    "accepted_order": [1, 0]
+  }
+]

@@ -129,6 +129,7 @@ def auth_client(client, session_factory, monkeypatch):
     from app.api.v1.endpoints import learning as learning_module
     from app.api.v1.endpoints import words as words_module
     from app.api.v1.endpoints import quests as quests_module
+    from app.api.v1.endpoints import sentences as sentences_module
     from app.core.config import get_settings
     from app.services.clerk_users import ClerkProfileData
 
@@ -155,6 +156,7 @@ def auth_client(client, session_factory, monkeypatch):
     client.app.dependency_overrides[learning_module.get_db] = override_get_db
     client.app.dependency_overrides[words_module.get_db] = override_get_db
     client.app.dependency_overrides[quests_module.get_db] = override_get_db
+    client.app.dependency_overrides[sentences_module.get_db] = override_get_db
     monkeypatch.setattr(
         endpoint_module,
         "fetch_clerk_profile",

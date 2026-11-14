@@ -168,6 +168,8 @@ def get_vocabulary(
     if content_type:
         filters.append("w.content_type = :content_type")
         params["content_type"] = content_type
+    else:
+        filters.append("w.content_type <> 'sentence'")
 
     if audio_available is True:
         filters.append(
@@ -285,7 +287,7 @@ def get_categories(
                 COALESCE(NULLIF(TRIM(category), ''), 'Uncategorized') AS name,
                 COUNT(*) AS word_count
             FROM words
-            WHERE status = 'approved' AND language_code = :language_code
+            WHERE status = 'approved' AND content_type <> 'sentence' AND language_code = :language_code
             GROUP BY COALESCE(NULLIF(TRIM(category), ''), 'Uncategorized')
             ORDER BY LOWER(
                 COALESCE(NULLIF(TRIM(category), ''), 'Uncategorized')

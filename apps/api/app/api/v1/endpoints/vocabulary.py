@@ -97,7 +97,7 @@ def update_vocabulary_state(
             FROM words AS w
             LEFT JOIN word_translations AS wt
               ON wt.word_id = w.id AND wt.language_code = 'en'
-            WHERE w.id = :word_id AND w.status = 'approved'
+            WHERE w.id = :word_id AND w.status = 'approved' AND w.content_type <> 'sentence'
             ORDER BY wt.created_at
             LIMIT 1
             """

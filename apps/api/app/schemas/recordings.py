@@ -100,6 +100,7 @@ class StartBatchRequest(BaseModel):
         description="Words per batch; defaults to 100.",
     )
     language_code: Literal["om", "am", "ti"] = "om"
+    content_type: Literal["word", "phrase", "sentence"] | None = None
     speaker_id: str | None = Field(default=None, max_length=100)
 
 

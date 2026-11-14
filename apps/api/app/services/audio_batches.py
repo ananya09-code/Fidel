@@ -87,6 +87,7 @@ ELIGIBLE_WORDS_SQL = text("""
         w.transliteration
     FROM words AS w
     WHERE w.language_code = :language_code
+      AND (CAST(:content_type AS TEXT) IS NULL OR w.content_type = :content_type)
       AND NOT EXISTS (
             SELECT 1
             FROM audio_recordings AS a
@@ -103,6 +104,7 @@ COUNT_ELIGIBLE_WORDS_SQL = text("""
     SELECT COUNT(*)
     FROM words AS w
     WHERE w.language_code = :language_code
+      AND (CAST(:content_type AS TEXT) IS NULL OR w.content_type = :content_type)
       AND NOT EXISTS (
             SELECT 1
             FROM audio_recordings AS a
@@ -115,12 +117,12 @@ COUNT_ELIGIBLE_WORDS_SQL = text("""
 
 INSERT_BATCH_SQL = text("""
     INSERT INTO generation_batches (
-        id, language_code, speaker_id, speed, status,
+        id, language_code, speaker_id, speed, content_type, status,
         requested_size, total_selected, generated_count, failed_count,
         started_at
     )
     VALUES (
-        :id, :language_code, :speaker_id, :speed, 'running',
+        :id, :language_code, :speaker_id, :speed, :content_type, 'running',
         :requested_size, 0, 0, 0, :started_at
     )
     RETURNING id
@@ -168,6 +170,7 @@ def create_batch(
     language_code: str = LANGUAGE_CODE,
     speaker_id: str = DEFAULT_VOICE_ID,
     speed: str = SPEED,
+    content_type: str | None = None,
 ) -> dict[str, Any]:
     """Create a ``running`` batch row. The worker fills in the results."""
     size = validate_batch_size(batch_size)
@@ -181,6 +184,7 @@ def create_batch(
                 "language_code": language_code,
                 "speaker_id": speaker_id,
                 "speed": speed,
+                "content_type": content_type,
                 "requested_size": size,
                 "started_at": _utcnow(),
             },
@@ -201,7 +205,7 @@ def get_batch(session: Session, batch_id: str) -> dict[str, Any] | None:
     row = session.execute(
         text("""
             SELECT
-                b.id, b.language_code, b.speaker_id, b.speed, b.status,
+                b.id, b.language_code, b.speaker_id, b.speed, b.content_type, b.status,
                 b.requested_size, b.total_selected, b.generated_count,
                 b.failed_count, b.error, b.created_at, b.started_at,
                 b.completed_at
@@ -317,6 +321,7 @@ def count_eligible_words(
     language_code: str = LANGUAGE_CODE,
     speaker_id: str = DEFAULT_VOICE_ID,
     speed: str = SPEED,
+    content_type: str | None = None,
 ) -> int:
     """Number of vocabulary entries that still need audio."""
     return int(
@@ -326,6 +331,7 @@ def count_eligible_words(
                 "language_code": language_code,
                 "speaker_id": speaker_id,
                 "speed": speed,
+                "content_type": content_type,
             },
         ).scalar_one()
     )
@@ -381,6 +387,7 @@ def select_batch_words(
     language_code: str = LANGUAGE_CODE,
     speaker_id: str = DEFAULT_VOICE_ID,
     speed: str = SPEED,
+    content_type: str | None = None,
 ) -> list[dict[str, Any]]:
     """Select the words this batch will attempt, skipping already-active ones."""
     rows = session.execute(
@@ -389,6 +396,7 @@ def select_batch_words(
             "language_code": language_code,
             "speaker_id": speaker_id,
             "speed": speed,
+            "content_type": content_type,
             "limit": limit,
         },
     ).mappings().all()
@@ -642,6 +650,7 @@ def run_batch(
             language_code=language_code,
             speaker_id=speaker_id,
             speed=speed,
+            content_type=batch["content_type"],
         )
         _update_batch_progress(session, batch_id, selected=len(words))
 

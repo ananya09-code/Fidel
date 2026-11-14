@@ -118,6 +118,7 @@ def get_learning_path(
     FROM words
     WHERE language_code = :language_code
       AND status = 'approved'
+      AND content_type <> 'sentence'
     ORDER BY category, difficulty, id
     """
     )    
@@ -249,6 +250,7 @@ def get_lesson_words(
             FROM words
             WHERE language_code = :language_code
               AND status = 'approved'
+              AND content_type <> 'sentence'
             GROUP BY
                 difficulty,
                 COALESCE(NULLIF(TRIM(category), ''), 'uncategorized')
@@ -291,6 +293,7 @@ def get_lesson_words(
             FROM words
             WHERE language_code = :language_code
               AND status = 'approved'
+              AND content_type <> 'sentence'
               AND COALESCE(NULLIF(TRIM(category), ''), 'uncategorized')
                     = :category
               AND (
@@ -323,6 +326,7 @@ def get_lesson_words(
             FROM words
             WHERE language_code = :language_code
               AND status = 'approved'
+              AND content_type <> 'sentence'
               AND COALESCE(NULLIF(TRIM(category), ''), 'uncategorized')
                     = :category
               AND (
