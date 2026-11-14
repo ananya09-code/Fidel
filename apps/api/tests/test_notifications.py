@@ -1,6 +1,6 @@
 """Push subscriptions and reminder decisions use isolated learner data."""
 
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from uuid import uuid4
 
 from pydantic import SecretStr
@@ -47,6 +47,42 @@ def test_rejects_untrusted_push_endpoint(auth_client, mock_clerk, monkeypatch):
     auth_client.patch("/api/v1/preferences", headers=AUTH_HEADERS, json={"onboarding_completed": True})
     unsafe = {**SUBSCRIPTION, "endpoint": "https://127.0.0.1/internal"}
     assert auth_client.post(f"{BASE}/subscriptions", headers=AUTH_HEADERS, json=unsafe).status_code == 422
+
+
+def test_inbox_shows_only_authenticated_users_deliveries(auth_client, mock_clerk, session_factory, monkeypatch):
+    _configure(monkeypatch)
+    assert auth_client.get(f"{BASE}/inbox").status_code == 401
+
+    auth_client.patch("/api/v1/preferences", headers=AUTH_HEADERS, json={"onboarding_completed": True})
+    assert auth_client.get(f"{BASE}/inbox", headers=AUTH_HEADERS).json() == {"items": []}
+    assert auth_client.post(f"{BASE}/subscriptions", headers=AUTH_HEADERS, json=SUBSCRIPTION).status_code == 204
+    with session_factory() as db:
+        first_subscription = db.execute(text("SELECT id FROM push_subscriptions WHERE endpoint = :endpoint"), {"endpoint": SUBSCRIPTION["endpoint"]}).scalar_one()
+        db.execute(text("INSERT INTO notification_deliveries (id, subscription_id, kind, local_date) VALUES (:id, :subscription_id, 'goal', :day)"),
+                   {"id": uuid4(), "subscription_id": first_subscription, "day": date(2026, 11, 13)})
+        db.commit()
+    assert auth_client.get(f"{BASE}/inbox", headers=AUTH_HEADERS).json() == {
+        "items": [{"kind": "goal", "local_date": "2026-11-13"}]
+    }
+
+    mock_clerk("another_user")
+    auth_client.patch("/api/v1/preferences", headers=AUTH_HEADERS, json={"onboarding_completed": True})
+    assert auth_client.get(f"{BASE}/inbox", headers=AUTH_HEADERS).json() == {"items": []}
+    second = {**SUBSCRIPTION, "endpoint": "https://fcm.googleapis.com/fcm/send/another-device"}
+    assert auth_client.post(f"{BASE}/subscriptions", headers=AUTH_HEADERS, json=second).status_code == 204
+    with session_factory() as db:
+        second_subscription = db.execute(text("SELECT id FROM push_subscriptions WHERE endpoint = :endpoint"), {"endpoint": second["endpoint"]}).scalar_one()
+        db.execute(text("INSERT INTO notification_deliveries (id, subscription_id, kind, local_date) VALUES (:id, :subscription_id, 'quiz', :day)"),
+                   {"id": uuid4(), "subscription_id": second_subscription, "day": date(2026, 11, 14)})
+        db.commit()
+    assert auth_client.get(f"{BASE}/inbox", headers=AUTH_HEADERS).json() == {
+        "items": [{"kind": "quiz", "local_date": "2026-11-14"}]
+    }
+
+    mock_clerk("user_test")
+    assert auth_client.get(f"{BASE}/inbox", headers=AUTH_HEADERS).json() == {
+        "items": [{"kind": "goal", "local_date": "2026-11-13"}]
+    }
 
 
 def test_daily_goal_delivery_is_deduplicated_and_uses_selected_language(auth_client, mock_clerk, session_factory, monkeypatch):

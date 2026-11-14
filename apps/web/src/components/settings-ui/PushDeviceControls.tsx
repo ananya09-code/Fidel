@@ -9,6 +9,21 @@ function decodeKey(value: string): Uint8Array<ArrayBuffer> {
   return Uint8Array.from(bytes, (character) => character.charCodeAt(0));
 }
 
+function usesKey(subscription: PushSubscription, key: Uint8Array<ArrayBuffer>): boolean {
+  const saved = subscription.options.applicationServerKey;
+  if (!saved) return false;
+  const bytes = new Uint8Array(saved);
+  return bytes.length === key.length && bytes.every((byte, index) => byte === key[index]);
+}
+
+function pushError(cause: unknown): string {
+  const message = cause instanceof Error ? cause.message : "Couldn't update notifications.";
+  if (/registration failed.*push service error/i.test(message)) {
+    return "Your browser couldn't connect to its push service. If you use Brave, turn on ‘Use Google services for push messaging’ in Privacy and security, then try again. Otherwise, check your connection or try another browser.";
+  }
+  return message;
+}
+
 function payload(subscription: PushSubscription): DeviceSubscription {
   const json = subscription.toJSON();
   if (!json.endpoint || !json.keys?.p256dh || !json.keys.auth) throw new Error("This browser did not provide valid push keys.");
@@ -43,24 +58,29 @@ export function PushDeviceControls() {
   async function toggle() {
     setBusy(true); setError(null);
     try {
-      const registration = await navigator.serviceWorker.register("/push-sw.js", { scope: "/" });
       if (enabled) {
         await disablePushOnThisDevice(getToken);
         setEnabled(false);
       } else {
-        const config = await getPushConfig(getToken);
-        if (!config.public_key) throw new Error("Notifications are not available yet.");
         if (Notification.permission === "denied") throw new Error("Notifications are blocked in your browser settings.");
         const permission = await Notification.requestPermission();
         if (permission !== "granted") throw new Error("Allow notifications in your browser to use this feature.");
+        const config = await getPushConfig(getToken);
+        if (!config.public_key) throw new Error("Notifications are not available yet.");
+        const key = decodeKey(config.public_key);
+        if (key.length !== 65 || key[0] !== 4) throw new Error("The notification key is invalid. Please try again later.");
+        await navigator.serviceWorker.register("/push-sw.js", { scope: "/" });
+        const registration = await navigator.serviceWorker.ready;
         const existing = await registration.pushManager.getSubscription();
-        if (existing) await existing.unsubscribe();
-        const subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: decodeKey(config.public_key) });
+        if (existing && !usesKey(existing, key)) await existing.unsubscribe();
+        const subscription = existing && usesKey(existing, key)
+          ? existing
+          : await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key });
         try { await savePushSubscription(getToken, payload(subscription)); }
-        catch (cause) { await subscription.unsubscribe(); throw cause; }
+        catch (cause) { if (subscription !== existing) await subscription.unsubscribe(); throw cause; }
         setEnabled(true);
       }
-    } catch (cause) { setError(cause instanceof Error ? cause.message : "Couldn't update notifications."); }
+    } catch (cause) { setError(pushError(cause)); }
     finally { setBusy(false); }
   }
 

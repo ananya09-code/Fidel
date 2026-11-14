@@ -28,7 +28,7 @@ body:has(.fidel-home) [data-slot="sidebar-header"] { background: transparent; bo
 body:has(.fidel-home) [data-slot="sidebar-inset"] > header { background: #edf2ec; backdrop-filter: none; border: 0; }
 .dark body:has(.fidel-home) [data-slot="sidebar-inset"] > header { background: #1c231e; }
 body:has(.fidel-home) [data-slot="sidebar-inset"] > header button { box-shadow: none; backdrop-filter: none; background: transparent; }
-body:has(.fidel-home) button[aria-label="Notifications"], body:has(.fidel-home) [data-slot="sidebar-inset"] > header [data-slot="dropdown-menu-trigger"]:has(.lucide-globe-2) { display: none; }
+body:has(.fidel-home) [data-slot="sidebar-inset"] > header [data-slot="dropdown-menu-trigger"]:has(.lucide-globe-2) { display: none; }
 body:has(.fidel-home) nav[aria-label="Mobile navigation"] { background: #edf2ec; backdrop-filter: none; box-shadow: none; }
 .dark body:has(.fidel-home) nav[aria-label="Mobile navigation"] { background: #1c231e; }
 body:has(.fidel-home) nav[aria-label="Mobile navigation"] li > a > span:last-child { font-size: 11px; }

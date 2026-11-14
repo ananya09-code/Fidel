@@ -26,6 +26,21 @@ body:has(.fidel-app)::before,body:has(.fidel-app)::after { display:none; }
 .app-header-actions { display:flex; align-items:center; gap:20px; margin-left:auto; min-width:0; }
 .app-header-language { color:var(--ui-muted); font-size:13px; min-height:44px; display:flex; align-items:center; }
 .app-header-language:hover { color:var(--ui-ink); text-decoration:underline; text-underline-offset:4px; }
+.app-notification-trigger { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border:0; border-radius:6px; background:transparent; color:var(--ui-ink); cursor:pointer; }
+.app-notification-trigger:hover,.app-notification-trigger[data-state="open"] { background:var(--ui-line); }
+.fidel-notification-menu { width:min(360px,calc(100vw - 24px)); max-height:min(480px,70vh); overflow-y:auto; padding:8px; border:1px solid var(--ui-line); border-radius:8px; background:var(--ui-paper); color:var(--ui-ink); box-shadow:0 8px 24px #00000014; }
+.app-notification-heading { display:flex; flex-direction:column; gap:2px; padding:8px; }
+.app-notification-heading strong { font-size:14px; font-weight:600; }
+.app-notification-heading span { font-size:12px; color:var(--ui-muted); font-weight:400; }
+.fidel-notification-menu [data-slot="dropdown-menu-separator"] { background:var(--ui-line); }
+.fidel-notification-menu [data-slot="dropdown-menu-item"]:focus { background:var(--ui-surface); color:var(--ui-ink); }
+.app-notification-row { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; min-height:64px; padding:9px 8px; color:var(--ui-ink); }
+.app-notification-row-text { display:flex; flex-direction:column; min-width:0; gap:2px; }
+.app-notification-row-text strong { font-size:13px; font-weight:600; }
+.app-notification-row-text > span { color:var(--ui-muted); font-size:12px; line-height:1.35; }
+.app-notification-row time { flex:none; color:var(--ui-muted); font-size:12px; }
+.app-notification-state { display:flex; align-items:center; gap:8px; margin:0; padding:18px 8px; color:var(--ui-muted); font-size:13px; line-height:1.4; }
+.app-notification-settings { min-height:40px; font-size:13px; color:var(--ui-ink); }
 .app-account-trigger { display:flex; align-items:center; gap:9px; padding:4px; min-height:44px; background:none; border:0; color:var(--ui-ink); border-radius:6px; cursor:pointer; font-size:13px; }
 .app-account-trigger > span:not([data-slot="avatar"]) { max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .app-avatar { width:32px; height:32px; border-radius:50%; }

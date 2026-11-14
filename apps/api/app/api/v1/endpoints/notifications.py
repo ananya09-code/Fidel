@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Annotated
+from datetime import date
+from typing import Annotated, Literal
 from urllib.parse import urlsplit
 from uuid import uuid4
 
@@ -35,6 +36,15 @@ class PushConfig(BaseModel):
 
 class SubscriptionList(BaseModel):
     endpoints: list[str]
+
+
+class InboxItem(BaseModel):
+    kind: Literal["goal", "quiz", "streak"]
+    local_date: date
+
+
+class Inbox(BaseModel):
+    items: list[InboxItem]
 
 
 _PUSH_HOSTS = {
@@ -74,6 +84,22 @@ def subscriptions(current_user: Annotated[ClerkUser, Depends(get_current_user)],
         return SubscriptionList(endpoints=[])
     rows = db.execute(text("SELECT endpoint FROM push_subscriptions WHERE user_id = :user_id"), {"user_id": user_id}).scalars().all()
     return SubscriptionList(endpoints=list(rows))
+
+
+@router.get("/inbox", response_model=Inbox)
+def inbox(current_user: Annotated[ClerkUser, Depends(get_current_user)], db: Session = Depends(get_db)) -> Inbox:
+    user_id = _user_id(db, current_user.user_id)
+    if user_id is None:
+        return Inbox(items=[])
+    rows = db.execute(text("""
+        SELECT DISTINCT d.kind, d.local_date
+        FROM notification_deliveries d
+        JOIN push_subscriptions s ON s.id = d.subscription_id
+        WHERE s.user_id = :user_id
+        ORDER BY d.local_date DESC, d.kind
+        LIMIT 12
+    """), {"user_id": user_id}).mappings().all()
+    return Inbox(items=[InboxItem.model_validate(row) for row in rows])
 
 
 @router.post("/subscriptions", status_code=status.HTTP_204_NO_CONTENT)
