@@ -24,6 +24,8 @@ function load(path) {
     if (name === '@/lib/api') return { SESSION_EXPIRED_MESSAGE: 'Session expired' };
     if (name.startsWith('@/')) {
       const relative = name.slice(2);
+      if (relative === 'lib/character-cast') return { characterFor: () => ({ image: '' }) };
+      if (relative === 'components/settings-ui/PushDeviceControls') return { PushDeviceControls: () => null };
       if (['lib/languages', 'components/common-ui/FidelTeacherMark', 'components/common-ui/PageState', 'components/theme/AppearancePicker', 'components/install/InstallFidel'].includes(relative)) {
         return load(relative + (relative === 'lib/languages' ? '.ts' : '.tsx'));
       }
@@ -70,8 +72,11 @@ test('finished onboarding offers installation after setup', () => {
   const html = renderToStaticMarkup(React.createElement(OnboardingView, {
     step: 4, data: { language: 'ti', level: 'beginner', motivations: ['family'], dailyGoal: 5, appearance: 'light' },
     completed: true, canContinue: true,
+    notificationControl: React.createElement('div', null, 'Enable reminders'),
     onBack() {}, onContinue() {}, onStart() {}, onLanguage() {}, onLevel() {}, onMotivation() {}, onGoal() {}, onAppearance() {},
   }));
   assert.match(html, /Want Fidel on your home screen\?/);
   assert.match(html, /Install Fidel/);
+  assert.match(html, /Enable reminders/);
+  assert.ok(html.indexOf('Enable reminders') < html.indexOf('Start learning'));
 });

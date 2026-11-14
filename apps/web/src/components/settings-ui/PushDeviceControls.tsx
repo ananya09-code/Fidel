@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/tanstack-react-start";
 import { getPushConfig, getPushSubscriptions, savePushSubscription, type DeviceSubscription } from "@/lib/api/notifications";
 import { disablePushOnThisDevice } from "@/lib/push-device";
+import { LoaderCircle } from "lucide-react";
 
 function decodeKey(value: string): Uint8Array<ArrayBuffer> {
   const base64 = value.replace(/-/g, "+").replace(/_/g, "/");
@@ -30,18 +31,19 @@ function payload(subscription: PushSubscription): DeviceSubscription {
   return { endpoint: json.endpoint, keys: { p256dh: json.keys.p256dh, auth: json.keys.auth } };
 }
 
-export function PushDeviceControls() {
+export function PushDeviceControls({ variant = "settings" }: { variant?: "settings" | "onboarding" }) {
   const { getToken, userId } = useAuth();
   const [enabled, setEnabled] = useState(false);
   const [available, setAvailable] = useState(false);
   const [configured, setConfigured] = useState(false);
+  const [checked, setChecked] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let live = true;
     const supported = typeof window !== "undefined" && window.isSecureContext && "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
-    void Promise.resolve().then(() => { if (live) setAvailable(supported); });
+    void Promise.resolve().then(() => { if (live) { setAvailable(supported); if (!supported) setChecked(true); } });
     if (!supported || !userId) return;
     void (async () => {
       try {
@@ -51,6 +53,7 @@ export function PushDeviceControls() {
         const current = await registration?.pushManager.getSubscription();
         if (live) { setConfigured(Boolean(config.public_key)); setEnabled(Boolean(current && saved.endpoints.includes(current.endpoint))); }
       } catch (cause) { if (live) setError(cause instanceof Error ? cause.message : "Couldn't check notifications."); }
+      finally { if (live) setChecked(true); }
     })();
     return () => { live = false; };
   }, [getToken, userId]);
@@ -83,6 +86,8 @@ export function PushDeviceControls() {
     } catch (cause) { setError(pushError(cause)); }
     finally { setBusy(false); }
   }
+
+  if (variant === "onboarding") return <div className="onboarding-reminders"><h2>Keep your words close.</h2><p>Get a nudge for your daily word goal, due quizzes and your learning streak. You can choose which reminders to receive in Settings.</p>{checked && (enabled ? <p className="onboarding-reminders-on" role="status">Reminders are on for this device.</p> : !available ? <p className="onboarding-reminders-note">Push needs a supported browser. On iPhone, add Fidel to your Home Screen first.</p> : !configured ? <p className="onboarding-reminders-note">Reminders are unavailable right now. You can try again in Settings.</p> : null)}{!enabled && <button type="button" className="app-secondary" disabled={!checked || !available || !configured || busy} onClick={() => void toggle()}>{busy ? <><LoaderCircle size={16} className="app-spinner" aria-hidden="true" />Enabling…</> : "Enable reminders"}</button>}{error && <p className="app-error" role="alert">{error}</p>}<p className="onboarding-reminders-note">You can start learning without enabling reminders.</p></div>;
 
   return <section className="settings-section"><div className="settings-section-title"><h2>Notifications</h2><p>A nudge when it helps.</p></div><div className="settings-panel"><div className="settings-row"><span>This device<span>{!available ? "Push needs a supported browser. On iPhone, open Fidel from your Home Screen." : !configured ? "Notifications are not configured on the server yet." : enabled ? "Fidel can remind you on this device." : "Choose which reminders you want above, then enable them here."}</span></span><button type="button" className="app-secondary" disabled={!available || !configured || busy} onClick={() => void toggle()}>{busy ? "Updating…" : enabled ? "Turn off" : "Enable notifications"}</button></div>{error && <p className="app-error" role="alert">{error}</p>}</div></section>;
 }

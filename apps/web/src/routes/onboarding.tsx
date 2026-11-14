@@ -36,6 +36,8 @@ import { AppearancePicker } from "@/components/theme/AppearancePicker";
 import { LoaderCircle } from "lucide-react";
 import { useThemePreview } from "@/components/theme/ThemeProvider";
 import type { Appearance } from "@/lib/theme";
+import type { ReactNode } from "react";
+import { PushDeviceControls } from "@/components/settings-ui/PushDeviceControls";
 
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
@@ -311,24 +313,24 @@ function OnboardingFlow({
   }
 
 
-  return <OnboardingView step={step} data={data} completed={completed} canContinue={Boolean(canContinue)} isSaving={updatePreferences.isPending} error={updatePreferences.error?.message} onBack={handleBack} onContinue={() => void handleContinue()} onStart={handleStartLearning} onLanguage={(language) => setData((current) => ({ ...current, language }))} onLevel={(level) => setData((current) => ({ ...current, level }))} onMotivation={toggleMotivation} onGoal={(dailyGoal) => setData((current) => ({ ...current, dailyGoal }))} onAppearance={(appearance) => { setData((current) => ({ ...current, appearance })); previewAppearance(appearance); }} />;
+  return <OnboardingView step={step} data={data} completed={completed} canContinue={Boolean(canContinue)} isSaving={updatePreferences.isPending} error={updatePreferences.error?.message} notificationControl={completed ? <PushDeviceControls variant="onboarding" /> : undefined} onBack={handleBack} onContinue={() => void handleContinue()} onStart={handleStartLearning} onLanguage={(language) => setData((current) => ({ ...current, language }))} onLevel={(level) => setData((current) => ({ ...current, level }))} onMotivation={toggleMotivation} onGoal={(dailyGoal) => setData((current) => ({ ...current, dailyGoal }))} onAppearance={(appearance) => { setData((current) => ({ ...current, appearance })); previewAppearance(appearance); }} />;
 }
 
 type OnboardingViewProps = {
- step: number; data: OnboardingData; completed: boolean; canContinue: boolean; isSaving?: boolean; error?: string;
+ step: number; data: OnboardingData; completed: boolean; canContinue: boolean; isSaving?: boolean; error?: string; notificationControl?: ReactNode;
  onBack: () => void; onContinue: () => void; onStart: () => void;
  onLanguage: (value: Language) => void; onLevel: (value: Level) => void;
  onMotivation: (value: Motivation) => void; onGoal: (value: DailyGoal) => void; onAppearance: (value: Appearance) => void;
 };
 
-export function OnboardingView({ step, data, completed, canContinue, isSaving, error, onBack, onContinue, onStart, onLanguage, onLevel, onMotivation, onGoal, onAppearance }: OnboardingViewProps) {
+export function OnboardingView({ step, data, completed, canContinue, isSaving, error, notificationControl, onBack, onContinue, onStart, onLanguage, onLevel, onMotivation, onGoal, onAppearance }: OnboardingViewProps) {
  const installed = useFidelInstalled();
  const language = languages.find((item) => item.id === data.language);
  const level = levels.find((item) => item.id === data.level);
  return <main className="fidel-onboarding">
   <header className="onboarding-header"><Link to="/" className="app-wordmark" aria-label="Fidel home"><FidelTeacherMark className="app-header-mark" /><span>Fidel<span className="app-wordmark-dot">.</span></span></Link>{!completed && <span>{step + 1} of {steps.length}</span>}</header>
   <div className="onboarding-content">
-   {completed ? <section className="onboarding-complete"><FidelTeacherMark className="onboarding-teacher" /><h1>A new conversation starts here.</h1><p>Your learning plan is ready.</p><dl><div><dt>Learning</dt><dd>{language?.name ?? "Your language"}</dd></div><div><dt>Your level</dt><dd>{level?.title ?? "Your level"}</dd></div><div><dt>Daily goal</dt><dd>{data.dailyGoal} words</dd></div></dl><button type="button" className="app-primary" onClick={onStart}>Start learning<ArrowRight size={18} aria-hidden="true" /></button><button type="button" className="app-secondary" onClick={onBack}>Change my answers</button>{!installed && <div className="onboarding-install"><p>Want Fidel on your home screen?</p><InstallFidel /></div>}</section> : <>
+   {completed ? <section className="onboarding-complete"><FidelTeacherMark className="onboarding-teacher" /><h1>A new conversation starts here.</h1><p>Your learning plan is ready.</p><dl><div><dt>Learning</dt><dd>{language?.name ?? "Your language"}</dd></div><div><dt>Your level</dt><dd>{level?.title ?? "Your level"}</dd></div><div><dt>Daily goal</dt><dd>{data.dailyGoal} words</dd></div></dl>{notificationControl}<div className="onboarding-finish-actions"><button type="button" className="app-primary" onClick={onStart}>Start learning<ArrowRight size={18} aria-hidden="true" /></button><button type="button" className="app-secondary" onClick={onBack}>Change my answers</button></div>{!installed && <div className="onboarding-install"><p>Want Fidel on your home screen?</p><InstallFidel /></div>}</section> : <>
     <progress className="onboarding-progress" value={step + 1} max={steps.length} aria-label="Setup progress" />
     <header className="onboarding-title"><h1>{steps[step].title}</h1><p>{steps[step].description}</p></header>
     <fieldset className="onboarding-options" disabled={isSaving}><legend className="sr-only">{steps[step].title}</legend>

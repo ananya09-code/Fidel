@@ -248,7 +248,13 @@ body:has(.fidel-onboarding)::before,body:has(.fidel-onboarding)::after { display
 .onboarding-complete dl > div { display:flex; justify-content:space-between; gap:16px; }
 .onboarding-complete dt { color:var(--ui-muted); font-size:13px; }
 .onboarding-complete dd { margin:0; text-align:right; font-size:14px; }
-.onboarding-complete > button { margin:0 12px 12px 0; }
+.onboarding-reminders { border-top:1px solid var(--ui-line); border-bottom:1px solid var(--ui-line); padding:20px 0; margin:0 0 24px; }
+.onboarding-reminders h2 { margin:0; font-size:18px; font-weight:500; letter-spacing:-.02em; }
+.onboarding-reminders > p { max-width:54ch; margin:8px 0 14px; color:var(--ui-muted); font-size:13px; line-height:1.5; }
+.onboarding-reminders .onboarding-reminders-on { color:var(--ui-ink); }
+.onboarding-reminders .onboarding-reminders-note { margin:10px 0 0; font-size:12px; }
+.onboarding-reminders .app-error { margin:12px 0 0; }
+.onboarding-finish-actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
 .onboarding-install { margin-top:18px;padding-top:22px;border-top:1px solid var(--ui-line); }
 .onboarding-install > p { margin:0 0 12px;color:var(--ui-muted);font-size:13px; }
 .onboarding-install .install-fidel-help { color:var(--ui-muted); }
