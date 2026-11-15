@@ -7,7 +7,10 @@ import { AppSidebar } from "@/components/common-ui/AppSideBar";
 import { Header } from "@/components/common-ui/Header";
 import { MobileBottomNavigation } from "@/components/common-ui/MobileBottomNavigation";
 import { GuideExperience } from "@/components/guide/GuideExperience";
+import { PageState } from "@/components/common-ui/PageState";
+import { usePreferences } from "@/hooks/use-preferences";
 import { useProfile } from "@/hooks/use-profile";
+import { appEntryState } from "@/lib/first-run";
 
 import {
   SidebarProvider,
@@ -21,18 +24,28 @@ export const Route = createFileRoute("/_app")({
 
 function AppLayout() {
   const { isLoaded, isSignedIn } = useAuth();
+  const preferences = usePreferences();
   useProfile();
+  const entry = appEntryState(isLoaded, Boolean(isSignedIn), {
+    isPending: preferences.isPending,
+    isError: preferences.isError,
+    onboarding_completed: preferences.data?.onboarding_completed,
+  });
 
   useEffect(() => {
-    if (!isLoaded || isSignedIn) return;
+    if (entry === "sign-in") {
+      const target = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      window.location.replace(`/sign-in?redirect=${encodeURIComponent(target)}`);
+    } else if (entry === "onboarding") {
+      window.location.replace("/onboarding");
+    }
+  }, [entry]);
 
-    const target = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-    window.location.replace(
-      `/sign-in?redirect=${encodeURIComponent(target)}`,
-    );
-  }, [isLoaded, isSignedIn]);
+  if (entry === "error") {
+    return <main className="app-standalone"><PageState kind="error" title="We couldn’t load your setup" description={preferences.error instanceof Error ? preferences.error.message : "Please try again."} actionLabel="Try again" onAction={() => void preferences.refetch()} /></main>;
+  }
 
-  if (!isLoaded || !isSignedIn) {
+  if (entry !== "ready") {
     return <AuthLoading />;
   }
 

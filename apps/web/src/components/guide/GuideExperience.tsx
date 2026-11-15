@@ -6,12 +6,10 @@ import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
 import { usePreferences, useUpdatePreferences } from "@/hooks/use-preferences";
 import { characterFor } from "@/lib/character-cast";
+import { TOUR_VERSION, UPDATE_VERSION } from "@/lib/first-run";
 import "./guide.css";
 
 export const GUIDE_EVENT = "fidel:guide";
-const TOUR_VERSION = 1;
-// Bump this when the release-note copy below changes in a shipped update.
-const UPDATE_VERSION = "2026-11";
 
 type GuideMode = "tour" | "updates" | null;
 const stops = [
@@ -75,11 +73,20 @@ export function GuideExperience() {
     if (!userId || autoOpened.current === userId || pathname !== "/home" || !preferences.data?.onboarding_completed) return;
     const next = preferences.data.tour_completed_version < TOUR_VERSION ? "tour"
       : preferences.data.last_seen_update !== UPDATE_VERSION ? "updates" : null;
-    const timer = window.setTimeout(() => {
-      autoOpened.current = userId;
-      if (next) setMode(next);
-    }, 0);
-    return () => window.clearTimeout(timer);
+    if (!next) return;
+    let timer = 0;
+    const openWhenReady = () => {
+      const target = document.querySelector<HTMLElement>('[data-guide-target="Home"]');
+      if (!target || target.getBoundingClientRect().width === 0 || timer) return;
+      timer = window.setTimeout(() => {
+        autoOpened.current = userId;
+        setMode(next);
+      }, 0);
+    };
+    const observer = new MutationObserver(openWhenReady);
+    observer.observe(document.querySelector("main") ?? document.body, { childList: true, subtree: true });
+    openWhenReady();
+    return () => { observer.disconnect(); window.clearTimeout(timer); };
   }, [pathname, preferences.data, userId]);
 
   useEffect(() => {

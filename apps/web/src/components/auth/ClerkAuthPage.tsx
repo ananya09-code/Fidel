@@ -41,7 +41,8 @@ type ClerkAuthPageProps = {
 export function ClerkAuthPage({ mode, redirect }: ClerkAuthPageProps) {
   const { isLoaded, isSignedIn } = useAuth();
   const isSignIn = mode === "sign-in";
-  const fallback = isSignIn ? "/Home" : "/onboarding";
+  // Every auth method enters the same saved-preferences gate in the app shell.
+  const fallback = "/Home";
   const candidate = getSafeAuthRedirect(redirect, fallback);
   const pointsBackToAuth = ["/sign-in", "/sign-up"].some(
     (prefix) =>
