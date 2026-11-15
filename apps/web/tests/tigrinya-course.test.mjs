@@ -78,5 +78,16 @@ test('finished onboarding offers installation after setup', () => {
   assert.match(html, /Want Fidel on your home screen\?/);
   assert.match(html, /Install Fidel/);
   assert.match(html, /Enable reminders/);
-  assert.ok(html.indexOf('Enable reminders') < html.indexOf('Start learning'));
+  assert.ok(html.indexOf('Start learning') < html.indexOf('Enable reminders'));
+});
+
+test('new learners can take or skip the tour after setup', () => {
+  const { OnboardingView } = load('routes/onboarding.tsx');
+  const html = renderToStaticMarkup(React.createElement(OnboardingView, {
+    step: 4, data: { language: 'om', level: 'beginner', motivations: ['family'], dailyGoal: 5, appearance: 'light' },
+    completed: true, tourPending: true, canContinue: true,
+    onBack() {}, onContinue() {}, onStart() {}, onSkipTour() {}, onLanguage() {}, onLevel() {}, onMotivation() {}, onGoal() {}, onAppearance() {},
+  }));
+  assert.match(html, /Take the tour/);
+  assert.match(html, /Skip tour/);
 });
