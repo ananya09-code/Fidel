@@ -8,6 +8,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { usePreferences } from "@/hooks/use-preferences";
 import { disablePushOnThisDevice } from "@/lib/push-device";
 import { FidelTeacherMark } from "./FidelTeacherMark";
+import { FeedbackPanel } from "./FeedbackPanel";
 import { NotificationMenu } from "./NotificationMenu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -22,15 +23,17 @@ type HeaderViewProps = {
   sidebarOpen?: boolean;
   onSignOut: () => void;
   notificationControl?: ReactNode;
+  feedbackControl?: ReactNode;
 };
 
-export function HeaderView({ displayName, email, imageUrl, language, area, sidebarOpen, onSignOut, notificationControl }: HeaderViewProps) {
+export function HeaderView({ displayName, email, imageUrl, language, area, sidebarOpen, onSignOut, notificationControl, feedbackControl }: HeaderViewProps) {
   const initials = displayName.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("") || "F";
   return <div className="app-header-content">
     <Link to="/Home" className={"app-wordmark" + (sidebarOpen ? " is-sidebar-open" : "")} aria-label="Fidel home"><FidelTeacherMark className="app-header-mark" /><span>Fidel<span className="app-wordmark-dot">.</span></span></Link>
     <span className="app-context">{area}</span>
     <div className="app-header-actions">
       {language && <Link to="/settings" className="app-header-language" aria-label={"Learning " + language + ". Change in Settings."}>{language}</Link>}
+      {feedbackControl}
       {notificationControl}
       <DropdownMenu><DropdownMenuTrigger asChild><button type="button" className="app-account-trigger" aria-label="Open profile menu"><Avatar className="app-avatar"><AvatarImage src={imageUrl} alt="" /><AvatarFallback>{initials}</AvatarFallback></Avatar><span>{displayName}</span><ChevronDown size={15} aria-hidden="true" /></button></DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="fidel-account-menu">
@@ -55,5 +58,5 @@ export function Header() {
   const preferences = usePreferences();
   const pathname = useRouterState({ select: (router) => router.location.pathname }).toLowerCase();
   const area = pathname.startsWith("/learn/") ? "Lesson" : pathname.startsWith("/learn") ? "Learn" : pathname.startsWith("/dictionary") ? "Dictionary" : pathname.startsWith("/review") ? "Review" : pathname.startsWith("/settings") ? "Settings" : pathname.startsWith("/profile") ? "Profile" : "Home";
-  return <HeaderView displayName={user?.fullName || user?.username || "Fidel learner"} email={user?.primaryEmailAddress?.emailAddress} imageUrl={user?.imageUrl} language={preferences.data ? languageLabel(preferences.data.learning_language) : undefined} area={area} sidebarOpen={state === "expanded"} notificationControl={<NotificationMenu />} onSignOut={() => { void disablePushOnThisDevice(getToken).catch(() => undefined).then(() => signOut({ redirectUrl: "/" })); }} />;
+  return <HeaderView displayName={user?.fullName || user?.username || "Fidel learner"} email={user?.primaryEmailAddress?.emailAddress} imageUrl={user?.imageUrl} language={preferences.data ? languageLabel(preferences.data.learning_language) : undefined} area={area} sidebarOpen={state === "expanded"} feedbackControl={<FeedbackPanel />} notificationControl={<NotificationMenu />} onSignOut={() => { void disablePushOnThisDevice(getToken).catch(() => undefined).then(() => signOut({ redirectUrl: "/" })); }} />;
 }
