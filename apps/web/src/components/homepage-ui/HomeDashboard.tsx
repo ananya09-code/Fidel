@@ -6,6 +6,7 @@ import type { DashboardSummary } from "@/lib/api/dashboard";
 import type { QuestItem } from "@/lib/api/quests";
 import { characterForQuest } from "@/lib/character-cast";
 import { topicLabel } from "./labels";
+import { WeeklyStreak } from "./WeeklyStreak";
 import "./home.css";
 
 type Props = {
@@ -47,12 +48,12 @@ export function HomeDashboard({ data, languageCode, topics, dailyWord, memoryChe
         {[
           ["Words learned", data.learned_words, "In your vocabulary"],
           ["Lessons completed", data.lessons_completed, "From your learning path"],
-          ["Current streak", data.streak_days, data.streak_days === 1 ? "Day of learning" : "Days of learning"],
         ].map(([label, value, caption]) => (
           <div className="home-stat" key={label}>
             <h2>{label}</h2><p>{value.toLocaleString()}</p><span>{caption}</span>
           </div>
         ))}
+        <WeeklyStreak streakDays={data.streak_days} activity={data.weekly_activity} />
       </section>
 
       <div className="home-main-grid">
