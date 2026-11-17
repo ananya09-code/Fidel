@@ -373,6 +373,21 @@ notification_deliveries = Table(
 )
 
 
+feedback_submissions = Table(
+    "feedback_submissions", metadata,
+    Column("id", Uuid, primary_key=True),
+    Column("user_id", Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False),
+    Column("category", String(20), nullable=False),
+    Column("message", Text, nullable=False),
+    Column("page_path", String(512), nullable=False),
+    Column("contact_allowed", Boolean, nullable=False, server_default=text("0")),
+    Column("created_at", DateTime(timezone=True), nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    CheckConstraint("category IN ('bug','idea','content','other')", name="feedback_submissions_category_check"),
+    Index("feedback_submissions_user_created_idx", "user_id", "created_at"),
+    Index("feedback_submissions_created_idx", "created_at"),
+)
+
+
 quest_progress = Table(
     "quest_progress", metadata,
     Column("user_id", Uuid, ForeignKey("users.id"), primary_key=True),

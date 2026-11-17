@@ -23,6 +23,7 @@ import { Route as AppReviewRouteImport } from './routes/_app/review'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppTestRouteImport } from './routes/_app/test'
 import { Route as AdminAudioReviewRouteImport } from './routes/admin.audio-review'
+import { Route as AdminFeedbackRouteImport } from './routes/admin.feedback'
 import { Route as SignInSplatRouteImport } from './routes/sign-in.$'
 import { Route as SignUpSplatRouteImport } from './routes/sign-up.$'
 import { Route as AppLearnIndexRouteImport } from './routes/_app/Learn/index'
@@ -97,6 +98,11 @@ const AdminAudioReviewRoute = AdminAudioReviewRouteImport.update({
   path: '/admin/audio-review',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminFeedbackRoute = AdminFeedbackRouteImport.update({
+  id: '/admin/feedback',
+  path: '/admin/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignInSplatRoute = SignInSplatRouteImport.update({
   id: '/$',
   path: '/$',
@@ -132,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AppSettingsRoute
   '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
+  '/admin/feedback': typeof AdminFeedbackRoute
   '/sign-in/$': typeof SignInSplatRoute
   '/sign-up/$': typeof SignUpSplatRoute
   '/Learn/$lessonId': typeof AppLearnLessonIdRoute
@@ -150,6 +157,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AppSettingsRoute
   '/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
+  '/admin/feedback': typeof AdminFeedbackRoute
   '/sign-in/$': typeof SignInSplatRoute
   '/sign-up/$': typeof SignUpSplatRoute
   '/Learn/$lessonId': typeof AppLearnLessonIdRoute
@@ -171,6 +179,7 @@ export interface FileRoutesById {
   '/_app/settings': typeof AppSettingsRoute
   '/_app/test': typeof AppTestRoute
   '/admin/audio-review': typeof AdminAudioReviewRoute
+  '/admin/feedback': typeof AdminFeedbackRoute
   '/sign-in/$': typeof SignInSplatRoute
   '/sign-up/$': typeof SignUpSplatRoute
   '/_app/Learn/$lessonId': typeof AppLearnLessonIdRoute
@@ -192,6 +201,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/test'
     | '/admin/audio-review'
+    | '/admin/feedback'
     | '/sign-in/$'
     | '/sign-up/$'
     | '/Learn/$lessonId'
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/test'
     | '/admin/audio-review'
+    | '/admin/feedback'
     | '/sign-in/$'
     | '/sign-up/$'
     | '/Learn/$lessonId'
@@ -230,6 +241,7 @@ export interface FileRouteTypes {
     | '/_app/settings'
     | '/_app/test'
     | '/admin/audio-review'
+    | '/admin/feedback'
     | '/sign-in/$'
     | '/sign-up/$'
     | '/_app/Learn/$lessonId'
@@ -243,6 +255,7 @@ export interface RootRouteChildren {
   SignInRoute: typeof SignInRouteWithChildren
   SignUpRoute: typeof SignUpRouteWithChildren
   AdminAudioReviewRoute: typeof AdminAudioReviewRoute
+  AdminFeedbackRoute: typeof AdminFeedbackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -345,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAudioReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/feedback': {
+      id: '/admin/feedback'
+      path: '/admin/feedback'
+      fullPath: '/admin/feedback'
+      preLoaderRoute: typeof AdminFeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sign-in/$': {
       id: '/sign-in/$'
       path: '/$'
@@ -445,7 +465,17 @@ const rootRouteChildren: RootRouteChildren = {
   SignInRoute: SignInRouteWithChildren,
   SignUpRoute: SignUpRouteWithChildren,
   AdminAudioReviewRoute: AdminAudioReviewRoute,
+  AdminFeedbackRoute: AdminFeedbackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

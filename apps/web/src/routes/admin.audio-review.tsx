@@ -326,6 +326,7 @@ function AdminDashboard({
             >
               Back to app
             </a>
+            <a href="/admin/feedback" className="text-sm text-[var(--sea-ink)]/75 underline-offset-2 hover:underline">Feedback inbox</a>
             {isAuthenticated ? (
               <button
                 type="button"
