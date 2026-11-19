@@ -45,6 +45,7 @@ class Settings(BaseSettings):
     # JWT key is set, tokens are verified without calling Clerk's JWKS endpoint.
     clerk_jwt_key: SecretStr | None = None
     clerk_authorized_parties: list[str] | None = None
+    clerk_allow_native_sessions: bool = False
 
     # Web Push credentials. The public key may be returned to browsers;
     # the private key and contact address remain server-only.

@@ -1,6 +1,9 @@
 packages:
   - "apps/web"
+  - "apps/mobile"
 
 allowBuilds:
+  browser-tabs-lock: false
+  core-js: false
   esbuild: true
   lightningcss: true

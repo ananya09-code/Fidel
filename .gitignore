@@ -11,6 +11,9 @@ dist-ssr/
 .vinxi/
 .wrangler/
 .taste-skill/
+.expo/
+apps/mobile/android/
+apps/mobile/ios/
 apps/api/generated_audio/
 
 # Environment variables -- never commit real secrets.

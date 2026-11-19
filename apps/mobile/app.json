@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "Fidel",
+    "slug": "fidel-mobile",
+    "scheme": "et.fidelapp.mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/fidel.png",
+    "android": { "package": "et.fidelapp.mobile" },
+    "ios": { "bundleIdentifier": "et.fidelapp.mobile" },
+    "plugins": ["expo-secure-store", "@clerk/expo", ["expo-audio", {
+      "microphonePermission": false,
+      "recordAudioAndroid": false,
+      "enableBackgroundPlayback": false,
+      "enableBackgroundRecording": false
+    }]]
+  }
+}
