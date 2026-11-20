@@ -81,7 +81,10 @@ def get_current_user(request: Request) -> ClerkUser:
         AuthenticateRequestOptions(
             secret_key=secret_key,
             jwt_key=jwt_key,
-            authorized_parties=settings.clerk_authorized_parties,
+            authorized_parties=(
+                None if settings.clerk_allow_native_sessions
+                else settings.clerk_authorized_parties
+            ),
             accepts_token=["session_token"],
         ),
     )
@@ -94,6 +97,20 @@ def get_current_user(request: Request) -> ClerkUser:
         )
 
     claims = state.payload
+    # A native Clerk session may have no browser origin. Any origin present in
+    # the verified token must still match the existing browser allowlist.
+    if (
+        settings.clerk_allow_native_sessions
+        and settings.clerk_authorized_parties is not None
+        and "azp" in claims
+        and claims["azp"] not in settings.clerk_authorized_parties
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="The session token was issued for an unexpected origin.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     token_issuer = claims.get("iss")
     if not isinstance(token_issuer, str) or _normalize_issuer(token_issuer) != issuer:
         raise HTTPException(
