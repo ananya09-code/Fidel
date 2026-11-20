@@ -2,6 +2,8 @@ import { ClerkProvider, useAuth, useUser } from "@clerk/expo";
 import { useHostedAuth } from "@clerk/expo/hosted-auth";
 import { tokenCache } from "@clerk/expo/token-cache";
 import { QueryClient, QueryClientProvider, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { makeRedirectUri } from "expo-auth-session";
+import Constants, { ExecutionEnvironment } from "expo-constants";
 import { useEffect, useState } from "react";
 import { BackHandler, Image, Pressable, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -19,6 +21,7 @@ type Tab = typeof tabs[number];
 type Course = { token: ApiToken; language: LearningLanguage };
 const logo = require("../assets/fidel.png");
 const publicKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY?.trim();
+const expoGo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient || !!Constants.expoGoConfig;
 
 export default function App() {
   const systemDark = useColorScheme() === "dark";
@@ -59,9 +62,24 @@ function SignIn() {
     setPending(true);
     setError(undefined);
     try {
-      await startHostedAuth({ mode });
-    } catch {
-      setError(new Error("Sign-in couldn’t open. Check your connection and try again."));
+      await startHostedAuth(expoGo ? {
+        mode,
+        redirectUrl: makeRedirectUri({ path: "hosted-auth-callback", isTripleSlashed: true }),
+      } : { mode });
+    } catch (cause) {
+      const errors = cause && typeof cause === "object" && "errors" in cause ? cause.errors : null;
+      const codes = Array.isArray(errors) ? errors.map((entry) => entry?.code) : [];
+      const redirectRejected = codes.some((code) => typeof code === "string" && /redirect|callback/.test(code)) ||
+        (codes.includes("resource_missmatch") && cause instanceof Error && /redirect|callback/i.test(cause.message));
+      if (codes.includes("native_api_disabled")) {
+        setError(new Error("Mobile sign-in hasn’t been enabled for Fidel in Clerk yet."));
+      } else if (redirectRejected) {
+        setError(new Error(expoGo
+          ? "Fidel’s production sign-in requires an Android build registered with Clerk."
+          : "This Android build’s sign-in callback hasn’t been registered with Clerk."));
+      } else {
+        setError(new Error("Sign-in couldn’t open. Please try again."));
+      }
     } finally {
       setPending(false);
     }

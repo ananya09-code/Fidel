@@ -7,13 +7,33 @@
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/fidel.png",
-    "android": { "package": "et.fidelapp.mobile" },
-    "ios": { "bundleIdentifier": "et.fidelapp.mobile" },
-    "plugins": ["expo-secure-store", "@clerk/expo", ["expo-audio", {
-      "microphonePermission": false,
-      "recordAudioAndroid": false,
-      "enableBackgroundPlayback": false,
-      "enableBackgroundRecording": false
-    }]]
+    "android": {
+      "package": "et.fidelapp.mobile",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
+    },
+    "ios": {
+      "bundleIdentifier": "et.fidelapp.mobile"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "@clerk/expo",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false,
+          "enableBackgroundPlayback": false,
+          "enableBackgroundRecording": false
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f76998b0-d062-4f5d-be11-43f5c2d7e86f"
+      }
+    },
+    "owner": "ananya-09"
   }
 }
