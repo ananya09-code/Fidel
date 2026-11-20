@@ -10,6 +10,58 @@ from tests.conftest import AUTH_HEADERS, TEST_CLERK_ISSUER
 BASE = "/api/v1/auth"
 
 
+def test_native_auth_keeps_signature_issuer_and_browser_origin_checks(monkeypatch):
+    from datetime import datetime, timedelta, timezone
+
+    import jwt
+    from cryptography.hazmat.primitives import serialization
+    from cryptography.hazmat.primitives.asymmetric import rsa
+    from fastapi import HTTPException, Request
+    from pydantic import SecretStr
+
+    from app.core.clerk_auth import get_current_user
+    from app.core.config import get_settings
+
+    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+    public_key = key.public_key().public_bytes(
+        serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo
+    ).decode()
+    settings = get_settings()
+    origin = "https://fidel.example.test"
+    monkeypatch.setattr(settings, "clerk_jwt_key", SecretStr(public_key))
+    monkeypatch.setattr(settings, "clerk_issuer", TEST_CLERK_ISSUER)
+    monkeypatch.setattr(settings, "clerk_authorized_parties", [origin])
+    monkeypatch.setattr(settings, "clerk_allow_native_sessions", False)
+
+    def authenticate(signing_key=key, **overrides):
+        claims = {
+            "sub": "user_native", "iss": TEST_CLERK_ISSUER, "sid": "sess_native",
+            "exp": datetime.now(timezone.utc) + timedelta(minutes=1), **overrides,
+        }
+        token = jwt.encode(claims, signing_key, algorithm="RS256")
+        request = Request({"type": "http", "headers": [
+            (b"authorization", f"Bearer {token}".encode()),
+        ]})
+        return get_current_user(request)
+
+    with pytest.raises(HTTPException) as rejected:
+        authenticate()
+    assert rejected.value.status_code == 401
+    assert authenticate(azp=origin).user_id == "user_native"
+
+    monkeypatch.setattr(settings, "clerk_allow_native_sessions", True)
+    assert authenticate().user_id == "user_native"
+    assert authenticate(azp=origin).user_id == "user_native"
+    wrong_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+    for overrides in (
+        {"azp": "https://wrong.example.test"}, {"azp": None},
+        {"iss": "https://wrong.example.test"}, {"signing_key": wrong_key},
+    ):
+        with pytest.raises(HTTPException) as rejected:
+            authenticate(**overrides)
+        assert rejected.value.status_code == 401
+
+
 def test_profile_requires_a_bearer_token(auth_client, mock_clerk):
     response = auth_client.post(f"{BASE}/profile")
 
