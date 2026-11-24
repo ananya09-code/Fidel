@@ -2,5 +2,6 @@ packages:
   - "apps/web"
 
 allowBuilds:
+  core-js: false
   esbuild: true
   lightningcss: true

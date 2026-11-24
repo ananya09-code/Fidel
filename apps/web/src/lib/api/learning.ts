@@ -1,3 +1,4 @@
+import { trackLearning } from "@/lib/analytics";
 import { z } from "zod";
 
 import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
@@ -99,11 +100,13 @@ export function getLessonAttempt(token: ApiToken, lessonKey: string, signal?: Ab
     lessonAttemptSchema.nullable(), { ...authenticatedRequest(token), signal },
   );
 }
-export function startLesson(token: ApiToken, lessonKey: string, input: StartLessonInput) {
-  return apiFetch(
+export async function startLesson(token: ApiToken, lessonKey: string, input: StartLessonInput) {
+  const result = await apiFetch(
     `/api/v1/progress/lessons/${encodeURIComponent(lessonKey)}/start`, lessonAttemptSchema,
     { method: "POST", ...authenticatedRequest(token), body: JSON.stringify(input) },
   );
+  trackLearning("lesson_started", { lesson_key: result.lesson_key, category: result.category_key, word_count: result.question_count }, result.id);
+  return result;
 }
 export function checkpointLesson(
   token: ApiToken, attemptId: string, stage: "vocabulary" | "practice", questionIndex: number,
@@ -121,8 +124,12 @@ export function saveLessonAnswer(
     method: "PUT", ...authenticatedRequest(token), body: JSON.stringify(input),
   });
 }
-export function completeLesson(token: ApiToken, attemptId: string) {
-  return apiFetch(`/api/v1/progress/attempts/${attemptId}/complete`, lessonAttemptSchema, {
+export async function completeLesson(token: ApiToken, attemptId: string) {
+  const result = await apiFetch(`/api/v1/progress/attempts/${attemptId}/complete`, lessonAttemptSchema, {
     method: "POST", ...authenticatedRequest(token),
   });
+  if (result.status === "completed") {
+    trackLearning("lesson_completed", { lesson_key: result.lesson_key, word_count: result.question_count, correct_count: result.correct_count }, result.id);
+  }
+  return result;
 }

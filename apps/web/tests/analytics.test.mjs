@@ -1,0 +1,37 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { readFileSync } from "node:fs";
+import { stripTypeScriptTypes } from "node:module";
+
+test("analytics excludes private routes, strips URLs, resets identity, and deduplicates saved events", async () => {
+  const calls = [];
+  let config;
+  const sdk = { init: (_key, options) => { config = options; }, identify: (id) => calls.push(["identify", id]), reset: () => calls.push(["reset"]), capture: (...args) => calls.push(args) };
+  globalThis.__analyticsSdk = sdk;
+  globalThis.window = { location: { origin: "https://fidelapp.et", pathname: "/Home" } };
+  let source = readFileSync(new URL("../src/lib/analytics.ts", import.meta.url), "utf8");
+  source = source.replaceAll("import.meta.env.PROD", "true").replaceAll("import.meta.env.VITE_POSTHOG_PROJECT_TOKEN", '"public-test-token"').replaceAll("import.meta.env.VITE_POSTHOG_HOST", '"https://us.i.posthog.com"').replace('import("posthog-js")', 'Promise.resolve({ default: globalThis.__analyticsSdk })');
+  const js = stripTypeScriptTypes(source);
+  const analytics = await import("data:text/javascript;base64," + Buffer.from(js).toString("base64"));
+  await analytics.initializeAnalytics();
+  assert.equal(config.autocapture, false);
+  assert.equal(config.disable_session_recording, true);
+  for (const path of ["/admin/audio-review", "/admin.audio-review", "/sign-in", "/sign-up/verify"]) assert.equal(analytics.analyticsAllowed(path), false);
+  const clean = config.before_send({ properties: { $current_url: "https://fidelapp.et/Home?token=secret#code" } });
+  assert.equal(clean.properties.$current_url, "https://fidelapp.et/Home");
+  analytics.syncAnalyticsIdentity("learner-a");
+  analytics.trackLearning("lesson_completed", { word_count: 5 }, "session-a");
+  analytics.trackLearning("lesson_completed", { word_count: 5 }, "session-a");
+  assert.equal(calls.filter(([event]) => event === "lesson_completed").length, 1);
+  analytics.syncAnalyticsIdentity(null);
+  assert.equal(calls.at(-1)[0], "reset");
+  analytics.trackLearning("lesson_completed", {}, "session-a");
+  assert.equal(calls.filter(([event]) => event === "lesson_completed").length, 1);
+  analytics.syncAnalyticsIdentity("learner-b");
+  analytics.trackLearning("lesson_completed", {}, "session-a");
+  assert.equal(calls.filter(([event]) => event === "lesson_completed").length, 2);
+  window.location.pathname = "/admin/audio-review";
+  assert.equal(config.before_send({ properties: {} }), null);
+  delete globalThis.window;
+  delete globalThis.__analyticsSdk;
+});

@@ -1,3 +1,4 @@
+import { trackLearning } from "@/lib/analytics";
 import { z } from "zod";
 
 import { authenticatedRequest, type ApiToken, apiFetch } from "@/lib/api";
@@ -39,10 +40,12 @@ export function getSpacedReviews(token: ApiToken, languageCode: "om" | "am" | "t
 export function getReviews(token: ApiToken, languageCode: LearningLanguage, signal?: AbortSignal) {
   return apiFetch(`/api/v1/reviews?language_code=${languageCode}`, reviewOverviewSchema, { ...authenticatedRequest(token), signal });
 }
-export function startReview(token: ApiToken, mode: "manual" | "spaced" = "manual", languageCode: "om" | "am" | "ti" = "om") {
-  return apiFetch(`/api/v1/reviews/start?mode=${mode}&language_code=${languageCode}`, reviewSessionSchema, {
+export async function startReview(token: ApiToken, mode: "manual" | "spaced" = "manual", languageCode: "om" | "am" | "ti" = "om") {
+  const result = await apiFetch(`/api/v1/reviews/start?mode=${mode}&language_code=${languageCode}`, reviewSessionSchema, {
     method: "POST", ...authenticatedRequest(token),
   });
+  trackLearning("review_started", { mode, language: languageCode, word_count: result.total_count }, result.id);
+  return result;
 }
 export function saveReviewAnswer(
   token: ApiToken, sessionId: string, wordId: string, selectedWordId: string,
@@ -52,8 +55,12 @@ export function saveReviewAnswer(
     body: JSON.stringify({ word_id: wordId, selected_word_id: selectedWordId }),
   });
 }
-export function completeReview(token: ApiToken, sessionId: string) {
-  return apiFetch(`/api/v1/reviews/${sessionId}/complete`, reviewSessionSchema, {
+export async function completeReview(token: ApiToken, sessionId: string) {
+  const result = await apiFetch(`/api/v1/reviews/${sessionId}/complete`, reviewSessionSchema, {
     method: "POST", ...authenticatedRequest(token),
   });
+  if (result.status === "completed") {
+    trackLearning("review_completed", { word_count: result.total_count, correct_count: result.correct_count }, result.id);
+  }
+  return result;
 }

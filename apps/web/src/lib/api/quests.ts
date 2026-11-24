@@ -1,3 +1,4 @@
+import { trackLearning } from "@/lib/analytics";
 import { z } from "zod";
 import { apiFetch, authenticatedRequest, type ApiToken } from "@/lib/api";
 
@@ -80,24 +81,26 @@ export function getQuests(
     { ...authenticatedRequest(token), signal },
   );
 }
-export function startQuest(
+export async function startQuest(
   token: ApiToken,
   language: "om" | "am" | "ti",
   key: string,
 ) {
-  return apiFetch(
+  const result = await apiFetch(
     `/api/v1/quests/${language}/${encodeURIComponent(key)}/start`,
     questStateSchema,
     { ...authenticatedRequest(token), method: "POST" },
   );
+  trackLearning("quest_started", { language, quest: key }, language + ":" + key);
+  return result;
 }
-export function replyToQuest(
+export async function replyToQuest(
   token: ApiToken,
   language: "om" | "am" | "ti",
   key: string,
   reply: QuestReply,
 ) {
-  return apiFetch(
+  const result = await apiFetch(
     `/api/v1/quests/${language}/${encodeURIComponent(key)}/reply`,
     questReplySchema,
     {
@@ -106,4 +109,8 @@ export function replyToQuest(
       body: JSON.stringify(reply),
     },
   );
+  if (result.accepted && result.state.completed) {
+    trackLearning("quest_completed", { language, quest: key }, language + ":" + key);
+  }
+  return result;
 }
