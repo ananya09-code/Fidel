@@ -1,3 +1,4 @@
+import { trackLearning } from "@/lib/analytics";
 import { z } from "zod";
 import { learningLanguageCodes } from "@/lib/languages";
 
@@ -65,13 +66,17 @@ export function getPreferences(
   });
 }
 
-export function updatePreferences(
+export async function updatePreferences(
   token: ApiToken,
   update: UserPreferencesUpdate,
 ): Promise<UserPreferences> {
-  return apiFetch("/api/v1/preferences", userPreferencesSchema, {
+  const result = await apiFetch("/api/v1/preferences", userPreferencesSchema, {
     method: "PATCH",
     ...authenticatedRequest(token),
     body: JSON.stringify(update),
   });
+  if (update.onboarding_completed === true && result.onboarding_completed) {
+    trackLearning("onboarding_completed", { language: result.learning_language, daily_goal_words: result.daily_goal_words }, "onboarding");
+  }
+  return result;
 }

@@ -19,6 +19,7 @@ function load(path, overrides = {}) {
   ).outputText;
   const exports = {};
   const require = (name) => {
+    if (name === "@/lib/analytics") return { trackLearning: () => {} };
     if (name in overrides) return overrides[name];
     if (name.endsWith(".css")) return {};
     if (name === "@tanstack/react-router")

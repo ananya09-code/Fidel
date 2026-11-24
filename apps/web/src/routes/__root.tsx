@@ -1,3 +1,4 @@
+import { Analytics } from "@/components/analytics/Analytics";
 
 import {
   HeadContent,
@@ -77,6 +78,7 @@ function RootComponent() {
             <QueryClientProvider client={queryClient}>
               <ThemeProvider>
                 <PreferenceThemeSync />
+                <Analytics />
                 <InstallFidelProvider><Outlet /></InstallFidelProvider>
               </ThemeProvider>
             </QueryClientProvider>

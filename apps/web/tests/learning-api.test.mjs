@@ -6,12 +6,13 @@ import * as zod from "zod";
 
 // Exercise the real TypeScript client with a fake HTTP boundary, without a server.
 const source = readFileSync(new URL("../src/lib/api/learning.ts", import.meta.url), "utf8");
-function clientWith(apiFetch) {
+function clientWith(apiFetch, trackLearning = () => {}) {
   const exports = {};
   const compiled = ts.transpileModule(source, {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
   const require = (name) => {
+    if (name === "@/lib/analytics") return { trackLearning };
     if (name === "zod") return zod;
     if (name === "@/lib/api") return { apiFetch, authenticatedRequest: () => ({}) };
     throw new Error(`Unexpected import: ${name}`);
@@ -68,4 +69,20 @@ test("requests progress for the selected language", async () => {
     "/api/v1/progress?language_code=om",
     "/api/v1/progress?language_code=am",
   ]);
+});
+
+
+test("lesson completion analytics follow confirmed saves and skip failures", async () => {
+  const events = [];
+  const result = { id: "attempt-1", lesson_key: "om-beginner-greetings", category_key: "greetings", question_count: 5, correct_count: 4, status: "completed" };
+  const client = clientWith(async () => result, (...args) => events.push(args));
+  assert.equal(await client.completeLesson("token", "attempt-1"), result);
+  assert.equal(events[0][0], "lesson_completed");
+  assert.equal(events[0][1].word_count, 5);
+  const failed = clientWith(async () => { throw new Error("save failed"); }, (...args) => events.push(args));
+  await assert.rejects(failed.completeLesson("token", "attempt-1"), /save failed/);
+  assert.equal(events.length, 1);
+  const unfinished = clientWith(async () => ({ ...result, status: "in_progress" }), (...args) => events.push(args));
+  await unfinished.completeLesson("token", "attempt-1");
+  assert.equal(events.length, 1);
 });
