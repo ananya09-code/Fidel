@@ -36,3 +36,26 @@ export async function apiFetch<T>(path: string, schema: ZodType<T>, options: Api
   }
   return schema.parse(payload);
 }
+
+export async function apiFetchVoid(path: string, options: ApiOptions = {}): Promise<void> {
+  const base = process.env.EXPO_PUBLIC_API_URL?.trim().replace(/\/+$/, "");
+  if (!base) throw new Error("Fidel’s API address is missing.");
+  const { session, ...init } = options;
+  const headers = new Headers(init.headers);
+  headers.set("Accept", "application/json");
+  async function send(refresh: boolean) {
+    if (session) {
+      const token = typeof session === "function" ? await session({ skipCache: refresh }) : session;
+      if (!token) throw new Error("Please sign in again to continue.");
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return fetch(base + path, { ...init, headers });
+  }
+  let response = await send(false);
+  if (response.status === 401 && typeof session === "function") response = await send(true);
+  if (!response.ok) {
+    const payload: unknown = await response.json().catch(() => null);
+    const detail = payload && typeof payload === "object" && "detail" in payload && typeof payload.detail === "string" ? payload.detail : null;
+    throw new Error(detail ?? `Fidel could not complete the request (${response.status}).`);
+  }
+}

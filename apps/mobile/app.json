@@ -3,14 +3,16 @@
     "name": "Fidel",
     "slug": "fidel-mobile",
     "scheme": "et.fidelapp.mobile",
-    "version": "0.1.0",
+    "version": "0.1.5",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/fidel.png",
     "android": {
       "package": "et.fidelapp.mobile",
+      "versionCode": 6,
       "permissions": [
-        "android.permission.MODIFY_AUDIO_SETTINGS"
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.VIBRATE"
       ]
     },
     "ios": {

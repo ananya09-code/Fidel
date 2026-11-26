@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="620" viewBox="0 0 680 620">
+  <rect width="680" height="620" fill="#171c19"/>
+  <defs>
+    <g id="pine"><path d="M0 2V-31" stroke="#765e43" stroke-width="5"/><path d="M0-61-23 30h12L-27-8h54L11-31h12Z" fill="#386251"/><path d="M0-61V-8h27L11-31h12Z" fill="#284a3e"/></g>
+    <g id="tree"><path d="M0 3v-34" stroke="#765e43" stroke-width="5"/><path d="M-18-18c-18-12-13-31 2-34 1-20 30-25 36-6 23 0 31 29 11 39-5 20-38 22-49 1Z" fill="#527348"/><path d="M3-61c24-10 39 21 25 33 7 15-12 24-25 21 12-15 16-37 0-54Z" fill="#344f38"/></g>
+    <g id="house"><ellipse cy="68" rx="73" ry="13" fill="#536e482d"/><path d="m-54 1 59 18v48l-59-19Z" fill="#29382e"/><path d="M5 19 53-7v45L5 67Z" fill="#566146"/><path d="m-64 0 59-57L63-8 5 24Z" fill="#a0834c"/><path d="M-5-57 63-8 5 24Z" fill="#80623b"/><path d="m-64 0 69 24L63-8M-5-57 5 24m-8-73-47 49m54-40L-33 8m43-38-28 42m36-30 24 17" fill="none" stroke="#d2b780" stroke-width="1.5"/><path d="M-31 55V29q13-11 20 6v24" fill="#193b31"/><path d="m-49 17 13 4v17l-13-4Zm71 10 14-7v15l-14 8Z" fill="#9eae82" stroke="#765e43" stroke-width="1.5"/></g>
+  </defs>
+  <path d="M28 282 343 113 653 264 668 350 653 435 341 603 28 446 12 363Z" fill="#25382b"/>
+  <path d="M28 267 343 98 653 249 668 335 653 420 341 588 28 431 12 348Z" fill="#3a5039"/>
+  <path d="M343 98 653 249 668 335 653 420 341 588 340 414 167 338Z" fill="#435c3e"/>
+  <path d="M530 210c-22 39 26 64 17 94s-42 40-36 75-87 56-91 81-68 43-70 108" fill="none" stroke="#536f65" stroke-width="25"/>
+  <path d="M530 210c-22 39 26 64 17 94s-42 40-36 75-87 56-91 81-68 43-70 108" fill="none" stroke="#426e77" stroke-width="17"/>
+  <path d="M124 473C200 426 115 363 185 310S274 269 330 304 381 407 450 402 506 347 494 332M185 310Q170 180 310 170T505 300M185 310Q110 410 255 455T480 480" fill="none" stroke="#4b4937" stroke-width="24" stroke-linecap="round"/>
+  <path d="M124 473C200 426 115 363 185 310S274 269 330 304 381 407 450 402 506 347 494 332M185 310Q170 180 310 170T505 300M185 310Q110 410 255 455T480 480" fill="none" stroke="#d5ae6b" stroke-width="3" stroke-dasharray="6 10"/>
+  <use href="#pine" transform="translate(290 110) scale(.8)"/><use href="#tree" transform="translate(384 128) scale(.8)"/><use href="#tree" transform="translate(446 160) scale(.7)"/>
+  <use href="#pine" transform="translate(270 179) scale(.8)"/><use href="#tree" transform="translate(350 198) scale(.7)"/><use href="#pine" transform="translate(575 242) scale(.8)"/>
+  <use href="#tree" transform="translate(92 256) scale(.7)"/><use href="#pine" transform="translate(105 306) scale(.8)"/><use href="#tree" transform="translate(108 397) scale(.8)"/>
+  <use href="#pine" transform="translate(204 453) scale(.8)"/><use href="#tree" transform="translate(251 546) scale(.8)"/><use href="#pine" transform="translate(548 422) scale(.8)"/>
+  <use href="#tree" transform="translate(581 401) scale(.8)"/>
+  <use href="#house" transform="translate(137 242) scale(.72)"/>
+  <use href="#house" transform="translate(506 310) scale(.72)"/>
+  <use href="#house" transform="translate(351 206) scale(.72)"/>
+  <use href="#house" transform="translate(213 472) scale(.72)"/>
+  <use href="#house" transform="translate(479 515) scale(.72)"/>
+</svg>

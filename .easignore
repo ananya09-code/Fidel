@@ -21,6 +21,14 @@
 !/apps/web/src
 /apps/web/src/*
 !/apps/web/src/lib
+!/apps/web/src/components
+/apps/web/src/components/*
+!/apps/web/src/components/learn-ui
+/apps/web/src/components/learn-ui/*
+!/apps/web/src/components/learn-ui/lesson
+/apps/web/src/components/learn-ui/lesson/*
+!/apps/web/src/components/learn-ui/lesson/exercise-plan.ts
+!/apps/web/src/components/learn-ui/lesson/sentence-plan.ts
 
 **/node_modules/
 **/.expo/

@@ -1,71 +1,91 @@
-import { ClerkProvider, useAuth, useUser } from "@clerk/expo";
+import { ClerkProvider, useAuth } from "@clerk/expo";
 import { useHostedAuth } from "@clerk/expo/hosted-auth";
 import { tokenCache } from "@clerk/expo/token-cache";
-import { QueryClient, QueryClientProvider, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+import * as Application from "expo-application";
 import { makeRedirectUri } from "expo-auth-session";
 import Constants, { ExecutionEnvironment } from "expo-constants";
-import { useEffect, useState } from "react";
-import { BackHandler, Image, Pressable, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { useFonts } from "expo-font";
+import { useEffect, useRef, useState, type ComponentRef, type ReactNode } from "react";
+import { BackHandler, Image, Linking, Platform, ScrollView, StatusBar, StyleSheet, useColorScheme, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { getDashboard } from "@/lib/api/dashboard";
-import { getLearningPath, getProgress } from "@/lib/api/learning";
-import { getPreferences, updatePreferences, type UserPreferences } from "@/lib/api/preferences";
-import { learningLanguageCodes, learningLanguages, type LearningLanguage } from "@/lib/languages";
+import { getPreferences } from "@/lib/api/preferences";
+import { learningLanguages } from "@/lib/languages";
 import type { ApiToken } from "./api";
 import { Dictionary } from "./Dictionary";
+import { Home, Learn } from "./LearnerScreens";
+import { Profile, Settings, SignOut } from "./AccountScreens";
 import { Lesson, Review } from "./Study";
-import { Button, Card, Copy, Loading, palettes, Problem, Theme, Title, usePalette } from "./ui";
+import { Quest } from "./Quest";
+import { HomePreview } from "./HomePreview";
+import { FeedbackContext } from "./feedback";
+import { Button, Copy, grow, Icon, IconButton, type IconName, Label, Loading, palettes, Press, Problem, row, Teacher, Theme, Title, usePalette, WordText } from "./ui";
 
-const tabs = ["Home", "Learn", "Review", "Dictionary", "Profile"] as const;
-type Tab = typeof tabs[number];
-type Course = { token: ApiToken; language: LearningLanguage };
-const logo = require("../assets/fidel.png");
+const tabs = [
+  ["Home", "home"], ["Learn", "learn"], ["Review", "review"], ["Dictionary", "search"], ["Profile", "profile"],
+] as const satisfies ReadonlyArray<readonly [string, IconName]>;
+type Tab = typeof tabs[number][0];
+
 const publicKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY?.trim();
-const expoGo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient || !!Constants.expoGoConfig;
+const applicationId = Application.applicationId;
+const expoGo = applicationId
+  ? applicationId.toLowerCase() === "host.exp.exponent"
+  : Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
+
+function signInCallback() {
+  if (expoGo) return makeRedirectUri({ path: "hosted-auth-callback", isTripleSlashed: true });
+  if (!applicationId) throw new Error("Fidel could not read the installed application ID.");
+  return Platform.OS === "android"
+    ? `clerk://${applicationId}.hosted-callback`
+    : `${applicationId}://callback`;
+}
+
+const fonts = {
+  Manrope: require("../assets/fonts/Manrope-Regular.ttf"),
+  ManropeBold: require("../assets/fonts/Manrope-Bold.ttf"),
+  Ethiopic: require("../assets/fonts/noto-serif-ethiopic.ttf"),
+};
 
 export default function App() {
   const systemDark = useColorScheme() === "dark";
+  const [ready, fontError] = useFonts(fonts);
   return <SafeAreaProvider>
     <Theme.Provider value={systemDark ? palettes.dark : palettes.light}>
-      {publicKey ? <ClerkProvider publishableKey={publicKey} tokenCache={tokenCache}>
-        <Session />
-      </ClerkProvider> : <Frame dark={systemDark}><ScrollView contentContainerStyle={styles.body}>
-        <Image source={logo} style={styles.mark} />
-        <Title>Fidel</Title>
-        <Problem error={new Error("Set up the mobile Clerk publishable key to sign in.")} />
-      </ScrollView></Frame>}
+      {!ready && !fontError ? <Frame><Loading /></Frame> :
+        __DEV__ && expoGo ? <HomePreview /> :
+        publicKey ? <ClerkProvider publishableKey={publicKey} tokenCache={tokenCache}><Session /></ClerkProvider> :
+          <Frame><ScrollView contentContainerStyle={styles.body}>
+            <Teacher /><Title>Fidel</Title><Problem error={new Error("Set up the mobile Clerk publishable key to sign in.")} />
+          </ScrollView></Frame>}
     </Theme.Provider>
   </SafeAreaProvider>;
 }
 
-function Frame({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
-  const palette = usePalette();
-  return <SafeAreaView style={{ flex: 1, backgroundColor: palette.paper }}>
-    <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
+function Frame({ children }: { children: ReactNode }) {
+  const color = usePalette();
+  return <SafeAreaView style={{ flex: 1, backgroundColor: color.frame }}>
+    <StatusBar barStyle={color.dark ? "light-content" : "dark-content"} />
     {children}
   </SafeAreaView>;
 }
 
 function Session() {
   const auth = useAuth();
-  const dark = useColorScheme() === "dark";
-  if (!auth.isLoaded) return <Frame dark={dark}><Loading /></Frame>;
-  if (!auth.isSignedIn) return <Frame dark={dark}><SignIn /></Frame>;
+  if (!auth.isLoaded) return <Frame><Loading /></Frame>;
+  if (!auth.isSignedIn) return <Frame><SignIn /></Frame>;
   return <Account key={auth.userId} token={auth.getToken} onSignOut={() => auth.signOut()} />;
 }
 
 function SignIn() {
   const { startHostedAuth } = useHostedAuth();
-  const [pending, setPending] = useState(false);
+  const color = usePalette();
+  const [pending, setPending] = useState<"sign-in" | "sign-up">();
   const [error, setError] = useState<unknown>();
   async function open(mode: "sign-in" | "sign-up") {
-    setPending(true);
+    setPending(mode);
     setError(undefined);
     try {
-      await startHostedAuth(expoGo ? {
-        mode,
-        redirectUrl: makeRedirectUri({ path: "hosted-auth-callback", isTripleSlashed: true }),
-      } : { mode });
+      await startHostedAuth({ mode, redirectUrl: signInCallback() });
     } catch (cause) {
       const errors = cause && typeof cause === "object" && "errors" in cause ? cause.errors : null;
       const codes = Array.isArray(errors) ? errors.map((entry) => entry?.code) : [];
@@ -81,16 +101,33 @@ function SignIn() {
         setError(new Error("Sign-in couldn’t open. Please try again."));
       }
     } finally {
-      setPending(false);
+      setPending(undefined);
     }
   }
-  return <ScrollView contentContainerStyle={[styles.body, styles.welcome]}>
-    <Image source={logo} style={styles.heroMark} />
-    <Title>Welcome to Fidel.</Title>
-    <Copy>Get closer to your roots, one word at a time.</Copy>
-    <Button primary title="Sign in" disabled={pending} onPress={() => void open("sign-in")} />
-    <Button title="Create an account" disabled={pending} onPress={() => void open("sign-up")} />
-    {pending && <Loading />}
+  return <ScrollView contentContainerStyle={[styles.body, { gap: 22 }]} style={{ backgroundColor: color.paper }}>
+    <View style={row}><Teacher size={36} /><Title>Fidel</Title></View>
+    <View style={{ borderWidth: 1, borderColor: color.line, backgroundColor: color.tint, borderRadius: 12, overflow: "hidden" }}>
+      <View style={{ height: 218, flexDirection: "row" }}>
+        <View style={[grow, { justifyContent: "space-between", padding: 13 }]}>
+          <Title>Some words feel like home.</Title>
+          <View>
+            <WordText size={24}>ሰላም</WordText>
+            <Label muted size={12}>Selam · Hello · Amharic</Label>
+          </View>
+        </View>
+        <Image accessible accessibilityLabel="A woman wearing a white netela with woven borders" source={require("../assets/ui/auth-portrait.jpg")}
+          resizeMode="cover" style={{ width: "47%", height: "100%" }} />
+      </View>
+      <Press label="Photo by HagosBeyene · CC BY-SA 4.0 (adapted)" onPress={() => { void Linking.openURL("https://commons.wikimedia.org/wiki/File:Traditional_Habesha_clothes.jpg").catch(() => undefined); }}
+        style={{ minHeight: 44, justifyContent: "center", padding: 8 }}>
+        <Label muted size={12} style={{ textAlign: "center" }}>Photo by HagosBeyene · CC BY-SA 4.0 (adapted)</Label>
+      </Press>
+    </View>
+    <View style={{ gap: 5 }}><Title>Welcome to Fidel</Title><Copy>Learn Amharic, Afaan Oromoo, and Tigrinya one word at a time.</Copy></View>
+    <View style={{ gap: 8 }}>
+      <Button primary title="Sign in" icon="arrow" disabled={!!pending} busy={pending === "sign-in"} onPress={() => void open("sign-in")} />
+      <Button title="Create an account" disabled={!!pending} busy={pending === "sign-up"} onPress={() => void open("sign-up")} />
+    </View>
     {!!error && <Problem error={error} />}
   </ScrollView>;
 }
@@ -103,174 +140,91 @@ function Account({ token, onSignOut }: { token: ApiToken; onSignOut: () => Promi
 function Learner({ token, onSignOut }: { token: ApiToken; onSignOut: () => Promise<void> }) {
   const system = useColorScheme();
   const prefs = useQuery({ queryKey: ["preferences"], queryFn: ({ signal }) => getPreferences(token, signal) });
+  const scroll = useRef<ComponentRef<typeof ScrollView>>(null);
   const [tab, setTab] = useState<Tab>("Home");
   const [lesson, setLesson] = useState<string>();
+  const [quest, setQuest] = useState(false);
   const [settings, setSettings] = useState(false);
-  const appearance = prefs.data?.appearance;
+  const [appearanceDraft, setAppearanceDraft] = useState<"light" | "dark" | "system">();
+  const [topic, setTopic] = useState<string>();
+  const [startReviewFromDictionary, setStartReviewFromDictionary] = useState(false);
+  const appearance = appearanceDraft ?? prefs.data?.appearance;
   const dark = appearance === "dark" || ((appearance === "system" || !appearance) && system === "dark");
   const color = dark ? palettes.dark : palettes.light;
+  const language = prefs.data?.learning_language;
+  const ready = prefs.data?.onboarding_completed;
+  const openLesson = (id: string) => { setLesson(id); setTab("Learn"); };
+  const openDictionary = (category?: string) => { setTopic(category); setTab("Dictionary"); };
+  const back = () => { if (lesson) setLesson(undefined); else if (quest) setQuest(false); else { setSettings(false); setAppearanceDraft(undefined); } };
+  const scrollTop = () => scroll.current?.scrollTo({ y: 0, animated: false });
   useEffect(() => {
     const sub = BackHandler.addEventListener("hardwareBackPress", () => {
       if (lesson) { setLesson(undefined); return true; }
-      if (settings) { setSettings(false); return true; }
+      if (quest) { setQuest(false); return true; }
+      if (settings) { setSettings(false); setAppearanceDraft(undefined); return true; }
       if (tab !== "Home") { setTab("Home"); return true; }
       return false;
     });
     return () => sub.remove();
-  }, [lesson, settings, tab]);
-  const language = prefs.data?.learning_language;
-  const openLesson = (id: string) => { setLesson(id); setTab("Learn"); };
-  return <Theme.Provider value={color}><Frame dark={dark}>
+  }, [lesson, quest, settings, tab]);
+  return <Theme.Provider value={color}><FeedbackContext.Provider value={prefs.data ?? { sound_enabled: false, sound_volume: 75, haptics_enabled: false }}><Frame>
     <View style={[styles.header, { borderColor: color.line }]}>
-      <Image source={logo} style={styles.mark} />
-      <Text accessibilityRole="header" style={{ color: color.ink, fontSize: 22, fontWeight: "800" }}>Fidel</Text>
-      {!!lesson && <Pressable accessibilityRole="button" onPress={() => setLesson(undefined)} style={{ marginLeft: "auto", padding: 12 }}>
-        <Text style={{ color: color.ink, fontWeight: "700" }}>Back to Learn</Text>
-      </Pressable>}
-      {settings && <Pressable accessibilityRole="button" onPress={() => setSettings(false)} style={{ marginLeft: "auto", padding: 12 }}>
-        <Text style={{ color: color.ink, fontWeight: "700" }}>Back to Profile</Text>
-      </Pressable>}
-    </View>
-    <ScrollView key={lesson ?? (settings ? "Settings" : tab)} contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
-      {prefs.isPending ? <Loading /> : prefs.error || !prefs.data || !language ?
-        <>
-          <Title>We couldn’t load your setup</Title>
-          <Problem error={prefs.error} retry={() => void prefs.refetch()} />
-          <SignOut onSignOut={onSignOut} />
-        </> : !prefs.data.onboarding_completed ?
-          <Settings token={token} prefs={prefs.data} onboarding onSignOut={onSignOut} /> :
-          lesson ? <Lesson key={lesson} token={token} language={language} lessonId={lesson} back={() => setLesson(undefined)} /> :
-          settings ? <Settings key={language} token={token} prefs={prefs.data} onSignOut={onSignOut} /> :
-          tab === "Home" ? <Home token={token} language={language} openLesson={openLesson} goLearn={() => setTab("Learn")} /> :
-          tab === "Learn" ? <Learn token={token} language={language} openLesson={openLesson} /> :
-          tab === "Review" ? <Review key={language} token={token} language={language} /> :
-          tab === "Dictionary" ? <Dictionary key={language} token={token} language={language} /> :
-          <Profile token={token} language={language} openSettings={() => setSettings(true)} />}
-    </ScrollView>
-    {!!prefs.data?.onboarding_completed && !lesson && !settings && <View style={[styles.tabs, { backgroundColor: color.panel, borderColor: color.line }]}>
-      {tabs.map((name) => <Pressable accessibilityRole="tab" accessibilityState={{ selected: name === tab }}
-        key={name} style={styles.tab} onPress={() => setTab(name)}>
-        <View style={[styles.tabMarker, { backgroundColor: name === tab ? color.gold : "transparent" }]} />
-        <Text numberOfLines={1} style={{ color: name === tab ? color.ink : color.muted, fontSize: 12, fontWeight: "700" }}>{name}</Text>
-      </Pressable>)}
-    </View>}
-  </Frame></Theme.Provider>;
-}
-
-function Home({ token, language, openLesson, goLearn }: Course & { openLesson: (id: string) => void; goLearn: () => void }) {
-  const dashboard = useQuery({ queryKey: ["dashboard", language], queryFn: ({ signal }) => getDashboard(token, language, signal) });
-  const data = dashboard.data;
-  const color = usePalette();
-  return <>
-    <Copy>{learningLanguages[language].nativeName}</Copy>
-    <Title>Make today a study day.</Title>
-    {dashboard.isPending ? <Loading /> : dashboard.error ? <Problem error={dashboard.error} retry={() => void dashboard.refetch()} /> : data && <>
-      <Card>
-        <Copy>Daily word goal</Copy>
-        <Text style={{ color: color.ink, fontSize: 30, fontWeight: "800" }}>{data.words_learned_today} / {data.daily_word_goal} words</Text>
-        <View accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: data.daily_word_goal, now: Math.min(data.words_learned_today, data.daily_word_goal) }}
-          style={{ height: 7, borderRadius: 8, backgroundColor: color.line }}>
-          <View style={{ backgroundColor: color.gold, height: 7, borderRadius: 8, width: `${Math.min(100, data.words_learned_today / data.daily_word_goal * 100)}%` }} />
+      <View style={styles.shellWidth}>
+        <View style={[row, { minHeight: 52 }]}>
+          {lesson || settings || quest ? <>
+            <IconButton name="back" label={lesson || quest ? "Back to Learn" : "Close settings"} onPress={back} />
+            <Label strong size={16} style={grow}>{lesson ? "Lesson" : quest ? "Fidel Quest" : "Settings"}</Label>
+          </> : <>
+            <Teacher size={28} />
+            <Label strong size={19} style={grow}>Fidel</Label>
+            {!!ready && language && <Label muted size={12}>{learningLanguages[language].name}</Label>}
+            {!!ready && <IconButton name="settings" label="Open settings" onPress={() => setSettings(true)} />}
+          </>}
         </View>
-        <Copy>{data.streak_days} day streak · {data.learned_words} words learned</Copy>
-      </Card>
-      <Card>
-        <Title>{data.current_lesson?.title ?? "Your learning path"}</Title>
-        <Button primary title={data.current_lesson ? "Resume lesson" : "Find a lesson"}
-          onPress={() => data.current_lesson ? openLesson(data.current_lesson.lesson_key) : goLearn()} />
-      </Card>
-    </>}
-  </>;
-}
-
-function Learn({ token, language, openLesson }: Course & { openLesson: (id: string) => void }) {
-  const path = useQuery({ queryKey: ["path", language], queryFn: ({ signal }) => getLearningPath(language, signal) });
-  const progress = useQuery({ queryKey: ["progress", language], queryFn: ({ signal }) => getProgress(token, language, signal) });
-  return <>
-    <Copy>{learningLanguages[language].nativeName}</Copy>
-    <Title>Learning path</Title>
-    {path.isPending || progress.isPending ? <Loading /> : path.error || progress.error ?
-      <Problem error={path.error ?? progress.error} retry={() => { void path.refetch(); void progress.refetch(); }} /> :
-      path.data?.levels.length ? path.data.levels.map((level) => <Card key={level.id}>
-        <Title>{level.title}</Title>
-        {level.lessons.map((item) => {
-          const label = progress.data?.completed_lesson_keys.includes(item.id) ? "Completed" :
-            progress.data?.in_progress.some((attempt) => attempt.lesson_key === item.id) ? "Resume" : `${item.word_count} words`;
-          return <Button key={item.id} title={`${item.title} · ${label}`} onPress={() => openLesson(item.id)} />;
-        })}
-      </Card>) : <Card><Copy>This course has no lessons ready yet.</Copy></Card>}
-  </>;
-}
-
-function SignOut({ onSignOut }: { onSignOut: () => Promise<void> }) {
-  const signOut = useMutation({ mutationFn: onSignOut });
-  return <>
-    <Button title="Sign out" disabled={signOut.isPending} onPress={() => signOut.mutate()} />
-    {signOut.error && <Problem error={signOut.error} />}
-  </>;
-}
-
-function Profile({ token, language, openSettings }: Course & { openSettings: () => void }) {
-  const { user } = useUser();
-  const dashboard = useQuery({ queryKey: ["dashboard", language], queryFn: ({ signal }) => getDashboard(token, language, signal) });
-  const data = dashboard.data;
-  return <>
-    <Title>{user?.fullName || "Your profile"}</Title>
-    <Copy>{learningLanguages[language].name}</Copy>
-    <Button title="Settings" onPress={openSettings} />
-    {dashboard.isPending ? <Loading /> : dashboard.error ?
-      <Problem error={dashboard.error} retry={() => void dashboard.refetch()} /> : data && <Card>
-        <Copy>{data.streak_days} day streak</Copy>
-        <Copy>{data.learned_words} words learned</Copy>
-        <Copy>{data.lessons_completed} lessons completed</Copy>
-        <Copy>{data.reviews_completed} reviews completed</Copy>
-      </Card>}
-  </>;
-}
-
-function Settings({ token, prefs, onboarding = false, onSignOut }: {
-  token: ApiToken; prefs: UserPreferences; onboarding?: boolean; onSignOut: () => Promise<void>;
-}) {
-  const client = useQueryClient();
-  const [language, setLanguage] = useState(prefs.learning_language);
-  const [goal, setGoal] = useState(prefs.daily_goal_words);
-  const [appearance, setAppearance] = useState(prefs.appearance);
-  const [level, setLevel] = useState(prefs.proficiency_level ?? "beginner");
-  const save = useMutation({
-    mutationFn: () => updatePreferences(token, {
-      learning_language: language, daily_goal_words: goal, appearance, proficiency_level: level,
-      ...(onboarding ? { onboarding_completed: true } : {}),
-    }),
-    onSuccess: (result) => {
-      client.setQueryData(["preferences"], result);
-      void client.invalidateQueries({ queryKey: ["dashboard"] });
-    },
-  });
-  return <>
-    <Title>{onboarding ? "Make Fidel yours" : "Settings"}</Title>
-    <Card><Copy>Learning language</Copy>{learningLanguageCodes.map((code) =>
-      <Button key={code} title={learningLanguages[code].name} primary={language === code} onPress={() => setLanguage(code)} />)}</Card>
-    <Card><Copy>Your level</Copy>{(["beginner", "some", "conversational", "improving"] as const).map((value) =>
-      <Button key={value} title={{ beginner: "Just starting", some: "I know a little", conversational: "I can have a conversation", improving: "I’m polishing my skills" }[value]}
-        primary={level === value} onPress={() => setLevel(value)} />)}</Card>
-    <Card><Copy>Daily goal</Copy>{([5, 10, 15, 20] as const).map((value) =>
-      <Button key={value} title={`${value} words per day`} primary={goal === value} onPress={() => setGoal(value)} />)}</Card>
-    <Card><Copy>Appearance</Copy>{(["light", "dark", "system"] as const).map((value) =>
-      <Button key={value} title={{ light: "Light", dark: "Dark", system: "Match device" }[value]} primary={appearance === value} onPress={() => setAppearance(value)} />)}</Card>
-    {save.error && <Problem error={save.error} />}
-    {save.isSuccess && <Copy>Preferences saved.</Copy>}
-    <Button primary title={onboarding ? "Start learning" : "Save settings"} disabled={save.isPending} onPress={() => save.mutate()} />
-    <SignOut onSignOut={onSignOut} />
-  </>;
+      </View>
+    </View>
+    <ScrollView ref={scroll} key={lesson ?? (settings ? "Settings" : quest ? "Quest" : `${tab}-${topic ?? ""}`)} style={{ backgroundColor: color.paper }}
+      contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
+      {prefs.isPending ? <Loading label="Loading your setup" /> : prefs.error || !prefs.data || !language ?
+        <><Title>We couldn’t load your setup</Title><Problem error={prefs.error} retry={() => void prefs.refetch()} /><SignOut onSignOut={onSignOut} /></> :
+        !ready ? <Settings token={token} prefs={prefs.data} onboarding onSignOut={onSignOut} onStepChange={scrollTop}
+          onAppearancePreview={setAppearanceDraft} /> :
+        lesson ? <Lesson key={lesson} token={token} language={language} lessonId={lesson} back={back} onStepChange={scrollTop} /> :
+        settings ? <Settings token={token} prefs={prefs.data} onSignOut={onSignOut} onStepChange={scrollTop}
+          onAppearancePreview={setAppearanceDraft} /> :
+        quest ? <Quest token={token} language={language} goDictionary={() => { setQuest(false); openDictionary(); }} /> :
+        tab === "Home" ? <Home key={language} token={token} language={language} openLesson={openLesson} goLearn={() => setTab("Learn")}
+          goReview={() => setTab("Review")} goProfile={() => setTab("Profile")} openDictionary={openDictionary} goQuest={() => { setTab("Learn"); setQuest(true); }} /> :
+        tab === "Learn" ? <Learn key={language} token={token} language={language} openLesson={openLesson} goReview={() => setTab("Review")}
+          goDictionary={() => openDictionary()} goQuest={() => setQuest(true)} /> :
+        tab === "Review" ? <Review key={language} token={token} language={language} goLearn={() => setTab("Learn")} goDictionary={() => openDictionary()}
+          onStepChange={scrollTop} startImmediately={startReviewFromDictionary} onAutoStartHandled={() => setStartReviewFromDictionary(false)} /> :
+        tab === "Dictionary" ? <Dictionary key={language} token={token} language={language} initialTopic={topic}
+          goReview={() => { setStartReviewFromDictionary(true); setTab("Review"); }} /> :
+        <Profile key={language} token={token} language={language} openSettings={() => setSettings(true)} goLearn={() => setTab("Learn")} />}
+    </ScrollView>
+    {!!ready && !lesson && !settings && !quest && <View style={{ borderTopWidth: 1, borderColor: color.line }}>
+      <View accessibilityRole="tablist" style={[styles.shellWidth, styles.tabs]}>
+        {tabs.map(([name, icon]) => <Press tab selected={name === tab} label={name} key={name} style={styles.tab} onPress={() => {
+          if (name === tab) { scrollTop(); return; }
+          setTopic(undefined);
+          setTab(name);
+        }}>
+          <View style={[styles.tabIcon, { backgroundColor: name === tab ? color.line : "transparent" }]}>
+            <Icon name={icon} tint={name === tab ? color.ink : color.muted} />
+          </View>
+          <Label size={11} strong={name === tab} muted={name !== tab} style={{ textAlign: "center" }}>{name}</Label>
+        </Press>)}
+      </View>
+    </View>}
+  </Frame></FeedbackContext.Provider></Theme.Provider>;
 }
 
 const styles = StyleSheet.create({
-  body: { padding: 20, paddingBottom: 28, gap: 14 },
-  welcome: { flexGrow: 1, justifyContent: "center", paddingHorizontal: 28 },
-  mark: { width: 34, height: 34, borderRadius: 8 },
-  heroMark: { width: 94, height: 94, borderRadius: 22, marginBottom: 10 },
-  header: { flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 20, minHeight: 56, borderBottomWidth: StyleSheet.hairlineWidth },
-  tabs: { flexDirection: "row", borderTopWidth: StyleSheet.hairlineWidth },
-  tab: { flex: 1, minHeight: 58, justifyContent: "center", alignItems: "center", gap: 5 },
-  tabMarker: { height: 3, width: 19, borderRadius: 2 },
+  shellWidth: { alignSelf: "center", width: "100%", maxWidth: 560, paddingHorizontal: 12 },
+  body: { width: "100%", maxWidth: 560, alignSelf: "center", padding: 16, paddingBottom: 32, gap: 13 },
+  header: { borderBottomWidth: 1 },
+  tabs: { flexDirection: "row", paddingHorizontal: 4, paddingVertical: 4 },
+  tab: { flex: 1, minWidth: 0, minHeight: 56, justifyContent: "center", alignItems: "center", gap: 3, borderRadius: 8, paddingHorizontal: 1 },
+  tabIcon: { minWidth: 42, height: 28, borderRadius: 14, alignItems: "center", justifyContent: "center" },
 });
