@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight, Check, LoaderCircle, RotateCcw, X } from "lucide
 import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
 import { topicLabel } from "@/components/homepage-ui/labels";
 import { MatchingRound } from "./MatchingRound";
-import { listeningIndices, matchingIndices, shuffleExercise as shuffle } from "./exercise-plan";
+import { choiceOptions, listeningIndices, matchingIndices } from "./exercise-plan";
 import { ListeningPrompt } from "./ListeningPrompt";
 import { TeacherFeedback } from "./TeacherFeedback";
 import { correctRun, type EncouragementEvent } from "./encouragement";
@@ -36,7 +36,8 @@ type LessonQuizProps = {
     wordId: string;
     selectedWordId: string;
     questionIndex: number;
-    questionType?: "multiple_choice" | "matching";
+    questionType?: "multiple_choice" | "matching" | "self_review";
+    remembered?: boolean;
   }) => Promise<void> | void;
   onFinish?: (result: {
     score: number;
@@ -76,16 +77,10 @@ export function LessonQuiz({
       (word) => word.word.trim() && word.meaning.trim(),
     );
 
-    return usableWords.map((word) => {
-      const distractors = shuffle(
-        (choiceWords?.length ? choiceWords : usableWords).filter((candidate) => candidate.id !== word.id && candidate.meaning.trim() && candidate.meaning !== word.meaning), word.id,
-      ).slice(0, 3);
-
-      return {
-        word,
-        options: shuffle([word, ...distractors], word.id + "-options"),
-      };
-    });
+    return usableWords.map((word) => ({
+      word,
+      options: choiceOptions(word, usableWords, choiceWords ?? []),
+    }));
   }, [words, choiceWords]);
   const companion = variant === "quiz"
     ? reviewCharacterFor(languageCode, questions.map(({ word }) => word.id))
@@ -113,6 +108,7 @@ export function LessonQuiz({
   const [readInstead, setReadInstead] = useState<string | null>(null);
   const [nextSentence, setNextSentence] = useState<SentenceExercise | null>(null);
   const [showSentence, setShowSentence] = useState(false);
+  const [revealed, setRevealed] = useState(false);
 
   const currentQuestion = questions[currentIndex];
   const selectedId = currentQuestion
@@ -134,7 +130,7 @@ export function LessonQuiz({
       ? Math.round((score / questions.length) * 100)
       : 0;
 
-  async function selectAnswer(wordId: string) {
+  async function selectAnswer(wordId: string, remembered?: boolean) {
     if (answered || isSaving || !currentQuestion) return;
     prepareFeedbackSound(soundEnabled, soundVolume);
     setIsSaving(true);
@@ -145,19 +141,21 @@ export function LessonQuiz({
         wordId: currentQuestion.word.id,
         selectedWordId: wordId,
         questionIndex: currentIndex,
+        ...(remembered === undefined ? {} : { questionType: "self_review" as const, remembered }),
       });
-      const savedAnswers = { ...answers, [currentQuestion.word.id]: wordId };
+      const right = remembered ?? wordId === currentQuestion.word.id;
+      const savedAnswers = { ...answers, [currentQuestion.word.id]: right ? currentQuestion.word.id : "__incorrect__" };
       setAnswers(savedAnswers);
       setReaction({
         id: currentQuestion.word.id,
-        outcome: wordId === currentQuestion.word.id ? "correct" : "incorrect",
+        outcome: right ? "correct" : "incorrect",
         turn: Object.keys(savedAnswers).length,
         streak: correctRun(savedAnswers),
       });
-      const cue = wordId === currentQuestion.word.id ? "correct" : "retry";
+      const cue = right ? "correct" : "retry";
       playFeedbackSound(cue, soundEnabled, soundVolume);
       playFeedbackHaptic(cue, hapticsEnabled);
-      if (variant === "practice" && wordId === currentQuestion.word.id) {
+      if (variant === "practice" && right) {
         try {
           const catalogue = await getSentenceExercises(getToken, languageCode);
           const eligible = sentenceAfterWord(catalogue.exercises, currentQuestion.word.id, shownSentences.current);
@@ -218,6 +216,7 @@ export function LessonQuiz({
 
     setReaction(null);
     setReadInstead(null);
+    setRevealed(false);
     setCurrentIndex(nextIndex);
   }
 
@@ -272,6 +271,20 @@ export function LessonQuiz({
           setAnswers(previous => ({ ...previous, [wordId]: selectedWordId }));
         }}
         onComplete={() => nextQuestion(nextIndex)} />
+      {saveError && <p className="study-error" role="alert">{saveError}</p>}
+    </div>;
+  }
+
+  if (variant === "practice" && currentQuestion.options.length < 2) {
+    return <div className="fidel-study">
+      <header className="study-header"><button type="button" className="study-text-button" onClick={onBack}><ArrowLeft size={18} aria-hidden="true" />Exit practice</button><span>{topicLabel(category)}</span></header>
+      <div className="study-progress-label"><h1>Recall this word</h1><span>{currentIndex + 1} of {questions.length}</span></div>
+      <progress className="study-progress" value={currentIndex + 1} max={questions.length} aria-label="Practice progress" />
+      <div className="study-feedback-space" aria-live="polite">{answered && <TeacherFeedback event={reaction ?? { id: currentQuestion.word.id, outcome: correct ? "correct" : "incorrect", turn: 0 }} animate={reaction !== null}><p>{currentQuestion.word.meaning} — <strong>{currentQuestion.word.word}</strong></p></TeacherFeedback>}</div>
+      <section className="study-question"><p>Think of the word for this meaning before you reveal it.</p><dl className="study-translations"><div><dt>English</dt><dd>{currentQuestion.word.meaning}</dd></div><div><dt>Amharic</dt><dd lang="am">{currentQuestion.word.amharic ?? "Translation unavailable"}</dd></div></dl></section>
+      {!revealed && !answered ? <button type="button" className="study-primary" onClick={() => setRevealed(true)}>Reveal word</button> : <section className="study-question"><strong>{currentQuestion.word.word}</strong>{currentQuestion.word.transliteration && <p>{currentQuestion.word.transliteration}</p>}</section>}
+      {revealed && !answered && <div className="study-practice-actions"><button type="button" className="study-secondary" disabled={isSaving} onClick={() => void selectAnswer(currentQuestion.word.id, false)}>Need another look</button><button type="button" className="study-primary" disabled={isSaving} onClick={() => void selectAnswer(currentQuestion.word.id, true)}>I remembered</button></div>}
+      {answered && <div className="study-practice-actions"><button type="button" className="study-primary" disabled={isSaving} onClick={() => void nextQuestion()}>{currentIndex === questions.length - 1 ? "See my results" : "Continue"}<ArrowRight size={18} aria-hidden="true" /></button></div>}
       {saveError && <p className="study-error" role="alert">{saveError}</p>}
     </div>;
   }

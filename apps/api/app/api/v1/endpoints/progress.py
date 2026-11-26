@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from typing import Annotated, Any, Generator, Literal, Mapping
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import JSON, bindparam, text
 from sqlalchemy.orm import Session
 
@@ -180,6 +180,47 @@ def get_progress_summary(
     )
 
 
+@router.get("/practice-choices")
+def practice_choices(
+    current_user: Annotated[ClerkUser, Depends(get_current_user)],
+    language_code: Literal["om", "am", "ti"] = Query(...),
+    category: str = Query("", max_length=200),
+    db: Session = Depends(get_db),
+) -> dict[str, list[dict[str, str | None]]]:
+    """Approved same-language choices, with previously seen words first."""
+    user_id = _user_id(db, current_user.user_id)
+    rows = db.execute(
+        text("""
+            SELECT w.id, w.text, w.transliteration,
+                   (SELECT wt.meaning FROM word_translations wt
+                    WHERE wt.word_id = w.id AND wt.language_code = 'en'
+                    ORDER BY wt.created_at, wt.id LIMIT 1) AS meaning,
+                   (SELECT wt.meaning FROM word_translations wt
+                    WHERE wt.word_id = w.id AND wt.language_code = 'am'
+                    ORDER BY wt.created_at, wt.id LIMIT 1) AS amharic
+            FROM words w
+            LEFT JOIN user_words uw ON uw.word_id = w.id AND uw.user_id = :user_id
+            WHERE w.language_code = :language_code AND w.status = 'approved'
+              AND w.content_type IN ('word', 'phrase')
+              AND EXISTS (SELECT 1 FROM word_translations wt
+                          WHERE wt.word_id = w.id AND wt.language_code = 'en'
+                            AND TRIM(wt.meaning) <> '')
+            ORDER BY CASE WHEN uw.times_seen > 0 THEN 0 ELSE 1 END,
+                     CASE WHEN w.category <> :category THEN 0 ELSE 1 END,
+                     CASE WHEN w.difficulty = 'beginner' THEN 0 ELSE 1 END,
+                     w.created_at, w.id
+            LIMIT 60
+        """),
+        {"user_id": user_id, "language_code": language_code, "category": category},
+    ).mappings().all()
+    return {"words": [
+        {"id": str(row["id"]), "word": row["text"],
+         "transliteration": row["transliteration"],
+         "meaning": row["meaning"], "amharic": row["amharic"]}
+        for row in rows
+    ]}
+
+
 @router.get("/lessons/{lesson_key}", response_model=LessonAttempt | None)
 def get_lesson_attempt(
     lesson_key: str,
@@ -328,6 +369,12 @@ def save_answer(
             detail="Question index is outside this lesson.",
         )
 
+    if payload.question_type == "self_review":
+        if payload.remembered is None or payload.selected_word_id != payload.word_id:
+            raise HTTPException(status_code=422, detail="Provide a valid recall response.")
+    elif payload.remembered is not None:
+        raise HTTPException(status_code=422, detail="Recall response is only for self review.")
+
     now = datetime.now(timezone.utc)
     word_ids = [str(payload.word_id), str(payload.selected_word_id)]
     previous = db.execute(
@@ -347,6 +394,7 @@ def save_answer(
     previous_correct = previous["is_correct"] if previous else None
     if previous and previous["question_type"] == "matching":
         return _serialize(db, row, user_id)
+    is_correct = payload.remembered if payload.question_type == "self_review" else payload.word_id == payload.selected_word_id
     statement = text(
         """
         INSERT INTO answer_attempts (
@@ -371,11 +419,10 @@ def save_answer(
             "question_id": payload.question_id,
             "question_type": payload.question_type,
             "word_ids": word_ids,
-            "is_correct": payload.word_id == payload.selected_word_id,
+            "is_correct": is_correct,
             "now": now,
         },
     )
-    is_correct = payload.word_id == payload.selected_word_id
     seen_increment = 1 if previous_correct is None else 0
     correct_delta = int(is_correct) - (
         int(previous_correct) if previous_correct is not None else 0

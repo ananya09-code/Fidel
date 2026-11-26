@@ -13,6 +13,22 @@ export function shuffleExercise<T>(items: T[], seed: string): T[] {
 
 const normalize = (value: string) => value.normalize("NFKC").trim().toLocaleLowerCase("en").replace(/\s+/g, " ");
 
+export function choiceOptions<T extends WordIdentity>(target: T, sessionWords: T[], choiceWords: T[]): T[] {
+  const labels = new Set([normalize(target.word)]);
+  const meanings = new Set([normalize(target.meaning)]);
+  const distractors: T[] = [];
+  for (const candidate of [...sessionWords, ...choiceWords]) {
+    const label = normalize(candidate.word);
+    const meaning = normalize(candidate.meaning);
+    if (candidate.id === target.id || !label || !meaning || labels.has(label) || meanings.has(meaning)) continue;
+    labels.add(label);
+    meanings.add(meaning);
+    distractors.push(candidate);
+    if (distractors.length === 3) break;
+  }
+  return shuffleExercise([target, ...distractors], target.id + "-options");
+}
+
 /** A contiguous round of unambiguous pairs after two choice questions. */
 export function matchingIndices(words: WordIdentity[], variant: "practice" | "quiz"): number[] {
   if (variant === "quiz" && words.length < 8) return [];

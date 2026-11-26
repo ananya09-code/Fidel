@@ -27,10 +27,11 @@ class LessonCheckpointRequest(BaseModel):
 
 class AnswerRequest(BaseModel):
     question_id: str = Field(min_length=1, max_length=200)
-    question_type: Literal["multiple_choice", "matching"] = "multiple_choice"
+    question_type: Literal["multiple_choice", "matching", "self_review"] = "multiple_choice"
     word_id: UUID
     selected_word_id: UUID
     question_index: int = Field(ge=0, le=49)
+    remembered: bool | None = None
 
 
 class SavedAnswer(BaseModel):

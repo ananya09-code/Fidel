@@ -39,6 +39,10 @@ export const lessonWordsSchema = z.object({
     total: z.number().int().nonnegative(), has_more: z.boolean(),
   }),
 });
+const practiceChoicesSchema = z.object({ words: z.array(z.object({
+  id: z.string().uuid(), word: z.string(), transliteration: z.string().nullable(),
+  meaning: z.string(), amharic: z.string().nullable(),
+})) });
 const savedAnswerSchema = z.object({ question_id: z.string(), is_correct: z.boolean() });
 export const lessonAttemptSchema = z.object({
   id: z.string().uuid(), lesson_key: z.string(), difficulty: z.string(),
@@ -89,6 +93,12 @@ export async function getLessonWords(lessonKey: string, languageCode: string, si
   }
   return { ...result, pagination: { ...page.pagination, offset: 0, limit: result.words.length } };
 }
+export function getPracticeChoices(token: ApiToken, languageCode: string, category: string, signal?: AbortSignal) {
+  const params = new URLSearchParams({ language_code: languageCode, category });
+  return apiFetch(`/api/v1/progress/practice-choices?${params}`, practiceChoicesSchema, {
+    ...authenticatedRequest(token), signal,
+  });
+}
 export function getProgress(token: ApiToken, languageCode: "om" | "am" | "ti", signal?: AbortSignal) {
   return apiFetch(`/api/v1/progress?language_code=${languageCode}`, progressSummarySchema, {
     ...authenticatedRequest(token), signal,
@@ -118,7 +128,7 @@ export function checkpointLesson(
 }
 export function saveLessonAnswer(
   token: ApiToken, attemptId: string,
-  input: { question_id: string; word_id: string; selected_word_id: string; question_index: number; question_type?: "multiple_choice" | "matching" },
+  input: { question_id: string; word_id: string; selected_word_id: string; question_index: number; question_type?: "multiple_choice" | "matching" | "self_review"; remembered?: boolean },
 ) {
   return apiFetch(`/api/v1/progress/attempts/${attemptId}/answers`, lessonAttemptSchema, {
     method: "PUT", ...authenticatedRequest(token), body: JSON.stringify(input),

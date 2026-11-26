@@ -16,6 +16,7 @@ import {
   checkpointLesson,
   completeLesson,
   getLessonWords,
+  getPracticeChoices,
   saveLessonAnswer,
   startLesson,
   type LessonAttempt,
@@ -48,6 +49,13 @@ function LessonPage() {
     retry: false,
   });
   const attempt = localAttempt ?? savedProgress.data ?? null;
+  const choices = useQuery({
+    queryKey: ["practice-choices", userId, language_code, lesson.data?.lesson.category],
+    queryFn: ({ signal }) => getPracticeChoices(getToken, language_code, lesson.data!.lesson.category, signal),
+    enabled: attempt?.stage === "practice" && Boolean(lesson.data),
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
 
   function cacheAttempt(value: LessonAttempt) {
     setLocalAttempt(value);
@@ -81,7 +89,8 @@ function LessonPage() {
     wordId: string;
     selectedWordId: string;
     questionIndex: number;
-    questionType?: "multiple_choice" | "matching";
+    questionType?: "multiple_choice" | "matching" | "self_review";
+    remembered?: boolean;
   }) {
     if (!attempt) throw new Error("Start the lesson before answering questions.");
     const value = await saveLessonAnswer(getToken, attempt.id, {
@@ -90,6 +99,7 @@ function LessonPage() {
       selected_word_id: answer.selectedWordId,
       question_index: answer.questionIndex,
       question_type: answer.questionType ?? "multiple_choice",
+      remembered: answer.remembered,
     });
     cacheAttempt(value);
     void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
@@ -120,6 +130,13 @@ function LessonPage() {
   if (lesson.isError || savedProgress.isError || progress.isError) {
     const error = lesson.error ?? savedProgress.error ?? progress.error;
     return <PageState kind="error" title="Couldn't load your lesson" description={error instanceof Error ? error.message : "Something went wrong while loading the lesson."} actionLabel="Try again" onAction={() => { void lesson.refetch(); void savedProgress.refetch(); void progress.refetch(); }} />;
+  }
+
+  if (attempt?.stage === "practice" && choices.isPending) {
+    return <PageState kind="loading" title="Preparing your practice" />;
+  }
+  if (attempt?.stage === "practice" && choices.isError) {
+    return <PageState kind="error" title="Couldn't load practice choices" description={choices.error instanceof Error ? choices.error.message : "Please try again."} actionLabel="Try again" onAction={() => { void choices.refetch(); }} />;
   }
 
   if (!lesson.data || lesson.data.words.length === 0) {
@@ -156,6 +173,7 @@ function LessonPage() {
       <LessonQuiz
         key={attempt.id}
         words={sessionWords}
+        choiceWords={choices.data?.words}
         languageCode={language_code === "am" || language_code === "ti" ? language_code : "om"}
         category={lesson.data.lesson.category}
         initialQuestionIndex={attempt.question_index}

@@ -150,6 +150,69 @@ def seed_lesson_words(session_factory, word_ids):
         session.commit()
 
 
+def test_practice_choices_include_other_categories_and_isolate_history(auth_client, mock_clerk, session_factory):
+    ids = [uuid4() for _ in range(4)]
+    with session_factory() as session:
+        for word_id, language, category, status, label in (
+            (ids[0], "om", "greetings", "approved", "hello"),
+            (ids[1], "om", "home", "approved", "door"),
+            (ids[2], "ti", "home", "approved", "window"),
+            (ids[3], "om", "home", "draft", "table"),
+        ):
+            session.execute(text("""
+                INSERT INTO words (id, language_code, text, category, difficulty, status)
+                VALUES (:id, :language, :label, :category, 'beginner', :status)
+            """), {"id": word_id, "language": language, "label": label,
+                   "category": category, "status": status})
+            session.execute(text("""
+                INSERT INTO word_translations (id, word_id, language_code, meaning)
+                VALUES (:id, :word_id, 'en', :meaning)
+            """), {"id": uuid4(), "word_id": word_id, "meaning": label})
+        session.commit()
+
+    url = f"{BASE}/practice-choices?language_code=om&category=greetings"
+    fresh = auth_client.get(url, headers=AUTH_HEADERS)
+    assert fresh.status_code == 200
+    assert {word["id"] for word in fresh.json()["words"]} == {str(ids[0]), str(ids[1])}
+    assert fresh.json()["words"][0]["id"] == str(ids[1])
+
+    mock_clerk(user_id="first")
+    start(auth_client, count=1)
+    with session_factory() as session:
+        first_user = session.execute(text("SELECT id FROM users WHERE clerk_id = 'first'")).scalar_one()
+        session.execute(text("""
+            INSERT INTO user_words (user_id, word_id, times_seen, times_correct, text, meaning,
+                                    first_seen_at, last_seen_at, is_favorite, learning_state)
+            VALUES (:user_id, :word_id, 1, 1, 'hello', 'hello', CURRENT_TIMESTAMP,
+                    CURRENT_TIMESTAMP, false, 'learned')
+        """), {"user_id": first_user, "word_id": ids[0]})
+        session.commit()
+    assert auth_client.get(url, headers=AUTH_HEADERS).json()["words"][0]["id"] == str(ids[0])
+
+    mock_clerk(user_id="second")
+    assert auth_client.get(url, headers=AUTH_HEADERS).json()["words"][0]["id"] == str(ids[1])
+    assert auth_client.get(url).status_code == 401
+
+
+def test_single_word_recall_saves_a_miss_without_a_fake_distractor(auth_client, mock_clerk, session_factory):
+    word_id = uuid4()
+    seed_lesson_words(session_factory, [word_id])
+    attempt = start(auth_client, count=1).json()
+    url = f"{BASE}/attempts/{attempt['id']}/answers"
+    payload = {"question_id": str(word_id), "word_id": str(word_id),
+               "selected_word_id": str(word_id), "question_index": 0,
+               "question_type": "self_review"}
+    assert auth_client.put(url, headers=AUTH_HEADERS, json=payload).status_code == 422
+    response = auth_client.put(url, headers=AUTH_HEADERS, json={**payload, "remembered": False})
+    assert response.status_code == 200
+    assert response.json()["correct_count"] == 0
+    assert response.json()["answers"][0]["is_correct"] is False
+    assert auth_client.post(f"{BASE}/attempts/{attempt['id']}/complete", headers=AUTH_HEADERS).status_code == 200
+    with session_factory() as session:
+        assert session.execute(text("SELECT learning_state FROM user_words WHERE word_id = :id"),
+                               {"id": word_id}).scalar_one() == "needs_review"
+
+
 def test_matching_pairs_persist_first_attempt_and_resume_out_of_order(auth_client, mock_clerk, session_factory):
     words = [uuid4() for _ in range(5)]
     seed_lesson_words(session_factory, words)
