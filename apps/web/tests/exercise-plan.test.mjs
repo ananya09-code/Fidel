@@ -5,8 +5,16 @@ import ts from 'typescript';
 const source=readFileSync(new URL('../src/components/learn-ui/lesson/exercise-plan.ts',import.meta.url),'utf8');
 const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
 const exports={};new Function('exports',compiled)(exports);
-const {matchingIndices,listeningIndices,shuffleExercise}=exports;
+const {choiceOptions,matchingIndices,listeningIndices,shuffleExercise}=exports;
 const words=Array.from({length:10},(_,i)=>({id:String(i),word:'word '+i,meaning:'meaning '+i}));
+
+test('a one-word lesson borrows distinct choices without changing its target',()=>{
+ const target=words[0];
+ const choices=choiceOptions(target,[target],[words[1],{...words[2],meaning:' MEANING  1 '},words[3],words[4]]);
+ assert.deepEqual(new Set(choices.map(word=>word.id)),new Set(['0','1','3','4']));
+ assert.equal(choiceOptions(target,[target],[]).length,1);
+ assert.deepEqual(choiceOptions(target,[target],words.slice(1,2)).length,2);
+});
 test('mixes two recognition questions with up to five pairs',()=>{
  assert.deepEqual(matchingIndices(words,'practice'),[2,3,4,5,6]);
  assert.deepEqual(matchingIndices(words.slice(0,5),'practice'),[2,3,4]);
