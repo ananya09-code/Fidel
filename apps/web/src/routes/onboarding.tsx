@@ -2,10 +2,13 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@clerk/tanstack-react-start";
 import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import { NoelGuide } from "@/components/onboarding/NoelGuide";
+import { NoelWeave } from "@/components/onboarding/NoelWeave";
 import { characterFor } from "@/lib/character-cast";
 import { InstallFidel, useFidelInstalled } from "@/components/install/InstallFidel";
 import { PageState } from "@/components/common-ui/PageState";
 import "@/components/common-ui/app-ui.css";
+import "./onboarding.css";
 
 import { useEffect, useState } from "react";
 import {
@@ -17,6 +20,8 @@ import {
   Heart,
   Languages,
   MessageCircle,
+  Pause,
+  Play,
   Sparkles,
   Target,
   Trophy,
@@ -38,7 +43,7 @@ import { useThemePreview } from "@/components/theme/ThemeProvider";
 import type { Appearance } from "@/lib/theme";
 import type { ReactNode } from "react";
 import { PushDeviceControls } from "@/components/settings-ui/PushDeviceControls";
-import { TOUR_VERSION, UPDATE_VERSION } from "@/lib/first-run";
+import { TOUR_VERSION } from "@/lib/first-run";
 
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
@@ -241,6 +246,7 @@ function OnboardingFlow({
   const navigate = useNavigate();
   const previewAppearance = useThemePreview();
   const updatePreferences = useUpdatePreferences();
+  const [intro, setIntro] = useState(!initialPreferences.onboarding_completed);
   const [step, setStep] = useState(0);
   const [completed, setCompleted] = useState(
     initialPreferences.onboarding_completed,
@@ -306,6 +312,8 @@ function OnboardingFlow({
 
     if (step > 0) {
       setStep((current) => current - 1);
+    } else {
+      setIntro(true);
     }
   }
 
@@ -313,51 +321,97 @@ function OnboardingFlow({
     void navigate({ to: "/Home" });
   }
 
-  async function handleSkipTour() {
-    try {
-      await updatePreferences.mutateAsync({
-        tour_completed_version: TOUR_VERSION,
-        last_seen_update: UPDATE_VERSION,
-      });
-      void navigate({ to: "/Home" });
-    } catch {
-      // Keep the learner here so the saved choice can be retried.
-    }
-  }
-
-  return <OnboardingView step={step} data={data} completed={completed} tourPending={initialPreferences.tour_completed_version < TOUR_VERSION} canContinue={Boolean(canContinue)} isSaving={updatePreferences.isPending} error={updatePreferences.error?.message} notificationControl={completed ? <PushDeviceControls variant="onboarding" /> : undefined} onBack={handleBack} onContinue={() => void handleContinue()} onStart={handleStartLearning} onSkipTour={() => void handleSkipTour()} onLanguage={(language) => setData((current) => ({ ...current, language }))} onLevel={(level) => setData((current) => ({ ...current, level }))} onMotivation={toggleMotivation} onGoal={(dailyGoal) => setData((current) => ({ ...current, dailyGoal }))} onAppearance={(appearance) => { setData((current) => ({ ...current, appearance })); previewAppearance(appearance); }} />;
+  return <OnboardingView intro={intro} onBegin={() => setIntro(false)} step={step} data={data} completed={completed} tourPending={initialPreferences.tour_completed_version < TOUR_VERSION} canContinue={Boolean(canContinue)} isSaving={updatePreferences.isPending} error={updatePreferences.error?.message} notificationControl={completed ? <PushDeviceControls variant="onboarding" /> : undefined} onBack={handleBack} onContinue={() => void handleContinue()} onStart={handleStartLearning} onLanguage={(language) => setData((current) => ({ ...current, language }))} onLevel={(level) => setData((current) => ({ ...current, level }))} onMotivation={toggleMotivation} onGoal={(dailyGoal) => setData((current) => ({ ...current, dailyGoal }))} onAppearance={(appearance) => { setData((current) => ({ ...current, appearance })); previewAppearance(appearance); }} />;
 }
 
 type OnboardingViewProps = {
- step: number; data: OnboardingData; completed: boolean; tourPending?: boolean; canContinue: boolean; isSaving?: boolean; error?: string; notificationControl?: ReactNode;
- onBack: () => void; onContinue: () => void; onStart: () => void; onSkipTour?: () => void;
+ intro?: boolean; onBegin?: () => void; step: number; data: OnboardingData; completed: boolean; tourPending?: boolean; canContinue: boolean; isSaving?: boolean; error?: string; notificationControl?: ReactNode;
+ onBack: () => void; onContinue: () => void; onStart: () => void;
  onLanguage: (value: Language) => void; onLevel: (value: Level) => void;
  onMotivation: (value: Motivation) => void; onGoal: (value: DailyGoal) => void; onAppearance: (value: Appearance) => void;
 };
 
-export function OnboardingView({ step, data, completed, tourPending, canContinue, isSaving, error, notificationControl, onBack, onContinue, onStart, onSkipTour, onLanguage, onLevel, onMotivation, onGoal, onAppearance }: OnboardingViewProps) {
- const installed = useFidelInstalled();
- const language = languages.find((item) => item.id === data.language);
- const level = levels.find((item) => item.id === data.level);
- return <main className="fidel-onboarding">
-  <header className="onboarding-header"><Link to="/" className="app-wordmark" aria-label="Fidel home"><FidelTeacherMark className="app-header-mark" /><span>Fidel<span className="app-wordmark-dot">.</span></span></Link>{!completed && <span>{step + 1} of {steps.length}</span>}</header>
-  <div className="onboarding-content">
-   {completed ? <section className="onboarding-complete"><FidelTeacherMark className="onboarding-teacher" /><h1>A new conversation starts here.</h1><p>{tourPending ? "Your plan is ready. Take a short tour, or explore on your own." : "Your learning plan is ready."}</p><dl><div><dt>Learning</dt><dd>{language?.name ?? "Your language"}</dd></div><div><dt>Your level</dt><dd>{level?.title ?? "Your level"}</dd></div><div><dt>Daily goal</dt><dd>{data.dailyGoal} words</dd></div></dl><div className="onboarding-finish-actions"><button type="button" className="app-primary" disabled={isSaving} onClick={onStart}>{tourPending ? "Take the tour" : "Start learning"}<ArrowRight size={18} aria-hidden="true" /></button>{tourPending && onSkipTour && <button type="button" className="app-secondary" disabled={isSaving} onClick={onSkipTour}>Skip tour</button>}<button type="button" className="app-secondary" disabled={isSaving} onClick={onBack}>Change my answers</button></div>{error && <p className="app-error" role="alert">{error}</p>}{notificationControl}{!installed && <div className="onboarding-install"><p>Want Fidel on your home screen?</p><InstallFidel /></div>}</section> : <>
-    <progress className="onboarding-progress" value={step + 1} max={steps.length} aria-label="Setup progress" />
-    <header className="onboarding-title"><h1>{steps[step].title}</h1><p>{steps[step].description}</p></header>
-    <fieldset className="onboarding-options" disabled={isSaving}><legend className="sr-only">{steps[step].title}</legend>
-    {step === 0 && languages.map((item) => <Choice key={item.id} selected={data.language === item.id} title={item.name + (item.id !== "om" ? " · " + item.nativeName : "")} description={item.description} image={characterFor(item.id, "student").image} onClick={() => onLanguage(item.id)} />)}
-    {step === 1 && levels.map((item) => <Choice key={item.id} selected={data.level === item.id} title={item.title} description={item.description} onClick={() => onLevel(item.id)} />)}
-    {step === 2 && <><p className="onboarding-select-note">Choose all that feel right.</p>{motivations.map((item) => <Choice key={item.id} selected={data.motivations.includes(item.id)} title={item.title} description={item.description} onClick={() => onMotivation(item.id)} />)}</>}
-    {step === 3 && dailyGoals.map((item) => <Choice key={item.id} selected={data.dailyGoal === item.id} title={item.title} description={item.description} onClick={() => onGoal(item.id)} />)}
-    {step === 4 && <AppearancePicker value={data.appearance} onChange={onAppearance} />}
-    </fieldset>
-    {error && <p className="app-error" role="alert">{error}</p>}
-    <div className="onboarding-actions"><button type="button" className="app-secondary" onClick={onBack} disabled={step === 0 || isSaving}><ArrowLeft size={17} aria-hidden="true" />Back</button><button type="button" className="app-primary" onClick={onContinue} disabled={!canContinue || isSaving}>{isSaving && <LoaderCircle size={17} className="app-spinner" aria-hidden="true" />}{step === steps.length - 1 ? "Finish setup" : "Continue"}<ArrowRight size={17} aria-hidden="true" /></button></div>
-    <p className="onboarding-note">You can change these choices in Settings.</p>
-   </>}
-  </div>
- </main>;
+const storyLines = [
+  "Start with a hello.",
+  "Start from where you are.",
+  "Keep your reason close.",
+  "A few words, every day.",
+  "Make this place yours.",
+];
+
+function OnboardingStory({ step, data, completed }: { step: number; data: OnboardingData; completed: boolean }) {
+  const [motionPaused, setMotionPaused] = useState(false);
+  const language = languages.find((item) => item.id === data.language);
+  const note = completed ? "Ready for our first word?" : [
+    language ? `${language.name}. Good choice!` : "Which language shall we learn?",
+    data.level ? "I've got a place for you." : "Tell me what you already know.",
+    data.motivations.length ? "I'll remember that." : "What brings you here?",
+    `${data.dailyGoal} words a day? We can do that.`,
+    "Which one feels like you?",
+  ][step];
+  return <aside className={`onboarding-story onboarding-story--${completed ? "complete" : step} ${motionPaused ? "onboarding-story--paused" : ""}`} aria-label="A note from Noel">
+    <NoelWeave />
+    <div className="onboarding-story-top"><span>Noel, your guide</span><span className="onboarding-story-controls"><span>{completed ? "05" : String(step + 1).padStart(2, "0")} / 05</span><button type="button" onClick={() => setMotionPaused((paused) => !paused)} aria-label={motionPaused ? "Play Noel's animation" : "Pause Noel's animation"}>{motionPaused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}</button></span></div>
+    <div className="onboarding-story-art" key={completed ? "complete" : step}>
+      <span className="onboarding-story-glyph" aria-hidden="true">{language?.nativeName ?? "ፊደል"}</span>
+      <p className="onboarding-speech" aria-live="polite">{note}</p>
+      <div className="onboarding-guide"><NoelGuide step={completed ? 5 : step} /></div>
+      <div className="onboarding-scene-detail" aria-hidden="true">{completed ? "እንጀምር" : step === 0 ? "ሰላም  ·  Akkam  ·  ሰላም" : step === 3 ? `${data.dailyGoal} words / day` : language?.nativeName ?? "ፊደል"}</div>
+    </div>
+    <div className="onboarding-story-bottom"><h2>{completed ? "Let's begin." : storyLines[step]}</h2><p>Your first conversation is closer than you think.</p></div>
+  </aside>;
+}
+
+export function OnboardingView({ intro, onBegin, step, data, completed, tourPending, canContinue, isSaving, error, notificationControl, onBack, onContinue, onStart, onLanguage, onLevel, onMotivation, onGoal, onAppearance }: OnboardingViewProps) {
+  const installed = useFidelInstalled();
+  const [welcomePaused, setWelcomePaused] = useState(false);
+  const language = languages.find((item) => item.id === data.language);
+  const level = levels.find((item) => item.id === data.level);
+  if (intro) return <main className={`onboarding-welcome ${welcomePaused ? "onboarding-welcome--paused" : ""}`}>
+    <NoelWeave />
+    <Link to="/" className="app-wordmark" aria-label="Fidel home"><FidelTeacherMark className="app-header-mark" /><span>Fidel<span className="app-wordmark-dot">.</span></span></Link>
+    <button type="button" className="onboarding-welcome-motion" onClick={() => setWelcomePaused((paused) => !paused)} aria-label={welcomePaused ? "Play Noel's scene" : "Pause Noel's scene"}>{welcomePaused ? <Play size={17} aria-hidden="true" /> : <Pause size={17} aria-hidden="true" />}</button>
+    <div className="onboarding-welcome-center">
+      <div className="onboarding-welcome-guide"><NoelGuide step={0} /></div>
+      <h1>Hi, I'm Noel.</h1>
+      <p>Tell me a little about yourself. We'll find the right words to start with.</p>
+      <button type="button" className="app-primary" onClick={onBegin}>Let's begin <ArrowRight size={18} aria-hidden="true" /></button>
+    </div>
+    <span className="onboarding-welcome-foot">A word at a time, together.</span>
+  </main>;
+  return <main className="fidel-onboarding">
+    <OnboardingStory step={step} data={data} completed={completed} />
+    <div className="onboarding-work">
+      <header className="onboarding-header">
+        <Link to="/" className="app-wordmark" aria-label="Fidel home"><FidelTeacherMark className="app-header-mark" /><span>Fidel<span className="app-wordmark-dot">.</span></span></Link>
+        {!completed && <span>Step {step + 1} of {steps.length}</span>}
+      </header>
+      <div className="onboarding-content">
+        {completed ? <section className="onboarding-complete">
+          <h1>A new conversation starts here.</h1>
+          <p>{tourPending ? "Your plan is ready. Take a short tour to find your way around Fidel." : "Your learning plan is ready."}</p>
+          <dl><div><dt>Learning</dt><dd>{language?.name ?? "Your language"}</dd></div><div><dt>Your level</dt><dd>{level?.title ?? "Your level"}</dd></div><div><dt>Daily goal</dt><dd>{data.dailyGoal} words</dd></div></dl>
+          <div className="onboarding-finish-actions"><button type="button" className="app-primary" disabled={isSaving} onClick={onStart}>{tourPending ? "Take the tour" : "Start learning"}<ArrowRight size={18} aria-hidden="true" /></button><button type="button" className="app-secondary" disabled={isSaving} onClick={onBack}>Change my answers</button></div>
+          {error && <p className="app-error" role="alert">{error}</p>}
+          {notificationControl}
+          {!installed && <div className="onboarding-install"><p>Want Fidel on your home screen?</p><InstallFidel /></div>}
+        </section> : <>
+          <progress className="onboarding-progress" value={step + 1} max={steps.length} aria-label="Setup progress" />
+          <header className="onboarding-title"><h1>{steps[step].title}</h1><p>{steps[step].description}</p></header>
+          <fieldset className={`onboarding-options onboarding-options--${step}`} disabled={isSaving}><legend className="sr-only">{steps[step].title}</legend>
+            {step === 0 && languages.map((item) => <Choice key={item.id} selected={data.language === item.id} title={item.name + (item.id !== "om" ? " · " + item.nativeName : "")} description={item.description} image={characterFor(item.id, "student").image} onClick={() => onLanguage(item.id)} />)}
+            {step === 1 && levels.map((item) => <Choice key={item.id} selected={data.level === item.id} title={item.title} description={item.description} onClick={() => onLevel(item.id)} />)}
+            {step === 2 && <><p className="onboarding-select-note">Choose all that feel right.</p>{motivations.map((item) => <Choice key={item.id} selected={data.motivations.includes(item.id)} title={item.title} description={item.description} onClick={() => onMotivation(item.id)} />)}</>}
+            {step === 3 && dailyGoals.map((item) => <Choice key={item.id} selected={data.dailyGoal === item.id} title={item.title} description={item.description} onClick={() => onGoal(item.id)} />)}
+            {step === 4 && <AppearancePicker value={data.appearance} onChange={onAppearance} />}
+          </fieldset>
+          {error && <p className="app-error" role="alert">{error}</p>}
+          <div className="onboarding-actions"><button type="button" className="app-secondary" onClick={onBack} disabled={isSaving}><ArrowLeft size={17} aria-hidden="true" />Back</button><button type="button" className="app-primary" onClick={onContinue} disabled={!canContinue || isSaving}>{isSaving && <LoaderCircle size={17} className="app-spinner" aria-hidden="true" />}{step === steps.length - 1 ? "Finish setup" : "Continue"}<ArrowRight size={17} aria-hidden="true" /></button></div>
+          <p className="onboarding-note">You can change these choices in Settings.</p>
+        </>}
+      </div>
+    </div>
+  </main>;
 }
 
 function Choice({ selected, title, description, image, onClick }: { selected: boolean; title: string; description: string; image?: string; onClick: () => void }) {

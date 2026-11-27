@@ -1,0 +1,117 @@
+@font-face { font-family: "Fidel Onboarding Serif"; src: url("/landing/merriweather-1.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Fidel Onboarding Ethiopic"; src: url("/landing/noto-serif-ethiopic.ttf") format("truetype"); font-display: swap; }
+.onboarding-welcome { --ui-ink:#173b30; position:relative; display:grid; grid-template-rows:auto 1fr auto; min-height:100svh; padding:28px clamp(20px,5vw,70px) 32px; background:#a8d1a0; color:#173b30; overflow:hidden; }
+.onboarding-welcome-motion { position:absolute; top:28px; right:clamp(20px,5vw,70px); z-index:2; display:grid; place-items:center; width:38px; height:38px; border:1px solid currentColor; border-radius:50%; background:transparent; color:inherit; cursor:pointer; }
+.onboarding-welcome-motion:hover { background:rgb(255 255 255 / .22); }
+.noel-weave { position:absolute; inset:0; width:100%; height:100%; overflow:hidden; pointer-events:none; color:#173b30; mask-image:radial-gradient(ellipse 75% 78% at 50% 48%, transparent 12%, #000 100%); }
+.noel-weave-field { opacity:.075; animation:noel-weave-drift 18s linear infinite alternate; }
+.noel-weave-trail { opacity:.23; animation:noel-weave-travel 13s ease-in-out infinite alternate; }
+.onboarding-welcome .noel-weave { opacity:.85; }
+.onboarding-story .noel-weave { opacity:.82; }
+.onboarding-story--paused .noel-weave *, .onboarding-welcome--paused :is(.noel-weave *, .guide-figure, .guide-eye, .guide-arm, .guide-hand, .guide-page, .onboarding-welcome-guide) { animation-play-state:paused !important; }
+.onboarding-welcome .app-wordmark { justify-self:start; position:relative; z-index:1; color:#173b30; }
+.onboarding-welcome-center { position:relative; display:flex; flex-direction:column; align-items:center; align-self:center; text-align:center; }
+.onboarding-welcome-guide { width:clamp(180px,20vw,255px); margin:0 auto 6px; animation:guide-arrive 800ms cubic-bezier(.22,1,.36,1) both; }
+.onboarding-welcome-guide .guide-figure { animation:guide-idle 3.2s ease-in-out infinite; }
+.onboarding-welcome h1 { margin:0; font-family:"Fidel Onboarding Serif",Georgia,serif; font-size:clamp(36px,4.7vw,70px); line-height:1.1; letter-spacing:-.05em; }
+.onboarding-welcome p { max-width:390px; margin:16px 0 26px; font-size:16px; line-height:1.5; }
+.onboarding-welcome .app-primary { min-width:195px; min-height:52px; border-radius:9px; background:#173b30; color:#fff8e7; }
+.onboarding-welcome .app-primary:hover { background:#245642; }
+.onboarding-welcome-foot { text-align:center; font-size:13px; font-weight:600; }
+.onboarding-welcome :is(a,button):focus-visible { outline:3px solid #173b30; outline-offset:4px; }
+.fidel-onboarding { --ui-ground:#f5f4ec; --ui-paper:#fffefa; --ui-surface:#eef2e9; --ui-ink:#183b30; --ui-muted:#526b5d; --ui-line:#cfdbce; --ui-gold:#e7a038; --onboarding-selected:#e6efe3; --onboarding-action:#183b30; --onboarding-action-ink:#fff9e9; display:grid; grid-template-columns:minmax(360px,44%) minmax(0,1fr); min-height:100svh; background:var(--ui-ground); color:var(--ui-ink); }
+.onboarding-story { --stage:#a8d1a0; --stage-ink:#173b30; position:sticky; top:0; display:grid; grid-template-rows:auto minmax(0,1fr) auto; height:calc(100svh - 28px); min-height:580px; margin:14px; padding:clamp(25px,3vw,46px); overflow:hidden; border-radius:22px; background:var(--stage); color:var(--stage-ink); transition:background-color 350ms ease; }
+.onboarding-story--1 { --stage:#9acfc0; } .onboarding-story--2 { --stage:#f3bb97; } .onboarding-story--3 { --stage:#efc36b; } .onboarding-story--4 { --stage:#a8c7af; } .onboarding-story--complete { --stage:#eec46e; }
+.dark .fidel-onboarding { --ui-ground:#09120e; --ui-paper:#142019; --ui-surface:#1a2b20; --ui-ink:#f7f4e9; --ui-muted:#adbaaf; --ui-line:#2a3c30; --onboarding-selected:#324d37; --onboarding-action:#ecaa3d; --onboarding-action-ink:#153025; }
+.onboarding-story-top { position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:13px; font-weight:600; }
+.onboarding-story-controls { display:flex; align-items:center; gap:12px; font-variant-numeric:tabular-nums; }
+.onboarding-story-controls button { display:grid; place-items:center; width:34px; height:34px; border:1px solid currentColor; border-radius:50%; background:transparent; color:inherit; cursor:pointer; }
+.onboarding-story-controls button:hover { background:rgb(255 255 255 / .22); }
+.onboarding-story-art { position:relative; display:grid; align-content:center; justify-items:center; min-height:0; isolation:isolate; }
+.onboarding-story-glyph { position:absolute; top:5%; left:50%; transform:translateX(-50%); font-family:"Fidel Onboarding Ethiopic",serif; font-size:clamp(82px,10vw,160px); font-weight:700; white-space:nowrap; letter-spacing:-.05em; opacity:.1; pointer-events:none; }
+.onboarding-speech { position:relative; z-index:2; max-width:245px; margin:0 0 12px; padding:13px 17px; border:1px solid rgb(23 59 48 / .08); border-radius:15px 15px 15px 4px; background:#fff9e9; color:#1c3a30; box-shadow:0 5px 0 rgb(23 59 48 / .07); font-size:15px; line-height:1.35; text-align:center; animation:guide-speech-in 380ms cubic-bezier(.2,.8,.2,1) both; }
+.onboarding-speech::after { content:""; position:absolute; bottom:-10px; left:48%; width:14px; height:14px; background:#fff9e9; clip-path:polygon(0 0,100% 0,50% 100%); }
+.onboarding-guide { position:relative; z-index:1; width:clamp(182px,21vw,275px); animation:guide-arrive 700ms cubic-bezier(.22,1,.36,1) both; }
+.noel-guide { display:block; width:100%; height:auto; overflow:visible; color:#173b30; }
+.guide-figure { transform-origin:140px 230px; animation:guide-idle 3.2s ease-in-out infinite; }
+.guide-face { transform-origin:140px 115px; } .guide-eye { transform-origin:center; animation:guide-blink 3.2s ease-in-out infinite; }
+.guide-arm--right,.guide-hand--right { transform-origin:207px 156px; animation:guide-wave 3.2s ease-in-out infinite; }
+.guide-page { transform-origin:140px 180px; animation:guide-page-turn 3.2s ease-in-out infinite; }
+.noel-guide--1 .guide-face { transform:translateY(4px); } .noel-guide--2 .guide-arm--left,.noel-guide--2 .guide-hand--left { transform:translateY(-10px); }
+.noel-guide--3 .guide-figure { animation-duration:2.8s; } .noel-guide--4 .guide-face { transform:rotate(-4deg); }
+.onboarding-scene-detail { margin-top:-1px; min-height:28px; font-family:"Fidel Onboarding Ethiopic","Fidel Onboarding Serif",serif; font-size:16px; font-weight:700; letter-spacing:.02em; opacity:.8; animation:guide-speech-in 450ms 120ms both; }
+.onboarding-story-bottom { position:relative; z-index:2; } .onboarding-story-bottom h2 { max-width:500px; margin:0; font-family:"Fidel Onboarding Serif",Georgia,serif; font-size:clamp(34px,3.5vw,53px); line-height:1.15; letter-spacing:-.045em; }
+.onboarding-story-bottom p { margin:11px 0 0; font-size:14px; opacity:.76; }
+.onboarding-story--paused :is(.guide-figure,.guide-eye,.guide-arm,.guide-hand,.guide-page,.onboarding-guide,.onboarding-speech,.onboarding-scene-detail) { animation-play-state:paused !important; }
+.onboarding-work { display:flex; flex-direction:column; min-width:0; min-height:100svh; }
+.fidel-onboarding .onboarding-header { width:100%; max-width:none; margin:0; padding:27px clamp(28px,5vw,76px); }
+.fidel-onboarding .onboarding-header > span { color:var(--ui-muted); font-size:13px; } .fidel-onboarding .app-wordmark { color:var(--ui-ink); }
+.fidel-onboarding .onboarding-content { width:min(100%,660px); max-width:none; margin:auto; padding:36px clamp(28px,5vw,76px) 58px; }
+.fidel-onboarding .onboarding-progress,.fidel-onboarding .onboarding-progress::-webkit-progress-bar { height:4px; border-radius:0; background:var(--ui-line); }
+.fidel-onboarding .onboarding-progress::-webkit-progress-value { background:var(--ui-gold); } .fidel-onboarding .onboarding-progress::-moz-progress-bar { background:var(--ui-gold); }
+.fidel-onboarding .onboarding-title { margin:36px 0 27px; }
+.fidel-onboarding .onboarding-title h1,.fidel-onboarding .onboarding-complete h1 { max-width:550px; font-family:"Fidel Onboarding Serif",Georgia,serif; font-size:clamp(30px,3vw,42px); font-weight:700; line-height:1.18; letter-spacing:-.04em; }
+.fidel-onboarding .onboarding-title p,.fidel-onboarding .onboarding-complete > p { margin-top:13px; color:var(--ui-muted); font-size:15px; line-height:1.5; }
+.fidel-onboarding .onboarding-options { gap:9px; }
+.fidel-onboarding .app-choice { min-height:75px; padding:12px 16px; border:1px solid var(--ui-line); border-radius:10px; background:var(--ui-paper); color:var(--ui-ink); transition:background-color 150ms ease,border-color 150ms ease,transform 150ms ease; }
+.fidel-onboarding .app-choice:hover { border-color:#8fa696; transform:translateY(-2px); }
+.fidel-onboarding .app-choice[aria-pressed="true"] { outline:none; border-color:#4b7858; background:var(--onboarding-selected); }
+.dark .fidel-onboarding .app-choice[aria-pressed="true"] { border-color:var(--ui-gold); }
+.fidel-onboarding .app-choice strong { font-size:14px; font-weight:600; }
+.fidel-onboarding .app-choice > span:first-of-type > span { color:var(--ui-muted); font-size:12px; line-height:1.35; }
+.fidel-onboarding .app-choice-character { width:43px; height:52px; }
+.fidel-onboarding .choice-check { width:23px; height:23px; border-color:#65796c; }
+.fidel-onboarding .app-choice[aria-pressed="true"] .choice-check { border-color:var(--ui-gold); background:var(--ui-gold); color:#152d22; }
+.fidel-onboarding .onboarding-options--2,.fidel-onboarding .onboarding-options--3 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.fidel-onboarding .onboarding-options--2 .onboarding-select-note { grid-column:1/-1; }
+.fidel-onboarding .onboarding-options--2 .app-choice,.fidel-onboarding .onboarding-options--3 .app-choice { min-height:73px; }
+.fidel-onboarding .onboarding-options--2 .app-choice > span:first-of-type > span,.fidel-onboarding .onboarding-options--3 .app-choice > span:first-of-type > span { display:none; }
+.fidel-onboarding .onboarding-options--3 .app-choice strong { font-family:"Fidel Onboarding Serif",Georgia,serif; font-size:20px; }
+.fidel-onboarding .onboarding-actions { margin-top:25px; } .fidel-onboarding .onboarding-actions button { min-height:49px; }
+.fidel-onboarding .app-primary { border-radius:9px; padding-inline:22px; background:var(--onboarding-action); color:var(--onboarding-action-ink); }
+.fidel-onboarding .app-primary:hover:enabled { background:#2d634a; }
+.dark .fidel-onboarding .app-primary:hover:enabled { background:#f3b44e; }
+.fidel-onboarding .app-primary:disabled { background:var(--ui-line); color:var(--ui-muted); }
+.fidel-onboarding .app-secondary { border-radius:9px; }
+.fidel-onboarding .onboarding-note { margin-top:18px; color:var(--ui-muted); font-size:12px; }
+.fidel-onboarding .app-appearance label > span { min-height:58px; border-radius:9px; }
+.fidel-onboarding .app-appearance input:checked + span { outline-color:var(--ui-gold); }
+.fidel-onboarding .onboarding-complete dl { background:var(--ui-paper); border-radius:10px; }
+.fidel-onboarding .onboarding-finish-actions { display:flex; flex-wrap:wrap; gap:9px; }
+.fidel-onboarding .onboarding-finish-actions button { margin:0; min-height:46px; }
+.fidel-onboarding :is(a,button,input):focus-visible { outline:3px solid var(--ui-gold); outline-offset:3px; }
+@keyframes guide-arrive { from { opacity:.6; transform:translateY(18px) scale(.92); } to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes guide-speech-in { from { opacity:0; transform:translateY(9px); } to { opacity:1; transform:translateY(0); } }
+@keyframes guide-idle { 0%,100% { transform:translateY(0); } 45% { transform:translateY(-6px); } }
+@keyframes guide-blink { 0%,42%,47%,100% { transform:scaleY(1); } 44% { transform:scaleY(.12); } }
+@keyframes guide-wave { 0%,55%,100% { transform:rotate(0); } 68% { transform:rotate(-13deg); } 78% { transform:rotate(5deg); } }
+@keyframes guide-page-turn { 0%,60%,100% { transform:scaleX(1); } 75% { transform:scaleX(.65); } }
+@keyframes noel-weave-drift { from { transform:translate(-24px,-12px); } to { transform:translate(24px,12px); } }
+@keyframes noel-weave-travel { from { transform:translateX(-90px); } to { transform:translateX(620px); } }
+@media (max-width:950px) {
+  .fidel-onboarding { grid-template-columns:1fr; }
+  .onboarding-story { position:relative; grid-template-rows:auto 1fr; height:270px; min-height:0; margin:12px 12px 0; padding:20px 26px; }
+  .onboarding-story-art { position:absolute; inset:0; min-height:0; display:block; }
+  .onboarding-story-glyph,.onboarding-scene-detail { display:none; }
+  .onboarding-guide { position:absolute; right:9%; bottom:-25px; width:185px; }
+  .onboarding-speech { position:absolute; top:70px; left:26px; max-width:205px; margin:0; font-size:13px; }
+  .onboarding-speech::after { left:auto; right:-8px; top:55%; bottom:auto; transform:rotate(-90deg); }
+  .onboarding-story-bottom { align-self:end; max-width:48%; } .onboarding-story-bottom h2 { font-size:24px; } .onboarding-story-bottom p { display:none; }
+  .onboarding-work { min-height:0; } .fidel-onboarding .onboarding-header { padding:19px 28px; }
+  .fidel-onboarding .onboarding-content { width:min(100%,650px); margin:0 auto; padding-top:28px; }
+}
+@media (max-width:520px) {
+  .onboarding-story { height:235px; margin:8px 8px 0; padding:15px 16px; border-radius:16px; }
+  .onboarding-story-top { font-size:12px; } .onboarding-story-controls { gap:7px; } .onboarding-story-controls button { width:30px; height:30px; }
+  .onboarding-guide { right:4px; bottom:-20px; width:148px; }
+  .onboarding-speech { top:72px; left:15px; max-width:180px; padding:10px 12px; font-size:12px; }
+  .onboarding-story-bottom { max-width:55%; } .onboarding-story-bottom h2 { font-size:19px; }
+  .fidel-onboarding .onboarding-header { padding:16px 20px; } .fidel-onboarding .onboarding-content { padding:26px 20px 45px; }
+  .fidel-onboarding .onboarding-title { margin:29px 0 24px; } .fidel-onboarding .onboarding-title h1,.fidel-onboarding .onboarding-complete h1 { font-size:29px; }
+  .fidel-onboarding .onboarding-options--2,.fidel-onboarding .onboarding-options--3 { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .fidel-onboarding .onboarding-options--2 .app-choice,.fidel-onboarding .onboarding-options--3 .app-choice { min-height:78px; padding:11px; }
+  .fidel-onboarding .onboarding-options--2 .app-choice strong { font-size:12px; } .fidel-onboarding .onboarding-options--3 .app-choice strong { font-size:18px; }
+  .fidel-onboarding .onboarding-options--2 .choice-check,.fidel-onboarding .onboarding-options--3 .choice-check { width:19px; height:19px; }
+  .fidel-onboarding .onboarding-actions { gap:8px; } .fidel-onboarding .onboarding-actions button { padding-inline:14px; }
+}
+@media (prefers-reduced-motion:reduce) { .fidel-onboarding *, .fidel-onboarding *::before, .fidel-onboarding *::after,.onboarding-welcome * { animation:none !important; transition:none !important; } }
