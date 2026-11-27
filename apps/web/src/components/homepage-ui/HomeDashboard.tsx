@@ -45,7 +45,6 @@ export function HomeDashboard({ data, languageCode, topics, dailyWord, memoryChe
           <div className="home-track" role="progressbar" aria-label="Daily word goal" aria-valuemin={0} aria-valuemax={data.daily_word_goal} aria-valuenow={Math.min(data.words_learned_today, data.daily_word_goal)}>
             <span style={{ width: `${goalPercent}%` }} />
           </div>
-          {current && <NoelAside step={remaining === 0 ? 5 : 0} className="home-goal-noel">{remaining === 0 ? "You reached today’s word goal." : "Pick up where you left off when you’re ready."}</NoelAside>}
         </div>
         {[
           ["Words learned", data.learned_words, "In your vocabulary"],
@@ -64,7 +63,7 @@ export function HomeDashboard({ data, languageCode, topics, dailyWord, memoryChe
           <div className="home-lesson-body">
             <h3>{current ? topicLabel(current.title) : "Start with a few words"}</h3>
             <p>{current ? current.stage === "practice" ? "Put the words you’ve learned into practice." : "Pick up where you left off." : "Choose a topic on your path and begin learning."}</p>
-            {!current && <NoelAside step={0} className="home-first-lesson-noel">I’ll meet you at your first lesson. Pick a topic to begin.</NoelAside>}
+            <NoelAside step={current?.stage === "practice" ? 2 : 0} className="home-lesson-noel">{current?.stage === "practice" ? "Answer each word to finish this practice." : current ? "Listen to each word, then see what you remember." : "Choose a topic. Your first words count toward today’s goal."}</NoelAside>
           </div>
           {current && (
             <div className="home-lesson-progress">
