@@ -37,6 +37,16 @@ export function getSafeAuthRedirect(
   return value;
 }
 
+export function getPostAuthTarget(redirect: unknown): string {
+  const fallback = DEFAULT_SIGN_IN_REDIRECT;
+  const candidate = getSafeAuthRedirect(redirect, fallback);
+  const path = candidate.split(/[?#]/, 1)[0].replace(/\/$/, "");
+  if (["/sign-in", "/sign-up", "/onboarding"].some((entry) => path === entry || path.startsWith(`${entry}/`))) {
+    return fallback;
+  }
+  return candidate;
+}
+
 export function validateAuthRedirectSearch(
   search: Record<string, unknown>,
 ): AuthRedirectSearch {

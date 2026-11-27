@@ -5,6 +5,15 @@ export function parseAppearance(value: unknown): Appearance {
   return value === "dark" || value === "system" ? value : "light";
 }
 
+export function readDeviceAppearance(): Appearance {
+  try { return parseAppearance(localStorage.getItem(THEME_STORAGE_KEY)); }
+  catch { return "light"; }
+}
+
+export function onboardingAppearance(saved: Appearance, completed: boolean, device: Appearance): Appearance {
+  return completed ? saved : device;
+}
+
 export function resolveTheme(appearance: Appearance, systemDark: boolean) {
   return appearance === "system" ? (systemDark ? "dark" : "light") : appearance;
 }

@@ -3,7 +3,7 @@ import { SignIn, SignUp, useAuth } from "@clerk/tanstack-react-start";
 import { LoaderCircle } from "lucide-react";
 
 import { AuthLayout } from "@/components/auth/AuthLayout";
-import { getSafeAuthRedirect } from "@/lib/auth-redirect";
+import { getPostAuthTarget } from "@/lib/auth-redirect";
 
 const appearance = {
   variables: {
@@ -43,14 +43,7 @@ export function ClerkAuthPage({ mode, redirect }: ClerkAuthPageProps) {
   const isSignIn = mode === "sign-in";
   // Every auth method enters the same saved-preferences gate in the app shell.
   const fallback = "/Home";
-  const candidate = getSafeAuthRedirect(redirect, fallback);
-  const pointsBackToAuth = ["/sign-in", "/sign-up"].some(
-    (prefix) =>
-      candidate === prefix ||
-      candidate.startsWith(`${prefix}/`) ||
-      candidate.startsWith(`${prefix}?`),
-  );
-  const target = pointsBackToAuth ? fallback : candidate;
+  const target = getPostAuthTarget(redirect);
 
   useEffect(() => {
     if (isLoaded && isSignedIn) {

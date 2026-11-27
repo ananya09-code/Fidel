@@ -14,3 +14,9 @@ test("saved setup lets returning learners in and API failure stays recoverable",
   assert.equal(appEntryState(true, true, { isPending: false, isError: false, onboarding_completed: true }), "ready");
   assert.equal(appEntryState(true, true, { isPending: false, isError: true }), "error");
 });
+
+test("a signed-in return to the landing URL uses the same saved-preferences gate", () => {
+  assert.equal(appEntryState(true, true, { isPending: true, isError: false }), "checking");
+  assert.equal(appEntryState(true, true, { isPending: false, isError: false, onboarding_completed: false }), "onboarding");
+  assert.equal(appEntryState(true, true, { isPending: false, isError: false, onboarding_completed: true }), "ready");
+});

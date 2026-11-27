@@ -1,10 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@clerk/tanstack-react-start";
 import { usePreferences } from "@/hooks/use-preferences";
-import { parseAppearance, watchTheme, THEME_STORAGE_KEY, type Appearance } from "@/lib/theme";
+import { readDeviceAppearance, watchTheme, THEME_STORAGE_KEY, type Appearance } from "@/lib/theme";
 
 const ThemeContext = createContext<{
-  setSavedAppearance: (value: Appearance) => void;
+  setSavedAppearance: (value: Appearance | null) => void;
   previewAppearance: (value: Appearance | null) => void;
 } | null>(null);
 
@@ -12,18 +12,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Keep the server and first client render identical; the head script handles paint.
   const [saved, setSaved] = useState<Appearance | null>(null);
   const [preview, setPreview] = useState<Appearance | null>(null);
-  const setSavedAppearance = useCallback((value: Appearance) => setSaved(value), []);
+  const setSavedAppearance = useCallback((value: Appearance | null) => {
+    if (value !== null) {
+      try { localStorage.setItem(THEME_STORAGE_KEY, value); } catch { /* Device storage is optional. */ }
+    }
+    setSaved(value);
+  }, []);
   const previewAppearance = useCallback((value: Appearance | null) => setPreview(value), []);
 
   useEffect(() => {
-    let cached: Appearance = "light";
-    try { cached = parseAppearance(localStorage.getItem(THEME_STORAGE_KEY)); } catch { /* Optional device cache. */ }
-    const appearance = preview ?? saved ?? cached;
+    const appearance = preview ?? saved ?? readDeviceAppearance();
     const stopWatching = watchTheme(appearance);
-    // Only cache saved preferences; an unsaved preview disappears on navigation.
-    if (saved !== null) {
-      try { localStorage.setItem(THEME_STORAGE_KEY, saved); } catch { /* The account remains the source of truth. */ }
-    }
     return stopWatching;
   }, [saved, preview]);
 
@@ -42,17 +41,17 @@ export function PreferenceThemeSync() {
 
   useEffect(() => {
     if (!isLoaded) return;
-    // Retain the pre-paint device cache on initial load; clear it on account changes.
+    // Keep the device choice made on the landing page across sign-in.
     if (previousUser.current !== undefined && previousUser.current !== (userId ?? null)) {
       preview?.(null);
-      setSaved?.("light");
+      setSaved?.(null);
     }
     previousUser.current = userId ?? null;
   }, [userId, isLoaded, setSaved, preview]);
 
   useEffect(() => {
-    if (userId && appearance) setSaved?.(appearance);
-  }, [userId, appearance, setSaved]);
+    if (userId && preferences.data?.onboarding_completed && appearance) setSaved?.(appearance);
+  }, [userId, appearance, preferences.data?.onboarding_completed, setSaved]);
   return null;
 }
 
