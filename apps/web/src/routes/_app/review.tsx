@@ -114,11 +114,13 @@ function ReviewPage() {
       }}
       onFinish={async () => {
         const completed = await completeReview(getToken, active.id);
+        if (completed.status !== "completed") throw new Error("The review has not been saved as complete.");
         setSession({ course: languageCode!, value: completed });
         void queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
         await overview.refetch();
         void queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
         void queryClient.invalidateQueries({ queryKey: ["auth", "vocabulary-state", userId] });
+        return { saved: true };
       }}
     />
   );

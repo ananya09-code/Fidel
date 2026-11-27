@@ -2,7 +2,8 @@
 .memory-check-copy { min-width:0; }
 .memory-check .memory-check-copy h2 { font-size:28px;font-weight:700;letter-spacing:-.045em;margin:0 0 10px;line-height:1.15; }
 .memory-check p { color:var(--memory-muted);font-size:14px;line-height:1.6;margin:0;max-width:55ch; }
-.memory-check p:first-of-type { display:flex;align-items:center;gap:8px; }
+.memory-check-copy > p:first-of-type { display:flex;align-items:center;gap:8px; }
+.memory-noel { margin-top:14px; }
 .memory-check .memory-format { display:flex;gap:10px;align-items:center;font-size:12px;margin-top:16px;color:var(--memory-ink); }
 .memory-schedule { margin-top:8px;font-size:12px;color:var(--memory-muted); }
 .memory-schedule summary { cursor:pointer;min-height:36px;display:list-item;align-content:center;list-style-position:inside; }

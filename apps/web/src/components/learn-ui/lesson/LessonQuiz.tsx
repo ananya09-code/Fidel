@@ -3,7 +3,7 @@ import { useMemo, useRef, useState } from "react";
 import { useAuth } from "@clerk/tanstack-react-start";
 import type { FlashcardWord } from "./Flashcard";
 import { ArrowLeft, ArrowRight, Check, LoaderCircle, RotateCcw, X } from "lucide-react";
-import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import { NoelAside } from "@/components/onboarding/NoelAside";
 import { topicLabel } from "@/components/homepage-ui/labels";
 import { MatchingRound } from "./MatchingRound";
 import { choiceOptions, listeningIndices, matchingIndices } from "./exercise-plan";
@@ -43,7 +43,7 @@ type LessonQuizProps = {
     score: number;
     total: number;
     missedWords: FlashcardWord[];
-  }) => Promise<void> | void;
+  }) => Promise<{ saved: boolean; lessonCompleted?: boolean } | void> | { saved: boolean; lessonCompleted?: boolean } | void;
 };
 
 type QuizQuestion = {
@@ -102,6 +102,8 @@ export function LessonQuiz({
     ),
   );
   const [finished, setFinished] = useState(false);
+  const [lessonCompleted, setLessonCompleted] = useState(false);
+  const [resultSaved, setResultSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [reaction, setReaction] = useState<EncouragementEvent | null>(null);
@@ -197,11 +199,13 @@ export function LessonQuiz({
       setIsSaving(true);
       setSaveError(null);
       try {
-        await onFinish?.({
+        const completed = await onFinish?.({
           score: finalScore,
           total: questions.length,
           missedWords: finalMissedWords,
         });
+        setLessonCompleted(Boolean(completed && completed.lessonCompleted));
+        setResultSaved(Boolean(completed && completed.saved));
         setFinished(true);
         playFeedbackSound("complete", soundEnabled, soundVolume);
         playFeedbackHaptic("complete", hapticsEnabled);
@@ -224,19 +228,21 @@ export function LessonQuiz({
     setCurrentIndex(0);
     setAnswers({});
     setFinished(false);
+    setLessonCompleted(false);
+    setResultSaved(false);
     setReaction(null);
   }
 
 
   if (!questions.length) {
-    return <div className="fidel-study"><section className="study-milestone"><h1>Nothing to practise yet</h1><p>Explore some words before starting your practice.</p><button type="button" className="study-primary" onClick={onBack}>Back to learning</button></section></div>;
+    return <div className="fidel-study"><section className="study-milestone"><NoelAside step={1}>Your first practice will be here once you have words to learn.</NoelAside><h1>Nothing to practise yet</h1><p>Explore some words before starting your practice.</p><button type="button" className="study-primary" onClick={onBack}>Back to learning</button></section></div>;
   }
 
   if (finished) {
     return <div className={"fidel-study" + (variant === "quiz" ? " is-quiz" : "")}><section className="study-milestone">
-      <FidelTeacherMark className="study-teacher" />
-      <h1>{variant === "quiz" ? "Quiz complete." : score === questions.length ? "Every word remembered." : "A little more familiar."}</h1>
-      <p>{variant === "quiz" ? score === questions.length ? "A perfect score. You remembered every word." : "Your score is saved. Words you missed will return for another quiz." : score === questions.length ? "You recalled every word in this practice." : "Keep coming back. Familiarity grows with practice."}</p>
+      <NoelAside step={5} className="study-result-noel">{variant === "quiz" ? resultSaved ? "Your quiz is saved. Come back when more words are ready." : "You finished this quiz." : lessonCompleted ? "You finished every word in this lesson." : resultSaved ? "This practice is saved. Keep going when you’re ready." : "Practice finished. Keep going when you’re ready."}</NoelAside>
+      <h1>{variant === "quiz" ? "Quiz complete." : lessonCompleted ? "Lesson complete." : score === questions.length ? "Every word remembered." : "A little more familiar."}</h1>
+      <p>{variant === "quiz" ? score === questions.length ? "A perfect score. You remembered every word." : resultSaved ? "Your score is saved. Words you missed will return for another quiz." : "Words you missed are listed below." : score === questions.length ? "You recalled every word in this practice." : "Keep coming back. Familiarity grows with practice."}</p>
       <dl className="study-results"><div><dt>Correct</dt><dd>{score}/{questions.length}</dd></div><div><dt>Accuracy</dt><dd>{accuracy}%</dd></div><div><dt>To revisit</dt><dd>{missedWords.length}</dd></div></dl>
       {missedWords.length > 0 && <section className="study-missed"><h2>Words to revisit</h2><ul>{missedWords.map((word) => <li key={word.id}><strong>{word.word}</strong><span>{word.meaning}<span lang="am">{word.amharic ?? "Amharic translation unavailable"}</span></span></li>)}</ul></section>}
       <div className="study-milestone-actions">
@@ -283,6 +289,7 @@ export function LessonQuiz({
       <div className="study-feedback-space" aria-live="polite">{answered && <TeacherFeedback event={reaction ?? { id: currentQuestion.word.id, outcome: correct ? "correct" : "incorrect", turn: 0 }} animate={reaction !== null}><p>{currentQuestion.word.meaning} — <strong>{currentQuestion.word.word}</strong></p></TeacherFeedback>}</div>
       <section className="study-question"><p>Think of the word for this meaning before you reveal it.</p><dl className="study-translations"><div><dt>English</dt><dd>{currentQuestion.word.meaning}</dd></div><div><dt>Amharic</dt><dd lang="am">{currentQuestion.word.amharic ?? "Translation unavailable"}</dd></div></dl></section>
       {!revealed && !answered ? <button type="button" className="study-primary" onClick={() => setRevealed(true)}>Reveal word</button> : <section className="study-question"><strong>{currentQuestion.word.word}</strong>{currentQuestion.word.transliteration && <p>{currentQuestion.word.transliteration}</p>}</section>}
+      {revealed && !answered && <NoelAside step={1} className="study-hint-noel">Take your time. Did this word come back to you?</NoelAside>}
       {revealed && !answered && <div className="study-practice-actions"><button type="button" className="study-secondary" disabled={isSaving} onClick={() => void selectAnswer(currentQuestion.word.id, false)}>Need another look</button><button type="button" className="study-primary" disabled={isSaving} onClick={() => void selectAnswer(currentQuestion.word.id, true)}>I remembered</button></div>}
       {answered && <div className="study-practice-actions"><button type="button" className="study-primary" disabled={isSaving} onClick={() => void nextQuestion()}>{currentIndex === questions.length - 1 ? "See my results" : "Continue"}<ArrowRight size={18} aria-hidden="true" /></button></div>}
       {saveError && <p className="study-error" role="alert">{saveError}</p>}

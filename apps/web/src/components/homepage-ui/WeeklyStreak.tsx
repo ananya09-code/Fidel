@@ -3,12 +3,14 @@ import { ArrowRight } from "lucide-react";
 
 import type { DashboardSummary } from "@/lib/api/dashboard";
 import { studyWeek } from "@/lib/weekly-streak";
+import { NoelAside } from "@/components/onboarding/NoelAside";
 
 export function WeeklyStreak({ streakDays, activity }: {
   streakDays: number;
   activity: DashboardSummary["weekly_activity"];
 }) {
   const week = studyWeek(activity);
+  const milestone = [3, 7, 14, 30, 100].includes(streakDays) && week.some((day) => day.isToday && day.state === "studied");
 
   return <div className="home-streak">
     <div className="home-streak-heading">
@@ -22,5 +24,6 @@ export function WeeklyStreak({ streakDays, activity }: {
       </li>)}
     </ol>}
     <p className="home-streak-caption">A day counts when you practise or learn.</p>
+    {milestone && <NoelAside step={5} className="home-streak-noel">{streakDays} days in a row. See you for another word tomorrow.</NoelAside>}
   </div>;
 }
