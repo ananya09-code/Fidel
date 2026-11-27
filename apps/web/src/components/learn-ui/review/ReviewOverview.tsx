@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, LoaderCircle, Pause, Volume2 } from "lucide-react";
-import { FidelTeacherMark } from "@/components/common-ui/FidelTeacherMark";
+import { NoelGuide } from "@/components/onboarding/NoelGuide";
+import { NoelAside } from "@/components/onboarding/NoelAside";
 import { topicLabel } from "@/components/homepage-ui/labels";
 import type { ReviewOverview as ReviewData } from "@/lib/api/reviews";
 import "./review.css";
@@ -62,7 +63,7 @@ export function ReviewOverview({ data, onStart, isStarting = false, error, memor
     <ReviewHeader />
     {memoryCheck}
     <section className="review-start-panel" aria-labelledby="review-start-title">
-      <FidelTeacherMark className="review-teacher" />
+      {canStart && <div className="review-teacher" aria-hidden="true"><NoelGuide step={0} /></div>}
       <div className="review-start-copy" data-guide-target="Review">
         <h2 id="review-start-title">{active ? "Pick up your review" : data.queue.length ? data.queue.length + (data.queue.length === 1 ? " word to reconnect with" : " words to reconnect with") : "A little room for new words"}</h2>
         <p>{active ? answered + " of " + active.total_count + " answered. Your place is saved." : data.queue.length ? "A short practice with words that need another look." : "No words are waiting for review. Keep learning and come back when you need a refresher."}</p>
@@ -79,7 +80,7 @@ export function ReviewOverview({ data, onStart, isStarting = false, error, memor
           <div className="review-word-identity"><h3>{word.text}</h3><span>{topicLabel(word.category)}</span></div>
           <div className="review-meanings">{hideMeanings ? <p className="review-recall-prompt">Can you remember it?</p> : <dl><div><dt>English</dt><dd>{word.meaning}</dd></div><div><dt>Amharic</dt><dd lang="am">{word.amharic ?? "Translation unavailable"}</dd></div></dl>}</div>
           <button type="button" className="review-listen" disabled={!word.audio_url} onClick={() => play(word)} aria-label={(playingId === word.id ? "Pause " : "Listen to ") + word.text} title={word.audio_url ? "Listen to pronunciation" : "Audio unavailable"}>{playingId === word.id ? <Pause size={18} aria-hidden="true" /> : <Volume2 size={18} aria-hidden="true" />}</button>
-        </li>)}</ul> : <div className="review-empty"><h3>Nothing to revisit right now.</h3><p>Words you mark for review in the Dictionary will appear here.</p><Link to="/dictionary" search={{ category: undefined }}>Find a word<ArrowRight size={16} aria-hidden="true" /></Link></div>}
+        </li>)}</ul> : <div className="review-empty"><h3>Nothing to revisit right now.</h3><NoelAside step={1}>Words you mark for review in the Dictionary will appear here.</NoelAside><Link to="/dictionary" search={{ category: undefined }}>Find a word<ArrowRight size={16} aria-hidden="true" /></Link></div>}
         {data.queue.length > 6 && <button type="button" className="review-more" aria-expanded={showAllWords} onClick={() => setShowAllWords(!showAllWords)}>{showAllWords ? "Show fewer words" : "Show all " + data.queue.length + " words"}</button>}
       </section>
       <section className="review-history" aria-labelledby="review-history-title">

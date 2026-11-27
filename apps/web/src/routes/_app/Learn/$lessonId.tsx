@@ -20,6 +20,7 @@ import {
   saveLessonAnswer,
   startLesson,
   type LessonAttempt,
+  type ProgressSummary,
 } from "@/lib/api/learning";
 import { learningLanguageCodes, type LearningLanguage } from "@/lib/languages";
 
@@ -111,12 +112,15 @@ function LessonPage() {
     if (!attempt) throw new Error("No lesson attempt is active.");
     setSessionWordIds(sessionWords.map((word) => word.id));
     const value = await completeLesson(getToken, attempt.id);
+    if (value.status !== "completed") throw new Error("The lesson has not been saved as complete.");
     cacheAttempt(value);
     await queryClient.invalidateQueries({
       queryKey: ["auth", "learning-progress", userId ?? "signed-out"],
     });
     await queryClient.invalidateQueries({ queryKey: ["auth", "dashboard", userId] });
     await queryClient.invalidateQueries({ queryKey: ["auth", "spaced-reviews", userId] });
+    const refreshed = queryClient.getQueryData<ProgressSummary>(learningProgressKeys.all(userId, language_code));
+    return { saved: true, lessonCompleted: refreshed?.completed_lesson_keys.includes(lessonId) ?? false };
   }
 
   function goBack() {

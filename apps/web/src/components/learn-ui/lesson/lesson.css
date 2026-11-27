@@ -65,6 +65,9 @@ body:has(.fidel-study) nav[aria-label="Mobile navigation"] li > a > span:last-ch
 .study-card-controls { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:4px; }
 .study-swipe-hint { text-align:center; color:var(--study-muted); font-size:12px; margin:20px 0 0; }
 .study-teacher { width:76px; height:84px; margin-bottom:20px; }
+.study-milestone > .noel-aside { margin-bottom:18px; }
+.study-result-noel { padding-bottom:16px; border-bottom:1px solid var(--study-line); }
+.study-hint-noel { margin:4px 0 14px; }
 .study-setup,.study-milestone { padding:28px; background:var(--study-surface); border-radius:8px; }
 .study-setup > p,.study-milestone > p { color:var(--study-muted); margin:12px 0 24px; max-width:54ch; }
 .study-word-limit { border:0; padding:0; margin:28px 0; min-width:0; }

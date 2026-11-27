@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, LoaderCircle } from "lucide-react";
 import type { SpacedReviewOverview } from "@/lib/api/reviews";
+import { NoelAside } from "@/components/onboarding/NoelAside";
 import "./memory-check.css";
 
 type Props = { data?: SpacedReviewOverview; loading?: boolean; error?: string; onRetry?: () => void };
@@ -15,6 +16,7 @@ export function MemoryCheckView({ data, loading, error, onRetry }: Props) {
     <div className="memory-check-copy">
       <h2>Quiz yourself.</h2>
       <p>{loading ? <><LoaderCircle size={17} className="memory-spinner" aria-hidden="true" /><span role="status">Preparing your quiz</span></> : error ? <span role="alert">{error}</span> : active ? `${active.answers.length} of ${active.total_count} answered. Pick up your saved quiz.` : !enoughWords ? "Learn at least two words. Your first quiz opens 3 days after learning." : data?.due_count ? "How much do you remember? Test yourself with a random mix of words you’ve learned." : next ? `You’re all caught up. Your next quiz opens ${next}.` : "Keep learning. A new quiz will appear when your words are ready."}</p>
+      {!loading && !error && canStart && <NoelAside step={0} className="memory-noel">A few familiar words, one question at a time.</NoelAside>}
       <p className="memory-format">Multiple choice <span aria-hidden="true">·</span> Saved as you go</p>
       <details className="memory-schedule"><summary>When do I get a quiz?</summary><p>Words return after 3 days, then 2 weeks, 1 month, 3 months, 6 months and 1 year as you remember them. Missed words return after 1 day.</p></details>
     </div>
