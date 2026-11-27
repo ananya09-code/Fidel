@@ -26,7 +26,7 @@ function load(path) {
       const relative = name.slice(2);
       if (relative === 'lib/character-cast') return { characterFor: () => ({ image: '' }) };
       if (relative === 'components/settings-ui/PushDeviceControls') return { PushDeviceControls: () => null };
-      if (['lib/languages', 'components/common-ui/FidelTeacherMark', 'components/common-ui/PageState', 'components/theme/AppearancePicker', 'components/install/InstallFidel'].includes(relative)) {
+      if (['lib/languages', 'components/common-ui/FidelTeacherMark', 'components/onboarding/NoelGuide', 'components/onboarding/NoelWeave', 'components/common-ui/PageState', 'components/theme/AppearancePicker', 'components/install/InstallFidel'].includes(relative)) {
         return load(relative + (relative === 'lib/languages' ? '.ts' : '.tsx'));
       }
       return {};
@@ -57,6 +57,18 @@ test('onboarding renders a selectable Tigrinya course in both scripts', () => {
   assert.match(html, /aria-pressed="true"/);
 });
 
+test('new onboarding opens with the guide before language selection', () => {
+  const { OnboardingView } = load('routes/onboarding.tsx');
+  const html = renderToStaticMarkup(React.createElement(OnboardingView, {
+    intro: true, step: 0, data: { language: null, level: null, motivations: [], dailyGoal: 5, appearance: 'light' },
+    completed: false, canContinue: false,
+    onBegin() {}, onBack() {}, onContinue() {}, onStart() {}, onLanguage() {}, onLevel() {}, onMotivation() {}, onGoal() {}, onAppearance() {},
+  }));
+  assert.match(html, /Hi, I&#x27;m Noel/);
+  assert.match(html, /Let&#x27;s begin/);
+  assert.doesNotMatch(html, /Choose your language/);
+});
+
 test('settings keep Tigrinya selected rather than falling back to Oromo', () => {
   const { SettingsForm } = load('components/settings-ui/SettingsOverview.tsx');
   const html = renderToStaticMarkup(React.createElement(SettingsForm, {
@@ -81,13 +93,14 @@ test('finished onboarding offers installation after setup', () => {
   assert.ok(html.indexOf('Start learning') < html.indexOf('Enable reminders'));
 });
 
-test('new learners can take or skip the tour after setup', () => {
+test('new learners start the tour before a skip option appears', () => {
   const { OnboardingView } = load('routes/onboarding.tsx');
   const html = renderToStaticMarkup(React.createElement(OnboardingView, {
     step: 4, data: { language: 'om', level: 'beginner', motivations: ['family'], dailyGoal: 5, appearance: 'light' },
     completed: true, tourPending: true, canContinue: true,
-    onBack() {}, onContinue() {}, onStart() {}, onSkipTour() {}, onLanguage() {}, onLevel() {}, onMotivation() {}, onGoal() {}, onAppearance() {},
+    onBack() {}, onContinue() {}, onStart() {}, onLanguage() {}, onLevel() {}, onMotivation() {}, onGoal() {}, onAppearance() {},
   }));
   assert.match(html, /Take the tour/);
-  assert.match(html, /Skip tour/);
+  assert.doesNotMatch(html, /Skip tour/);
+  assert.match(html, /Change my answers/);
 });
