@@ -17,7 +17,7 @@ function load(path, environment = {}) {
   new Function("require", "exports", "window", "document", compiled)(require, exports, environment.window, environment.document);
   return exports;
 }
-const { parseAppearance, resolveTheme, themeInitScript } = load("../src/lib/theme.ts");
+const { parseAppearance, resolveTheme, onboardingAppearance, readDeviceAppearance, themeInitScript } = load("../src/lib/theme.ts");
 const { AppearancePicker } = load("../src/components/theme/AppearancePicker.tsx");
 
 test("explicit themes override the device and System follows it", () => {
@@ -27,6 +27,13 @@ test("explicit themes override the device and System follows it", () => {
   assert.equal(resolveTheme("system", false), "light");
   assert.equal(parseAppearance("system"), "system");
   for (const value of [null, "invalid", "SYSTEM", {}]) assert.equal(parseAppearance(value), "light");
+});
+
+test("new onboarding inherits the landing choice while returning users keep their saved theme", () => {
+  assert.equal(onboardingAppearance("light", false, "dark"), "dark");
+  assert.equal(onboardingAppearance("light", false, "system"), "system");
+  assert.equal(onboardingAppearance("light", true, "dark"), "light");
+  assert.equal(readDeviceAppearance(), "light");
 });
 
 test("pre-paint script applies the same theme with missing or blocked storage", () => {

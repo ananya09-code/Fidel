@@ -40,7 +40,7 @@ import type { UserPreferences } from "@/lib/api/preferences";
 import { AppearancePicker } from "@/components/theme/AppearancePicker";
 import { LoaderCircle } from "lucide-react";
 import { useThemePreview } from "@/components/theme/ThemeProvider";
-import type { Appearance } from "@/lib/theme";
+import { onboardingAppearance, readDeviceAppearance, type Appearance } from "@/lib/theme";
 import type { ReactNode } from "react";
 import { PushDeviceControls } from "@/components/settings-ui/PushDeviceControls";
 import { TOUR_VERSION } from "@/lib/first-run";
@@ -256,7 +256,7 @@ function OnboardingFlow({
     level: initialPreferences.proficiency_level,
     motivations: initialPreferences.motivations,
     dailyGoal: initialPreferences.daily_goal_words,
-    appearance: initialPreferences.appearance,
+    appearance: onboardingAppearance(initialPreferences.appearance, initialPreferences.onboarding_completed, readDeviceAppearance()),
   });
 
 
