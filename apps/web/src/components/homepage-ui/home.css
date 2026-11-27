@@ -65,10 +65,8 @@ body:has(.fidel-home) nav[aria-label="Mobile navigation"] li > a > span:last-chi
 .home-streak-caption { color: var(--home-muted); font-size: 11px; line-height: 1.35; margin: 10px 0 0; }
 .home-goal-value { margin: 6px 0 10px; font-size: 34px; line-height: 1.2; font-weight: 400; }
 .home-goal-value > span { font-size: 13px; color: var(--home-muted); white-space: nowrap; }
-.home-goal-noel { margin-top:16px; }
 .home-streak-noel { margin-top:12px; }
-.home-streak-noel .noel-aside-portrait { width:32px; height:34px; }
-.home-first-lesson-noel { margin-top:20px; padding-top:16px; border-top:1px solid var(--home-line); }
+.home-lesson-noel { margin-top:16px; padding-top:14px; border-top:1px solid var(--home-line); }
 .home-track { height: 5px; border-radius: 2px; overflow: hidden; background: var(--home-line); }
 .home-track > span { display: block; height: 100%; background: var(--home-accent); }
 .home-main-grid, .home-bottom-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
